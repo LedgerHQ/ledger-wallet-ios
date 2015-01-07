@@ -12,7 +12,10 @@
 		3784FB101A5D2F5F0063A364 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB0E1A5D2F5F0063A364 /* Main.storyboard */; };
 		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
 		3784FB151A5D2F5F0063A364 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB131A5D2F5F0063A364 /* LaunchScreen.xib */; };
-		3784FB211A5D2F5F0063A364 /* ledger_wallet_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB201A5D2F5F0063A364 /* ledger_wallet_iosTests.swift */; };
+		37B7469D1A5D3EF6001373C5 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B7469C1A5D3EF6001373C5 /* NavigationBar.swift */; };
+		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
+		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
+		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +38,9 @@
 		3784FB141A5D2F5F0063A364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3784FB1A1A5D2F5F0063A364 /* ledger-wallet-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ledger-wallet-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3784FB201A5D2F5F0063A364 /* ledger_wallet_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ledger_wallet_iosTests.swift; sourceTree = "<group>"; };
+		37B7469C1A5D3EF6001373C5 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
+		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +83,12 @@
 			isa = PBXGroup;
 			children = (
 				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
-				3784FB0C1A5D2F5F0063A364 /* ViewController.swift */,
 				3784FB0E1A5D2F5F0063A364 /* Main.storyboard */,
 				3784FB111A5D2F5F0063A364 /* Images.xcassets */,
-				3784FB131A5D2F5F0063A364 /* LaunchScreen.xib */,
+				37B746A01A5D45A3001373C5 /* Controllers */,
+				37B7469E1A5D4569001373C5 /* Model */,
+				37B7469F1A5D459F001373C5 /* View */,
+				37B746A11A5D4F03001373C5 /* WebSocket */,
 				3784FB081A5D2F5F0063A364 /* Supporting Files */,
 			);
 			path = "ledger-wallet-ios";
@@ -90,6 +97,7 @@
 		3784FB081A5D2F5F0063A364 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3784FB131A5D2F5F0063A364 /* LaunchScreen.xib */,
 				3784FB091A5D2F5F0063A364 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -98,7 +106,7 @@
 		3784FB1D1A5D2F5F0063A364 /* ledger-wallet-iosTests */ = {
 			isa = PBXGroup;
 			children = (
-				3784FB201A5D2F5F0063A364 /* ledger_wallet_iosTests.swift */,
+				37B746A41A5D5020001373C5 /* WebSocketTests.swift */,
 				3784FB1E1A5D2F5F0063A364 /* Supporting Files */,
 			);
 			path = "ledger-wallet-iosTests";
@@ -110,6 +118,37 @@
 				3784FB1F1A5D2F5F0063A364 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		37B7469E1A5D4569001373C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		37B7469F1A5D459F001373C5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				37B7469C1A5D3EF6001373C5 /* NavigationBar.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		37B746A01A5D45A3001373C5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3784FB0C1A5D2F5F0063A364 /* ViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		37B746A11A5D4F03001373C5 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				37B746A21A5D4F2C001373C5 /* WebSocket.swift */,
+			);
+			name = WebSocket;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +253,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3784FB0D1A5D2F5F0063A364 /* ViewController.swift in Sources */,
+				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
+				37B7469D1A5D3EF6001373C5 /* NavigationBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +263,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3784FB211A5D2F5F0063A364 /* ledger_wallet_iosTests.swift in Sources */,
+				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
+				37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +409,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -378,6 +421,7 @@
 				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
 			};
 			name = Debug;
@@ -386,6 +430,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
