@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3722897B1A5FD32400B77E35 /* UIColor+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722897A1A5FD32400B77E35 /* UIColor+Init.swift */; };
+		3722897E1A5FDA6D00B77E35 /* UIView+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722897D1A5FDA6D00B77E35 /* UIView+Configure.swift */; };
+		372289801A5FDD5200B77E35 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722897F1A5FDD5200B77E35 /* BackgroundView.swift */; };
+		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
-		3784FB0D1A5D2F5F0063A364 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0C1A5D2F5F0063A364 /* ViewController.swift */; };
+		3784FB0D1A5D2F5F0063A364 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0C1A5D2F5F0063A364 /* BaseViewController.swift */; };
 		3784FB101A5D2F5F0063A364 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB0E1A5D2F5F0063A364 /* Main.storyboard */; };
 		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
 		3784FB151A5D2F5F0063A364 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB131A5D2F5F0063A364 /* LaunchScreen.xib */; };
@@ -16,6 +20,7 @@
 		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
+		37B746A91A5D92BF001373C5 /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A81A5D92BF001373C5 /* VisualFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +34,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3722897A1A5FD32400B77E35 /* UIColor+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Init.swift"; sourceTree = "<group>"; };
+		3722897D1A5FDA6D00B77E35 /* UIView+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Configure.swift"; sourceTree = "<group>"; };
+		3722897F1A5FDD5200B77E35 /* BackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		3784FB051A5D2F5E0063A364 /* ledger-wallet-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ledger-wallet-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB091A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3784FB0C1A5D2F5F0063A364 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3784FB0C1A5D2F5F0063A364 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3784FB0F1A5D2F5F0063A364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3784FB111A5D2F5F0063A364 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3784FB141A5D2F5F0063A364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -41,6 +50,7 @@
 		37B7469C1A5D3EF6001373C5 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
+		37B746A81A5D92BF001373C5 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +71,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		372289791A5FD27200B77E35 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3722897A1A5FD32400B77E35 /* UIColor+Init.swift */,
+				3722897D1A5FDA6D00B77E35 /* UIView+Configure.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		3722897C1A5FD68C00B77E35 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				3784FB0C1A5D2F5F0063A364 /* BaseViewController.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		378205D51A60196C00F6CA45 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3784FB0E1A5D2F5F0063A364 /* Main.storyboard */,
+				3784FB111A5D2F5F0063A364 /* Images.xcassets */,
+				378205D31A60195E00F6CA45 /* Fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		3784FAFC1A5D2F5E0063A364 = {
 			isa = PBXGroup;
 			children = (
@@ -82,13 +119,12 @@
 		3784FB071A5D2F5E0063A364 /* ledger-wallet-ios */ = {
 			isa = PBXGroup;
 			children = (
-				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
-				3784FB0E1A5D2F5F0063A364 /* Main.storyboard */,
-				3784FB111A5D2F5F0063A364 /* Images.xcassets */,
+				378205D51A60196C00F6CA45 /* Resources */,
 				37B746A01A5D45A3001373C5 /* Controllers */,
-				37B7469E1A5D4569001373C5 /* Model */,
 				37B7469F1A5D459F001373C5 /* View */,
 				37B746A11A5D4F03001373C5 /* WebSocket */,
+				37B746A71A5D92A6001373C5 /* Helper */,
+				372289791A5FD27200B77E35 /* Extensions */,
 				3784FB081A5D2F5F0063A364 /* Supporting Files */,
 			);
 			path = "ledger-wallet-ios";
@@ -97,6 +133,7 @@
 		3784FB081A5D2F5F0063A364 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				3784FB131A5D2F5F0063A364 /* LaunchScreen.xib */,
 				3784FB091A5D2F5F0063A364 /* Info.plist */,
 			);
@@ -120,17 +157,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		37B7469E1A5D4569001373C5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		37B7469F1A5D459F001373C5 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				37B7469C1A5D3EF6001373C5 /* NavigationBar.swift */,
+				3722897F1A5FDD5200B77E35 /* BackgroundView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -138,7 +169,7 @@
 		37B746A01A5D45A3001373C5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3784FB0C1A5D2F5F0063A364 /* ViewController.swift */,
+				3722897C1A5FD68C00B77E35 /* Base */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -149,6 +180,14 @@
 				37B746A21A5D4F2C001373C5 /* WebSocket.swift */,
 			);
 			name = WebSocket;
+			sourceTree = "<group>";
+		};
+		37B746A71A5D92A6001373C5 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				37B746A81A5D92BF001373C5 /* VisualFactory.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +274,7 @@
 				3784FB101A5D2F5F0063A364 /* Main.storyboard in Resources */,
 				3784FB151A5D2F5F0063A364 /* LaunchScreen.xib in Resources */,
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
+				378205D41A60195E00F6CA45 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,10 +292,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3784FB0D1A5D2F5F0063A364 /* ViewController.swift in Sources */,
+				3784FB0D1A5D2F5F0063A364 /* BaseViewController.swift in Sources */,
 				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
+				372289801A5FDD5200B77E35 /* BackgroundView.swift in Sources */,
+				37B746A91A5D92BF001373C5 /* VisualFactory.swift in Sources */,
+				3722897B1A5FD32400B77E35 /* UIColor+Init.swift in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
 				37B7469D1A5D3EF6001373C5 /* NavigationBar.swift in Sources */,
+				3722897E1A5FDA6D00B77E35 /* UIView+Configure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

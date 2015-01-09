@@ -24,10 +24,6 @@ class NavigationBar: UINavigationBar {
         self.translucent = false
         self.shadowImage = UIImage()
         self.barTintColor = VisualFactory.Colors.nightBlue
-        self.titleTextAttributes = [
-            NSForegroundColorAttributeName: VisualFactory.Colors.white,
-            NSFontAttributeName: VisualFactory.Fonts.semiboldFontWithSize(15.0)
-        ]
         setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
     }
     
@@ -35,4 +31,12 @@ class NavigationBar: UINavigationBar {
         return CGSize(width: UIViewNoIntrinsicMetric, height: 80)
     }
     
+}
+
+extension NavigationBar {
+    class func uppercaseLabelWithText(title: String) -> UILabel {
+        let label = UILabel()
+        
+        return label
+    }
 }
