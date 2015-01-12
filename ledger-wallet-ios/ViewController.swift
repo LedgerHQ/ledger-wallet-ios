@@ -1,5 +1,5 @@
 //
-//  BaseViewController.swift
+//  ViewController.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 07/01/2015.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class ViewController: UIViewController {
     
-    //MARK: Status bar style
+    //MARK: Status bar Style
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent

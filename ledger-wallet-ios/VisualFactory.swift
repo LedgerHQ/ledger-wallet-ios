@@ -10,7 +10,18 @@ import UIKit
 
 struct VisualFactory {
     
+    struct TextAttributes {
+    
+        static let pageTitle = [
+            NSForegroundColorAttributeName: VisualFactory.Colors.black,
+            NSKernAttributeName: 0,
+            NSFontAttributeName: Fonts.regularFontWithSize(20)
+        ]
+        
+    }
+    
     struct Colors {
+        
         static let black = UIColor(hex: 0x000000)
         static let white = UIColor(hex: 0xffffff)
         static let backgroundColor = UIColor(hex: 0xf9f9f9)
@@ -28,6 +39,7 @@ struct VisualFactory {
         static let lightGrey = UIColor(hex: 0xcccccc)
         static let veryLightGrey = UIColor(hex: 0xeeeeee)
         static let extraLightGrey = UIColor(hex: 0xf4f4f4)
+        
     }
     
     enum Fonts {

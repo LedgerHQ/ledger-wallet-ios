@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+
+"welcome" = "Hello";
