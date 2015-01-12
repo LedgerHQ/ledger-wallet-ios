@@ -20,6 +20,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let label = UILabel()
+        label.localizableValue = "PAIR A NEW DEVICE"
+        label.style = "pageTitle"
+        label.sizeToFit()
+        self.navigationItem.titleView = label
     }
 
 }

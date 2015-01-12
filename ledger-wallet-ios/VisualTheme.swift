@@ -10,19 +10,31 @@ import UIKit
 
 struct VisualTheme {
     
+    typealias ViewStyle = (UIView) -> ()
     typealias LabelStyle = (UILabel) -> ()
     typealias ButtonStyle = (UIButton) -> ()
     typealias NavigationBarStyle = (UINavigationBar) -> ()
 
-    //MARK: Label Styles
+    //MARK: View Styles ------------------------------------
+    
+    static let viewStyles: [String: ViewStyle] = [
+        "background": { view in
+            view.backgroundColor = VisualFactory.Colors.backgroundColor
+        }
+    ]
+    
+    //MARK: Label Styles ------------------------------------
 
     static let labelStyles: [String: LabelStyle] = [
         "pageTitle": { label in
             label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.pageTitle)
+        },
+        "text": { label in
+            label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.text)
         }
     ]
     
-    //MARK: Button Styles
+    //MARK: Button Styles ------------------------------------
     
     static let buttonStyles: [String: ButtonStyle] = [
         "roundedGreen": { button in
@@ -30,7 +42,7 @@ struct VisualTheme {
         }
     ]
     
-    //MARK: Navigation bar Styles
+    //MARK: Navigation bar Styles ------------------------------------
     
     static let navigationBarStyles: [String: NavigationBarStyle] = [
         "nightBlue": { navigationBar in
@@ -38,6 +50,7 @@ struct VisualTheme {
             navigationBar.shadowImage = UIImage()
             navigationBar.barTintColor = VisualFactory.Colors.nightBlue
             navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+            navigationBar.setTitleVerticalPositionAdjustment(-10, forBarMetrics: UIBarMetrics.Default)
         }
     ]
     

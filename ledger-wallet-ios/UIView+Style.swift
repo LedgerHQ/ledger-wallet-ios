@@ -20,7 +20,7 @@ extension UIView {
         }
         set {
             objc_setAssociatedObject(self, &styleKey, newValue, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            ViewStylist.relookView(self)
+            ViewStylist.stylizeView(self)
         }
     }
     

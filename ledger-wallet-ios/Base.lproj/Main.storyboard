@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Ledger Wallet-->
+        <!--_ledger_wallet_-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,6 +24,7 @@
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="localizableValue" value="welcome"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="text"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
@@ -32,8 +33,11 @@
                             <constraint firstItem="Ff8-bx-kZS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="0yg-tK-wtB"/>
                             <constraint firstItem="Ff8-bx-kZS" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="Kgj-AH-PFG"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="background"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="Ledger Wallet" id="x2Z-UL-T03"/>
+                    <navigationItem key="navigationItem" title="_ledger_wallet_" id="x2Z-UL-T03"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

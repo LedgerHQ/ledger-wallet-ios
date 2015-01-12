@@ -13,9 +13,15 @@ struct VisualFactory {
     struct TextAttributes {
     
         static let pageTitle = [
+            NSForegroundColorAttributeName: VisualFactory.Colors.white,
+            NSKernAttributeName: -0.5,
+            NSFontAttributeName: Fonts.semiboldFontWithSize(15)
+        ]
+        
+        static let text = [
             NSForegroundColorAttributeName: VisualFactory.Colors.black,
-            NSKernAttributeName: 0,
-            NSFontAttributeName: Fonts.regularFontWithSize(20)
+            NSKernAttributeName: -0.5,
+            NSFontAttributeName: Fonts.regularFontWithSize(14)
         ]
         
     }
@@ -78,6 +84,12 @@ struct VisualFactory {
         static func extraboldFontWithSize(size: CGFloat) -> UIFont {
             return fontWithName(Names.Extrabold.rawValue, size: size)
         }
+    }
+    
+    struct Metrics {
+        
+        static let defaultNavigationBarHeight = 60
+        
     }
 
 }
