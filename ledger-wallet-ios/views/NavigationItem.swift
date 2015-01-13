@@ -10,6 +10,8 @@ import UIKit
 
 class NavigationItem: UINavigationItem {
     
+    //MARK: Style management
+    
     override var title: String? {
         didSet {
             let label = (self.titleView as? UILabel) ?? UILabel()
@@ -19,6 +21,8 @@ class NavigationItem: UINavigationItem {
             self.titleView = label
         }
     }
+    
+    //MARK: Localization
     
     override func awakeFromNib() {
         super.awakeFromNib()

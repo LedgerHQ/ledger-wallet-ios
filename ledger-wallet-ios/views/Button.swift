@@ -17,6 +17,8 @@ class Button: UIButton {
         ViewStylist.stylizeView(self)
     }
     
+    //MARK: Localization
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setTitle(localizedString(self.titleForState(UIControlState.Normal) ?? ""), forState: UIControlState.Normal)

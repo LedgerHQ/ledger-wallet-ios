@@ -18,6 +18,8 @@ class Label: UILabel {
         }
     }
 
+    //MARK: Localization
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.text = localizedString(self.text ?? "")
