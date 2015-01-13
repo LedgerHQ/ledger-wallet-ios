@@ -16,10 +16,21 @@ class ViewController: UIViewController {
         return UIStatusBarStyle.LightContent
     }
     
+    //MARK: Interface management
+    
+    func updateView() {
+        
+    }
+    
+    func configureView() {
+        
+    }
+    
     //MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
     }
 
 }

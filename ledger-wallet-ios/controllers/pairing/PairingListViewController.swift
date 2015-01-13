@@ -10,6 +10,14 @@ import UIKit
 
 class PairingListViewController: ViewController {
     
+    @IBOutlet weak var actionBar: ActionBarView!
     
+    //MARK: Interface management
+    
+    override func configureView() {
+        super.configureView()
+        
+        self.actionBar.borderPosition = ActionBarView.BorderPosition.Top
+    }
     
 }
