@@ -18,11 +18,16 @@ struct VisualTheme {
     //MARK: View Styles
     
     static let viewStyles: [String: ViewStyle] = [
-        "background": { view in
+        "view.background": { view in
             view.backgroundColor = VisualFactory.Colors.backgroundColor
         },
-        "nightBlue": { view in
+        "view.nightBlue": { view in
             view.backgroundColor = VisualFactory.Colors.nightBlue
+        },
+        "actionBar.grey": { view in
+            let actionBar = view as ActionBarView
+            actionBar.backgroundColor = VisualFactory.Colors.extraLightGrey
+            actionBar.borderColor = VisualFactory.Colors.veryLightGrey
         }
     ]
     

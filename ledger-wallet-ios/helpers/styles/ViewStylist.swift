@@ -11,20 +11,15 @@ import UIKit
 class ViewStylist {
     
     class func stylizeView(view: UIView) {
-        if view.isMemberOfClass(UIView) {
+        switch view {
+        case is UILabel:
+            relookLabel(view as UILabel)
+        case is UIButton:
+            relookButton(view as UIButton)
+        case is UINavigationBar:
+            relookNavigationBar(view as UINavigationBar)
+        default:
             relookView(view)
-        }
-        else {
-            switch view {
-            case is UILabel:
-                relookLabel(view as UILabel)
-            case is UIButton:
-                relookButton(view as UIButton)
-            case is UINavigationBar:
-                relookNavigationBar(view as UINavigationBar)
-            default:
-                println("ViewStylist: Unable to relook view with unknown type: \(view)")
-            }
         }
     }
     
