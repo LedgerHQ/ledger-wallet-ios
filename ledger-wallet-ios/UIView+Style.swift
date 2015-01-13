@@ -24,4 +24,9 @@ extension UIView {
         }
     }
     
+    convenience init(style: String) {
+        self.init(frame: CGRectZero)
+        self.style = style
+    }
+    
 }

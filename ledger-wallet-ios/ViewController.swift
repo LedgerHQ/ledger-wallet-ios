@@ -10,21 +10,35 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //MARK: Status bar Style
+    //MARK: Status bar style
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
+    }
+    
+    //MARK: Navigation item management
+    
+    func navigationItemLocalizedText() -> String {
+        if let title = self.navigationItem.title {
+            return title
+        }
+        if let title = self.title {
+            return title
+        }
+        return ""
+    }
+    
+    func updateNavigationItemTitle() {
+        let label = UILabel(localizableValue: navigationItemLocalizedText(), style: "pageTitle")
+        label.sizeToFit()
+        self.navigationItem.titleView = label
     }
     
     //MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let label = UILabel()
-        label.localizableValue = "PAIR A NEW DEVICE"
-        label.style = "pageTitle"
-        label.sizeToFit()
-        self.navigationItem.titleView = label
+        updateNavigationItemTitle()
     }
 
 }

@@ -31,4 +31,9 @@ extension UIView {
         return ""
     }
     
+    convenience init(localizableValue: String) {
+        self.init(frame: CGRectZero)
+        self.localizableValue = localizableValue
+    }
+    
 }

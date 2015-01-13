@@ -15,7 +15,7 @@ struct VisualTheme {
     typealias ButtonStyle = (UIButton) -> ()
     typealias NavigationBarStyle = (UINavigationBar) -> ()
 
-    //MARK: View Styles ------------------------------------
+    //MARK: View Styles
     
     static let viewStyles: [String: ViewStyle] = [
         "background": { view in
@@ -23,26 +23,38 @@ struct VisualTheme {
         }
     ]
     
-    //MARK: Label Styles ------------------------------------
-
+    //MARK: Label Styles
+    
     static let labelStyles: [String: LabelStyle] = [
         "pageTitle": { label in
             label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.pageTitle)
         },
-        "text": { label in
-            label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.text)
+        "largePageTitle": { label in
+            label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.largePageTitle)
+        },
+        "regularText": { label in
+            label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.regularText)
+        },
+        "regularGreyText": { label in
+            label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.regularGreyText)
+        },
+        "navigationBarText": { label in
+            label.attributedText = NSAttributedString(string: label.localizedValue, attributes: VisualFactory.TextAttributes.navigationBarText)
         }
     ]
     
-    //MARK: Button Styles ------------------------------------
+    //MARK: Button Styles
     
     static let buttonStyles: [String: ButtonStyle] = [
-        "roundedGreen": { button in
-            
+        "navigationBarButton": { button in
+            var hightlightedStyle = VisualFactory.TextAttributes.navigationBarText
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.localizedValue, attributes: VisualFactory.TextAttributes.navigationBarText), forState: UIControlState.Normal)
+            button.setAttributedTitle(NSAttributedString(string: button.localizedValue, attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         }
     ]
     
-    //MARK: Navigation bar Styles ------------------------------------
+    //MARK: Navigation bar Styles
     
     static let navigationBarStyles: [String: NavigationBarStyle] = [
         "nightBlue": { navigationBar in
@@ -50,7 +62,6 @@ struct VisualTheme {
             navigationBar.shadowImage = UIImage()
             navigationBar.barTintColor = VisualFactory.Colors.nightBlue
             navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-            navigationBar.setTitleVerticalPositionAdjustment(-10, forBarMetrics: UIBarMetrics.Default)
         }
     ]
     

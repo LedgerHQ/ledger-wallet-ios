@@ -10,19 +10,43 @@ import UIKit
 
 struct VisualFactory {
     
+    typealias TextAttribute = [NSObject: AnyObject]
+    
     struct TextAttributes {
     
         static let pageTitle = [
-            NSForegroundColorAttributeName: VisualFactory.Colors.white,
+            NSForegroundColorAttributeName: Colors.white,
             NSKernAttributeName: -0.5,
             NSFontAttributeName: Fonts.semiboldFontWithSize(15)
         ]
         
-        static let text = [
-            NSForegroundColorAttributeName: VisualFactory.Colors.black,
+        static let largePageTitle = [
+            NSForegroundColorAttributeName: Colors.white,
+            NSKernAttributeName: -0.5,
+            NSFontAttributeName: Fonts.regularFontWithSize(20)
+        ]
+        
+        static let regularText = [
+            NSForegroundColorAttributeName: Colors.black,
             NSKernAttributeName: -0.5,
             NSFontAttributeName: Fonts.regularFontWithSize(14)
         ]
+        
+        static let regularGreyText: TextAttribute = TextAttributes.extend(regularText, withAttributes: [
+            NSForegroundColorAttributeName: Colors.darkGrey
+        ])
+        
+        static let navigationBarText = [
+            NSForegroundColorAttributeName: Colors.lightGrey,
+            NSKernAttributeName: -0.5,
+            NSFontAttributeName: Fonts.regularFontWithSize(12)
+        ]
+        
+        private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
+            var newAttributes = textAttribute
+            newAttributes.merge(attributes)
+            return newAttributes
+        }
         
     }
     
