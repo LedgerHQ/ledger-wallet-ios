@@ -32,6 +32,11 @@
 		37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283BD1A655D7200F432CC /* VisualFactory.swift */; };
 		37F283C31A655D7200F432CC /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283BE1A655D7200F432CC /* VisualTheme.swift */; };
 		37F283C41A655D7200F432CC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C01A655D7200F432CC /* Localization.swift */; };
+		37F283C71A656BE400F432CC /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C61A656BE400F432CC /* PairingListViewController.swift */; };
+		37F283C91A656C6F00F432CC /* PairingAddDongleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C81A656C6F00F432CC /* PairingAddDongleViewController.swift */; };
+		37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F283CF1A656FEF00F432CC /* UIViewController+Init.m */; };
+		37F283D31A6578AC00F432CC /* ActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283D21A6578AC00F432CC /* ActionBarView.swift */; };
+		37F283D51A6578C500F432CC /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283D41A6578C500F432CC /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +78,13 @@
 		37F283BD1A655D7200F432CC /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		37F283BE1A655D7200F432CC /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualTheme.swift; sourceTree = "<group>"; };
 		37F283C01A655D7200F432CC /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		37F283C61A656BE400F432CC /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingListViewController.swift; path = pairing/PairingListViewController.swift; sourceTree = "<group>"; };
+		37F283C81A656C6F00F432CC /* PairingAddDongleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingAddDongleViewController.swift; path = pairing/PairingAddDongleViewController.swift; sourceTree = "<group>"; };
+		37F283CD1A656FEF00F432CC /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ledger-wallet-ios-Bridging-Header.h"; path = "extensions/ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
+		37F283CE1A656FEF00F432CC /* UIViewController+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Init.h"; sourceTree = "<group>"; };
+		37F283CF1A656FEF00F432CC /* UIViewController+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Init.m"; sourceTree = "<group>"; };
+		37F283D21A6578AC00F432CC /* ActionBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarView.swift; sourceTree = "<group>"; };
+		37F283D41A6578C500F432CC /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +151,7 @@
 		3784FB081A5D2F5F0063A364 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				37F283CD1A656FEF00F432CC /* ledger-wallet-ios-Bridging-Header.h */,
 				37F283631A64064A00F432CC /* LaunchScreen.xib */,
 				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				3784FB091A5D2F5F0063A364 /* Info.plist */,
@@ -175,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				37F283941A655D3400F432CC /* Base */,
+				37F283C51A656BB700F432CC /* Dongle pairing */,
 			);
 			name = Controllers;
 			path = controllers;
@@ -198,6 +212,8 @@
 				37F2839A1A655D3400F432CC /* UIColor+Utils.swift */,
 				37F2839B1A655D3400F432CC /* UILabel+Utils.swift */,
 				37F2839C1A655D3400F432CC /* UIView+Style.swift */,
+				37F283CE1A656FEF00F432CC /* UIViewController+Init.h */,
+				37F283CF1A656FEF00F432CC /* UIViewController+Init.m */,
 			);
 			name = Extensions;
 			path = extensions;
@@ -206,11 +222,13 @@
 		37F283A41A655D3400F432CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				37F283D41A6578C500F432CC /* View.swift */,
 				37F283A51A655D3400F432CC /* BarButtonItem.swift */,
 				37F283A61A655D3400F432CC /* Button.swift */,
 				37F283A71A655D3400F432CC /* Label.swift */,
 				37F283A81A655D3400F432CC /* NavigationBar.swift */,
 				37F283A91A655D3400F432CC /* NavigationItem.swift */,
+				37F283D21A6578AC00F432CC /* ActionBarView.swift */,
 			);
 			name = Views;
 			path = views;
@@ -229,9 +247,9 @@
 		37F283BB1A655D7200F432CC /* Styles */ = {
 			isa = PBXGroup;
 			children = (
-				37F283BC1A655D7200F432CC /* ViewStylist.swift */,
-				37F283BD1A655D7200F432CC /* VisualFactory.swift */,
 				37F283BE1A655D7200F432CC /* VisualTheme.swift */,
+				37F283BD1A655D7200F432CC /* VisualFactory.swift */,
+				37F283BC1A655D7200F432CC /* ViewStylist.swift */,
 			);
 			name = Styles;
 			path = styles;
@@ -244,6 +262,15 @@
 			);
 			name = Utils;
 			path = utils;
+			sourceTree = "<group>";
+		};
+		37F283C51A656BB700F432CC /* Dongle pairing */ = {
+			isa = PBXGroup;
+			children = (
+				37F283C61A656BE400F432CC /* PairingListViewController.swift */,
+				37F283C81A656C6F00F432CC /* PairingAddDongleViewController.swift */,
+			);
+			name = "Dongle pairing";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,14 +377,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F283C31A655D7200F432CC /* VisualTheme.swift in Sources */,
+				37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */,
 				37F283B91A655D3400F432CC /* NavigationItem.swift in Sources */,
 				37F283B81A655D3400F432CC /* NavigationBar.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Style.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
 				37F283C11A655D7200F432CC /* ViewStylist.swift in Sources */,
+				37F283C71A656BE400F432CC /* PairingListViewController.swift in Sources */,
+				37F283D51A6578C500F432CC /* View.swift in Sources */,
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
+				37F283D31A6578AC00F432CC /* ActionBarView.swift in Sources */,
 				37F283B71A655D3400F432CC /* Label.swift in Sources */,
+				37F283C91A656C6F00F432CC /* PairingAddDongleViewController.swift in Sources */,
 				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,
 				37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */,
 				37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */,
@@ -499,6 +531,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
@@ -506,6 +539,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/extensions/ledger-wallet-ios-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -514,6 +549,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
@@ -521,6 +557,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/extensions/ledger-wallet-ios-Bridging-Header.h";
 			};
 			name = Release;
 		};

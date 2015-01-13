@@ -1,80 +1,105 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FKx-8I-SVn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fN9-2h-qPz">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--welcome-->
-        <scene sceneID="ufC-wZ-h7g">
-            <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="welcome" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ff8-bx-kZS" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                <rect key="frame" x="20" y="84" width="69" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="regularGreyText"/>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Ff8-bx-kZS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="0yg-tK-wtB"/>
-                            <constraint firstItem="Ff8-bx-kZS" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="Kgj-AH-PFG"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="background"/>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                    <navigationItem key="navigationItem" title="welcome" id="x2Z-UL-T03" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
-                        <barButtonItem key="leftBarButtonItem" id="II2-nK-9Os" customClass="BarButtonItem" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hgu-Dq-2nd" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                <rect key="frame" x="16" y="7" width="133" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="goodbye">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="navigationBarButton"/>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1259" y="591"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="jNt-35-j8k">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FKx-8I-SVn" customClass="NavigationController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationController" automaticallyAdjustsScrollViewInsets="NO" id="FKx-8I-SVn" customClass="NavigationController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fuu-kT-K86" customClass="NavigationBar" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="navigationBar"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="nightBlue"/>
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="dHk-8e-rfy"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xNv-zl-377" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="447" y="591"/>
+            <point key="canvasLocation" x="1195" y="63"/>
+        </scene>
+        <!--Pairing List View Controller-->
+        <scene sceneID="OgS-3y-xXk">
+            <objects>
+                <viewController id="fN9-2h-qPz" customClass="PairingListViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iCE-dK-vNs"/>
+                        <viewControllerLayoutGuide type="bottom" id="kaN-O7-JUe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Apg-La-YHm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baV-lU-9nl">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="110"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ledger_wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT6-JM-Ncb" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <rect key="frame" x="250" y="35" width="101" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="navigationBar.largeTitle"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_status_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLQ-ec-6D3" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <rect key="frame" x="238" y="61" width="125" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="navigationBar.text"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.91305443549999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="4wM-Th-nfU"/>
+                                    <constraint firstAttribute="centerX" secondItem="rLQ-ec-6D3" secondAttribute="centerX" id="IAt-fv-FXp"/>
+                                    <constraint firstItem="XT6-JM-Ncb" firstAttribute="top" secondItem="baV-lU-9nl" secondAttribute="top" constant="35" id="Kr7-ej-Sbm"/>
+                                    <constraint firstAttribute="centerX" secondItem="XT6-JM-Ncb" secondAttribute="centerX" id="PdR-Xu-dMi"/>
+                                    <constraint firstItem="rLQ-ec-6D3" firstAttribute="top" secondItem="XT6-JM-Ncb" secondAttribute="bottom" constant="5" id="YsA-y4-vae"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="view.nightBlue"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="510" width="600" height="90"/>
+                                <color key="backgroundColor" red="0.90980392160000001" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="uAd-5e-sQC"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="actionBar.grey"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kaN-O7-JUe" firstAttribute="top" secondItem="wt8-T5-TCh" secondAttribute="bottom" id="1gy-JE-h8B"/>
+                            <constraint firstItem="baV-lU-9nl" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="IBj-zT-Veh"/>
+                            <constraint firstItem="wt8-T5-TCh" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="W9i-lA-88Q"/>
+                            <constraint firstAttribute="trailing" secondItem="baV-lU-9nl" secondAttribute="trailing" id="g7c-hl-nzr"/>
+                            <constraint firstAttribute="trailing" secondItem="wt8-T5-TCh" secondAttribute="trailing" id="jFB-Dc-JkR"/>
+                            <constraint firstItem="baV-lU-9nl" firstAttribute="top" secondItem="Apg-La-YHm" secondAttribute="top" id="shy-0L-Fkh"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="view.background"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <connections>
+                        <outlet property="actionBar" destination="wt8-T5-TCh" id="2X0-uB-bpj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="524" y="63"/>
         </scene>
     </scenes>
 </document>
