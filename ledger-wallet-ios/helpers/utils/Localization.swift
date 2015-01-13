@@ -9,5 +9,8 @@
 import Foundation
 
 func localizedString(key: String) -> String {
+    if key.hasPrefix("_") {
+        return key
+    }
     return NSLocalizedString(key, comment: "")
 }

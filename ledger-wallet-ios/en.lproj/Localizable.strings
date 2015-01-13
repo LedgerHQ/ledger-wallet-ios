@@ -6,6 +6,10 @@
   Copyright (c) 2015 Ledger. All rights reserved.
 */
 
-"goodbye" = "SEYA";
+"ledger_wallet" = "Ledger Wallet";
 
-"welcome" = "HELLO";
+"PAIR_A_NEW_DEVICE" = "PAIR A NEW DEVICE";
+
+"CANCEL" = "CANCEL";
+
+"WAITING_FOR_AN_OPERATION" = "WAITING FOR AN OPERATION...";
