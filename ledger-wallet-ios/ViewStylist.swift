@@ -30,6 +30,7 @@ class ViewStylist {
     
     private class func relookView(view: UIView) {
         if let style = view.style {
+            // apply style if present
             if let styleClosure = VisualTheme.viewStyles[style] {
                 styleClosure(view)
             }
@@ -49,14 +50,11 @@ class ViewStylist {
                 println("ViewStylist: Unable to find label style: \(style)")
             }
         }
-        else if let text = label.localizableValue {
-            // apply localization
-            label.text = localizedString(text)
-        }
     }
     
     private class func relookButton(button: UIButton) {
         if let style = button.style {
+            // apply style if present
             if let styleClosure = VisualTheme.buttonStyles[style] {
                 styleClosure(button)
             }
@@ -68,6 +66,7 @@ class ViewStylist {
     
     private class func relookNavigationBar(navigationBar:UINavigationBar) {
         if let style = navigationBar.style {
+            // apply style if present
             if let styleClosure = VisualTheme.navigationBarStyles[style] {
                 styleClosure(navigationBar)
             }

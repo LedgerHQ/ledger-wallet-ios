@@ -6,4 +6,6 @@
   Copyright (c) 2015 Ledger. All rights reserved.
 */
 
-"welcome" = "Finally, give a name to this Ledger Wallet";
+"goodbye" = "SEYA";
+
+"welcome" = "HELLO";

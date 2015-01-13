@@ -10,6 +10,8 @@ import UIKit
 
 class NavigationController: UINavigationController {
     
+    //MARK: Status bar management
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return self.topViewController.preferredStatusBarStyle()
     }
