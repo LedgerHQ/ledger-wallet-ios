@@ -22,25 +22,25 @@ struct VisualFactory {
         
         static let largePageTitle = [
             NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -0.5,
+            NSKernAttributeName: -1.2,
             NSFontAttributeName: Fonts.regularFontWithSize(20)
         ]
-        
-        static let regularText = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -0.5,
-            NSFontAttributeName: Fonts.regularFontWithSize(14)
-        ]
-        
-        static let regularGreyText: TextAttribute = TextAttributes.extend(regularText, withAttributes: [
-            NSForegroundColorAttributeName: Colors.darkGrey
-        ])
         
         static let navigationBarText = [
             NSForegroundColorAttributeName: Colors.lightGrey,
             NSKernAttributeName: -0.5,
             NSFontAttributeName: Fonts.regularFontWithSize(12)
         ]
+        
+        static let medium = [
+            NSForegroundColorAttributeName: Colors.black,
+            NSKernAttributeName: -0.5,
+            NSFontAttributeName: Fonts.regularFontWithSize(14)
+        ]
+        
+        static let mediumGrey: TextAttribute = TextAttributes.extend(medium, withAttributes: [
+            NSForegroundColorAttributeName: Colors.darkGrey
+        ])
         
         private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
             var newAttributes = textAttribute
