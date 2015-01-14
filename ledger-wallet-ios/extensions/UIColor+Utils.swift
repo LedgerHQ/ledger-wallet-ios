@@ -25,7 +25,7 @@ extension UIColor {
     
     //MARK: Darker and Lighter
     
-    func brighterColor(factor: CGFloat = 0.3) -> UIColor {
+    func brighterColor(factor: CGFloat = VisualFactory.Metrics.defaultDarkenFactor) -> UIColor {
         var h:CGFloat = 0.0, s:CGFloat = 0.0, b:CGFloat = 0.0, a:CGFloat = 0.0
         if (self.getHue(&h, saturation: &s, brightness: &b, alpha: &a)) {
             return UIColor(hue: h, saturation: s, brightness: min(b * (1.0 + factor), CGFloat(1.0)), alpha: a)
@@ -33,7 +33,7 @@ extension UIColor {
         return self
     }
     
-    func darkerColor(factor: CGFloat = 0.3) -> UIColor {
+    func darkerColor(factor: CGFloat = VisualFactory.Metrics.defaultDarkenFactor) -> UIColor {
         var h:CGFloat = 0.0, s:CGFloat = 0.0, b:CGFloat = 0.0, a:CGFloat = 0.0
         if (self.getHue(&h, saturation: &s, brightness: &b, alpha: &a)) {
             return UIColor(hue: h, saturation: s, brightness: b * (1.0 - factor), alpha: a)

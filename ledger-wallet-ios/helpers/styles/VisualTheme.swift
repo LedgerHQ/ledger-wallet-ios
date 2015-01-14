@@ -60,8 +60,17 @@ struct VisualTheme {
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarText), forState: UIControlState.Normal)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
+        "rounded": { button in
+            let roundedButton = button as RoundedButton
+            roundedButton.borderRadius = VisualFactory.Metrics.defaultBorderRadius
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
+            button.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.verySmallPadding, left: VisualFactory.Metrics.smallPadding, bottom: VisualFactory.Metrics.verySmallPadding, right: VisualFactory.Metrics.smallPadding)
+        },
         "rounded.green": { button in
-            
+            VisualTheme.buttonStyles["rounded"]?(button)
+            let roundedButton = button as RoundedButton
+            roundedButton.setFillColor(VisualFactory.Colors.actionGreen, forState: UIControlState.Normal)
+            roundedButton.setFillColor(VisualFactory.Colors.actionGreen.darkerColor(factor: VisualFactory.Metrics.strongDarkenFactor), forState: UIControlState.Highlighted)
         }
     ]
     
