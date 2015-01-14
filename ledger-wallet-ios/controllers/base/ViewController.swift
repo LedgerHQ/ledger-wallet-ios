@@ -13,20 +13,23 @@ class ViewController: UIViewController {
     //MARK: Content status
     
     enum ContentStatus {
-        case Default
         case Available
         case Loading
         case Empty
         case Error
     }
     
-    private var _contentStatus = ContentStatus.Available
     var contentStatus: ContentStatus {
         return _contentStatus
     }
     var loadingView: UIView?
     var emptyView: UIView?
     var errorView: UIView?
+    lazy private var _contentStatus: ContentStatus = { return self.initialContentStatus() }()
+    
+    func initialContentStatus() -> ContentStatus {
+        return ContentStatus.Available
+    }
     
     func updateViewForContentStatus(contentStatus: ContentStatus) {
         loadingView?.hidden = contentStatus != ContentStatus.Loading
@@ -49,9 +52,18 @@ class ViewController: UIViewController {
         if let view = view {
             let compressedSize = view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
             let viewsArea = contentStatusViewsArea()
-            return CGRectMake(viewsArea.origin.x, viewsArea.position.x, compressedSize.width, compressedSize.height)
+            return CGRectMake(
+                viewsArea.origin.x + ((viewsArea.size.width - compressedSize.width) / 2),
+                viewsArea.origin.y + ((viewsArea.size.height - compressedSize.height) / 2),
+                compressedSize.width,
+                compressedSize.height
+            )
         }
         return CGRectZero
+    }
+    
+    func loadContentStatusViews() {
+        
     }
     
     //MARK: Status bar style
@@ -83,15 +95,31 @@ class ViewController: UIViewController {
     
     //MARK: View lifecycle
     
+    override func loadView() {
+        super.loadView()
+        
+        // load content status views
+        loadContentStatusViews()
+        if (loadingView != nil) {
+            view.addSubview(loadingView!)
+        }
+        if (emptyView != nil) {
+            view.addSubview(emptyView!)
+        }
+        if (errorView != nil) {
+            view.addSubview(errorView!)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // notify about content status
-        let contentStatus = self.contentStatus
+        // configure main view
         configureView()
-        if (self.contentStatus == contentStatus) {
-            updateViewForContentStatus(contentStatus)
-        }
+        updateView()
+        
+        // notify about content status
+        updateViewForContentStatus(contentStatus)
     }
 
 }

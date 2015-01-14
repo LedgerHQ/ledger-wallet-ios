@@ -17,11 +17,12 @@ class PairingListViewController: ViewController {
     override func configureView() {
         super.configureView()
         
-        self.actionBar.borderPosition = ActionBarView.BorderPosition.Top
+        actionBar.borderPosition = ActionBarView.BorderPosition.Top
     }
     
     override func updateView() {
         super.updateView()
+        
         
     }
     
