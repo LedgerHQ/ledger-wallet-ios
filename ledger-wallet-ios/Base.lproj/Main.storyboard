@@ -31,15 +31,15 @@
                         <viewControllerLayoutGuide type="top" id="iCE-dK-vNs"/>
                         <viewControllerLayoutGuide type="bottom" id="kaN-O7-JUe"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Apg-La-YHm">
+                    <view key="view" contentMode="scaleToFill" id="Apg-La-YHm" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baV-lU-9nl">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baV-lU-9nl" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="110"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ledger_wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT6-JM-Ncb" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="250" y="35" width="101" height="21"/>
+                                        <rect key="frame" x="249" y="35" width="102" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_status_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLQ-ec-6D3" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="238" y="61" width="125" height="21"/>
+                                        <rect key="frame" x="259" y="66" width="82" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -70,10 +70,10 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="528" width="600" height="72"/>
+                                <rect key="frame" x="0.0" y="509" width="600" height="91"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="162" y="25" width="277" height="22"/>
+                                        <rect key="frame" x="171" y="25" width="259" height="41"/>
                                         <state key="normal" title="PAIR_A_NEW_LEDGER_WALLET" image="icon_device">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -83,7 +83,6 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.90980392160000001" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="ljT-9W-Ynp" firstAttribute="top" secondItem="wt8-T5-TCh" secondAttribute="top" constant="25" id="373-hV-wUx"/>
                                     <constraint firstAttribute="centerX" secondItem="ljT-9W-Ynp" secondAttribute="centerX" id="L8c-yo-Iec"/>
