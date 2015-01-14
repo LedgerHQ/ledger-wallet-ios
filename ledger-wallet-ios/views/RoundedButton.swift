@@ -53,10 +53,50 @@ class RoundedButton: Button {
     //MARK: Drawing
     
     override func drawRect(rect: CGRect) {
-        fillColorForState(self.state).setFill()
         let fillPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.borderRadius)
+        fillColorForState(self.state).setFill()
         fillPath.fill()
         super.drawRect(rect)
+    }
+    
+    //MARK: Layout
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        imageView?.frame = CGRectMake(
+            contentEdgeInsets.left + imageEdgeInsets.left,
+            (self.bounds.size.height - (self.imageView?.bounds.size.height ?? 0)) / 2,
+            (imageView?.bounds.size.width ?? 0),
+            (imageView?.bounds.size.height ?? 0))
+        titleLabel?.frame = CGRectMake(
+            self.bounds.size.width - (titleLabel?.bounds.size.width ?? 0) - contentEdgeInsets.right - titleEdgeInsets.right,
+            (self.bounds.size.height - (self.titleLabel?.bounds.size.height ?? 0)) / 2,
+            (titleLabel?.bounds.size.width ?? 0),
+            (titleLabel?.bounds.size.height ?? 0))
+    }
+    
+    //MARK: Content size
+    
+    override func intrinsicContentSize() -> CGSize {
+        var width: CGFloat = contentEdgeInsets.left + contentEdgeInsets.right
+        var height: CGFloat = contentEdgeInsets.top + contentEdgeInsets.bottom
+        var contentHeight: CGFloat = 0
+        var contentWidth: CGFloat = 0
+        
+        if (imageView?.image != nil) {
+            let imageSize = imageView?.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+            contentWidth += imageSize?.width ?? 0
+            contentWidth += imageEdgeInsets.left + imageEdgeInsets.right
+            contentHeight = max(contentHeight, imageSize?.height ?? 0 + imageEdgeInsets.top + imageEdgeInsets.bottom)
+        }
+        if (titleLabel?.text != nil) {
+            let labelSize = titleLabel?.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+            contentWidth += labelSize?.width ?? 0
+            contentWidth += titleEdgeInsets.left + titleEdgeInsets.right
+            contentHeight = max(contentHeight, labelSize?.height ?? 0 + titleEdgeInsets.top + titleEdgeInsets.bottom)
+        }
+        return CGSize(width: width + contentWidth, height: height + contentHeight)
     }
     
 }

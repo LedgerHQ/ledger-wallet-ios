@@ -9,11 +9,12 @@
 import UIKit
 
 class Button: UIButton {
-    
+
     //MARK: Style management
     
     override func setTitle(title: String?, forState state: UIControlState) {
         super.setTitle(title, forState: state)
+        
         ViewStylist.stylizeView(self)
     }
     
@@ -21,7 +22,8 @@ class Button: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setTitle(localizedString(self.titleForState(UIControlState.Normal) ?? ""), forState: UIControlState.Normal)
+        
+        setTitle(localizedString(self.titleForState(UIControlState.Normal) ?? ""), forState: UIControlState.Normal)
     }
-
+    
 }
