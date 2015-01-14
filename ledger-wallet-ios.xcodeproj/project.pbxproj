@@ -13,6 +13,7 @@
 		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
+		37B9E47C1A667EE20055E81A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E47B1A667EE20055E81A /* RoundedButton.swift */; };
 		37F283621A64064100F432CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F283601A64064100F432CC /* Main.storyboard */; };
 		37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37F283631A64064A00F432CC /* LaunchScreen.xib */; };
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
@@ -59,6 +60,7 @@
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
+		37B9E47B1A667EE20055E81A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283641A64064A00F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				37F283D41A6578C500F432CC /* View.swift */,
 				37F283A51A655D3400F432CC /* BarButtonItem.swift */,
 				37F283A61A655D3400F432CC /* Button.swift */,
+				37B9E47B1A667EE20055E81A /* RoundedButton.swift */,
 				37F283A71A655D3400F432CC /* Label.swift */,
 				37F283A81A655D3400F432CC /* NavigationBar.swift */,
 				37F283A91A655D3400F432CC /* NavigationItem.swift */,
@@ -395,6 +398,7 @@
 				37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */,
 				37F283B51A655D3400F432CC /* BarButtonItem.swift in Sources */,
 				37F283B61A655D3400F432CC /* Button.swift in Sources */,
+				37B9E47C1A667EE20055E81A /* RoundedButton.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				37F283AB1A655D3400F432CC /* ViewController.swift in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,

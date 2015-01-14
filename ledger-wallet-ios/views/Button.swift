@@ -23,5 +23,5 @@ class Button: UIButton {
         super.awakeFromNib()
         self.setTitle(localizedString(self.titleForState(UIControlState.Normal) ?? ""), forState: UIControlState.Normal)
     }
-    
+
 }
