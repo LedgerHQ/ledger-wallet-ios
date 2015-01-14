@@ -21,7 +21,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xNv-zl-377" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1195" y="63"/>
+            <point key="canvasLocation" x="703" y="-270"/>
         </scene>
         <!--Pairing List View Controller-->
         <scene sceneID="OgS-3y-xXk">
@@ -113,7 +113,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="524" y="63"/>
+            <point key="canvasLocation" x="1412" y="-270"/>
         </scene>
     </scenes>
     <resources>

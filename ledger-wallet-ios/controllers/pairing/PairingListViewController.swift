@@ -12,12 +12,17 @@ class PairingListViewController: ViewController {
     
     @IBOutlet weak var actionBar: ActionBarView!
     
-    //MARK: Interface management
+    //MARK: Interface
     
     override func configureView() {
         super.configureView()
         
         self.actionBar.borderPosition = ActionBarView.BorderPosition.Top
+    }
+    
+    override func updateView() {
+        super.updateView()
+        
     }
     
 }
