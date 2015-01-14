@@ -8,6 +8,8 @@
 
 import UIKit
 
+@IBDesignable
+
 class ActionBarView: View {
     
     enum BorderPosition {

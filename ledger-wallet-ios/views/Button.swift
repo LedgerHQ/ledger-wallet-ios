@@ -8,6 +8,8 @@
 
 import UIKit
 
+@IBDesignable
+
 class Button: UIButton {
 
     //MARK: Style management

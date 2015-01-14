@@ -8,6 +8,8 @@
 
 import UIKit
 
+@IBDesignable
+
 class Label: UILabel {
     
     //MARK: Style management

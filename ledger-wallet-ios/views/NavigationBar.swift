@@ -8,6 +8,8 @@
 
 import UIKit
 
+@IBDesignable
+
 class NavigationBar: UINavigationBar {
     
     //MARK: Content size
