@@ -63,8 +63,11 @@ struct VisualTheme {
         "rounded": { button in
             let roundedButton = button as RoundedButton
             roundedButton.borderRadius = VisualFactory.Metrics.defaultBorderRadius
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
-            button.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.verySmallPadding, left: VisualFactory.Metrics.smallPadding, bottom: VisualFactory.Metrics.verySmallPadding, right: VisualFactory.Metrics.smallPadding)
+            roundedButton.tintColor = VisualFactory.Colors.white
+            roundedButton.adjustsImageWhenHighlighted = false
+            roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.verySmallPadding)
+            roundedButton.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
+            roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.verySmallPadding, left: VisualFactory.Metrics.smallPadding, bottom: VisualFactory.Metrics.verySmallPadding, right: VisualFactory.Metrics.smallPadding)
         },
         "rounded.green": { button in
             VisualTheme.buttonStyles["rounded"]?(button)

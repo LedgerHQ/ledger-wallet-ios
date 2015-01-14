@@ -70,11 +70,11 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="516" width="600" height="84"/>
+                                <rect key="frame" x="0.0" y="528" width="600" height="72"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="174" y="25" width="252" height="34"/>
-                                        <state key="normal" title="PAIR A NEW LEDGER WALLET">
+                                        <rect key="frame" x="162" y="25" width="277" height="22"/>
+                                        <state key="normal" title="PAIR_A_NEW_LEDGER_WALLET" image="icon_device">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -116,4 +116,7 @@
             <point key="canvasLocation" x="524" y="63"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_device" width="9" height="15"/>
+    </resources>
 </document>
