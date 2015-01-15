@@ -69,6 +69,7 @@
 		37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListViewController.swift; sourceTree = "<group>"; };
 		37B9E48C1A67D0530055E81A /* PairingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListTableViewCell.swift; sourceTree = "<group>"; };
 		37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Colorize.swift"; sourceTree = "<group>"; };
+		37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
 		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283641A64064A00F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		37F283BD1A655D7200F432CC /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		37F283BE1A655D7200F432CC /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualTheme.swift; sourceTree = "<group>"; };
 		37F283C01A655D7200F432CC /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		37F283CD1A656FEF00F432CC /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ledger-wallet-ios-Bridging-Header.h"; path = "extensions/ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
 		37F283CE1A656FEF00F432CC /* UIViewController+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Init.h"; sourceTree = "<group>"; };
 		37F283CF1A656FEF00F432CC /* UIViewController+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Init.m"; sourceTree = "<group>"; };
 		37F283D21A6578AC00F432CC /* ActionBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarView.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 		3784FB081A5D2F5F0063A364 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				37F283CD1A656FEF00F432CC /* ledger-wallet-ios-Bridging-Header.h */,
+				37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */,
 				37F283631A64064A00F432CC /* LaunchScreen.xib */,
 				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				3784FB091A5D2F5F0063A364 /* Info.plist */,
@@ -564,7 +564,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/extensions/ledger-wallet-ios-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -582,7 +582,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/extensions/ledger-wallet-ios-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 			};
 			name = Release;
 		};
