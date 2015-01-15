@@ -10,14 +10,13 @@ import UIKit
 
 struct VisualTheme {
     
-    typealias ViewStyle = (UIView) -> ()
-    typealias LabelStyle = (UILabel) -> ()
-    typealias ButtonStyle = (UIButton) -> ()
-    typealias NavigationBarStyle = (UINavigationBar) -> ()
+    typealias ViewAllure = (UIView) -> ()
+    typealias LabelAllure = (Label) -> ()
+    typealias ButtonAllure = (Button) -> ()
 
-    //MARK: View Styles
+    //MARK: View allures
     
-    static let viewStyles: [String: ViewStyle] = [
+    static let viewAllures: [String: ViewAllure] = [
         "view.background": { view in
             view.backgroundColor = VisualFactory.Colors.backgroundColor
         },
@@ -28,12 +27,24 @@ struct VisualTheme {
             let actionBar = view as ActionBarView
             actionBar.backgroundColor = VisualFactory.Colors.extraLightGrey
             actionBar.borderColor = VisualFactory.Colors.veryLightGrey
+        },
+        "tableView.transparent": { view in
+            let tableView = view as TableView
+            tableView.backgroundColor = VisualFactory.Colors.transparent
+        },
+        "navigationBar.nightBlue": { view in
+            let navigationBar = view as NavigationBar
+            navigationBar.translucent = false
+            navigationBar.shadowImage = UIImage()
+            navigationBar.barTintColor = VisualFactory.Colors.nightBlue
+            navigationBar.barHeight = VisualFactory.Metrics.mediumNavigationBarHeight
+            navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         }
     ]
     
-    //MARK: Label Styles
+    //MARK: Label allures
     
-    static let labelStyles: [String: LabelStyle] = [
+    static let labelAllures: [String: LabelAllure] = [
         "navigationBar.title": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.pageTitle)
         },
@@ -51,9 +62,9 @@ struct VisualTheme {
         }
     ]
     
-    //MARK: Button Styles
+    //MARK: Button allures
     
-    static let buttonStyles: [String: ButtonStyle] = [
+    static let buttonAllures: [String: ButtonAllure] = [
         "navigationBar.button": { button in
             var hightlightedStyle = VisualFactory.TextAttributes.navigationBarText
             hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(), forKey: NSForegroundColorAttributeName)
@@ -62,7 +73,7 @@ struct VisualTheme {
         },
         "rounded": { button in
             let roundedButton = button as RoundedButton
-            roundedButton.borderRadius = VisualFactory.Metrics.defaultBorderRadius
+            roundedButton.borderRadius = VisualFactory.Metrics.mediumBorderRadius
             roundedButton.tintColor = VisualFactory.Colors.white
             roundedButton.adjustsImageWhenHighlighted = false
             roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.verySmallPadding)
@@ -70,21 +81,10 @@ struct VisualTheme {
             roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.verySmallPadding, left: VisualFactory.Metrics.smallPadding, bottom: VisualFactory.Metrics.verySmallPadding, right: VisualFactory.Metrics.smallPadding)
         },
         "rounded.green": { button in
-            VisualTheme.buttonStyles["rounded"]?(button)
+            VisualTheme.buttonAllures["rounded"]?(button)
             let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen.darkerColor(factor: VisualFactory.Metrics.strongDarkenFactor), forState: UIControlState.Highlighted)
-        }
-    ]
-    
-    //MARK: Navigation bar Styles
-    
-    static let navigationBarStyles: [String: NavigationBarStyle] = [
-        "nightBlue": { navigationBar in
-            navigationBar.translucent = false
-            navigationBar.shadowImage = UIImage()
-            navigationBar.barTintColor = VisualFactory.Colors.nightBlue
-            navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         }
     ]
     

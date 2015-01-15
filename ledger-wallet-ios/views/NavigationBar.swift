@@ -14,12 +14,18 @@ class NavigationBar: UINavigationBar {
     
     //MARK: Content size
     
+    var barHeight: CGFloat = VisualFactory.Metrics.defaultNavigationBarHeight {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
     override func intrinsicContentSize() -> CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: CGFloat(VisualFactory.Metrics.defaultNavigationBarHeight))
+        return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight)
     }
     
     override func sizeThatFits(size: CGSize) -> CGSize {
-        return CGSize(width: super.sizeThatFits(size).width, height: CGFloat(VisualFactory.Metrics.defaultNavigationBarHeight))
+        return CGSize(width: super.sizeThatFits(size).width, height: barHeight)
     }
     
     //MARK: Layout

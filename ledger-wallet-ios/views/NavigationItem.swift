@@ -16,7 +16,7 @@ class NavigationItem: UINavigationItem {
         didSet {
             let label = (self.titleView as? UILabel) ?? UILabel()
             label.text = title ?? ""
-            label.style = "navigationBar.title"
+            label.allure = "navigationBar.title"
             label.sizeToFit()
             self.titleView = label
         }

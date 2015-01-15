@@ -58,6 +58,7 @@ struct VisualFactory {
     
     struct Colors {
         
+        static let transparent = UIColor.clearColor()
         static let black = UIColor(hex: 0x000000)
         static let white = UIColor(hex: 0xffffff)
         static let backgroundColor = UIColor(hex: 0xf9f9f9)
@@ -133,8 +134,10 @@ struct VisualFactory {
     struct Metrics {
         
         static let defaultDarkenFactor:CGFloat = mediumDarkenFactor
-        static let defaultNavigationBarHeight:CGFloat = 60
+        static let defaultNavigationBarHeight:CGFloat = mediumNavigationBarHeight
         static let defaultBorderRadius:CGFloat = mediumBorderRadius
+        
+        static let mediumNavigationBarHeight: CGFloat = 60
         
         static let lightDarkenFactor:CGFloat = 0.03
         static let mediumDarkenFactor:CGFloat = 0.05

@@ -14,6 +14,9 @@
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B9E47C1A667EE20055E81A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E47B1A667EE20055E81A /* RoundedButton.swift */; };
+		37B9E4861A67BD200055E81A /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4851A67BD200055E81A /* TableView.swift */; };
+		37B9E4881A67BD3F0055E81A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4871A67BD3F0055E81A /* TableViewCell.swift */; };
+		37B9E48B1A67BDA20055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */; };
 		37F283621A64064100F432CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F283601A64064100F432CC /* Main.storyboard */; };
 		37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37F283631A64064A00F432CC /* LaunchScreen.xib */; };
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
@@ -23,7 +26,7 @@
 		37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283991A655D3400F432CC /* UIButton+Utils.swift */; };
 		37F283AE1A655D3400F432CC /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839A1A655D3400F432CC /* UIColor+Utils.swift */; };
 		37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839B1A655D3400F432CC /* UILabel+Utils.swift */; };
-		37F283B01A655D3400F432CC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839C1A655D3400F432CC /* UIView+Style.swift */; };
+		37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839C1A655D3400F432CC /* UIView+Allure.swift */; };
 		37F283B51A655D3400F432CC /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283A51A655D3400F432CC /* BarButtonItem.swift */; };
 		37F283B61A655D3400F432CC /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283A61A655D3400F432CC /* Button.swift */; };
 		37F283B71A655D3400F432CC /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283A71A655D3400F432CC /* Label.swift */; };
@@ -33,8 +36,6 @@
 		37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283BD1A655D7200F432CC /* VisualFactory.swift */; };
 		37F283C31A655D7200F432CC /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283BE1A655D7200F432CC /* VisualTheme.swift */; };
 		37F283C41A655D7200F432CC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C01A655D7200F432CC /* Localization.swift */; };
-		37F283C71A656BE400F432CC /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C61A656BE400F432CC /* PairingListViewController.swift */; };
-		37F283C91A656C6F00F432CC /* PairingAddDongleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C81A656C6F00F432CC /* PairingAddDongleViewController.swift */; };
 		37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F283CF1A656FEF00F432CC /* UIViewController+Init.m */; };
 		37F283D31A6578AC00F432CC /* ActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283D21A6578AC00F432CC /* ActionBarView.swift */; };
 		37F283D51A6578C500F432CC /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283D41A6578C500F432CC /* View.swift */; };
@@ -61,6 +62,9 @@
 		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E47B1A667EE20055E81A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		37B9E4851A67BD200055E81A /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		37B9E4871A67BD3F0055E81A /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListViewController.swift; sourceTree = "<group>"; };
 		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283641A64064A00F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -70,7 +74,7 @@
 		37F283991A655D3400F432CC /* UIButton+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Utils.swift"; sourceTree = "<group>"; };
 		37F2839A1A655D3400F432CC /* UIColor+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		37F2839B1A655D3400F432CC /* UILabel+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Utils.swift"; sourceTree = "<group>"; };
-		37F2839C1A655D3400F432CC /* UIView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
+		37F2839C1A655D3400F432CC /* UIView+Allure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Allure.swift"; sourceTree = "<group>"; };
 		37F283A51A655D3400F432CC /* BarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
 		37F283A61A655D3400F432CC /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		37F283A71A655D3400F432CC /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
@@ -80,8 +84,6 @@
 		37F283BD1A655D7200F432CC /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		37F283BE1A655D7200F432CC /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualTheme.swift; sourceTree = "<group>"; };
 		37F283C01A655D7200F432CC /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		37F283C61A656BE400F432CC /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingListViewController.swift; path = pairing/PairingListViewController.swift; sourceTree = "<group>"; };
-		37F283C81A656C6F00F432CC /* PairingAddDongleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingAddDongleViewController.swift; path = pairing/PairingAddDongleViewController.swift; sourceTree = "<group>"; };
 		37F283CD1A656FEF00F432CC /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ledger-wallet-ios-Bridging-Header.h"; path = "extensions/ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
 		37F283CE1A656FEF00F432CC /* UIViewController+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Init.h"; sourceTree = "<group>"; };
 		37F283CF1A656FEF00F432CC /* UIViewController+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Init.m"; sourceTree = "<group>"; };
@@ -186,11 +188,20 @@
 			name = WebSocket;
 			sourceTree = "<group>";
 		};
+		37B9E4891A67BDA20055E81A /* Pairing List */ = {
+			isa = PBXGroup;
+			children = (
+				37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */,
+			);
+			name = "Pairing List";
+			path = pairing/list;
+			sourceTree = "<group>";
+		};
 		37F283931A655D3400F432CC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				37F283941A655D3400F432CC /* Base */,
-				37F283C51A656BB700F432CC /* Dongle pairing */,
+				37F283C51A656BB700F432CC /* Dongle Pairing */,
 			);
 			name = Controllers;
 			path = controllers;
@@ -213,7 +224,7 @@
 				37F283991A655D3400F432CC /* UIButton+Utils.swift */,
 				37F2839A1A655D3400F432CC /* UIColor+Utils.swift */,
 				37F2839B1A655D3400F432CC /* UILabel+Utils.swift */,
-				37F2839C1A655D3400F432CC /* UIView+Style.swift */,
+				37F2839C1A655D3400F432CC /* UIView+Allure.swift */,
 				37F283CE1A656FEF00F432CC /* UIViewController+Init.h */,
 				37F283CF1A656FEF00F432CC /* UIViewController+Init.m */,
 			);
@@ -232,6 +243,8 @@
 				37F283A81A655D3400F432CC /* NavigationBar.swift */,
 				37F283A91A655D3400F432CC /* NavigationItem.swift */,
 				37F283D21A6578AC00F432CC /* ActionBarView.swift */,
+				37B9E4851A67BD200055E81A /* TableView.swift */,
+				37B9E4871A67BD3F0055E81A /* TableViewCell.swift */,
 			);
 			name = Views;
 			path = views;
@@ -267,13 +280,12 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
-		37F283C51A656BB700F432CC /* Dongle pairing */ = {
+		37F283C51A656BB700F432CC /* Dongle Pairing */ = {
 			isa = PBXGroup;
 			children = (
-				37F283C61A656BE400F432CC /* PairingListViewController.swift */,
-				37F283C81A656C6F00F432CC /* PairingAddDongleViewController.swift */,
+				37B9E4891A67BDA20055E81A /* Pairing List */,
 			);
-			name = "Dongle pairing";
+			name = "Dongle Pairing";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,19 +392,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F283C31A655D7200F432CC /* VisualTheme.swift in Sources */,
+				37B9E48B1A67BDA20055E81A /* PairingListViewController.swift in Sources */,
 				37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */,
 				37F283B91A655D3400F432CC /* NavigationItem.swift in Sources */,
 				37F283B81A655D3400F432CC /* NavigationBar.swift in Sources */,
-				37F283B01A655D3400F432CC /* UIView+Style.swift in Sources */,
+				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
+				37B9E4861A67BD200055E81A /* TableView.swift in Sources */,
 				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
 				37F283C11A655D7200F432CC /* ViewStylist.swift in Sources */,
-				37F283C71A656BE400F432CC /* PairingListViewController.swift in Sources */,
 				37F283D51A6578C500F432CC /* View.swift in Sources */,
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37F283D31A6578AC00F432CC /* ActionBarView.swift in Sources */,
+				37B9E4881A67BD3F0055E81A /* TableViewCell.swift in Sources */,
 				37F283B71A655D3400F432CC /* Label.swift in Sources */,
-				37F283C91A656C6F00F432CC /* PairingAddDongleViewController.swift in Sources */,
 				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,
 				37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */,
 				37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */,

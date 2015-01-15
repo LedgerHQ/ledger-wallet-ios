@@ -14,7 +14,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="nightBlue"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="nightBlue"/>
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -44,7 +44,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="navigationBar.largeTitle"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.largeTitle"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_status_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLQ-ec-6D3" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -53,7 +53,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="navigationBar.text"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.text"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                 </subviews>
@@ -66,7 +66,7 @@
                                     <constraint firstItem="rLQ-ec-6D3" firstAttribute="top" secondItem="XT6-JM-Ncb" secondAttribute="bottom" constant="5" id="YsA-y4-vae"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="view.nightBlue"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.nightBlue"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -79,7 +79,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="rounded.green"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                 </subviews>
@@ -89,21 +89,32 @@
                                     <constraint firstAttribute="bottom" secondItem="ljT-9W-Ynp" secondAttribute="bottom" constant="25" id="tya-AM-2D5"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="style" value="actionBar.grey"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="110" width="600" height="399"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="tableView.transparent"/>
+                                </userDefinedRuntimeAttributes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kaN-O7-JUe" firstAttribute="top" secondItem="wt8-T5-TCh" secondAttribute="bottom" id="1gy-JE-h8B"/>
+                            <constraint firstAttribute="trailing" secondItem="kqf-Ck-Kn5" secondAttribute="trailing" id="A9r-oW-ttr"/>
+                            <constraint firstItem="kqf-Ck-Kn5" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="Eql-jE-avZ"/>
                             <constraint firstItem="baV-lU-9nl" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="IBj-zT-Veh"/>
                             <constraint firstItem="wt8-T5-TCh" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="W9i-lA-88Q"/>
+                            <constraint firstItem="kqf-Ck-Kn5" firstAttribute="top" secondItem="baV-lU-9nl" secondAttribute="bottom" id="XbA-Uk-nkp"/>
+                            <constraint firstItem="wt8-T5-TCh" firstAttribute="top" secondItem="kqf-Ck-Kn5" secondAttribute="bottom" id="Ytg-T7-dTL"/>
                             <constraint firstAttribute="trailing" secondItem="baV-lU-9nl" secondAttribute="trailing" id="g7c-hl-nzr"/>
                             <constraint firstAttribute="trailing" secondItem="wt8-T5-TCh" secondAttribute="trailing" id="jFB-Dc-JkR"/>
                             <constraint firstItem="baV-lU-9nl" firstAttribute="top" secondItem="Apg-La-YHm" secondAttribute="top" id="shy-0L-Fkh"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="style" value="view.background"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
