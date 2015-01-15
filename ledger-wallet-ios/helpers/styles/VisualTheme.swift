@@ -92,7 +92,7 @@ struct VisualTheme {
         },
         "icon.grey": { button in
             VisualTheme.buttonAllures["icon"]?(button)
-            button.setTintedImages(button.imageForState(UIControlState.Normal)!, tintColor: VisualFactory.Colors.lightGrey)
+            button.setTintedImages(button.imageForState(UIControlState.Normal)!, tintColor: VisualFactory.Colors.lightGrey, darkenFactor: VisualFactory.Metrics.Factors.Darken.veryStrong)
         },
         "rounded": { button in
             let roundedButton = button as RoundedButton
