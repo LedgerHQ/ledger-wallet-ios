@@ -17,6 +17,8 @@
 		37B9E4861A67BD200055E81A /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4851A67BD200055E81A /* TableView.swift */; };
 		37B9E4881A67BD3F0055E81A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4871A67BD3F0055E81A /* TableViewCell.swift */; };
 		37B9E48B1A67BDA20055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */; };
+		37B9E48D1A67D0530055E81A /* PairingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48C1A67D0530055E81A /* PairingListTableViewCell.swift */; };
+		37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */; };
 		37F283621A64064100F432CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F283601A64064100F432CC /* Main.storyboard */; };
 		37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37F283631A64064A00F432CC /* LaunchScreen.xib */; };
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
@@ -65,6 +67,8 @@
 		37B9E4851A67BD200055E81A /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		37B9E4871A67BD3F0055E81A /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListViewController.swift; sourceTree = "<group>"; };
+		37B9E48C1A67D0530055E81A /* PairingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListTableViewCell.swift; sourceTree = "<group>"; };
+		37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Colorize.swift"; sourceTree = "<group>"; };
 		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283641A64064A00F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				37B9E48A1A67BDA20055E81A /* PairingListViewController.swift */,
+				37B9E48C1A67D0530055E81A /* PairingListTableViewCell.swift */,
 			);
 			name = "Pairing List";
 			path = pairing/list;
@@ -227,6 +232,7 @@
 				37F2839C1A655D3400F432CC /* UIView+Allure.swift */,
 				37F283CE1A656FEF00F432CC /* UIViewController+Init.h */,
 				37F283CF1A656FEF00F432CC /* UIViewController+Init.m */,
+				37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */,
 			);
 			name = Extensions;
 			path = extensions;
@@ -395,12 +401,14 @@
 				37B9E48B1A67BDA20055E81A /* PairingListViewController.swift in Sources */,
 				37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */,
 				37F283B91A655D3400F432CC /* NavigationItem.swift in Sources */,
+				37B9E48D1A67D0530055E81A /* PairingListTableViewCell.swift in Sources */,
 				37F283B81A655D3400F432CC /* NavigationBar.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37B9E4861A67BD200055E81A /* TableView.swift in Sources */,
 				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
 				37F283C11A655D7200F432CC /* ViewStylist.swift in Sources */,
+				37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */,
 				37F283D51A6578C500F432CC /* View.swift in Sources */,
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37F283D31A6578AC00F432CC /* ActionBarView.swift in Sources */,

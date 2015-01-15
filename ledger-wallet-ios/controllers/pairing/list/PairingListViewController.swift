@@ -27,3 +27,18 @@ class PairingListViewController: ViewController {
     }
     
 }
+
+extension PairingListViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    //MARK: Tableview methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("PairingListTableViewCell", forIndexPath: indexPath) as PairingListTableViewCell
+        return cell
+    }
+    
+}

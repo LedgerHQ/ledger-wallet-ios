@@ -92,12 +92,69 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="110" width="600" height="399"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PairingListTableViewCell" id="3y0-t4-g0T" customClass="PairingListTableViewCell" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3y0-t4-g0T" id="A5z-Hr-SbJ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sophie's Wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K23-Gm-dq2" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="19" width="105" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="largeTitle"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paired on 12/05/2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Pz-8Z0" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="45" width="117" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.grey"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Uk-V9-dNb" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="541" y="11" width="59" height="62"/>
+                                                    <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                                                    <state key="normal" image="icon_trash">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="icon.grey"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="7Uk-V9-dNb" secondAttribute="trailing" id="Jxq-FZ-D4a"/>
+                                                <constraint firstAttribute="centerY" secondItem="7Uk-V9-dNb" secondAttribute="centerY" id="VAi-P6-8yG"/>
+                                                <constraint firstItem="K23-Gm-dq2" firstAttribute="leading" secondItem="A5z-Hr-SbJ" secondAttribute="leading" constant="20" id="XqO-LC-LyJ"/>
+                                                <constraint firstAttribute="centerY" secondItem="ADw-Pz-8Z0" secondAttribute="centerY" constant="-12" id="ZVm-CD-6Sh"/>
+                                                <constraint firstItem="ADw-Pz-8Z0" firstAttribute="leading" secondItem="A5z-Hr-SbJ" secondAttribute="leading" constant="20" id="yUL-Sh-Ojw"/>
+                                                <constraint firstAttribute="centerY" secondItem="K23-Gm-dq2" secondAttribute="centerY" constant="12" id="yYL-Ar-gFo"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="tableViewCell.transparent"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="dongleTitleLabel" destination="K23-Gm-dq2" id="zoK-zx-UsS"/>
+                                            <outlet property="pairingDateLabel" destination="ADw-Pz-8Z0" id="w9e-Ve-FUG"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="tableView.transparent"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="fN9-2h-qPz" id="5Ae-Nk-GpB"/>
+                                    <outlet property="delegate" destination="fN9-2h-qPz" id="6V4-j5-bmq"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -123,10 +180,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1412" y="-270"/>
+            <point key="canvasLocation" x="1412" y="-272"/>
         </scene>
     </scenes>
     <resources>
         <image name="icon_device" width="9" height="15"/>
+        <image name="icon_trash" width="19" height="21"/>
     </resources>
 </document>

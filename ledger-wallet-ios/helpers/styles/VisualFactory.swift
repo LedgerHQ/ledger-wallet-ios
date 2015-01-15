@@ -16,35 +16,53 @@ struct VisualFactory {
     
         static let pageTitle = [
             NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -0.5,
+            NSKernAttributeName: -Fonts.Kernings.small,
             NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Sizes.almostLarge.rawValue)
         ]
         
         static let largePageTitle = [
             NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -1.2,
+            NSKernAttributeName: -Fonts.Kernings.large,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostExtraLarge.rawValue)
         ]
         
         static let navigationBarText = [
             NSForegroundColorAttributeName: Colors.lightGrey,
-            NSKernAttributeName: -0.5,
+            NSKernAttributeName: -Fonts.Kernings.small,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue)
         ]
         
         static let medium = [
             NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -0.5,
+            NSKernAttributeName: -Fonts.Kernings.small,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.medium.rawValue)
         ]
         
         static let mediumGrey: TextAttribute = TextAttributes.extend(medium, withAttributes: [
-            NSForegroundColorAttributeName: Colors.darkGrey
-        ])
+                NSForegroundColorAttributeName: Colors.darkGrey
+            ]
+        )
+        
+        static let small = [
+            NSForegroundColorAttributeName: Colors.black,
+            NSKernAttributeName: -Fonts.Kernings.verySmall,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue)
+        ]
+        
+        static let smallGrey: TextAttribute = TextAttributes.extend(small, withAttributes: [
+                NSForegroundColorAttributeName: Colors.darkGrey
+            ]
+        )
+        
+        static let largeTitle = [
+            NSForegroundColorAttributeName: Colors.black,
+            NSKernAttributeName: -Fonts.Kernings.small,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.large.rawValue)
+        ]
         
         static let roundedButtonText = [
             NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -0.5,
+            NSKernAttributeName: -Fonts.Kernings.small,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostLarge.rawValue)
         ]
         
@@ -82,17 +100,14 @@ struct VisualFactory {
     enum Fonts {
         
         private enum Names: String {
-            
             case Light = "OpenSans-Light"
             case Regular = "OpenSans"
             case Semibold = "OpenSans-Semibold"
             case Bold = "OpenSans-Bold"
             case Extrabold = "OpenSans-Extrabold"
-            
         }
         
         enum Sizes: CGFloat {
-            
             case small = 12
             case medium = 14
             case almostLarge = 15
@@ -100,7 +115,14 @@ struct VisualFactory {
             case extraLarge = 18
             case almostExtraLarge = 19
             case ultraLarge = 20
-            
+
+        }
+        
+        struct Kernings {
+            static let verySmall: CGFloat = 0.2
+            static let small: CGFloat = 0.5
+            static let medium: CGFloat = 0.9
+            static let large: CGFloat = 1.2
         }
         
         private static func fontWithName(name: String, size: CGFloat) -> UIFont {
@@ -133,28 +155,34 @@ struct VisualFactory {
     
     struct Metrics {
         
-        static let defaultDarkenFactor:CGFloat = mediumDarkenFactor
+        static let defaultDarkenFactor:CGFloat = Factors.Darken.strong
         static let defaultNavigationBarHeight:CGFloat = mediumNavigationBarHeight
-        static let defaultBorderRadius:CGFloat = mediumBorderRadius
+        static let defaultBorderRadius:CGFloat = BordersRadii.medium
         
         static let mediumNavigationBarHeight: CGFloat = 60
         
-        static let lightDarkenFactor:CGFloat = 0.03
-        static let mediumDarkenFactor:CGFloat = 0.05
-        static let strongDarkenFactor:CGFloat = 0.08
-        static let veryStrongDarkenFactor:CGFloat = 0.1
-        static let extraStrongDarkenFactor:CGFloat = 0.15
-        static let ultraStrongDarkenFactor:CGFloat = 0.2
+        struct Factors {
+            struct Darken {
+                static let light:CGFloat = 0.03
+                static let medium:CGFloat = 0.05
+                static let strong:CGFloat = 0.08
+                static let veryStrong:CGFloat = 0.1
+            }
+        }
         
-        static let mediumBorderRadius:CGFloat = 5
-        static let smallBorderRadius:CGFloat = 3
+        struct BordersRadii {
+            static let medium:CGFloat = 5
+            static let small:CGFloat = 3
+        }
         
-        static let verySmallPadding:CGFloat = 10
-        static let almostSmallPadding:CGFloat = 15
-        static let smallPadding:CGFloat = 20
-        static let almostMediumPadding:CGFloat = 25
-        static let mediumPadding:CGFloat = 10
-        
+        struct Paddings {
+            static let verySmall:CGFloat = 10
+            static let almostSmall:CGFloat = 15
+            static let small:CGFloat = 20
+            static let almostMedium:CGFloat = 25
+            static let medium:CGFloat = 30
+        }
+    
     }
 
 }
