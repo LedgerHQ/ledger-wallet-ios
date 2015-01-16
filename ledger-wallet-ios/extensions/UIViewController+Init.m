@@ -16,7 +16,7 @@
 
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard
 {
-    return [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([self class])];
+    return [storyboard instantiateViewControllerWithIdentifier:[self className]];
 }
 
 @end

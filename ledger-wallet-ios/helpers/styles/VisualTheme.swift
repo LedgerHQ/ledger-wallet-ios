@@ -75,15 +75,18 @@ struct VisualTheme {
         },
         "largeTitle": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeTitle)
+        },
+        "hugeNumber.grey": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.hugeNumberGrey)
         }
     ]
     
     //MARK: Button allures
     
     static let buttonAllures: [String: ButtonAllure] = [
-        "navigationBar.button": { button in
+        "navigationBar.grey": { button in
             var hightlightedStyle = VisualFactory.TextAttributes.navigationBarText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(), forKey: NSForegroundColorAttributeName)
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarText), forState: UIControlState.Normal)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
@@ -96,12 +99,12 @@ struct VisualTheme {
         },
         "rounded": { button in
             let roundedButton = button as RoundedButton
-            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadii.medium
-            roundedButton.tintColor = VisualFactory.Colors.white
             roundedButton.adjustsImageWhenHighlighted = false
+            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadii.medium
             roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.Paddings.verySmall)
             roundedButton.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
             roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.Paddings.verySmall, left: VisualFactory.Metrics.Paddings.small, bottom: VisualFactory.Metrics.Paddings.verySmall, right: VisualFactory.Metrics.Paddings.small)
+            button.setImage(button.imageForState(UIControlState.Normal)!.imageWithColor(VisualFactory.Colors.white), forState: UIControlState.Normal)
         },
         "rounded.green": { button in
             VisualTheme.buttonAllures["rounded"]?(button)

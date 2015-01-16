@@ -10,7 +10,18 @@ import UIKit
 
 class PairingListViewController: ViewController {
     
-    @IBOutlet weak var actionBar: ActionBarView!
+    @IBOutlet private weak var actionBar: ActionBarView!
+    @IBOutlet private weak var pairingStatusLabel: Label!
+    
+    //MARK: Actions
+    
+    @IBAction private func pairNewDongleButtonTouched(sender: AnyObject) {
+        let navigationController = NavigationController.instantiateFromStoryboard(storyboard)
+        let addDongleViewController = PairingAddViewController.instantiateFromStoryboard(storyboard)
+        navigationController.viewControllers = [addDongleViewController]
+        presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
     
     //MARK: Interface
     
@@ -18,12 +29,15 @@ class PairingListViewController: ViewController {
         super.configureView()
         
         actionBar.borderPosition = ActionBarView.BorderPosition.Top
+        pairingStatusLabel.text = localizedString("WAITING_FOR_AN_OPERATION")
     }
     
     override func updateView() {
         super.updateView()
         
-        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.pairNewDongleButtonTouched(self.actionBar)
+        })
     }
     
 }

@@ -14,7 +14,7 @@ class NavigationItem: UINavigationItem {
     
     override var title: String? {
         didSet {
-            let label = (self.titleView as? UILabel) ?? UILabel()
+            let label = (self.titleView as? Label) ?? Label()
             label.text = title ?? ""
             label.allure = "navigationBar.title"
             label.sizeToFit()

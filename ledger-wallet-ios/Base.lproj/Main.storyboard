@@ -14,7 +14,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="nightBlue"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.nightBlue"/>
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -26,7 +26,7 @@
         <!--Pairing List View Controller-->
         <scene sceneID="OgS-3y-xXk">
             <objects>
-                <viewController id="fN9-2h-qPz" customClass="PairingListViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PairingListViewController" id="fN9-2h-qPz" customClass="PairingListViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iCE-dK-vNs"/>
                         <viewControllerLayoutGuide type="bottom" id="kaN-O7-JUe"/>
@@ -81,6 +81,9 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="pairNewDongleButtonTouched:" destination="fN9-2h-qPz" eventType="touchUpInside" id="G3b-pY-fF6"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -176,11 +179,94 @@
                     </view>
                     <connections>
                         <outlet property="actionBar" destination="wt8-T5-TCh" id="2X0-uB-bpj"/>
+                        <outlet property="pairingStatusLabel" destination="rLQ-ec-6D3" id="7iG-ME-nqk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1412" y="-272"/>
+        </scene>
+        <!--PAIR_A_NEW_DEVICE-->
+        <scene sceneID="bMR-Jm-tId">
+            <objects>
+                <viewController storyboardIdentifier="PairingAddViewController" id="4D7-MK-KIs" customClass="PairingAddViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iSE-R5-Iv6"/>
+                        <viewControllerLayoutGuide type="bottom" id="Gt9-6m-NXK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wVi-6a-LwE" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-ic-rwA" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="CfJ-k8-D34" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <rect key="frame" x="143" y="20" width="437" height="45"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium.grey"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmW-hM-Rer" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="15" width="108" height="55"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="hugeNumber.grey"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="CfJ-k8-D34" secondAttribute="trailing" constant="20" id="32j-jk-dwE"/>
+                                    <constraint firstItem="CfJ-k8-D34" firstAttribute="leading" secondItem="xmW-hM-Rer" secondAttribute="trailing" constant="15" id="KyR-p8-Cu8"/>
+                                    <constraint firstItem="CfJ-k8-D34" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="top" constant="20" id="Mh1-Eq-hfP"/>
+                                    <constraint firstItem="xmW-hM-Rer" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="top" constant="15" id="S3C-zB-i1k"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xmW-hM-Rer" secondAttribute="bottom" constant="15" id="arE-O6-nGC"/>
+                                    <constraint firstAttribute="bottom" secondItem="CfJ-k8-D34" secondAttribute="bottom" constant="20" id="fIT-2u-kgf"/>
+                                    <constraint firstItem="xmW-hM-Rer" firstAttribute="leading" secondItem="qNa-ic-rwA" secondAttribute="leading" constant="20" id="o5v-qJ-wTo"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qNa-ic-rwA" firstAttribute="leading" secondItem="wVi-6a-LwE" secondAttribute="leading" id="Gy8-dO-9WS"/>
+                            <constraint firstItem="qNa-ic-rwA" firstAttribute="top" secondItem="iSE-R5-Iv6" secondAttribute="bottom" id="tzA-an-eZE"/>
+                            <constraint firstAttribute="trailing" secondItem="qNa-ic-rwA" secondAttribute="trailing" id="yUT-ef-LHw"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" title="PAIR_A_NEW_DEVICE" id="tDa-QY-nzN" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <barButtonItem key="leftBarButtonItem" id="vcY-KN-6Qz">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Eze-Et-Bgt" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="-23" y="-15" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="CANCEL">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.grey"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="cancel" destination="4D7-MK-KIs" eventType="touchUpInside" id="54J-RN-TN4"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SGO-in-bCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2117" y="-272"/>
         </scene>
     </scenes>
     <resources>

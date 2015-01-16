@@ -66,6 +66,16 @@ class ViewController: UIViewController {
         
     }
     
+    //MARK: Presentation
+    
+    @IBAction func cancel() {
+        dismiss()
+    }
+    
+    @IBAction func dismiss() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     //MARK: Status bar style
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

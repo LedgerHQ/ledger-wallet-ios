@@ -17,3 +17,5 @@
 "NO_INTERNET_CONNECTION" = "NO INTERNET CONNECTION";
 
 "PAIR_A_NEW_LEDGER_WALLET" = "PAIR A NEW LEDGER WALLET";
+
+"scan_the_pairing_qr_code" = "First, scan the pairing QR code on the Ledger Wallet Chrome application.";
