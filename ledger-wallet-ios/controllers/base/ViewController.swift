@@ -69,10 +69,10 @@ class ViewController: UIViewController {
     //MARK: Presentation
     
     @IBAction func cancel() {
-        dismiss()
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func dismiss() {
+    @IBAction func complete() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

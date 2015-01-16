@@ -23,6 +23,9 @@ struct VisualTheme {
         "view.nightBlue": { view in
             view.backgroundColor = VisualFactory.Colors.nightBlue
         },
+        "view.transparent": { view in
+            view.backgroundColor = VisualFactory.Colors.transparent
+        },
         "actionBar.grey": { view in
             let actionBar = view as ActionBarView
             actionBar.backgroundColor = VisualFactory.Colors.extraLightGrey

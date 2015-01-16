@@ -202,7 +202,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="CfJ-k8-D34" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="143" y="20" width="437" height="45"/>
+                                        <rect key="frame" x="148" y="20" width="432" height="45"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -223,7 +223,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="CfJ-k8-D34" secondAttribute="trailing" constant="20" id="32j-jk-dwE"/>
-                                    <constraint firstItem="CfJ-k8-D34" firstAttribute="leading" secondItem="xmW-hM-Rer" secondAttribute="trailing" constant="15" id="KyR-p8-Cu8"/>
+                                    <constraint firstItem="CfJ-k8-D34" firstAttribute="leading" secondItem="xmW-hM-Rer" secondAttribute="trailing" constant="20" id="KyR-p8-Cu8"/>
                                     <constraint firstItem="CfJ-k8-D34" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="top" constant="20" id="Mh1-Eq-hfP"/>
                                     <constraint firstItem="xmW-hM-Rer" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="top" constant="15" id="S3C-zB-i1k"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xmW-hM-Rer" secondAttribute="bottom" constant="15" id="arE-O6-nGC"/>
@@ -234,10 +234,21 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-CG-e38" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="600" height="451"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="SuA-CG-e38" firstAttribute="leading" secondItem="wVi-6a-LwE" secondAttribute="leading" id="CaE-9u-rT5"/>
                             <constraint firstItem="qNa-ic-rwA" firstAttribute="leading" secondItem="wVi-6a-LwE" secondAttribute="leading" id="Gy8-dO-9WS"/>
+                            <constraint firstItem="Gt9-6m-NXK" firstAttribute="top" secondItem="SuA-CG-e38" secondAttribute="bottom" id="IQd-K0-7k7"/>
+                            <constraint firstItem="SuA-CG-e38" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="bottom" id="RFU-Oq-hsA"/>
+                            <constraint firstAttribute="trailing" secondItem="SuA-CG-e38" secondAttribute="trailing" id="acr-gi-az0"/>
                             <constraint firstItem="qNa-ic-rwA" firstAttribute="top" secondItem="iSE-R5-Iv6" secondAttribute="bottom" id="tzA-an-eZE"/>
                             <constraint firstAttribute="trailing" secondItem="qNa-ic-rwA" secondAttribute="trailing" id="yUT-ef-LHw"/>
                         </constraints>
@@ -261,8 +272,28 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="1eX-aE-t0B">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="edw-SQ-fTH" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="-23" y="-15" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="DONE">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.grey"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="complete" destination="4D7-MK-KIs" eventType="touchUpInside" id="Qnl-6H-YtD"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="containerView" destination="SuA-CG-e38" id="a0n-Zp-gHt"/>
+                        <outlet property="stepIndicationLabel" destination="CfJ-k8-D34" id="ivc-Am-uyb"/>
+                        <outlet property="stepNumberLabel" destination="xmW-hM-Rer" id="04z-tW-ZU5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SGO-in-bCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

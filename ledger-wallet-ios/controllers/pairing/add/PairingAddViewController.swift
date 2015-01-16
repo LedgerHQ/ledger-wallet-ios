@@ -10,6 +10,77 @@ import UIKit
 
 class PairingAddViewController: ViewController {
 
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var stepNumberLabel: Label!
+    @IBOutlet private weak var stepIndicationLabel: Label!
     
+    private let stepClasses: [PairingAddBaseStepViewController.Type] = [
+        PairingAddScanStepViewController.self,
+        PairingAddCodeStepViewController.self,
+        PairingAddNameStepViewController.self
+    ]
+    private var currentStepNumber = -1
+    private var currentStepViewController: PairingAddBaseStepViewController?
+    
+    //MARK: Steps management
+    
+    func navigateToNextStep() {
+        navigateToStep(currentStepNumber + 1)
+    }
+    
+    func navigateToStep(stepNumber: Int) {
+        // instantiate new view controller
+        let newViewController = stepClasses[stepNumber].instantiateFromNib()
+        addChildViewController(newViewController)
+        newViewController.view.frame = containerView.bounds
+        containerView.addSubview(newViewController.view)
+
+        // slide to new view controller
+        if let currentViewController = currentStepViewController {
+            currentViewController.view.removeFromSuperview()
+            currentViewController.removeFromParentViewController()
+            
+            // animate
+            let transition = CATransition()
+            transition.type = kCATransitionReveal
+            transition.subtype = kCATransitionFromRight
+            transition.duration = 0.25
+            self.containerView.layer.addAnimation(transition, forKey: nil)
+        }
+        
+        // retain new view controller
+        currentStepViewController = newViewController
+        
+        // update view
+        updateView()
+        
+        // update current step
+        currentStepNumber = stepNumber
+    }
+    
+    //MARK: Layout
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        currentStepViewController?.view.frame = containerView.bounds
+
+    }
+    
+    //MARK: Interface
+    
+    override func updateView() {
+        super.updateView()
+        
+        navigationItem.rightBarButtonItem?.customView?.hidden = !currentStepViewController!.finalizesFlow
+        stepNumberLabel.text = "\(currentStepViewController!.stepNumber)."
+        stepIndicationLabel.text = currentStepViewController!.stepIndication
+    }
+    
+    override func configureView() {
+        super.configureView()
+        
+        navigateToNextStep()
+    }
     
 }

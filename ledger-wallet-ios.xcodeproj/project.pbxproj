@@ -10,6 +10,13 @@
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
 		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
+		37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F5F1A6911460036CF2A /* PairingAddBaseStepViewController.swift */; };
+		37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F611A6911DD0036CF2A /* PairingAddScanStepViewController.swift */; };
+		37A88F651A6928040036CF2A /* PairingAddScanStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F641A6928040036CF2A /* PairingAddScanStepViewController.xib */; };
+		37A88F671A692ED40036CF2A /* PairingAddCodeStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F661A692ED40036CF2A /* PairingAddCodeStepViewController.swift */; };
+		37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */; };
+		37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */; };
+		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
 		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
@@ -61,6 +68,13 @@
 		3784FB111A5D2F5F0063A364 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3784FB1A1A5D2F5F0063A364 /* ledger-wallet-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ledger-wallet-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37A88F5F1A6911460036CF2A /* PairingAddBaseStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddBaseStepViewController.swift; sourceTree = "<group>"; };
+		37A88F611A6911DD0036CF2A /* PairingAddScanStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddScanStepViewController.swift; sourceTree = "<group>"; };
+		37A88F641A6928040036CF2A /* PairingAddScanStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddScanStepViewController.xib; sourceTree = "<group>"; };
+		37A88F661A692ED40036CF2A /* PairingAddCodeStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddCodeStepViewController.swift; sourceTree = "<group>"; };
+		37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddCodeStepViewController.xib; sourceTree = "<group>"; };
+		37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddNameStepViewController.swift; sourceTree = "<group>"; };
+		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
 		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E47B1A667EE20055E81A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -196,6 +210,13 @@
 			isa = PBXGroup;
 			children = (
 				37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */,
+				37A88F5F1A6911460036CF2A /* PairingAddBaseStepViewController.swift */,
+				37A88F611A6911DD0036CF2A /* PairingAddScanStepViewController.swift */,
+				37A88F641A6928040036CF2A /* PairingAddScanStepViewController.xib */,
+				37A88F661A692ED40036CF2A /* PairingAddCodeStepViewController.swift */,
+				37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */,
+				37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */,
+				37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */,
 			);
 			name = "Add Dongle";
 			path = pairing/add;
@@ -384,8 +405,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A88F651A6928040036CF2A /* PairingAddScanStepViewController.xib in Resources */,
 				37F283681A6406A900F432CC /* Localizable.strings in Resources */,
+				37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */,
 				37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */,
+				37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */,
 				37F283621A64064100F432CC /* Main.storyboard in Resources */,
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
 				378205D41A60195E00F6CA45 /* Fonts in Resources */,
@@ -412,6 +436,7 @@
 				37F283B81A655D3400F432CC /* NavigationBar.swift in Sources */,
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
+				37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37B9E4861A67BD200055E81A /* TableView.swift in Sources */,
 				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
@@ -429,9 +454,12 @@
 				37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */,
 				37F283B61A655D3400F432CC /* Button.swift in Sources */,
 				37B9E47C1A667EE20055E81A /* RoundedButton.swift in Sources */,
+				37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				37F283AB1A655D3400F432CC /* ViewController.swift in Sources */,
+				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
+				37A88F671A692ED40036CF2A /* PairingAddCodeStepViewController.swift in Sources */,
 				37F283AE1A655D3400F432CC /* UIColor+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
