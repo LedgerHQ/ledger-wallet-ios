@@ -26,5 +26,5 @@ class PairingAddBaseStepViewController: ViewController {
     func completeStep() {
         parentPairingViewController?.navigateToNextStep()
     }
-
+    
 }

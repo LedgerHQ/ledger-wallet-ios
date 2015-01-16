@@ -280,7 +280,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.grey"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.white"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="complete" destination="4D7-MK-KIs" eventType="touchUpInside" id="Qnl-6H-YtD"/>

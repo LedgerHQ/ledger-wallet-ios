@@ -93,6 +93,12 @@ struct VisualTheme {
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarText), forState: UIControlState.Normal)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
+        "navigationBar.white": { button in
+            var hightlightedStyle = VisualFactory.TextAttributes.navigationBarWhiteText
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarWhiteText), forState: UIControlState.Normal)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
+        },
         "icon": { button in
             button.adjustsImageWhenHighlighted = false
         },

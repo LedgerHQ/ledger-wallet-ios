@@ -32,19 +32,21 @@ class PairingAddViewController: ViewController {
         // instantiate new view controller
         let newViewController = stepClasses[stepNumber].instantiateFromNib()
         addChildViewController(newViewController)
+        newViewController.didMoveToParentViewController(self)
         newViewController.view.frame = containerView.bounds
         containerView.addSubview(newViewController.view)
 
         // slide to new view controller
         if let currentViewController = currentStepViewController {
             currentViewController.view.removeFromSuperview()
+            currentViewController.willMoveToParentViewController(nil)
             currentViewController.removeFromParentViewController()
             
             // animate
             let transition = CATransition()
             transition.type = kCATransitionReveal
             transition.subtype = kCATransitionFromRight
-            transition.duration = 0.25
+            transition.duration = VisualFactory.Metrics.defaultAnimationDuration
             self.containerView.layer.addAnimation(transition, forKey: nil)
         }
         
@@ -56,15 +58,6 @@ class PairingAddViewController: ViewController {
         
         // update current step
         currentStepNumber = stepNumber
-    }
-    
-    //MARK: Layout
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        currentStepViewController?.view.frame = containerView.bounds
-
     }
     
     //MARK: Interface
@@ -81,6 +74,14 @@ class PairingAddViewController: ViewController {
         super.configureView()
         
         navigateToNextStep()
+    }
+    
+    //MARK: Layout
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        currentStepViewController?.view.frame = containerView.bounds
     }
     
 }

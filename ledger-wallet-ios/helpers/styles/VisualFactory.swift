@@ -28,8 +28,14 @@ struct VisualFactory {
         
         static let navigationBarText = [
             NSForegroundColorAttributeName: Colors.lightGrey,
-            NSKernAttributeName: -Fonts.Kernings.small,
+            NSKernAttributeName: -Fonts.Kernings.verySmall,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue)
+        ]
+        
+        static let navigationBarWhiteText = [
+            NSForegroundColorAttributeName: Colors.white,
+            NSKernAttributeName: -Fonts.Kernings.verySmall,
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Sizes.small.rawValue)
         ]
         
         static let medium = [
@@ -169,6 +175,7 @@ struct VisualFactory {
         static let defaultDarkenFactor:CGFloat = Factors.Darken.strong
         static let defaultNavigationBarHeight:CGFloat = mediumNavigationBarHeight
         static let defaultBorderRadius:CGFloat = BordersRadii.medium
+        static let defaultAnimationDuration = Durations.Animations.short
         
         static let mediumNavigationBarHeight: CGFloat = 60
         
@@ -194,6 +201,13 @@ struct VisualFactory {
             static let small:CGFloat = 20
             static let almostMedium:CGFloat = 25
             static let medium:CGFloat = 30
+        }
+        
+        struct Durations {
+            struct Animations {
+                static let short = 0.25
+                static let medium = 0.40
+            }
         }
     
     }
