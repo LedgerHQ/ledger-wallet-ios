@@ -19,4 +19,9 @@
     return [storyboard instantiateViewControllerWithIdentifier:[self className]];
 }
 
++ (instancetype)instantiateFromNib
+{
+    return [[[self class] alloc] initWithNibName:[self className] bundle:nil];
+}
+
 @end

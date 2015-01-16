@@ -13,5 +13,6 @@
 
 + (NSString *)className;
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard;
++ (instancetype)instantiateFromNib;
 
 @end
