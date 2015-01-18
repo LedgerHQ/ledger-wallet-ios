@@ -11,10 +11,39 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_nano" translatesAutoresizingMaskIntoConstraints="NO" id="Q0A-EM-WuO">
+                    <rect key="frame" x="0.0" y="258" width="336" height="84"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owi-Rt-4in">
+                    <rect key="frame" x="279" y="362" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RX6-ee-DSJ">
+                    <rect key="frame" x="287" y="208" width="26" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Q0A-EM-WuO" firstAttribute="top" secondItem="RX6-ee-DSJ" secondAttribute="bottom" constant="20" id="1pt-7i-LiT"/>
+                <constraint firstAttribute="centerX" secondItem="RX6-ee-DSJ" secondAttribute="centerX" id="9Pj-df-jim"/>
+                <constraint firstAttribute="centerX" secondItem="Owi-Rt-4in" secondAttribute="centerX" id="Ji5-Nz-jj7"/>
+                <constraint firstItem="Owi-Rt-4in" firstAttribute="top" secondItem="Q0A-EM-WuO" secondAttribute="bottom" constant="20" id="PPd-IN-TD4"/>
+                <constraint firstItem="Q0A-EM-WuO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gMd-Yv-9R3"/>
+                <constraint firstAttribute="centerY" secondItem="Q0A-EM-WuO" secondAttribute="centerY" id="n1Y-zW-FUn"/>
+            </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+            </userDefinedRuntimeAttributes>
         </view>
     </objects>
+    <resources>
+        <image name="horizontal_nano" width="336" height="84"/>
+    </resources>
 </document>
