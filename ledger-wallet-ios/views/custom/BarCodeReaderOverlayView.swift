@@ -42,8 +42,8 @@ class BarCodeReaderOverlayView: View {
     //MARK: Initialization
     
     private func initialize() {
-        self.backgroundColor = UIColor.clearColor()
-        self.opaque = false
+        backgroundColor = UIColor.clearColor()
+        opaque = false
     }
     
     override init(coder aDecoder: NSCoder) {
