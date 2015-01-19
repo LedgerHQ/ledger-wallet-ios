@@ -140,13 +140,13 @@ extension BarCodeReaderView {
         }
     }
     
-    func handleWillResignActiveNotification(notification: NSNotification) {
+    private dynamic func handleWillResignActiveNotification(notification: NSNotification) {
         if (window != nil && listensAppNotifications) {
             stopCapture()
         }
     }
     
-    func handleDidBecomeActiveNotification(notification: NSNotification) {
+    private dynamic func handleDidBecomeActiveNotification(notification: NSNotification) {
         if (window != nil && listensAppNotifications) {
             startCapture()
         }

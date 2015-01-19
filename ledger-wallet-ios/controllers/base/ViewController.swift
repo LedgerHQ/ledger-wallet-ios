@@ -73,7 +73,18 @@ class ViewController: UIViewController {
         // notify about content status
         updateViewForContentStatus(contentStatus)
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        observeKeyboardNotifications(true)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        observeKeyboardNotifications(false)
+    }
 }
 
 extension ViewController {
@@ -100,16 +111,16 @@ extension ViewController {
     
     private func observeKeyboardNotifications(observe: Bool) {
         if (observe) {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification", name: UIKeyboardWillShowNotification, object: UIApplication.sharedApplication())
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification", name: UIKeyboardWillHideNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
         }
         else {
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: UIApplication.sharedApplication())
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         }
     }
     
-    private func handleKeyboardWillShowNotification(notification: NSNotification) {
+    private dynamic func handleKeyboardWillShowNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             if let frame = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() {
                 _keyboardFrame = frame
@@ -118,7 +129,7 @@ extension ViewController {
         }
     }
     
-    private func handleKeyboardWillHideNotification(notification: NSNotification) {
+    private dynamic func handleKeyboardWillHideNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             keyboardWillHide(userInfo)
         }

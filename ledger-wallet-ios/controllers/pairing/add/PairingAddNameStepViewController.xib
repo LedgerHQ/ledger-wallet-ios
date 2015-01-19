@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingAddNameStepViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
             <connections>
+                <outlet property="centerLayoutConstraint" destination="n1Y-zW-FUn" id="ckA-dP-BsI"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Wt0-Hj-MNc"/>
             </connections>
         </placeholder>
@@ -15,9 +16,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_nano" translatesAutoresizingMaskIntoConstraints="NO" id="Q0A-EM-WuO">
-                    <rect key="frame" x="0.0" y="258" width="336" height="84"/>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owi-Rt-4in">
                     <rect key="frame" x="279" y="362" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -29,6 +27,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_nano" translatesAutoresizingMaskIntoConstraints="NO" id="Q0A-EM-WuO">
+                    <rect key="frame" x="0.0" y="258" width="336" height="84"/>
+                </imageView>
             </subviews>
             <constraints>
                 <constraint firstItem="Q0A-EM-WuO" firstAttribute="top" secondItem="RX6-ee-DSJ" secondAttribute="bottom" constant="20" id="1pt-7i-LiT"/>
