@@ -1,5 +1,5 @@
 //
-//  BarCodeReader.swift
+//  BarCodeReaderView.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 19/01/2015.
@@ -9,13 +9,13 @@
 import UIKit
 import AVFoundation
 
-protocol BarCodeReader {
+protocol BarCodeReaderViewDelegate: class {
     
-    @optional func barCodeReader(barCodeReader: BarCodeReader, didScanCode: String,
-    
+    func barCodeReader(barCodeReader: BarCodeReaderView, didScanCode code: String, withType type: String)
+
 }
 
-class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
+class BarCodeReaderView: View {
     
     var isCapturing: Bool {
         return _isCapturing
@@ -23,13 +23,13 @@ class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
     private var previewLayer: AVCaptureVideoPreviewLayer {
         return layer as AVCaptureVideoPreviewLayer
     }
+    weak var delegate: BarCodeReaderViewDelegate?
     private var _isCapturing = false
     private var captureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession?
     private var captureDeviceInput: AVCaptureDeviceInput?
     private var captureMetadataOutput: AVCaptureMetadataOutput?
     private var captureDispatchQueue: dispatch_queue_t?
-
     
     //MARK: Video Capture
     
@@ -39,9 +39,13 @@ class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
         }
         
         captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-        if (captureDevice == nil) {
+        if (captureDevice == nil || captureDevice!.lockForConfiguration(nil) == false) {
             return
         }
+        if (captureDevice!.focusPointOfInterestSupported) {
+            captureDevice!.focusPointOfInterest = CGPointMake(0.5, 0.5)
+        }
+        captureDevice!.unlockForConfiguration()
         
         captureDeviceInput = AVCaptureDeviceInput.deviceInputWithDevice(captureDevice, error: nil) as? AVCaptureDeviceInput
         if (captureDeviceInput == nil) {
@@ -54,6 +58,7 @@ class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
             cleanUp()
             return
         }
+        captureMetadataOutput?.rectOfInterest = CGRectMake(0.2, 0.2, 0.6, 0.6)
         
         captureSession = AVCaptureSession()
         previewLayer.session = captureSession
@@ -73,6 +78,11 @@ class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
         if (!isCapturing) {
             return
         }
+        
+        captureSession?.stopRunning()
+        cleanUp()
+        
+        _isCapturing = false
     }
     
     private func cleanUp() {
@@ -87,24 +97,8 @@ class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
     override class func layerClass() -> AnyClass {
         return AVCaptureVideoPreviewLayer.self
     }
-    
-    //MARK: Metadata objects delegate
-    
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
-        if let metadataObjects = metadataObjects {
-            if (metadataObjects.count > 0) {
-                if let metadataObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
-                    if (metadataObject.type == AVMetadataObjectTypeQRCode) {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            
-                        })
-                    }
-                }
-            }
-        }
-    }
-    
-    // MARK: Initialization
+
+    //MARK: Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -122,6 +116,26 @@ class BarCodeReader: View, AVCaptureMetadataOutputObjectsDelegate {
         clipsToBounds = true
         backgroundColor = UIColor.blackColor()
         previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+    }
+    
+}
+
+extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
+    
+    //MARK: Metadata objects delegate
+    
+    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+        if let metadataObjects = metadataObjects {
+            if (metadataObjects.count > 0) {
+                if let metadataObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
+                    if (metadataObject.type == AVMetadataObjectTypeQRCode) {
+                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                            (self?.delegate?.barCodeReader(self!, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
+                        })
+                    }
+                }
+            }
+        }
     }
     
 }

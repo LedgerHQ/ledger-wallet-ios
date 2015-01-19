@@ -28,7 +28,7 @@ class PairingAddViewController: ViewController {
         navigateToStep(currentStepNumber + 1)
     }
     
-    func navigateToStep(stepNumber: Int) {
+    private func navigateToStep(stepNumber: Int) {
         // instantiate new view controller
         let newViewController = stepClasses[stepNumber].instantiateFromNib()
         addChildViewController(newViewController)

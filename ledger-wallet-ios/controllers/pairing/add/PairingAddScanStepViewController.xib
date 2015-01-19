@@ -16,16 +16,24 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Mq-3S-Tgo" customClass="BarCodeReader" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Mq-3S-Tgo" customClass="BarCodeReaderView" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vde-FJ-dCd" customClass="BarCodeReaderOverlayView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Vde-FJ-dCd" secondAttribute="trailing" id="5by-3U-dpd"/>
+                <constraint firstAttribute="bottom" secondItem="Vde-FJ-dCd" secondAttribute="bottom" id="WZ3-mM-oDE"/>
                 <constraint firstItem="0Mq-3S-Tgo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bEU-Zf-a7u"/>
                 <constraint firstAttribute="bottom" secondItem="0Mq-3S-Tgo" secondAttribute="bottom" id="hTc-KQ-Hjr"/>
                 <constraint firstItem="0Mq-3S-Tgo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ljV-0M-xiq"/>
+                <constraint firstItem="Vde-FJ-dCd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pSr-uY-QDV"/>
                 <constraint firstAttribute="trailing" secondItem="0Mq-3S-Tgo" secondAttribute="trailing" id="uDu-l1-7Hv"/>
+                <constraint firstItem="Vde-FJ-dCd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ybA-d0-Fdu"/>
             </constraints>
         </view>
     </objects>

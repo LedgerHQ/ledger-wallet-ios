@@ -16,9 +16,5 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     override var stepNumber: Int {
         return 2
     }
-
-    @IBAction func test(sender: AnyObject) {
-        completeStep()
-    }
     
 }
