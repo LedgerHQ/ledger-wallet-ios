@@ -24,6 +24,7 @@ class BarCodeReaderView: View {
         return layer as AVCaptureVideoPreviewLayer
     }
     weak var delegate: BarCodeReaderViewDelegate?
+    var listensAppNotifications = true
     private var _isCapturing = false
     private var captureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession?
@@ -116,6 +117,39 @@ class BarCodeReaderView: View {
         clipsToBounds = true
         backgroundColor = UIColor.blackColor()
         previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        listenNotifications(true)
+    }
+    
+    deinit {
+        listenNotifications(false)
+    }
+    
+}
+
+extension BarCodeReaderView {
+    
+    //MARK: Notifications
+    
+    private func listenNotifications(listen: Bool) {
+        if (listen) {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleDidBecomeActiveNotification:", name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
+        }
+        else {
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+        }
+    }
+    
+    func handleWillResignActiveNotification(notification: NSNotification) {
+        if (window != nil && listensAppNotifications) {
+            stopCapture()
+        }
+    }
+    
+    func handleDidBecomeActiveNotification(notification: NSNotification) {
+        if (window != nil && listensAppNotifications) {
+            startCapture()
+        }
     }
     
 }

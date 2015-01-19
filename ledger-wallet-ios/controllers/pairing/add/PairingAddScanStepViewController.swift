@@ -25,22 +25,6 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         super.configureView()
         
         barCodeReader.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication())
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleDidBecomeActiveNotification:", name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
-    }
-    
-    //MARK: Notifications
-    
-    func handleWillResignActiveNotification(notification: NSNotification) {
-        if (isViewLoaded() && view.window != nil) {
-            barCodeReader.stopCapture()
-        }
-    }
-    
-    func handleDidBecomeActiveNotification(notification: NSNotification) {
-        if (isViewLoaded() && view.window != nil) {
-            barCodeReader.startCapture()
-        }
     }
     
     //MARK: View lifecycle
@@ -55,10 +39,6 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         super.viewWillDisappear(animated)
         
         barCodeReader.stopCapture()
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
 }
