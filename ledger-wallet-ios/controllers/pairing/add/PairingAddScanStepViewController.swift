@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class PairingAddScanStepViewController: PairingAddBaseStepViewController {
     
@@ -47,8 +48,11 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
     
     //MARK: Barcode reader delegate
     
-    func barCodeReader(barCodeReader: BarCodeReaderView, didScanCode code: String, withType type: String) {
-        println("\(code) in \(NSThread.currentThread())")
+    func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String) {
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        println(code)
+        
+        parentPairingViewController?.navigateToNextStep()
     }
     
 }

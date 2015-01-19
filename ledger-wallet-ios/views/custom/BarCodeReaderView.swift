@@ -11,7 +11,7 @@ import AVFoundation
 
 protocol BarCodeReaderViewDelegate: class {
     
-    func barCodeReader(barCodeReader: BarCodeReaderView, didScanCode code: String, withType type: String)
+    func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String)
 
 }
 
@@ -164,7 +164,7 @@ extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
                 if let metadataObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
                     if (metadataObject.type == AVMetadataObjectTypeQRCode) {
                         dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            (self?.delegate?.barCodeReader(self!, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
+                            (self?.delegate?.barCodeReaderView(self!, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
                         })
                     }
                 }
