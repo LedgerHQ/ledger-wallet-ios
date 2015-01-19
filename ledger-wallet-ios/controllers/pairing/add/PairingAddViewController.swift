@@ -15,7 +15,7 @@ class PairingAddViewController: ViewController {
     @IBOutlet private weak var stepIndicationLabel: Label!
     
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        PairingAddScanStepViewController.self,
+        PairingAddCodeStepViewController.self,
         PairingAddCodeStepViewController.self,
         PairingAddNameStepViewController.self
     ]
