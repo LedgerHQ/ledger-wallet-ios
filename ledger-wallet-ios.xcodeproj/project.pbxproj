@@ -17,6 +17,7 @@
 		37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */; };
 		37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */; };
 		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
+		37A88F701A6CFC670036CF2A /* BarCodeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F6F1A6CFC670036CF2A /* BarCodeReader.swift */; };
 		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
@@ -75,6 +76,7 @@
 		37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddCodeStepViewController.xib; sourceTree = "<group>"; };
 		37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddNameStepViewController.swift; sourceTree = "<group>"; };
 		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
+		37A88F6F1A6CFC670036CF2A /* BarCodeReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeReader.swift; sourceTree = "<group>"; };
 		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E47B1A667EE20055E81A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				37F283D21A6578AC00F432CC /* ActionBarView.swift */,
 				37B9E4851A67BD200055E81A /* TableView.swift */,
 				37B9E4871A67BD3F0055E81A /* TableViewCell.swift */,
+				37A88F6F1A6CFC670036CF2A /* BarCodeReader.swift */,
 			);
 			name = Views;
 			path = views;
@@ -447,6 +450,7 @@
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37F283D31A6578AC00F432CC /* ActionBarView.swift in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
+				37A88F701A6CFC670036CF2A /* BarCodeReader.swift in Sources */,
 				37B9E4881A67BD3F0055E81A /* TableViewCell.swift in Sources */,
 				37F283B71A655D3400F432CC /* Label.swift in Sources */,
 				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,

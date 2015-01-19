@@ -60,7 +60,7 @@ class PairingAddViewController: ViewController {
         currentStepNumber = stepNumber
     }
     
-    //MARK: Interface
+    //MARK: /Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/views/ActionBarView.swiftInterface
     
     override func updateView() {
         super.updateView()

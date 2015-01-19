@@ -2,11 +2,12 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6254"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingAddScanStepViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
             <connections>
+                <outlet property="barCodeReader" destination="0Mq-3S-Tgo" id="Qk0-Qy-b7f"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Ct1-iJ-Kuj"/>
             </connections>
         </placeholder>
@@ -15,20 +16,16 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8p3-cv-1hl">
-                    <rect key="frame" x="277" y="285" width="46" height="30"/>
-                    <state key="normal" title="Button">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="test:" destination="-1" eventType="touchUpInside" id="ans-5H-cwr"/>
-                    </connections>
-                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Mq-3S-Tgo" customClass="BarCodeReader" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="8p3-cv-1hl" secondAttribute="centerY" id="enC-YL-Ktr"/>
-                <constraint firstAttribute="centerX" secondItem="8p3-cv-1hl" secondAttribute="centerX" id="kOw-3j-FCc"/>
+                <constraint firstItem="0Mq-3S-Tgo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bEU-Zf-a7u"/>
+                <constraint firstAttribute="bottom" secondItem="0Mq-3S-Tgo" secondAttribute="bottom" id="hTc-KQ-Hjr"/>
+                <constraint firstItem="0Mq-3S-Tgo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ljV-0M-xiq"/>
+                <constraint firstAttribute="trailing" secondItem="0Mq-3S-Tgo" secondAttribute="trailing" id="uDu-l1-7Hv"/>
             </constraints>
         </view>
     </objects>

@@ -10,15 +10,21 @@ import UIKit
 
 class PairingAddScanStepViewController: PairingAddBaseStepViewController {
     
+    @IBOutlet private weak var barCodeReader: BarCodeReader!
+    
     override var stepIndication: String {
         return localizedString("scan_the_pairing_qr_code")
     }
     override var stepNumber: Int {
         return 1
     }
+
+    //MARK: View lifecycle
     
-    @IBAction func test(sender: AnyObject) {
-        completeStep()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        barCodeReader.startCapture()
     }
     
 }
