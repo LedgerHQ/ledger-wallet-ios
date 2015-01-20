@@ -59,7 +59,7 @@ class BarCodeReaderView: View {
             cleanUp()
             return
         }
-        captureMetadataOutput?.rectOfInterest = CGRectMake(0.2, 0.2, 0.6, 0.6)
+        captureMetadataOutput?.rectOfInterest = CGRectMake(0.1, 0.1, 0.7, 0.7)
         
         captureSession = AVCaptureSession()
         previewLayer.session = captureSession
@@ -164,7 +164,9 @@ extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
                 if let metadataObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
                     if (metadataObject.type == AVMetadataObjectTypeQRCode) {
                         dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            (self?.delegate?.barCodeReaderView(self!, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
+                            if (self != nil) {
+                                (self?.delegate?.barCodeReaderView(self!, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
+                            }
                         })
                     }
                 }

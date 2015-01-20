@@ -52,6 +52,7 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         println(code)
         
+        barCodeReader?.stopCapture()
         parentPairingViewController?.navigateToNextStep()
     }
     

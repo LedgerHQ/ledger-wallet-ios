@@ -16,7 +16,7 @@ class PairingAddViewController: ViewController {
     @IBOutlet private weak var bottomInsetConstraint: NSLayoutConstraint!
     
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        PairingAddNameStepViewController.self,
+        PairingAddScanStepViewController.self,
         PairingAddCodeStepViewController.self,
         PairingAddNameStepViewController.self
     ]
