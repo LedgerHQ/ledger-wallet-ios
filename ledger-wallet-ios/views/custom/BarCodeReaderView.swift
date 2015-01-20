@@ -163,10 +163,8 @@ extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
             if (metadataObjects.count > 0) {
                 if let metadataObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
                     if (metadataObject.type == AVMetadataObjectTypeQRCode) {
-                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            if (self != nil) {
-                                (self?.delegate?.barCodeReaderView(self!, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
-                            }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            (self.delegate?.barCodeReaderView(self, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
                         })
                     }
                 }
