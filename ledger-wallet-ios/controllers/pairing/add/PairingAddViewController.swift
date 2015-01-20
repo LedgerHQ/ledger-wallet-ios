@@ -45,7 +45,7 @@ class PairingAddViewController: ViewController {
             
             // animate
             let transition = CATransition()
-            transition.type = kCATransitionReveal
+            transition.type = kCATransitionMoveIn
             transition.subtype = kCATransitionFromRight
             transition.duration = VisualFactory.Metrics.defaultAnimationDuration
             self.containerView.layer.addAnimation(transition, forKey: nil)
