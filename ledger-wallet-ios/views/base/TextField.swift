@@ -32,7 +32,7 @@ class TextField: UITextField {
         super.awakeFromNib()
         
         self.text = localizedString(self.text ?? "")
-        self.placeholder = localizedString(self.text ?? "")
+        self.placeholder = localizedString(self.placeholder ?? "")
     }
     
 }

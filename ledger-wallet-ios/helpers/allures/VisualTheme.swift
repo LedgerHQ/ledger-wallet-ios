@@ -13,6 +13,8 @@ struct VisualTheme {
     typealias ViewAllure = (UIView) -> ()
     typealias LabelAllure = (Label) -> ()
     typealias ButtonAllure = (Button) -> ()
+    typealias TextFieldAllure = (TextField) -> ()
+
 
     //MARK: View allures
     
@@ -25,6 +27,7 @@ struct VisualTheme {
         },
         "view.transparent": { view in
             view.backgroundColor = VisualFactory.Colors.transparent
+            view.opaque = false
         },
         "actionBar.grey": { view in
             let actionBar = view as ActionBarView
@@ -47,7 +50,6 @@ struct VisualTheme {
             navigationBar.translucent = false
             navigationBar.shadowImage = UIImage()
             navigationBar.barTintColor = VisualFactory.Colors.nightBlue
-            navigationBar.barHeight = VisualFactory.Metrics.mediumNavigationBarHeight
             navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         }
     ]
@@ -75,6 +77,9 @@ struct VisualTheme {
         },
         "small.grey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallGrey)
+        },
+        "small.softGrey": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGrey)
         },
         "largeTitle": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeTitle)
@@ -120,6 +125,20 @@ struct VisualTheme {
             let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen.darkerColor(), forState: UIControlState.Highlighted)
+        }
+    ]
+    
+    //MARK: TextField allures
+    
+    static let textFieldAllures: [String: TextFieldAllure] = [
+        "hugeName": { textField in
+            var placeholderAttributes = VisualFactory.TextAttributes.hugeName
+            placeholderAttributes.updateValue(VisualFactory.Colors.lightGrey, forKey: NSForegroundColorAttributeName)
+            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.hugeName)
+            textField.attributedPlaceholder = NSAttributedString(string: textField.readablePlaceholder(), attributes: placeholderAttributes)
+            textField.tintColor = VisualFactory.Colors.darkGrey
+            textField.borderStyle = UITextBorderStyle.None
+            textField.adjustsFontSizeToFitWidth = false
         }
     ]
     

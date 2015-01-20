@@ -14,10 +14,11 @@ class NavigationBar: UINavigationBar {
     
     //MARK: Content size
     
-    var barHeight: CGFloat = VisualFactory.Metrics.defaultNavigationBarHeight {
-        didSet {
-            invalidateIntrinsicContentSize()
+    var barHeight: CGFloat {
+        if (UIScreen.mainScreen().bounds.height <= 480) {
+            return VisualFactory.Metrics.Views.NavigationBar.smallNavigationBarHeight
         }
+        return VisualFactory.Metrics.defaultNavigationBarHeight
     }
     
     override func intrinsicContentSize() -> CGSize {

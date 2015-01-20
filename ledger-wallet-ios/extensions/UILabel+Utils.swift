@@ -11,7 +11,7 @@ import UIKit
 extension UILabel {
     
     func readableText() -> String {
-        return self.text ?? ""
+        return text ?? ""
     }
     
 }

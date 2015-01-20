@@ -11,6 +11,8 @@ import UIKit
 class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     
     @IBOutlet private weak var nameTextField: TextField!
+    @IBOutlet private weak var walletImageView: UIImageView!
+    @IBOutlet private weak var indicationLabel: Label!
     
     override var stepIndication: String {
         return localizedString("give_a_name_to_your_wallet")
@@ -27,7 +29,16 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     override func configureView() {
         super.configureView()
         
-        nameTextField.becomeFirstResponder()
+        nameTextField?.becomeFirstResponder()
+        
+        // remove invisible views
+        if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Medium) {
+            self.indicationLabel?.removeFromSuperview()
+        }
+        if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Small) {
+            self.indicationLabel?.removeFromSuperview()
+            self.walletImageView?.removeFromSuperview()
+        }
     }
     
 }

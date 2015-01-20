@@ -16,6 +16,8 @@ class ViewStylist {
             relookLabel(view as Label)
         case is Button:
             relookButton(view as Button)
+        case is TextField:
+            relookTextField(view as TextField)
         default:
             relookView(view)
         }
@@ -53,6 +55,18 @@ class ViewStylist {
             }
             else {
                 println("ViewStylist: Unable to find button allure: \(allure)")
+            }
+        }
+    }
+    
+    private class func relookTextField(textField: TextField) {
+        if let allure = textField.allure {
+            // apply allure if present
+            if let allureClosure = VisualTheme.textFieldAllures[allure] {
+                allureClosure(textField)
+            }
+            else {
+                println("ViewStylist: Unable to find textField allure: \(allure)")
             }
         }
     }

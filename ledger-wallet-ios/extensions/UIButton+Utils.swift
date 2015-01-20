@@ -13,7 +13,7 @@ import UIKit
 extension UIButton {
     
     func readableTitleForState(state: UIControlState) -> String {
-        return self.titleForState(state) ?? ""
+        return titleForState(state) ?? ""
     }
     
 }

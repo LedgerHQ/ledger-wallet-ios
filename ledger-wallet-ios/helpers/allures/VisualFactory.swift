@@ -23,7 +23,7 @@ struct VisualFactory {
         static let largePageTitle = [
             NSForegroundColorAttributeName: Colors.white,
             NSKernAttributeName: -Fonts.Kernings.large,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostExtraLarge.rawValue)
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostUltraLarge.rawValue)
         ]
         
         static let navigationBarText = [
@@ -65,6 +65,11 @@ struct VisualFactory {
             ]
         )
         
+        static let smallSoftGrey: TextAttribute = TextAttributes.extend(smallGrey, withAttributes: [
+                NSForegroundColorAttributeName: Colors.softGrey
+            ]
+        )
+        
         static let hugeNumberGrey = [
             NSForegroundColorAttributeName: Colors.darkGrey,
             NSKernAttributeName: -Fonts.Kernings.small,
@@ -81,6 +86,12 @@ struct VisualFactory {
             NSForegroundColorAttributeName: Colors.white,
             NSKernAttributeName: -Fonts.Kernings.small,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostLarge.rawValue)
+        ]
+        
+        static let hugeName = [
+            NSForegroundColorAttributeName: Colors.darkGrey,
+            NSKernAttributeName: -Fonts.Kernings.veryLarge,
+            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.extraHuge.rawValue)
         ]
         
         private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
@@ -130,9 +141,9 @@ struct VisualFactory {
             case almostLarge = 15
             case large = 16
             case extraLarge = 18
-            case almostExtraLarge = 19
+            case almostUltraLarge = 19
             case ultraLarge = 20
-
+            case extraHuge = 27
         }
         
         struct Kernings {
@@ -140,6 +151,7 @@ struct VisualFactory {
             static let small: CGFloat = 0.5
             static let medium: CGFloat = 0.9
             static let large: CGFloat = 1.2
+            static let veryLarge: CGFloat = 1.5
         }
         
         private static func fontWithName(name: String, size: CGFloat) -> UIFont {
@@ -173,11 +185,16 @@ struct VisualFactory {
     struct Metrics {
         
         static let defaultDarkenFactor:CGFloat = Factors.Darken.strong
-        static let defaultNavigationBarHeight:CGFloat = mediumNavigationBarHeight
+        static let defaultNavigationBarHeight:CGFloat = Views.NavigationBar.mediumNavigationBarHeight
         static let defaultBorderRadius:CGFloat = BordersRadii.medium
         static let defaultAnimationDuration = Durations.Animations.short
         
-        static let mediumNavigationBarHeight: CGFloat = 60
+        struct Views {
+            struct NavigationBar {
+                static let mediumNavigationBarHeight: CGFloat = 60
+                static let smallNavigationBarHeight: CGFloat = 44
+            }
+        }
         
         struct Factors {
             struct Darken {
