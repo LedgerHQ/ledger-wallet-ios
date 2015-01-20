@@ -16,8 +16,8 @@ class PairingAddViewController: ViewController {
     @IBOutlet private weak var bottomInsetConstraint: NSLayoutConstraint!
     
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        PairingAddScanStepViewController.self,
-        PairingAddCodeStepViewController.self,
+        //PairingAddScanStepViewController.self,
+        //PairingAddCodeStepViewController.self,
         PairingAddNameStepViewController.self
     ]
     private var currentStepNumber = -1
@@ -35,7 +35,7 @@ class PairingAddViewController: ViewController {
         addChildViewController(newViewController)
         newViewController.didMoveToParentViewController(self)
         newViewController.view.frame = containerView.bounds
-        containerView.addSubview(newViewController.view)
+        containerView?.addSubview(newViewController.view)
 
         // slide to new view controller
         if let currentViewController = currentStepViewController {
@@ -48,7 +48,7 @@ class PairingAddViewController: ViewController {
             transition.type = kCATransitionMoveIn
             transition.subtype = kCATransitionFromRight
             transition.duration = VisualFactory.Metrics.defaultAnimationDuration
-            self.containerView.layer.addAnimation(transition, forKey: nil)
+            self.containerView?.layer.addAnimation(transition, forKey: nil)
         }
         
         // retain new view controller
@@ -67,8 +67,8 @@ class PairingAddViewController: ViewController {
         super.updateView()
         
         navigationItem.rightBarButtonItem?.customView?.hidden = !currentStepViewController!.finalizesFlow
-        stepNumberLabel.text = "\(currentStepViewController!.stepNumber)."
-        stepIndicationLabel.text = currentStepViewController!.stepIndication
+        stepNumberLabel?.text = "\(currentStepViewController!.stepNumber)."
+        stepIndicationLabel?.text = currentStepViewController!.stepIndication
     }
     
     override func configureView() {
@@ -78,7 +78,7 @@ class PairingAddViewController: ViewController {
     }
     
     private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
-        bottomInsetConstraint.constant = height
+        bottomInsetConstraint?.constant = height
         view.setNeedsLayout()
         
         if (animated) {
