@@ -13,6 +13,7 @@ class PairingAddViewController: ViewController {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var stepNumberLabel: Label!
     @IBOutlet private weak var stepIndicationLabel: Label!
+    @IBOutlet private weak var bottomInsetConstraint: NSLayoutConstraint!
     
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
         PairingAddNameStepViewController.self,
@@ -60,7 +61,7 @@ class PairingAddViewController: ViewController {
         currentStepNumber = stepNumber
     }
     
-    //MARK: /Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/views/ActionBarView.swiftInterface
+    //MARK: Interface
     
     override func updateView() {
         super.updateView()
@@ -74,6 +75,38 @@ class PairingAddViewController: ViewController {
         super.configureView()
         
         navigateToNextStep()
+    }
+    
+    private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
+        bottomInsetConstraint.constant = height
+        view.setNeedsLayout()
+        
+        if (animated) {
+            UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: options, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            view.layoutIfNeeded()
+        }
+    }
+    
+    //MARK: Keyboard management
+    
+    override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
+        super.keyboardWillHide(userInfo)
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
+        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
+        adjustContentInset(0, duration: duration, options: options, animated: true)
+    }
+    
+    override func keyboardWillShow(userInfo: [NSObject : AnyObject]) {
+        super.keyboardWillShow(userInfo)
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
+        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
+        adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
     }
     
     //MARK: Layout

@@ -10,7 +10,7 @@ import UIKit
 
 class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     
-    @IBOutlet private weak var centerLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var nameTextField: TextField!
     
     override var stepIndication: String {
         return localizedString("give_a_name_to_your_wallet")
@@ -22,23 +22,12 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         return true
     }
     
-    //MARK: Keyboard management
+    //MARK: Interface
     
-    override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
-        centerLayoutConstraint.constant = 0
-        view.setNeedsLayout()
-        UIView.animateWithDuration(2.0, animations: {
-            self.view.layoutIfNeeded()
-        })
+    override func configureView() {
+        super.configureView()
+        
+        nameTextField.becomeFirstResponder()
     }
-    
-    override func keyboardWillShow(userInfo: [NSObject : AnyObject]) {
-        centerLayoutConstraint.constant = 100
-        view.setNeedsLayout()
-        UIView.animateWithDuration(2.0, animations: {
-            self.view.layoutIfNeeded()
-        })
-    }
-
     
 }

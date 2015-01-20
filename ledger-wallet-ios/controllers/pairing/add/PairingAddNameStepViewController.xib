@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingAddNameStepViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
             <connections>
-                <outlet property="centerLayoutConstraint" destination="n1Y-zW-FUn" id="ckA-dP-BsI"/>
+                <outlet property="nameTextField" destination="RX6-ee-DSJ" id="T6R-iG-10J"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Wt0-Hj-MNc"/>
             </connections>
         </placeholder>
@@ -22,13 +22,13 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RX6-ee-DSJ">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RX6-ee-DSJ" customClass="TextField" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="287" y="208" width="26" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_nano" translatesAutoresizingMaskIntoConstraints="NO" id="Q0A-EM-WuO">
-                    <rect key="frame" x="0.0" y="258" width="336" height="84"/>
+                    <rect key="frame" x="224" y="258" width="336" height="84"/>
                 </imageView>
             </subviews>
             <constraints>
@@ -36,7 +36,7 @@
                 <constraint firstAttribute="centerX" secondItem="RX6-ee-DSJ" secondAttribute="centerX" id="9Pj-df-jim"/>
                 <constraint firstAttribute="centerX" secondItem="Owi-Rt-4in" secondAttribute="centerX" id="Ji5-Nz-jj7"/>
                 <constraint firstItem="Owi-Rt-4in" firstAttribute="top" secondItem="Q0A-EM-WuO" secondAttribute="bottom" constant="20" id="PPd-IN-TD4"/>
-                <constraint firstItem="Q0A-EM-WuO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gMd-Yv-9R3"/>
+                <constraint firstAttribute="trailing" secondItem="Q0A-EM-WuO" secondAttribute="trailing" constant="40" id="dBP-iL-biT"/>
                 <constraint firstAttribute="centerY" secondItem="Q0A-EM-WuO" secondAttribute="centerY" id="n1Y-zW-FUn"/>
             </constraints>
             <userDefinedRuntimeAttributes>

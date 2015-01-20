@@ -17,6 +17,7 @@
 		37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */; };
 		37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */; };
 		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
+		37A88F741A6E550F0036CF2A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F731A6E550F0036CF2A /* TextField.swift */; };
 		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
@@ -77,6 +78,7 @@
 		37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddCodeStepViewController.xib; sourceTree = "<group>"; };
 		37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddNameStepViewController.swift; sourceTree = "<group>"; };
 		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
+		37A88F731A6E550F0036CF2A /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Colorize.swift"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				37EF91B81A6D3C47007DBBAF /* TableView.swift */,
 				37EF91B91A6D3C47007DBBAF /* TableViewCell.swift */,
 				37EF91BA1A6D3C47007DBBAF /* View.swift */,
+				37A88F731A6E550F0036CF2A /* TextField.swift */,
 			);
 			name = Base;
 			path = base;
@@ -477,6 +480,7 @@
 				37F283C21A655D7200F432CC /* VisualFactory.swift in Sources */,
 				37EF91CA1A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift in Sources */,
 				37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */,
+				37A88F741A6E550F0036CF2A /* TextField.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				37F283AB1A655D3400F432CC /* ViewController.swift in Sources */,
