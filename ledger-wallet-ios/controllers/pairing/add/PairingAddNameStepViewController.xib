@@ -31,10 +31,10 @@
                             </userDefinedRuntimeAttributes>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_nano" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-W8-Rck">
-                            <rect key="frame" x="204" y="57" width="336" height="84"/>
+                            <rect key="frame" x="144" y="57" width="396" height="84"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="84" id="JYH-bS-xdG"/>
-                                <constraint firstAttribute="width" constant="336" id="x4a-Cd-0LS"/>
+                                <constraint firstAttribute="width" constant="396" id="x4a-Cd-0LS"/>
                             </constraints>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="my_ledger_wallet" borderStyle="roundedRect" placeholder="ledger_wallet_name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JA2-qu-hty" customClass="TextField" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -78,6 +78,6 @@
         </view>
     </objects>
     <resources>
-        <image name="horizontal_nano" width="336" height="84"/>
+        <image name="horizontal_nano" width="396" height="84"/>
     </resources>
 </document>
