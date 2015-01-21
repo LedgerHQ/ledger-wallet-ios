@@ -17,8 +17,8 @@ class PairingAddViewController: ViewController {
     
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
         //PairingAddScanStepViewController.self,
-        //PairingAddCodeStepViewController.self,
-        PairingAddNameStepViewController.self
+        PairingAddCodeStepViewController.self,
+        //PairingAddNameStepViewController.self
     ]
     private var currentStepNumber = -1
     private var currentStepViewController: PairingAddBaseStepViewController?

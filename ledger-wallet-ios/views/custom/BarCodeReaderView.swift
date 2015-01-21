@@ -66,7 +66,7 @@ class BarCodeReaderView: View {
         captureSession?.addInput(captureDeviceInput)
         captureSession?.addOutput(captureMetadataOutput)
         
-        captureDispatchQueue = dispatch_queue_create("co.ledger.barcodereader.captureQueue", DISPATCH_QUEUE_SERIAL)
+        captureDispatchQueue = dispatch_get_main_queue()
         captureMetadataOutput?.setMetadataObjectsDelegate(self, queue: captureDispatchQueue)
         captureMetadataOutput?.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
 
@@ -163,9 +163,7 @@ extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
             if (metadataObjects.count > 0) {
                 if let metadataObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
                     if (metadataObject.type == AVMetadataObjectTypeQRCode) {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            (self.delegate?.barCodeReaderView(self, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode))!
-                        })
+                        self.delegate?.barCodeReaderView(self, didScanCode: metadataObject.stringValue, withType: AVMetadataObjectTypeQRCode)
                     }
                 }
             }
