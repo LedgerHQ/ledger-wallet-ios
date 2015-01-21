@@ -33,11 +33,11 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         
         // remove invisible views
         if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Medium) {
-            self.indicationLabel?.removeFromSuperview()
+            indicationLabel?.removeFromSuperview()
         }
         if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Small) {
-            self.indicationLabel?.removeFromSuperview()
-            self.walletImageView?.removeFromSuperview()
+            indicationLabel?.removeFromSuperview()
+            walletImageView?.removeFromSuperview()
         }
     }
     

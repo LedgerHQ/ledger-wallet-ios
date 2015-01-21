@@ -51,6 +51,16 @@ struct VisualTheme {
             navigationBar.shadowImage = UIImage()
             navigationBar.barTintColor = VisualFactory.Colors.nightBlue
             navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        },
+        "pinCodeView.grey": { view in
+            let pinCodeView = view as PinCodeView
+            pinCodeView.boxSize = CGSizeMake(55.0, 75.0)
+            pinCodeView.highlightedColor = VisualFactory.Colors.invalidRed
+            pinCodeView.filledColor = VisualFactory.Colors.darkGrey
+            pinCodeView.boxSpacing = VisualFactory.Metrics.Paddings.verySmall
+            pinCodeView.boxColor = VisualFactory.Colors.white
+            pinCodeView.borderWidth = 1.0
+            pinCodeView.dotRadius = 15.0
         }
     ]
     

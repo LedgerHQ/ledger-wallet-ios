@@ -20,6 +20,10 @@ class DeviceManager {
         return UIScreen.mainScreen().bounds.size
     }
     
+    class func screenScale() -> CGFloat {
+        return UIScreen.mainScreen().scale
+    }
+    
     class func screenHeightClass() -> HeightClass {
         switch screenSize().height {
         case 480.0: return HeightClass.Small

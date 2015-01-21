@@ -144,6 +144,7 @@ struct VisualFactory {
             case almostUltraLarge = 19
             case ultraLarge = 20
             case extraHuge = 27
+            case ultraHuge = 42
         }
         
         struct Kernings {
@@ -208,8 +209,9 @@ struct VisualFactory {
         }
         
         struct BordersRadii {
-            static let medium:CGFloat = 5
             static let small:CGFloat = 3
+            static let medium:CGFloat = 5
+            static let large:CGFloat = 10
         }
         
         struct Paddings {
