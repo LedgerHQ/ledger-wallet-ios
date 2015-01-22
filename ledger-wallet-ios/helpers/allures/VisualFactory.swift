@@ -57,7 +57,12 @@ struct VisualFactory {
         static let small = [
             NSForegroundColorAttributeName: Colors.black,
             NSKernAttributeName: -Fonts.Kernings.verySmall,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue)
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue),
+            NSParagraphStyleAttributeName: {
+                let paragraph = NSMutableParagraphStyle()
+                paragraph.lineSpacing = 5
+                return paragraph
+                }()
         ]
         
         static let smallGrey: TextAttribute = TextAttributes.extend(small, withAttributes: [
@@ -67,6 +72,15 @@ struct VisualFactory {
         
         static let smallSoftGrey: TextAttribute = TextAttributes.extend(smallGrey, withAttributes: [
                 NSForegroundColorAttributeName: Colors.softGrey
+            ]
+        )
+        
+        static let smallSoftGreyCentered: TextAttribute = TextAttributes.extend(smallSoftGrey, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = smallSoftGrey[NSParagraphStyleAttributeName] as NSMutableParagraphStyle
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
             ]
         )
         

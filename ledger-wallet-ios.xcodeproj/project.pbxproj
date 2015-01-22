@@ -68,7 +68,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		378057911A6E9C2600481B4D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		378057921A6EA8DE00481B4D /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		3784FB051A5D2F5E0063A364 /* ledger-wallet-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ledger-wallet-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -428,7 +427,6 @@
 			knownRegions = (
 				en,
 				Base,
-				fr,
 			);
 			mainGroup = 3784FAFC1A5D2F5E0063A364;
 			productRefGroup = 3784FB061A5D2F5E0063A364 /* Products */;
@@ -552,7 +550,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				37F283691A6406A900F432CC /* en */,
-				378057911A6E9C2600481B4D /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

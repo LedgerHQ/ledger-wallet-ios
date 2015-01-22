@@ -8,6 +8,14 @@
 
 import UIKit
 
+@objc protocol PinCodeViewDelegate: class {
+    
+    optional func pinCodeView(pinCodeView: PinCodeView, didChangeText text: String)
+    optional func pinCodeView(pinCodeView: PinCodeView, didRequestNewIndex index: Int, placeholderChar: String?)
+    func pinCodeViewDidComplete(pinCodeView: PinCodeView, text: String)
+    
+}
+
 class PinCodeView: View {
     
     var highlightedColor: UIColor? {
@@ -27,6 +35,8 @@ class PinCodeView: View {
     }
     var length: Int = 0 {
         didSet {
+            _textField.text = ""
+            handleTextFieldDidChangeNotification()
             invalidateIntrinsicContentSize()
             setNeedsDisplay()
         }
@@ -45,6 +55,7 @@ class PinCodeView: View {
     }
     var placeholder: String? {
         didSet {
+            handleTextFieldDidChangeNotification()
             setNeedsDisplay()
         }
     }
@@ -59,6 +70,7 @@ class PinCodeView: View {
         }
     }
     var restrictedCharacterSet: NSCharacterSet?
+    weak var delegate: PinCodeViewDelegate?
     lazy private var _textField: UITextField = {
        let textField = UITextField()
         textField.tintColor = UIColor.clearColor()
@@ -79,6 +91,12 @@ class PinCodeView: View {
 
     //MARK: Responder
 
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        super.touchesBegan(touches, withEvent: event)
+        
+        _textField.becomeFirstResponder()
+    }
+    
     override func becomeFirstResponder() -> Bool {
         return _textField.becomeFirstResponder()
     }
@@ -206,15 +224,25 @@ extension PinCodeView {
     
     private func observeTextFieldNotifications(observe: Bool) {
         if (observe) {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleTextFieldDidChangeNotification:", name: UITextFieldTextDidChangeNotification, object: _textField)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleTextFieldDidChangeNotification", name: UITextFieldTextDidChangeNotification, object: _textField)
         }
         else {
             NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: _textField)
         }
     }
     
-    private dynamic func handleTextFieldDidChangeNotification(notification: NSNotification) {
+    private dynamic func handleTextFieldDidChangeNotification() {
         setNeedsDisplay()
+        
+        delegate?.pinCodeView?(self, didChangeText: _textField.text)
+        let textLength = _textField.text.lengthOfBytesUsingEncoding(NSASCIIStringEncoding)
+        if (textLength < length) {
+            delegate?.pinCodeView?(self, didRequestNewIndex: textLength, placeholderChar: (placeholder as NSString?)?.substringWithRange(NSMakeRange(textLength, 1)))
+        }
+        if (length > 0 && textLength == length) {
+            delegate?.pinCodeViewDidComplete(self, text: _textField.text)
+        }
+        
     }
     
 }

@@ -29,3 +29,5 @@
 "my_ledger_wallet" = "My Ledger Wallet";
 
 "assign_a_name_to_this_ledger_wallet" = "Enter a name to assign to this Ledger Wallet.";
+
+"enter_letter_or_value_matching_%@" = "Enter the letter or digit in the black box matching “ %@ ” on your security card.";

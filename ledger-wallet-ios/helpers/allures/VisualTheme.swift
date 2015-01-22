@@ -91,6 +91,9 @@ struct VisualTheme {
         "small.softGrey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGrey)
         },
+        "small.softGrey.centered": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGreyCentered)
+        },
         "largeTitle": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeTitle)
         },
