@@ -19,11 +19,11 @@ class ViewController: UIViewController {
     //MARK: Presentation
     
     @IBAction func cancel() {
-        dismissViewControllerAnimated(true, completion: nil)
+    
     }
     
     @IBAction func complete() {
-        dismissViewControllerAnimated(true, completion: nil)
+
     }
     
     //MARK: Status bar style

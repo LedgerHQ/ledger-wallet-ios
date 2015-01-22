@@ -10,9 +10,6 @@ import UIKit
 
 class PairingAddBaseStepViewController: ViewController {
 
-    var parentPairingViewController: PairingAddViewController? {
-        return parentViewController as? PairingAddViewController
-    }
     var stepNumber: Int {
         return 0
     }
@@ -21,6 +18,9 @@ class PairingAddBaseStepViewController: ViewController {
     }
     var finalizesFlow: Bool {
         return false
+    }
+    var parentPairingViewController: PairingAddViewController? {
+        return parentViewController as? PairingAddViewController
     }
     
 }

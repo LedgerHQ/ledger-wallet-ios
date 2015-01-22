@@ -29,6 +29,8 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     override func configureView() {
         super.configureView()
         
+        nameTextField?.delegate = self
+        
         // remove invisible views
         if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Medium) {
             indicationLabel?.removeFromSuperview()
@@ -45,6 +47,15 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         super.viewDidAppear(animated)
         
         nameTextField?.becomeFirstResponder()
+    }
+    
+}
+
+extension PairingAddNameStepViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        complete()
+        return false
     }
     
 }

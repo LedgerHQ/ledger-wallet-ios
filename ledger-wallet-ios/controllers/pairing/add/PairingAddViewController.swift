@@ -24,7 +24,7 @@ class PairingAddViewController: ViewController {
     private var currentStepViewController: PairingAddBaseStepViewController?
     
     //MARK: Steps management
-    
+
     func navigateToNextStep() {
         navigateToStep(currentStepNumber + 1)
     }
@@ -66,6 +66,24 @@ class PairingAddViewController: ViewController {
         
         // update current step
         currentStepNumber = stepNumber
+    }
+    
+    //MARK: Actions
+    
+    override func complete() {
+        // complete current step view controller
+        currentStepViewController?.complete()
+        
+        // dimiss pairing
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func cancel() {
+        // cancel current step view controller
+        currentStepViewController?.cancel()
+        
+        // dimiss pairing
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //MARK: Interface
