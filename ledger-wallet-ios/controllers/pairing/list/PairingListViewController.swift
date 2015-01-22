@@ -35,9 +35,6 @@ class PairingListViewController: ViewController {
     override func updateView() {
         super.updateView()
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.pairNewDongleButtonTouched(self.actionBar)
-        })
     }
     
 }
