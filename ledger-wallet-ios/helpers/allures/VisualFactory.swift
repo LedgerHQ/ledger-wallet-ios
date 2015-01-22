@@ -202,7 +202,7 @@ struct VisualFactory {
         static let defaultDarkenFactor:CGFloat = Factors.Darken.strong
         static let defaultNavigationBarHeight:CGFloat = Views.NavigationBar.mediumNavigationBarHeight
         static let defaultBorderRadius:CGFloat = BordersRadii.medium
-        static let defaultAnimationDuration = Durations.Animations.short
+        static let defaultAnimationDuration = Durations.Animations.medium
         
         struct Views {
             struct NavigationBar {

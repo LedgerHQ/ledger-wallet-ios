@@ -46,7 +46,7 @@ class PairingAddViewController: ViewController {
             transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
             transition.type = kCATransitionPush
             transition.subtype = kCATransitionFromRight
-            transition.duration = VisualFactory.Metrics.Durations.Animations.medium
+            transition.duration = VisualFactory.Metrics.defaultAnimationDuration
             transition.delegate = self
             transition.setValue(currentViewController, forKey: "stepViewController")
             
