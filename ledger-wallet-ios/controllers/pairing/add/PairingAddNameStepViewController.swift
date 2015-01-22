@@ -29,8 +29,6 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     override func configureView() {
         super.configureView()
         
-        nameTextField?.becomeFirstResponder()
-        
         // remove invisible views
         if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Medium) {
             indicationLabel?.removeFromSuperview()
@@ -39,6 +37,14 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
             indicationLabel?.removeFromSuperview()
             walletImageView?.removeFromSuperview()
         }
+    }
+    
+    //MARK: View lifecycle
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        nameTextField?.becomeFirstResponder()
     }
     
 }

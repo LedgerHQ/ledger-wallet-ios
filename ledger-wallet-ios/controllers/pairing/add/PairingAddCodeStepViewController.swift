@@ -24,8 +24,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     
     override func configureView() {
         super.configureView()
-        
-        pinCodeView?.becomeFirstResponder()
+
         pinCodeView?.restrictedCharacterSet = NSCharacterSet.hexadecimalCharacterSet()
         pinCodeView?.delegate = self
         pinCodeView?.length = 4
@@ -37,6 +36,13 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         }
     }
     
+    //MARK: View lifecycle
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        pinCodeView?.becomeFirstResponder()
+    }
 }
 
 extension PairingAddCodeStepViewController: PinCodeViewDelegate {
@@ -44,7 +50,7 @@ extension PairingAddCodeStepViewController: PinCodeViewDelegate {
     //MARK: PinCodeView delegate
     
     func pinCodeViewDidComplete(pinCodeView: PinCodeView, text: String) {
-        
+        parentPairingViewController?.navigateToNextStep()
     }
     
     func pinCodeView(pinCodeView: PinCodeView, didRequestNewIndex index: Int, placeholderChar: String?) {

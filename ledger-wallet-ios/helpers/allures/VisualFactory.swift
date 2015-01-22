@@ -239,7 +239,8 @@ struct VisualFactory {
         struct Durations {
             struct Animations {
                 static let short = 0.25
-                static let medium = 0.40
+                static let medium = 0.32
+                static let long = 0.40
             }
         }
     

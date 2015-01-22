@@ -16,9 +16,9 @@ class PairingAddViewController: ViewController {
     @IBOutlet private weak var bottomInsetConstraint: NSLayoutConstraint!
     
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        //PairingAddScanStepViewController.self,
+        PairingAddScanStepViewController.self,
         PairingAddCodeStepViewController.self,
-        //PairingAddNameStepViewController.self
+        PairingAddNameStepViewController.self
     ]
     private var currentStepNumber = -1
     private var currentStepViewController: PairingAddBaseStepViewController?
@@ -35,21 +35,28 @@ class PairingAddViewController: ViewController {
         addChildViewController(newViewController)
         newViewController.didMoveToParentViewController(self)
         newViewController.view.frame = containerView.bounds
+        newViewController.view.setNeedsLayout()
+        newViewController.view.layoutIfNeeded()
         containerView?.addSubview(newViewController.view)
 
-        // slide to new view controller
+        // animate slide to new view controller if there is already a view controller
         if let currentViewController = currentStepViewController {
-            currentViewController.view.removeFromSuperview()
+            // create transision
+            let transition = CATransition()
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromRight
+            transition.duration = VisualFactory.Metrics.Durations.Animations.medium
+            transition.delegate = self
+            transition.setValue(currentViewController, forKey: "stepViewController")
+            
+            // remove current view controller from children
             currentViewController.willMoveToParentViewController(nil)
             currentViewController.removeFromParentViewController()
             
-            // animate
-            let transition = CATransition()
-            transition.type = kCATransitionMoveIn
-            transition.subtype = kCATransitionFromRight
-            transition.duration = VisualFactory.Metrics.defaultAnimationDuration
             self.containerView?.layer.addAnimation(transition, forKey: nil)
         }
+
         
         // retain new view controller
         currentStepViewController = newViewController
@@ -115,6 +122,18 @@ class PairingAddViewController: ViewController {
         super.viewDidLayoutSubviews()
         
         currentStepViewController?.view.frame = containerView.bounds
+    }
+    
+}
+
+extension PairingAddViewController {
+    
+    //MARK: CATransition delegate
+    
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        // remove previous view controller view
+        let stepViewController = anim.valueForKey("stepViewController") as? PairingAddBaseStepViewController
+        stepViewController?.view.removeFromSuperview()
     }
     
 }
