@@ -13,6 +13,8 @@ class PairingListViewController: ViewController {
     @IBOutlet private weak var actionBar: ActionBarView!
     @IBOutlet private weak var pairingStatusLabel: Label!
     
+    var dialogController: DialogController!
+    
     //MARK: Actions
     
     @IBAction private func pairNewDongleButtonTouched(sender: AnyObject) {
@@ -34,7 +36,6 @@ class PairingListViewController: ViewController {
     
     override func updateView() {
         super.updateView()
-        
     }
     
 }
