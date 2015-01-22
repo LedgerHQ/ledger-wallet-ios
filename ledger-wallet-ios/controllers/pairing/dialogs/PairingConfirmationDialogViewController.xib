@@ -14,7 +14,25 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nL-RC-u4b">
+                    <rect key="frame" x="50" y="50" width="500" height="500"/>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="lol:" destination="-1" eventType="touchUpInside" id="ItC-O6-1w2"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="4nL-RC-u4b" secondAttribute="trailing" constant="50" id="GD2-1w-END"/>
+                <constraint firstItem="4nL-RC-u4b" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="WEG-rr-a7d"/>
+                <constraint firstItem="4nL-RC-u4b" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="WSx-zH-yIM"/>
+                <constraint firstAttribute="bottom" secondItem="4nL-RC-u4b" secondAttribute="bottom" constant="50" id="e1F-Mf-YY4"/>
+            </constraints>
+            <point key="canvasLocation" x="220" y="501"/>
         </view>
     </objects>
 </document>

@@ -10,8 +10,4 @@ import Foundation
 
 class PairingConfirmationDialogViewController: DialogViewController {
     
-    override var viewContentSize: CGSize {
-        return CGSizeMake(100, 100)
-    }
-    
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
+		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
 		378057931A6EA8DE00481B4D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378057921A6EA8DE00481B4D /* DeviceManager.swift */; };
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
@@ -17,7 +18,6 @@
 		3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */; };
 		3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA1D1A6E6D8800F5B603 /* UITextField+Utils.swift */; };
 		379CA0F81A7135A300A9D426 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379CA0F71A7135A300A9D426 /* DialogViewController.swift */; };
-		379CA0FA1A71375100A9D426 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379CA0F91A71375100A9D426 /* DialogController.swift */; };
 		379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379CA1031A713B7100A9D426 /* PairingConfirmationDialogViewController.swift */; };
 		379CA1061A713BB900A9D426 /* PairingConfirmationDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 379CA1051A713BB900A9D426 /* PairingConfirmationDialogViewController.xib */; };
 		37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F5F1A6911460036CF2A /* PairingAddBaseStepViewController.swift */; };
@@ -74,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		373E22CB1A71517C00BAF63F /* Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
+		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; };
 		378057921A6EA8DE00481B4D /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		3784FB051A5D2F5E0063A364 /* ledger-wallet-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ledger-wallet-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,7 +88,6 @@
 		3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualTheme.swift; sourceTree = "<group>"; };
 		3798BA1D1A6E6D8800F5B603 /* UITextField+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
 		379CA0F71A7135A300A9D426 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogViewController.swift; path = dialogs/DialogViewController.swift; sourceTree = "<group>"; };
-		379CA0F91A71375100A9D426 /* DialogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogController.swift; path = dialogs/DialogController.swift; sourceTree = "<group>"; };
 		379CA1031A713B7100A9D426 /* PairingConfirmationDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingConfirmationDialogViewController.swift; sourceTree = "<group>"; };
 		379CA1051A713BB900A9D426 /* PairingConfirmationDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingConfirmationDialogViewController.xib; sourceTree = "<group>"; };
 		37A88F5F1A6911460036CF2A /* PairingAddBaseStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddBaseStepViewController.swift; sourceTree = "<group>"; };
@@ -236,8 +236,8 @@
 		379CA0F61A71357700A9D426 /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
-				379CA0F91A71375100A9D426 /* DialogController.swift */,
 				379CA0F71A7135A300A9D426 /* DialogViewController.swift */,
+				37579F071A719BCE007A7344 /* DialogAnimationController.swift */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -329,8 +329,8 @@
 		37F283941A655D3400F432CC /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				37F283951A655D3400F432CC /* NavigationController.swift */,
 				37F283961A655D3400F432CC /* ViewController.swift */,
+				37F283951A655D3400F432CC /* NavigationController.swift */,
 			);
 			name = Base;
 			path = base;
@@ -508,7 +508,6 @@
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,
 				373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */,
-				379CA0FA1A71375100A9D426 /* DialogController.swift in Sources */,
 				37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */,
 				37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
@@ -533,6 +532,7 @@
 				37A88F741A6E550F0036CF2A /* TextField.swift in Sources */,
 				378057931A6EA8DE00481B4D /* DeviceManager.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
+				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
