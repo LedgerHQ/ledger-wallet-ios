@@ -84,17 +84,19 @@ class RoundedButton: Button {
         var contentHeight: CGFloat = 0
         var contentWidth: CGFloat = 0
         
-        if (imageView?.image != nil) {
-            let imageSize = imageView?.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-            contentWidth += imageSize?.width ?? 0
+        if let imageSize = currentImage?.size {
+            contentWidth += imageSize.width
             contentWidth += imageEdgeInsets.left + imageEdgeInsets.right
-            contentHeight = max(contentHeight, imageSize?.height ?? 0 + imageEdgeInsets.top + imageEdgeInsets.bottom)
+            contentHeight = max(contentHeight, imageSize.height + imageEdgeInsets.top + imageEdgeInsets.bottom)
         }
-        if (titleLabel?.text != nil) {
-            let labelSize = titleLabel?.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-            contentWidth += labelSize?.width ?? 0
-            contentWidth += titleEdgeInsets.left + titleEdgeInsets.right
-            contentHeight = max(contentHeight, labelSize?.height ?? 0 + titleEdgeInsets.top + titleEdgeInsets.bottom)
+        if let labelAttributes = currentAttributedTitle?.attributesAtIndex(0, effectiveRange: nil) {
+            if let labelText = currentAttributedTitle?.string {
+                let labelTextAsNSString = labelText as NSString
+                let labelSize = labelTextAsNSString.sizeWithAttributes(labelAttributes)
+                contentWidth += ceil(labelSize.width)
+                contentWidth += titleEdgeInsets.left + titleEdgeInsets.right
+                contentHeight = max(contentHeight, ceil(labelSize.height) + titleEdgeInsets.top + titleEdgeInsets.bottom)
+            }
         }
         return CGSize(width: width + contentWidth, height: height + contentHeight)
     }
