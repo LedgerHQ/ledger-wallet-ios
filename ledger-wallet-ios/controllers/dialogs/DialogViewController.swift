@@ -11,11 +11,21 @@ import UIKit
 class DialogViewController: ViewController {
     
     private lazy var dialogAnimationController = DialogAnimationController()
+    var dialogContentPadding: UIEdgeInsets {
+        return UIEdgeInsetsMake(VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium)
+    }
+    var dialogContainerMargin: UIEdgeInsets {
+        return UIEdgeInsetsMake(VisualFactory.Metrics.Paddings.small, VisualFactory.Metrics.Paddings.small, VisualFactory.Metrics.Paddings.small, VisualFactory.Metrics.Paddings.small)
+    }
+    var dialogContentDistance: UIEdgeInsets {
+        return UIEdgeInsetsMake(dialogContentPadding.top + dialogContainerMargin.top, dialogContentPadding.left + dialogContainerMargin.left, dialogContentPadding.bottom + dialogContainerMargin.bottom, dialogContentPadding.right + dialogContainerMargin.right)
+    }
     
     //MARK: Content size
     
-    var dialogContentSize: CGSize {
-        return view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+    func dialogLayoutSize(constraintedSize size: CGSize) -> CGSize {
+        let contentSize = view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        return CGSizeMake(contentSize.width + dialogContentPadding.left + dialogContentPadding.right, contentSize.height + dialogContentPadding.top + dialogContentPadding.bottom)
     }
     
     //MARK: Initialization

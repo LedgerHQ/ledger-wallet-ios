@@ -12,7 +12,6 @@ class DialogAnimationController: NSObject {
     
     private var dimmingView: UIView!
     private var backgroundView: UIView!
-    lazy private var dialogLayoutMargins: UIEdgeInsets = UIEdgeInsetsMake(VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium)
     
 }
 
@@ -32,13 +31,13 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             dimmingView.frame = containerView.bounds
             dimmingView.alpha = 0.0
             containerView.addSubview(dimmingView)
-            
-            // create background view
+
+            // compute optimal sizes
             let contentView = toViewController.view
-            contentView.setNeedsLayout()
-            contentView.layoutIfNeeded()
-            let contentViewSize = (toViewController as DialogViewController).dialogContentSize
-            let backgroundViewSize = CGSizeMake(contentViewSize.width + dialogLayoutMargins.left + dialogLayoutMargins.right, contentViewSize.height + dialogLayoutMargins.top + dialogLayoutMargins.bottom)
+            let backgroundViewSize = (toViewController as DialogViewController).dialogLayoutSize(constraintedSize: containerView.bounds.size)
+            let padding = (toViewController as DialogViewController).dialogContentPadding
+
+            // create background view
             backgroundView = UIView()
             backgroundView.backgroundColor = contentView.backgroundColor
             backgroundView.layer.cornerRadius = VisualFactory.Metrics.defaultBorderRadius
@@ -50,7 +49,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             dimmingView.addSubview(backgroundView)
             
             // create content view
-            contentView.frame = CGRectMake(dialogLayoutMargins.left, dialogLayoutMargins.top, contentViewSize.width, contentViewSize.height)
+            contentView.frame = CGRectMake(padding.left, padding.top, backgroundViewSize.width - padding.left - padding.right, backgroundViewSize.height - padding.top - padding.bottom)
             backgroundView.addSubview(contentView)
             
             // animate
