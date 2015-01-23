@@ -7,12 +7,9 @@
 //
 
 #import "UIViewController+Init.h"
+#import "NSObject+Utils.h"
 
 @implementation UIViewController (Init)
-
-+ (NSString *)className {
-    return [[NSStringFromClass(self) componentsSeparatedByString:@"."] lastObject];
-}
 
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard
 {
@@ -21,7 +18,12 @@
 
 + (instancetype)instantiateFromNib
 {
-    return [[[self class] alloc] initWithNibName:[self className] bundle:nil];
+    return [self instantiateFromNibNamed:[self className]];
+}
+
++ (instancetype)instantiateFromNibNamed:(NSString *)name
+{
+    return [[[self class] alloc] initWithNibName:name bundle:nil];
 }
 
 @end
