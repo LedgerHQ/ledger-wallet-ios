@@ -12,6 +12,12 @@ class DialogViewController: ViewController {
     
     private lazy var dialogAnimationController = DialogAnimationController()
     
+    //MARK: Content size
+    
+    var dialogContentSize: CGSize {
+        return view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+    }
+    
     //MARK: Initialization
     
     private func initialize() {

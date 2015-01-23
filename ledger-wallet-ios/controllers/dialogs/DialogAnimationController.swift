@@ -34,10 +34,13 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             containerView.addSubview(dimmingView)
             
             // create background view
-            let contentViewSize = toViewController.view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+            let contentView = toViewController.view
+            contentView.setNeedsLayout()
+            contentView.layoutIfNeeded()
+            let contentViewSize = (toViewController as DialogViewController).dialogContentSize
             let backgroundViewSize = CGSizeMake(contentViewSize.width + dialogLayoutMargins.left + dialogLayoutMargins.right, contentViewSize.height + dialogLayoutMargins.top + dialogLayoutMargins.bottom)
             backgroundView = UIView()
-            backgroundView.backgroundColor = UIColor.whiteColor()
+            backgroundView.backgroundColor = contentView.backgroundColor
             backgroundView.layer.cornerRadius = VisualFactory.Metrics.defaultBorderRadius
             backgroundView.layer.shadowColor = UIColor.blackColor().CGColor
             backgroundView.layer.shadowOffset = CGSizeZero
@@ -47,7 +50,6 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             dimmingView.addSubview(backgroundView)
             
             // create content view
-            let contentView = toViewController.view
             contentView.frame = CGRectMake(dialogLayoutMargins.left, dialogLayoutMargins.top, contentViewSize.width, contentViewSize.height)
             backgroundView.addSubview(contentView)
             
