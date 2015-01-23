@@ -40,7 +40,7 @@ struct VisualFactory {
         
         static let medium = [
             NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.small,
+            NSKernAttributeName: -Fonts.Kernings.verySmall,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.medium.rawValue),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
@@ -48,6 +48,15 @@ struct VisualFactory {
                 return paragraph
             }()
         ]
+        
+        static let mediumCentered: TextAttribute = TextAttributes.extend(medium, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = (medium[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
+            ]
+        )
         
         static let mediumGrey: TextAttribute = TextAttributes.extend(medium, withAttributes: [
                 NSForegroundColorAttributeName: Colors.darkGrey
@@ -77,7 +86,7 @@ struct VisualFactory {
         
         static let smallSoftGreyCentered: TextAttribute = TextAttributes.extend(smallSoftGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = smallSoftGrey[NSParagraphStyleAttributeName] as NSMutableParagraphStyle
+                let paragraph = (smallSoftGrey[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
@@ -106,6 +115,12 @@ struct VisualFactory {
             NSForegroundColorAttributeName: Colors.darkGrey,
             NSKernAttributeName: -Fonts.Kernings.veryLarge,
             NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.extraHuge.rawValue)
+        ]
+        
+        static let sectionTitle = [
+            NSForegroundColorAttributeName: Colors.black,
+            NSKernAttributeName: -Fonts.Kernings.small,
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Sizes.almostLarge.rawValue)
         ]
         
         private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {

@@ -79,6 +79,9 @@ struct VisualTheme {
         "medium": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.medium)
         },
+        "medium.centered": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumCentered)
+        },
         "medium.grey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumGrey)
         },
@@ -99,6 +102,9 @@ struct VisualTheme {
         },
         "hugeNumber.grey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.hugeNumberGrey)
+        },
+        "sectionTitle": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.sectionTitle)
         }
     ]
     
@@ -128,16 +134,24 @@ struct VisualTheme {
             let roundedButton = button as RoundedButton
             roundedButton.adjustsImageWhenHighlighted = false
             roundedButton.borderRadius = VisualFactory.Metrics.BordersRadii.medium
-            roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.Paddings.verySmall)
             roundedButton.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
             roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.Paddings.verySmall, left: VisualFactory.Metrics.Paddings.small, bottom: VisualFactory.Metrics.Paddings.verySmall, right: VisualFactory.Metrics.Paddings.small)
-            button.setImage(button.imageForState(UIControlState.Normal)!.imageWithColor(VisualFactory.Colors.white), forState: UIControlState.Normal)
+            if (roundedButton.imageForState(UIControlState.Normal) != nil) {
+                roundedButton.setImage(roundedButton.imageForState(UIControlState.Normal)!.imageWithColor(VisualFactory.Colors.white), forState: UIControlState.Normal)
+                roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.Paddings.verySmall)
+            }
         },
         "rounded.green": { button in
             VisualTheme.buttonAllures["rounded"]?(button)
             let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen.darkerColor(), forState: UIControlState.Highlighted)
+        },
+        "rounded.grey": { button in
+            VisualTheme.buttonAllures["rounded"]?(button)
+            let roundedButton = button as RoundedButton
+            roundedButton.setFillColor(VisualFactory.Colors.lightGrey, forState: UIControlState.Normal)
+            roundedButton.setFillColor(VisualFactory.Colors.lightGrey.darkerColor(), forState: UIControlState.Highlighted)
         }
     ]
     
