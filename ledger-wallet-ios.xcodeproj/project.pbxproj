@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
+		373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
 		378057931A6EA8DE00481B4D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378057921A6EA8DE00481B4D /* DeviceManager.swift */; };
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
@@ -74,6 +75,8 @@
 
 /* Begin PBXFileReference section */
 		373E22CB1A71517C00BAF63F /* Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
+		373E22CD1A72490D00BAF63F /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
+		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; };
 		378057921A6EA8DE00481B4D /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
@@ -349,6 +352,8 @@
 				37F283CF1A656FEF00F432CC /* UIViewController+Init.m */,
 				37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */,
 				37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */,
+				373E22CD1A72490D00BAF63F /* NSObject+Utils.h */,
+				373E22CE1A72490D00BAF63F /* NSObject+Utils.m */,
 			);
 			name = Extensions;
 			path = extensions;
@@ -517,6 +522,7 @@
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
 				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
+				373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */,
 				37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */,
 				37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */,
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
