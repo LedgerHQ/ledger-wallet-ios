@@ -12,6 +12,8 @@
 
 "CANCEL" = "CANCEL";
 
+"CONFIRM" = "CONFIRM";
+
 "CLOSE" = "CLOSE";
 
 "WAITING_FOR_AN_OPERATION" = "WAITING FOR AN OPERATION...";
@@ -19,6 +21,8 @@
 "NO_INTERNET_CONNECTION" = "NO INTERNET CONNECTION";
 
 "PAIR_A_NEW_LEDGER_WALLET" = "PAIR A NEW LEDGER WALLET";
+
+"CONFIRM_OPERATION" = "CONFIRM OPERATION";
 
 "scan_the_pairing_qr_code" = "First, scan the pairing QR code on the Ledger Wallet Chrome application.";
 

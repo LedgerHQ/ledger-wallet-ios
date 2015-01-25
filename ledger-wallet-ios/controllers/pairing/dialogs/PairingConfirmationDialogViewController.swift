@@ -18,6 +18,7 @@ class PairingConfirmationDialogViewController: DialogViewController {
     var messageType: MessageType = MessageType.Success
     var localizedTitle = ""
     var localizedMessage = ""
+    
     @IBOutlet private weak var variableWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: Label!

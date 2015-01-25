@@ -10,6 +10,8 @@
 		373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
 		373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
+		37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */; };
+		37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37698A5F1A75158A00AA8B30 /* PairingTransactionDialogViewController.xib */; };
 		378057931A6EA8DE00481B4D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378057921A6EA8DE00481B4D /* DeviceManager.swift */; };
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
@@ -78,6 +80,8 @@
 		373E22CD1A72490D00BAF63F /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; };
+		37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionDialogViewController.swift; sourceTree = "<group>"; };
+		37698A5F1A75158A00AA8B30 /* PairingTransactionDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingTransactionDialogViewController.xib; sourceTree = "<group>"; };
 		378057921A6EA8DE00481B4D /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		3784FB051A5D2F5E0063A364 /* ledger-wallet-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ledger-wallet-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,6 +254,8 @@
 			children = (
 				379CA1031A713B7100A9D426 /* PairingConfirmationDialogViewController.swift */,
 				379CA1051A713BB900A9D426 /* PairingConfirmationDialogViewController.xib */,
+				37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */,
+				37698A5F1A75158A00AA8B30 /* PairingTransactionDialogViewController.xib */,
 			);
 			name = Dialogs;
 			path = pairing/dialogs;
@@ -489,6 +495,7 @@
 				37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */,
 				37F283621A64064100F432CC /* Main.storyboard in Resources */,
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
+				37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */,
 				378205D41A60195E00F6CA45 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,6 +516,7 @@
 			files = (
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */,
+				37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */,
 				37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */,
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,

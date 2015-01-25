@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingTransactionDialogViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="iN0-l3-epB" id="Gim-d4-6tf"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="235"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONFIRM_OPERATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-2p-dm7" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="142" y="29" width="152" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="sectionTitle"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sophie’s Wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nF-aI-wQH" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="171" y="80" width="95" height="25"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="requested on 05/01/2015 at 12:33 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ece-Hq-lEG" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="116" y="142" width="204" height="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.grey"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1MrpXW4dUz4FgFhNwkeqHqsWJDn12mPZPe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxF-wJ-VCI" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="115" width="436" height="25"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium.centered"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8z5-Za-l3m" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="115" y="194" width="207" height="41"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-Zj-cLi" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <rect key="frame" x="103" y="0.0" width="104" height="41"/>
+                            <state key="normal" title="CONFIRM">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-Gt-hMZ" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="93" height="41"/>
+                            <state key="normal" title="CANCEL">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.grey"/>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="vf2-Zj-cLi" secondAttribute="bottom" id="Fvl-oW-p1q"/>
+                        <constraint firstAttribute="trailing" secondItem="vf2-Zj-cLi" secondAttribute="trailing" id="KZh-5Y-uPq"/>
+                        <constraint firstItem="vf2-Zj-cLi" firstAttribute="top" secondItem="8z5-Za-l3m" secondAttribute="top" id="XXw-qp-V72"/>
+                        <constraint firstItem="uT2-Gt-hMZ" firstAttribute="leading" secondItem="8z5-Za-l3m" secondAttribute="leading" id="ZI2-uB-tRZ"/>
+                        <constraint firstItem="vf2-Zj-cLi" firstAttribute="leading" secondItem="uT2-Gt-hMZ" secondAttribute="trailing" constant="10" id="c8Z-tF-45E"/>
+                        <constraint firstItem="uT2-Gt-hMZ" firstAttribute="top" secondItem="8z5-Za-l3m" secondAttribute="top" id="v3H-N5-dfF"/>
+                        <constraint firstAttribute="bottom" secondItem="uT2-Gt-hMZ" secondAttribute="bottom" id="xFz-Lm-anU"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.transparent"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="3nF-aI-wQH" secondAttribute="centerX" id="0oU-SU-kw6"/>
+                <constraint firstItem="8z5-Za-l3m" firstAttribute="top" secondItem="ece-Hq-lEG" secondAttribute="bottom" constant="30" id="3JL-Sd-Oqb"/>
+                <constraint firstAttribute="centerX" secondItem="ece-Hq-lEG" secondAttribute="centerX" id="Bve-2T-Czk"/>
+                <constraint firstItem="bxF-wJ-VCI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JJc-O4-UnG"/>
+                <constraint firstItem="WlM-2p-dm7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" id="KKy-MO-bbX"/>
+                <constraint firstAttribute="bottom" secondItem="8z5-Za-l3m" secondAttribute="bottom" id="MMq-ic-xxZ"/>
+                <constraint firstAttribute="centerX" secondItem="8z5-Za-l3m" secondAttribute="centerX" id="Nhl-GP-1tB"/>
+                <constraint firstItem="3nF-aI-wQH" firstAttribute="top" secondItem="WlM-2p-dm7" secondAttribute="bottom" constant="30" id="QPh-hX-u1S"/>
+                <constraint firstAttribute="centerX" secondItem="bxF-wJ-VCI" secondAttribute="centerX" id="Yrx-SR-CdV"/>
+                <constraint firstAttribute="trailing" secondItem="bxF-wJ-VCI" secondAttribute="trailing" id="ewX-gG-sZA"/>
+                <constraint firstAttribute="centerX" secondItem="WlM-2p-dm7" secondAttribute="centerX" id="stp-Na-1MD"/>
+                <constraint firstItem="ece-Hq-lEG" firstAttribute="top" secondItem="bxF-wJ-VCI" secondAttribute="bottom" constant="2" id="szJ-3q-hDr"/>
+                <constraint firstItem="bxF-wJ-VCI" firstAttribute="top" secondItem="3nF-aI-wQH" secondAttribute="bottom" constant="10" id="xBq-aw-jUZ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="416" y="209.5"/>
+        </view>
+    </objects>
+</document>
