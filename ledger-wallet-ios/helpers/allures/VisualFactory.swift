@@ -74,6 +74,15 @@ struct VisualFactory {
                 }()
         ]
         
+        static let smallCentered: TextAttribute = TextAttributes.extend(small, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = (small[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
+            ]
+        )
+        
         static let smallGrey: TextAttribute = TextAttributes.extend(small, withAttributes: [
                 NSForegroundColorAttributeName: Colors.darkGrey
             ]
