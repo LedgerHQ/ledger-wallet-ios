@@ -16,7 +16,7 @@ struct VisualTheme {
     typealias TextFieldAllure = (TextField) -> ()
 
 
-    //MARK: View allures
+    // MARK: View allures
     
     static let viewAllures: [String: ViewAllure] = [
         "view.background": { view in
@@ -64,7 +64,7 @@ struct VisualTheme {
         }
     ]
     
-    //MARK: Label allures
+    // MARK: Label allures
     
     static let labelAllures: [String: LabelAllure] = [
         "navigationBar.title": { label in
@@ -111,7 +111,7 @@ struct VisualTheme {
         }
     ]
     
-    //MARK: Button allures
+    // MARK: Button allures
     
     static let buttonAllures: [String: ButtonAllure] = [
         "navigationBar.grey": { button in
@@ -158,7 +158,7 @@ struct VisualTheme {
         }
     ]
     
-    //MARK: TextField allures
+    // MARK: TextField allures
     
     static let textFieldAllures: [String: TextFieldAllure] = [
         "hugeName": { textField in

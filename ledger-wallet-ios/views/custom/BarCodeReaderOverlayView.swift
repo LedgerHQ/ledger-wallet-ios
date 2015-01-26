@@ -10,7 +10,7 @@ import UIKit
 
 class BarCodeReaderOverlayView: View {
 
-    //MARK: Drawing
+    // MARK: Drawing
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
@@ -39,7 +39,7 @@ class BarCodeReaderOverlayView: View {
         CGContextRestoreGState(context)
     }
     
-    //MARK: Initialization
+    // MARK: Initialization
     
     private func initialize() {
         backgroundColor = UIColor.clearColor()

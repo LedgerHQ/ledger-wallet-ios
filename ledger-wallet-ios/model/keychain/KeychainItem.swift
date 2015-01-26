@@ -15,7 +15,7 @@ class KeychainItem {
     class var serviceIdentifier: String { return "" }
     private(set) var persistentReference: NSData!
     
-    //MARK: Test environment
+    // MARK: Test environment
     
     class var testEnvironment: Bool {
         get {
@@ -29,7 +29,7 @@ class KeychainItem {
         private static var testEnvironment = false
     }
     
-    //MARK: Static methods
+    // MARK: Static methods
     
     class func fetchAll() -> [KeychainItem] {
         // build query
@@ -94,7 +94,7 @@ class KeychainItem {
         ]
     }
     
-    //MARK: Instance methods
+    // MARK: Instance methods
     
     func remove() -> Bool {
         // build query
@@ -109,7 +109,7 @@ class KeychainItem {
         return status == errSecSuccess
     }
     
-    //MARK: Initialization
+    // MARK: Initialization
     
     func initialize(data: NSData) -> Bool {
         return false

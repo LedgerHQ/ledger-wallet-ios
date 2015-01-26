@@ -20,7 +20,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         return 2
     }
     
-    //MARK: Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -36,7 +36,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         }
     }
     
-    //MARK: View lifecycle
+    // MARK: View lifecycle
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -47,7 +47,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
 
 extension PairingAddCodeStepViewController: PinCodeViewDelegate {
     
-    //MARK: PinCodeView delegate
+    // MARK: PinCodeView delegate
     
     func pinCodeViewDidComplete(pinCodeView: PinCodeView, text: String) {
         parentPairingViewController?.navigateToNextStep()

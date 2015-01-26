@@ -23,7 +23,7 @@ class PairingAddViewController: ViewController {
     private var currentStepNumber = -1
     private var currentStepViewController: PairingAddBaseStepViewController?
     
-    //MARK: Steps management
+    // MARK: Steps management
 
     func navigateToNextStep() {
         navigateToStep(currentStepNumber + 1)
@@ -68,7 +68,7 @@ class PairingAddViewController: ViewController {
         currentStepNumber = stepNumber
     }
     
-    //MARK: Actions
+    // MARK: Actions
     
     override func complete() {
         // complete current step view controller
@@ -86,7 +86,7 @@ class PairingAddViewController: ViewController {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //MARK: Interface
+    // MARK: Interface
     
     override func updateView() {
         super.updateView()
@@ -116,7 +116,7 @@ class PairingAddViewController: ViewController {
         }
     }
     
-    //MARK: Keyboard management
+    // MARK: Keyboard management
     
     override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
         super.keyboardWillHide(userInfo)
@@ -134,7 +134,7 @@ class PairingAddViewController: ViewController {
         adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
     }
     
-    //MARK: Layout
+    // MARK: Layout
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -146,7 +146,7 @@ class PairingAddViewController: ViewController {
 
 extension PairingAddViewController {
     
-    //MARK: CATransition delegate
+    // MARK: CATransition delegate
     
     override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
         // remove previous view controller view

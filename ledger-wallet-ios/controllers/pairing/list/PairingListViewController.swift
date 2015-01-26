@@ -13,7 +13,7 @@ class PairingListViewController: ViewController {
     @IBOutlet private weak var actionBar: ActionBarView!
     @IBOutlet private weak var pairingStatusLabel: Label!
     
-    //MARK: Actions
+    // MARK: Actions
     
     @IBAction private func pairNewDongleButtonTouched(sender: AnyObject) {
         let navigationController = NavigationController.instantiateFromStoryboard(storyboard)
@@ -23,7 +23,7 @@ class PairingListViewController: ViewController {
     }
     
     
-    //MARK: Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -40,7 +40,7 @@ class PairingListViewController: ViewController {
 
 extension PairingListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    //MARK: Tableview methods
+    // MARK: Tableview methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3

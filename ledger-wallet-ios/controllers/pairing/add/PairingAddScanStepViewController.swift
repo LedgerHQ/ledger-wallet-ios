@@ -20,7 +20,7 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         return 1
     }
 
-    //MARK: Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -28,7 +28,7 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         barCodeReader.delegate = self
     }
     
-    //MARK: View lifecycle
+    // MARK: View lifecycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,7 +46,7 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
 
 extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
     
-    //MARK: Barcode reader delegate
+    // MARK: Barcode reader delegate
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String) {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))

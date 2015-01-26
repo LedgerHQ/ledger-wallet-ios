@@ -12,7 +12,7 @@ class RoundedButton: Button {
     
     private var fillColors: [UInt: UIColor] = [:]
 
-    //MARK: Border radius
+    // MARK: Border radius
     
     var borderRadius: CGFloat = VisualFactory.Metrics.defaultBorderRadius {
         didSet {
@@ -20,7 +20,7 @@ class RoundedButton: Button {
         }
     }
     
-    //MARK: Fill color
+    // MARK: Fill color
     
     func setFillColor(color: UIColor, forState state: UIControlState) {
         fillColors.updateValue(color, forKey: state.rawValue)
@@ -37,7 +37,7 @@ class RoundedButton: Button {
         return UIColor.clearColor()
     }
     
-    //MARK: Drawing invalidation
+    // MARK: Drawing invalidation
     
     override var selected: Bool {
         didSet {
@@ -50,7 +50,7 @@ class RoundedButton: Button {
         }
     }
     
-    //MARK: Drawing
+    // MARK: Drawing
     
     override func drawRect(rect: CGRect) {
         let fillPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.borderRadius)
@@ -59,7 +59,7 @@ class RoundedButton: Button {
         super.drawRect(rect)
     }
     
-    //MARK: Layout
+    // MARK: Layout
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -76,7 +76,7 @@ class RoundedButton: Button {
             (titleLabel?.bounds.size.height ?? 0))
     }
     
-    //MARK: Content size
+    // MARK: Content size
     
     override func intrinsicContentSize() -> CGSize {
         var width: CGFloat = contentEdgeInsets.left + contentEdgeInsets.right

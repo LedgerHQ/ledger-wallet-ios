@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     lazy private var _contentStatus: ContentStatus = { return self.initialContentStatus() }()
     private var _keyboardFrame: CGRect?
     
-    //MARK: Presentation
+    // MARK: Presentation
     
     @IBAction func cancel() {
     
@@ -26,13 +26,13 @@ class ViewController: UIViewController {
 
     }
     
-    //MARK: Status bar style
+    // MARK: Status bar style
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
     
-    //MARK: Interface
+    // MARK: Interface
     
     func updateView() {
         
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
 
     }
     
-    //MARK: Layout 
+    // MARK: Layout 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         layoutContentStatusViews()
     }
     
-    //MARK: View lifecycle
+    // MARK: View lifecycle
     
     override func loadView() {
         super.loadView()
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
 
 extension ViewController {
     
-    //MARK: Keyboard management
+    // MARK: Keyboard management
     
     var keyboardFrame: CGRect {
         if let frame = _keyboardFrame {
@@ -140,7 +140,7 @@ extension ViewController {
 
 extension ViewController {
     
-    //MARK: Content status
+    // MARK: Content status
     
     enum ContentStatus {
         case Available

@@ -17,7 +17,7 @@ class DialogAnimationController: NSObject {
 
 extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
     
-    //MARK: Transition
+    // MARK: Transition
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!

@@ -10,7 +10,7 @@ import UIKit
 
 extension UIColor {
     
-    //MARK: Hex initialization
+    // MARK: Hex initialization
     
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
@@ -23,7 +23,7 @@ extension UIColor {
         self.init(red:(hex >> 16) & 0xFF, green:(hex >> 8) & 0xFF, blue:hex & 0xFF)
     }
     
-    //MARK: Darker and Lighter
+    // MARK: Darker and Lighter
     
     func brighterColor(factor: CGFloat = VisualFactory.Metrics.defaultDarkenFactor) -> UIColor {
         var h:CGFloat = 0.0, s:CGFloat = 0.0, b:CGFloat = 0.0, a:CGFloat = 0.0

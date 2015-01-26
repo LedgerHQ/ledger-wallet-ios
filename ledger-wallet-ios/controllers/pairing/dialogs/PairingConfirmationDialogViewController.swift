@@ -24,7 +24,7 @@ class PairingConfirmationDialogViewController: DialogViewController {
     @IBOutlet private weak var titleLabel: Label!
     @IBOutlet private weak var messageLabel: Label!
     
-    //MARK: Interface 
+    // MARK: Interface 
     
     override func updateView() {
         super.updateView()
@@ -34,7 +34,7 @@ class PairingConfirmationDialogViewController: DialogViewController {
         messageLabel?.text = localizedMessage
     }
     
-    //MARK: Actions
+    // MARK: Actions
     
     override func complete() {
         super.complete()
@@ -42,7 +42,7 @@ class PairingConfirmationDialogViewController: DialogViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //MARK: Content size
+    // MARK: Content size
     
     override func dialogLayoutSize(constraintedSize size: CGSize) -> CGSize {
         variableWidthConstraint?.constant = size.width - dialogContentDistance.left - dialogContentDistance.right

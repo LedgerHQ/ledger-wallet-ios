@@ -24,7 +24,7 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         return true
     }
     
-    //MARK: Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -41,7 +41,7 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         }
     }
     
-    //MARK: View lifecycle
+    // MARK: View lifecycle
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
