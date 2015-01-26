@@ -62,10 +62,4 @@ class KeychainItemTests: XCTestCase {
         XCTAssertEqual(PairingKeychainItem.fetchAll().count, 0, "Wrong fetched keychain items count")
     }
     
-    func testSameData() {
-        PairingKeychainItem.add(testData)
-        let item = PairingKeychainItem.fetchAll()[0]
-        XCTAssertEqual(item.data, testData, "Data is not equal")
-    }
-
 }

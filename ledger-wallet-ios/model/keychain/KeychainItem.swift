@@ -14,7 +14,6 @@ class KeychainItem {
     var valid: Bool { return persistentReference != nil }
     class var serviceIdentifier: String { return "" }
     private(set) var persistentReference: NSData!
-    private(set) var data: NSData!
     
     //MARK: Test environment
     
@@ -51,7 +50,7 @@ class KeychainItem {
                 // loop through all returned items
                 for item in items {
                     // try to build keychain item with given attributes
-                    if let keychainItem = KeychainItem(attributes: item) {
+                    if let keychainItem = self(attributes: item) {
                         keychainItems.append(keychainItem)
                     }
                 }
@@ -80,7 +79,7 @@ class KeychainItem {
         if (status == errSecSuccess) {
             if let item = result as? [String: AnyObject] {
                 // try to build keychain item with given attributes
-                if let keychainItem = KeychainItem(attributes: item) {
+                if let keychainItem = self(attributes: item) {
                     return keychainItem
                 }
             }
@@ -106,21 +105,20 @@ class KeychainItem {
         
         // clear itself
         persistentReference = nil
-        data = nil
-        
+
         return status == errSecSuccess
     }
     
     //MARK: Initialization
     
-    func initialize() -> Bool {
+    func initialize(data: NSData) -> Bool {
         return false
     }
     
-    private init?(attributes: [String: AnyObject]) {
+    required init?(attributes: [String: AnyObject]) {
         persistentReference = attributes[kSecValuePersistentRef] as? NSData
-        data = attributes[kSecValueData] as? NSData
-        if (persistentReference == nil || data == nil || !initialize()) {
+        let data = attributes[kSecValueData] as? NSData
+        if (persistentReference == nil || data == nil || !initialize(data!)) {
             return nil
         }
     }
