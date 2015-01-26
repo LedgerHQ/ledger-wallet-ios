@@ -34,11 +34,6 @@ class PairingListViewController: ViewController {
     
     override func updateView() {
         super.updateView()
-        
-        delayOnMainQueue(0.5) {
-            let vc = PairingTransactionDialogViewController.instantiateFromNib()
-            self.presentViewController(vc, animated: true, completion: nil)
-        }
     }
     
 }
