@@ -84,7 +84,6 @@
 		373E22CB1A71517C00BAF63F /* Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
 		373E22CD1A72490D00BAF63F /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
-		373E22D51A76717A00BAF63F /* ledger-wallet-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ledger-wallet-ios.entitlements"; sourceTree = "<group>"; };
 		373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingKeychainItem.swift; sourceTree = "<group>"; };
 		373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemTests.swift; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -218,7 +217,6 @@
 		3784FB071A5D2F5E0063A364 /* ledger-wallet-ios */ = {
 			isa = PBXGroup;
 			children = (
-				373E22D51A76717A00BAF63F /* ledger-wallet-ios.entitlements */,
 				378205D51A60196C00F6CA45 /* Resources */,
 				373E22D61A7681F100BAF63F /* Model */,
 				37F283931A655D3400F432CC /* Controllers */,
