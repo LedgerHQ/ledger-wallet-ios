@@ -14,6 +14,7 @@ class KeychainItem {
     var valid: Bool { return persistentReference != nil }
     class var serviceIdentifier: String { return "" }
     private(set) var persistentReference: NSData!
+    private(set) var data: NSData!
     
     // MARK: Test environment
     
@@ -60,7 +61,12 @@ class KeychainItem {
     }
     
     class func removeAll() -> Bool {
-        return fetchAll().map({ $0.remove() }).reduce(true, &)
+        // build query
+        var query = defaultQuery()
+        
+        // perform keychain query
+        let status = SecItemDelete(query)
+        return status == errSecSuccess || status == errSecItemNotFound
     }
     
     class func add(data: NSData) -> KeychainItem? {
@@ -105,19 +111,19 @@ class KeychainItem {
         
         // clear itself
         persistentReference = nil
-
+        data = nil
         return status == errSecSuccess
     }
     
     // MARK: Initialization
     
     func initialize(data: NSData) -> Bool {
-        return false
+        return true
     }
     
     required init?(attributes: [String: AnyObject]) {
         persistentReference = attributes[kSecValuePersistentRef] as? NSData
-        let data = attributes[kSecValueData] as? NSData
+        data = attributes[kSecValueData] as? NSData
         if (persistentReference == nil || data == nil || !initialize(data!)) {
             return nil
         }
