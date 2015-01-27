@@ -15,7 +15,7 @@ class PairingKeychainItem: KeychainItem {
     private(set) var pairingId: String!
     private(set) var dongleName: String!
 
-    override func initialize(data: NSData) -> Bool {
+    override func initialize(attributes: [String: AnyObject], data: NSData) -> Bool {
         if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as? [String: AnyObject] {
             pairingKey = JSON["pairing_key"] as? String
             pairingId = JSON["pairing_id"] as? String

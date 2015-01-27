@@ -15,6 +15,7 @@ class KeychainItem {
     class var serviceIdentifier: String { return "" }
     private(set) var persistentReference: NSData!
     private(set) var data: NSData!
+    private(set) var creationDate: NSDate!
     
     // MARK: Test environment
     
@@ -110,21 +111,27 @@ class KeychainItem {
         let status = SecItemDelete(query)
         
         // clear itself
+        clear()
+        return status == errSecSuccess
+    }
+    
+    private func clear() {
         persistentReference = nil
         data = nil
-        return status == errSecSuccess
+        creationDate = nil
     }
     
     // MARK: Initialization
     
-    func initialize(data: NSData) -> Bool {
+    func initialize(attributes: [String: AnyObject], data: NSData) -> Bool {
         return true
     }
     
     required init?(attributes: [String: AnyObject]) {
         persistentReference = attributes[kSecValuePersistentRef] as? NSData
         data = attributes[kSecValueData] as? NSData
-        if (persistentReference == nil || data == nil || !initialize(data!)) {
+        creationDate = attributes[kSecAttrCreationDate] as? NSDate
+        if (persistentReference == nil || data == nil || creationDate == nil || !initialize(attributes, data: data!)) {
             return nil
         }
     }
