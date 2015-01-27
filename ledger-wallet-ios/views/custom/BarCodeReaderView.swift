@@ -17,15 +17,12 @@ protocol BarCodeReaderViewDelegate: class {
 
 class BarCodeReaderView: View {
     
-    var isCapturing: Bool {
-        return _isCapturing
-    }
     private var previewLayer: AVCaptureVideoPreviewLayer {
         return layer as AVCaptureVideoPreviewLayer
     }
     weak var delegate: BarCodeReaderViewDelegate?
     var listensAppNotifications = true
-    private var _isCapturing = false
+    private(set) var isCapturing = false
     private var captureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession?
     private var captureDeviceInput: AVCaptureDeviceInput?
@@ -72,7 +69,7 @@ class BarCodeReaderView: View {
 
         captureSession?.startRunning()
         
-        _isCapturing = true
+        isCapturing = true
     }
     
     func stopCapture() {
@@ -83,7 +80,7 @@ class BarCodeReaderView: View {
         captureSession?.stopRunning()
         cleanUp()
         
-        _isCapturing = false
+        isCapturing = false
     }
     
     private func cleanUp() {
