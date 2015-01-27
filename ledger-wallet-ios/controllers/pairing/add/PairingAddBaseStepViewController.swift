@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddBaseStepViewController: ViewController {
+class PairingAddBaseStepViewController: BaseViewController {
 
     var stepNumber: Int {
         return 0

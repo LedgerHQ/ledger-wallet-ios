@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DialogViewController: ViewController {
+class DialogViewController: BaseViewController {
     
     private lazy var dialogAnimationController = DialogAnimationController()
     var dialogContentPadding: UIEdgeInsets {

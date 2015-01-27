@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingListViewController: ViewController {
+class PairingListViewController: BaseViewController {
     
     @IBOutlet private weak var actionBar: ActionBarView!
     @IBOutlet private weak var pairingStatusLabel: Label!

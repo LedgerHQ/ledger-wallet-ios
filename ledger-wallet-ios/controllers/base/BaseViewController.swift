@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  BaseViewController.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 07/01/2015.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BaseViewController: UIViewController {
     
     var loadingView: UIView?
     var emptyView: UIView?
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController {
+extension BaseViewController {
     
     // MARK: Keyboard management
     
@@ -138,7 +138,7 @@ extension ViewController {
     
 }
 
-extension ViewController {
+extension BaseViewController {
     
     // MARK: Content status
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddViewController: ViewController {
+class PairingAddViewController: BaseViewController {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var stepNumberLabel: Label!
