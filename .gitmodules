@@ -1,3 +1,3 @@
-[submodule "vendor/starscream"]
-	path = vendor/starscream
-	url = git@github.com:daltoniam/Starscream.git
+[submodule "ledger-wallet-ios/vendor/jetfire"]
+	path = ledger-wallet-ios/vendor/jetfire
+	url = git@github.com:acmacalister/jetfire.git

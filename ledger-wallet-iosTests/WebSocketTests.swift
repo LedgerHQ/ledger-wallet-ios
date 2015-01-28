@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 Ledger. All rights reserved.
 //
 
-import UIKit
 import XCTest
 
-class WebSocketTests: XCTestCase, WebSocketDelegate {
-    var websocket: WebSocket!
+class WebSocketTests: XCTestCase, JFRWebSocketDelegate {
+    var websocket: JFRWebSocket!
     var connectExpectation: XCTestExpectation!
     var disconnectExpectation: XCTestExpectation!
     
@@ -19,8 +18,8 @@ class WebSocketTests: XCTestCase, WebSocketDelegate {
     
     override func setUp() {
         super.setUp()
-        if let url = NSURL(string: "wss://echo.websocket.org") {
-            websocket = WebSocket(url: url)
+        if let url = NSURL(string: "ws://echo.websocket.org") {
+            websocket = JFRWebSocket(URL: url, protocols: nil)
             websocket.delegate = self
             connectExpectation = expectationWithDescription("websocket connect")
             websocket.connect()
@@ -34,27 +33,19 @@ class WebSocketTests: XCTestCase, WebSocketDelegate {
         }
     }
     
-    func websocketDidConnect() {
+    func websocketDidConnect(socket: JFRWebSocket!) {
         connectExpectation.fulfill()
     }
     
-    func websocketDidDisconnect(error: NSError?) {
+    func websocketDidDisconnect(socket: JFRWebSocket!, error: NSError!) {
         disconnectExpectation.fulfill()
     }
     
-    func websocketDidWriteError(error: NSError?) {
-        
-    }
-    
-    func websocketDidReceiveMessage(text: String) {
-        XCTAssert(text == message, "echo mismatch")
+    func websocket(socket: JFRWebSocket!, didReceiveMessage string: String!) {
+        XCTAssert(string == message, "echo mismatch")
         expectation.fulfill()
     }
-    
-    func websocketDidReceiveData(data: NSData) {
-        
-    }
-    
+
     func testEcho() {
         expectation = expectationWithDescription("test echo")
         message = "this is an echo test"
