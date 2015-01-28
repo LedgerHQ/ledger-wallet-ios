@@ -50,7 +50,7 @@ extension PairingAddCodeStepViewController: PinCodeViewDelegate {
     // MARK: PinCodeView delegate
     
     func pinCodeViewDidComplete(pinCodeView: PinCodeView, text: String) {
-        parentPairingViewController?.navigateToNextStep()
+//        parentPairingViewController?.navigateToNextStep()
     }
     
     func pinCodeView(pinCodeView: PinCodeView, didRequestNewIndex index: Int, placeholderChar: String?) {

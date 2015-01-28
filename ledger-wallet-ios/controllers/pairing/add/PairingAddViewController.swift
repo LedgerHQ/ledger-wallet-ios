@@ -15,58 +15,19 @@ class PairingAddViewController: BaseViewController {
     @IBOutlet private weak var stepIndicationLabel: Label!
     @IBOutlet private weak var bottomInsetConstraint: NSLayoutConstraint!
     
+    lazy private(set) var pairingAddManager: PairingAddManager = {
+        let manager = PairingAddManager()
+        manager.delegate = self
+        return manager
+    }()
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        PairingAddScanStepViewController.self,
+        //PairingAddScanStepViewController.self,
+        PairingAddConnectionStepViewController.self,
         PairingAddCodeStepViewController.self,
         PairingAddNameStepViewController.self
     ]
     private var currentStepNumber = -1
     private var currentStepViewController: PairingAddBaseStepViewController?
-    
-    // MARK: Steps management
-
-    func navigateToNextStep() {
-        navigateToStep(currentStepNumber + 1)
-    }
-    
-    private func navigateToStep(stepNumber: Int) {
-        // instantiate new view controller
-        let newViewController = stepClasses[stepNumber].instantiateFromNib()
-        addChildViewController(newViewController)
-        newViewController.didMoveToParentViewController(self)
-        newViewController.view.frame = containerView.bounds
-        newViewController.view.setNeedsLayout()
-        newViewController.view.layoutIfNeeded()
-        containerView?.addSubview(newViewController.view)
-
-        // animate slide to new view controller if there is already a view controller
-        if let currentViewController = currentStepViewController {
-            // create transision
-            let transition = CATransition()
-            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            transition.duration = VisualFactory.Metrics.defaultAnimationDuration
-            transition.delegate = self
-            transition.setValue(currentViewController, forKey: "stepViewController")
-            
-            // remove current view controller from children
-            currentViewController.willMoveToParentViewController(nil)
-            currentViewController.removeFromParentViewController()
-            
-            self.containerView?.layer.addAnimation(transition, forKey: nil)
-        }
-
-        
-        // retain new view controller
-        currentStepViewController = newViewController
-        
-        // update view
-        updateView()
-        
-        // update current step
-        currentStepNumber = stepNumber
-    }
     
     // MARK: Actions
     
@@ -81,6 +42,10 @@ class PairingAddViewController: BaseViewController {
     override func cancel() {
         // cancel current step view controller
         currentStepViewController?.cancel()
+        
+        // terminate pairing manager
+        pairingAddManager.delegate = nil
+        pairingAddManager.terminate()
         
         // dimiss pairing
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -99,7 +64,7 @@ class PairingAddViewController: BaseViewController {
     override func configureView() {
         super.configureView()
         
-        navigateToNextStep()
+        navigateToStep(0)
     }
     
     private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
@@ -142,6 +107,67 @@ class PairingAddViewController: BaseViewController {
         currentStepViewController?.view.frame = containerView.bounds
     }
     
+    override init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // TODO:
+        pairingAddManager.joinRoom("holymacaroni")
+    }
+    
+}
+
+extension PairingAddViewController {
+    
+    // MARK: Steps management
+    
+    private func navigateToStepWithClass(`class`: PairingAddBaseStepViewController.Type) {
+        navigateToStep((stepClasses as NSArray).indexOfObject(`class`))
+    }
+    
+    private func navigateToStep(stepNumber: Int) {
+        // instantiate new view controller
+        let newViewController = stepClasses[stepNumber].instantiateFromNib()
+        addChildViewController(newViewController)
+        newViewController.didMoveToParentViewController(self)
+        newViewController.view.frame = containerView.bounds
+        newViewController.view.setNeedsLayout()
+        newViewController.view.layoutIfNeeded()
+        containerView?.addSubview(newViewController.view)
+        
+        // animate slide to new view controller if there is already a view controller
+        if let currentViewController = currentStepViewController {
+            // create transision
+            let transition = CATransition()
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromRight
+            transition.duration = VisualFactory.Metrics.defaultAnimationDuration
+            transition.delegate = self
+            transition.setValue(currentViewController, forKey: "stepViewController")
+            
+            // remove current view controller from children
+            currentViewController.willMoveToParentViewController(nil)
+            currentViewController.removeFromParentViewController()
+            
+            self.containerView?.layer.addAnimation(transition, forKey: nil)
+        }
+        
+        // retain new view controller
+        currentStepViewController = newViewController
+        
+        // update view
+        updateView()
+        
+        // update current step
+        currentStepNumber = stepNumber
+    }
+    
 }
 
 extension PairingAddViewController {
@@ -152,6 +178,28 @@ extension PairingAddViewController {
         // remove previous view controller view
         let stepViewController = anim.valueForKey("stepViewController") as? PairingAddBaseStepViewController
         stepViewController?.view.removeFromSuperview()
+    }
+    
+}
+
+extension PairingAddViewController: PairingAddManagerDelegate {
+    
+    // MARK: PairingAddManager delegate
+    
+    func pairingAddManagerDidJoinRoom(pairingAddManager: PairingAddManager) {
+        
+    }
+    
+    func pairingAddManagerDidReceiveChallenge(pairingAddManager: PairingAddManager, challenge: String) {
+        
+    }
+    
+    func pairingAddManager(pairingAddManager: PairingAddManager, didPairWithKey key: String?) {
+        
+    }
+    
+    func pairingAddManager(pairingAddManager: PairingAddManager, didTerminateWithError hasError: Bool) {
+
     }
     
 }

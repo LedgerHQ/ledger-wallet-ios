@@ -53,7 +53,7 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
         println(code)
         
         barCodeReader?.stopCapture()
-        parentPairingViewController?.navigateToNextStep()
+//        parentPairingViewController?.navigateToNextStep()
     }
     
 }

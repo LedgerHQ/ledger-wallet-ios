@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3724A3821A79383700E1B977 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
+		3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */; };
+		3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */; };
 		373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
 		373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
@@ -39,9 +42,10 @@
 		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
 		37A88F741A6E550F0036CF2A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F731A6E550F0036CF2A /* TextField.swift */; };
 		37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */; };
-		37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
+		37ACFDEC1A79161B002E32FC /* EllipticCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEB1A79161B002E32FC /* EllipticCurve.swift */; };
+		37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
+		37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
-		37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A21A5D4F2C001373C5 /* WebSocket.swift */; };
 		37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */; };
 		37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */; };
 		37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */; };
@@ -83,6 +87,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3724A3811A79383700E1B977 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddConnectionStepViewController.swift; sourceTree = "<group>"; };
+		3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddConnectionStepViewController.xib; sourceTree = "<group>"; };
 		373E22CB1A71517C00BAF63F /* Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
 		373E22CD1A72490D00BAF63F /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
@@ -118,7 +125,9 @@
 		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
 		37A88F731A6E550F0036CF2A /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+Utils.swift"; sourceTree = "<group>"; };
-		37B746A21A5D4F2C001373C5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = SOURCE_ROOT; };
+		37ACFDEB1A79161B002E32FC /* EllipticCurve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EllipticCurve.swift; path = crypto/EllipticCurve.swift; sourceTree = "<group>"; };
+		37ACFDEE1A791810002E32FC /* JFRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFRWebSocket.h; path = vendor/jetfire/JFRWebSocket.h; sourceTree = "<group>"; };
+		37ACFDEF1A791810002E32FC /* JFRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFRWebSocket.m; path = vendor/jetfire/JFRWebSocket.m; sourceTree = "<group>"; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Colorize.swift"; sourceTree = "<group>"; };
 		37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -235,10 +244,10 @@
 				375A38081A77DA9A0082D917 /* Managers */,
 				37F283931A655D3400F432CC /* Controllers */,
 				37F283A41A655D3400F432CC /* Views */,
-				37B746A11A5D4F03001373C5 /* WebSocket */,
 				37F283BA1A655D7200F432CC /* Helpers */,
 				37F283971A655D3400F432CC /* Extensions */,
 				3784FB081A5D2F5F0063A364 /* Supporting Files */,
+				37ACFDED1A7917FC002E32FC /* Vendor */,
 			);
 			path = "ledger-wallet-ios";
 			sourceTree = "<group>";
@@ -304,12 +313,21 @@
 			path = pairing/dialogs;
 			sourceTree = "<group>";
 		};
-		37B746A11A5D4F03001373C5 /* WebSocket */ = {
+		37ACFDEA1A7915FF002E32FC /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				37B746A21A5D4F2C001373C5 /* WebSocket.swift */,
+				37ACFDEB1A79161B002E32FC /* EllipticCurve.swift */,
 			);
-			name = WebSocket;
+			name = Crypto;
+			sourceTree = "<group>";
+		};
+		37ACFDED1A7917FC002E32FC /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				37ACFDEE1A791810002E32FC /* JFRWebSocket.h */,
+				37ACFDEF1A791810002E32FC /* JFRWebSocket.m */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 		37B9E4A91A67F98F0055E81A /* Add Dongle */ = {
@@ -319,6 +337,8 @@
 				37A88F5F1A6911460036CF2A /* PairingAddBaseStepViewController.swift */,
 				37A88F611A6911DD0036CF2A /* PairingAddScanStepViewController.swift */,
 				37A88F641A6928040036CF2A /* PairingAddScanStepViewController.xib */,
+				3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */,
+				3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */,
 				37A88F661A692ED40036CF2A /* PairingAddCodeStepViewController.swift */,
 				37A88F681A692EDC0036CF2A /* PairingAddCodeStepViewController.xib */,
 				37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */,
@@ -421,6 +441,7 @@
 		37F283BA1A655D7200F432CC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				37ACFDEA1A7915FF002E32FC /* Crypto */,
 				3798BA161A6E6C7C00F5B603 /* Allures */,
 				37F283BF1A655D7200F432CC /* Utils */,
 			);
@@ -434,6 +455,7 @@
 				37F283C01A655D7200F432CC /* Localization.swift */,
 				378057921A6EA8DE00481B4D /* DeviceManager.swift */,
 				373E22CB1A71517C00BAF63F /* Blocks.swift */,
+				3724A3811A79383700E1B977 /* Common.swift */,
 			);
 			name = Utils;
 			path = utils;
@@ -537,6 +559,7 @@
 			files = (
 				37A88F651A6928040036CF2A /* PairingAddScanStepViewController.xib in Resources */,
 				37F283681A6406A900F432CC /* Localizable.strings in Resources */,
+				3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */,
 				37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */,
 				37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */,
 				379CA1061A713BB900A9D426 /* PairingConfirmationDialogViewController.xib in Resources */,
@@ -577,7 +600,6 @@
 				37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
-				37B746A31A5D4F2C001373C5 /* WebSocket.swift in Sources */,
 				373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */,
 				373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */,
 				375A380A1A77DB200082D917 /* BaseManager.swift in Sources */,
@@ -586,6 +608,7 @@
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
 				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,
+				37ACFDEC1A79161B002E32FC /* EllipticCurve.swift in Sources */,
 				3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,
 				37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */,
@@ -600,11 +623,14 @@
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
+				3724A3821A79383700E1B977 /* Common.swift in Sources */,
 				375A38071A77DA930082D917 /* PairingAddManager.swift in Sources */,
+				37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
 				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
+				3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */,
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
 				37A88F671A692ED40036CF2A /* PairingAddCodeStepViewController.swift in Sources */,
@@ -617,11 +643,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
 				37656F301A76A3F60042512D /* KeychainItem.swift in Sources */,
 				373E22DB1A76895C00BAF63F /* KeychainItemTests.swift in Sources */,
-				37B746A61A5D504F001373C5 /* WebSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +815,7 @@
 				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
 			};
@@ -806,6 +833,7 @@
 				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
 			};
 			name = Release;

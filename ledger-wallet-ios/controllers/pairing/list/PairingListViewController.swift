@@ -34,6 +34,10 @@ class PairingListViewController: BaseViewController {
     
     override func updateView() {
         super.updateView()
+        
+        delayOnMainQueue(0.5) {
+            self.pairNewDongleButtonTouched(UIView())
+        }
     }
     
 }
