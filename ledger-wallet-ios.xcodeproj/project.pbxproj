@@ -15,6 +15,7 @@
 		373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
 		373E22DB1A76895C00BAF63F /* KeychainItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */; };
 		373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
+		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
 		375A38071A77DA930082D917 /* PairingAddManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38061A77DA930082D917 /* PairingAddManager.swift */; };
 		375A380A1A77DB200082D917 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38091A77DB200082D917 /* BaseManager.swift */; };
@@ -95,6 +96,7 @@
 		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingKeychainItem.swift; sourceTree = "<group>"; };
 		373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemTests.swift; sourceTree = "<group>"; };
+		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		375A38061A77DA930082D917 /* PairingAddManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingAddManager.swift; path = managers/PairingAddManager.swift; sourceTree = "<group>"; };
 		375A38091A77DB200082D917 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				37EF91BD1A6D3C47007DBBAF /* BarCodeReaderView.swift */,
 				37EF91C91A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift */,
 				37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */,
+				3745D7801A796CE100762F80 /* LoadingIndicator.swift */,
 			);
 			name = Custom;
 			path = custom;
@@ -629,6 +632,7 @@
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
+				3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */,
 				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
 				3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */,
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,

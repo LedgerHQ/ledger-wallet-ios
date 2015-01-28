@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6254"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingAddConnectionStepViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -14,7 +14,21 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ry5-Q5-OJ7" customClass="LoadingIndicator" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="250" y="250" width="100" height="100"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="1JO-8V-BNY"/>
+                        <constraint firstAttribute="height" constant="100" id="eOe-nG-fQD"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="Ry5-Q5-OJ7" secondAttribute="centerY" id="jX2-W1-rw0"/>
+                <constraint firstAttribute="centerX" secondItem="Ry5-Q5-OJ7" secondAttribute="centerX" id="umG-Aa-0n6"/>
+            </constraints>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
             </userDefinedRuntimeAttributes>
