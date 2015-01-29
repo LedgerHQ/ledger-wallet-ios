@@ -36,8 +36,17 @@ class LoadingIndicator: View {
             invalidateIntrinsicContentSize()
         }
     }
-    var dotsNormalColor = UIColor.blackColor()
-    var dotsHighlightedColor = UIColor.redColor()
+    var dotsNormalColor: UIColor = UIColor.blackColor() {
+        didSet {
+            
+        }
+    }
+    var dotsHighlightedColor: UIColor = UIColor.redColor() {
+        didSet {
+            
+        }
+    }
+    var autoStartAnimating = true
     private var timer: NSTimer? = nil
     private var highlightedLayerIndex = -1
     
@@ -77,7 +86,7 @@ class LoadingIndicator: View {
         if (oldIndex >= 0) {
             if let layer = layer.sublayers[oldIndex] as? CALayer {
                 CATransaction.begin()
-                CATransaction.setAnimationDuration(1.0)
+                CATransaction.setAnimationDuration(0.25)
                 layer.backgroundColor = dotsNormalColor.CGColor
                 CATransaction.commit()
             }
@@ -99,7 +108,9 @@ class LoadingIndicator: View {
         CATransaction.setDisableActions(true)
         for _ in 0..<dotsCount {
             let layer = CALayer()
+            layer.contentsScale = DeviceManager.screenScale()
             layer.bounds = CGRectZero
+            layer.allowsEdgeAntialiasing = true
             layer.backgroundColor = dotsNormalColor.CGColor
             self.layer.addSublayer(layer)
         }
@@ -153,6 +164,9 @@ class LoadingIndicator: View {
         
         if (superview == nil) {
             stopAnimating()
+        }
+        else if autoStartAnimating {
+            startAnimating()
         }
     }
     

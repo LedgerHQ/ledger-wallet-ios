@@ -17,16 +17,16 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YcX-Lp-v09" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YcX-Lp-v09" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="20" y="229" width="560" height="142"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_enter_step_indication_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="eVT-Qs-kzj" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <rect key="frame" x="40" y="120" width="480" height="22"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_enter_step_indication_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="eVT-Qs-kzj" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <rect key="frame" x="20" y="120" width="520" height="22"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.softGrey.centered"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.grey.centered"/>
                             </userDefinedRuntimeAttributes>
                         </label>
                         <view contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="wne-6T-vky" customClass="PinCodeView" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -42,11 +42,11 @@
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wne-6T-vky" secondAttribute="bottom" id="C0S-zY-iA0"/>
                         <constraint firstItem="wne-6T-vky" firstAttribute="top" secondItem="YcX-Lp-v09" secondAttribute="top" id="FQZ-uZ-r0l"/>
                         <constraint firstItem="eVT-Qs-kzj" firstAttribute="top" secondItem="wne-6T-vky" secondAttribute="bottom" constant="20" id="J2q-Ae-Fi8"/>
-                        <constraint firstItem="eVT-Qs-kzj" firstAttribute="leading" secondItem="YcX-Lp-v09" secondAttribute="leading" constant="40" id="bsZ-im-VHN"/>
+                        <constraint firstItem="eVT-Qs-kzj" firstAttribute="leading" secondItem="YcX-Lp-v09" secondAttribute="leading" constant="20" id="bsZ-im-VHN"/>
                         <constraint firstAttribute="centerX" secondItem="eVT-Qs-kzj" secondAttribute="centerX" id="ds4-MI-z0e"/>
                         <constraint firstAttribute="centerX" secondItem="wne-6T-vky" secondAttribute="centerX" id="hhZ-pc-3bz"/>
                         <constraint firstAttribute="bottom" secondItem="eVT-Qs-kzj" secondAttribute="bottom" id="kEV-dx-Vy9"/>
-                        <constraint firstAttribute="trailing" secondItem="eVT-Qs-kzj" secondAttribute="trailing" constant="40" id="qsq-k1-ieZ"/>
+                        <constraint firstAttribute="trailing" secondItem="eVT-Qs-kzj" secondAttribute="trailing" constant="20" id="qsq-k1-ieZ"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.transparent"/>

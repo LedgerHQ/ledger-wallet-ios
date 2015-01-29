@@ -163,7 +163,7 @@ class PinCodeView: View {
             }
             else if (i < (_textField.text as NSString).length) {
                 let dotPath = UIBezierPath(ovalInRect: CGRectInset(CGRectMake(boxCenter.x, boxCenter.y, 0, 0), -dotRadius / 2.0, -dotRadius / 2.0))
-                strokeColor.setFill()
+                UIColor.blackColor().setFill()
                 dotPath.fill()
             }
             else {

@@ -61,6 +61,15 @@ struct VisualTheme {
             pinCodeView.boxColor = VisualFactory.Colors.white
             pinCodeView.borderWidth = 1.0
             pinCodeView.dotRadius = 15.0
+        },
+        "loadingIndicator.grey": { view in
+            let loadingIndicator = view as LoadingIndicator
+            loadingIndicator.dotsHighlightedColor = VisualFactory.Colors.darkGreyBlue
+            loadingIndicator.dotsNormalColor = VisualFactory.Colors.lightGrey
+            loadingIndicator.animationDuration = VisualFactory.Metrics.Durations.Animations.veryShort
+            loadingIndicator.dotsSize = 3.5
+            loadingIndicator.preferredWidth = 44.0
+            loadingIndicator.dotsCount = 9
         }
     ]
     
@@ -85,6 +94,9 @@ struct VisualTheme {
         "medium.grey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumGrey)
         },
+        "medium.softGrey": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumSoftGrey)
+        },
         "small": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.small)
         },
@@ -93,6 +105,9 @@ struct VisualTheme {
         },
         "small.grey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallGrey)
+        },
+        "small.grey.centered": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallGreyCentered)
         },
         "small.softGrey": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGrey)
@@ -166,7 +181,7 @@ struct VisualTheme {
             placeholderAttributes.updateValue(VisualFactory.Colors.lightGrey, forKey: NSForegroundColorAttributeName)
             textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.hugeName)
             textField.attributedPlaceholder = NSAttributedString(string: textField.readablePlaceholder(), attributes: placeholderAttributes)
-            textField.tintColor = VisualFactory.Colors.darkGrey
+            textField.tintColor = VisualFactory.Colors.black
             textField.borderStyle = UITextBorderStyle.None
             textField.adjustsFontSizeToFitWidth = false
         }

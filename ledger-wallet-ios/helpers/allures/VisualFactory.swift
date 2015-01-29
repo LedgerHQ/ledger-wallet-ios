@@ -63,13 +63,18 @@ struct VisualFactory {
             ]
         )
         
+        static let mediumSoftGrey: TextAttribute = TextAttributes.extend(medium, withAttributes: [
+                NSForegroundColorAttributeName: Colors.softGrey
+            ]
+        )
+        
         static let small = [
             NSForegroundColorAttributeName: Colors.black,
             NSKernAttributeName: -Fonts.Kernings.verySmall,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = 5
+                paragraph.lineSpacing = 8
                 return paragraph
                 }()
         ]
@@ -85,6 +90,15 @@ struct VisualFactory {
         
         static let smallGrey: TextAttribute = TextAttributes.extend(small, withAttributes: [
                 NSForegroundColorAttributeName: Colors.darkGrey
+            ]
+        )
+        
+        static let smallGreyCentered: TextAttribute = TextAttributes.extend(smallGrey, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = (smallGrey[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
             ]
         )
         
@@ -121,7 +135,7 @@ struct VisualFactory {
         ]
         
         static let hugeName = [
-            NSForegroundColorAttributeName: Colors.darkGrey,
+            NSForegroundColorAttributeName: Colors.black,
             NSKernAttributeName: -Fonts.Kernings.veryLarge,
             NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.extraHuge.rawValue)
         ]
@@ -262,6 +276,7 @@ struct VisualFactory {
         
         struct Durations {
             struct Animations {
+                static let veryShort = 0.17
                 static let short = 0.25
                 static let medium = 0.32
                 static let long = 0.40

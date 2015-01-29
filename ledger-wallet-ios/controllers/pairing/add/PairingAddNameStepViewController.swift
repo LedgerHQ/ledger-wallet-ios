@@ -15,10 +15,10 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     @IBOutlet private weak var indicationLabel: Label!
     
     override var stepIndication: String {
-        return localizedString("give_a_name_to_your_wallet")
+        return localizedString("your_device_is_now_paired")
     }
     override var stepNumber: Int {
-        return 3
+        return 5
     }
     override var finalizesFlow: Bool {
         return true

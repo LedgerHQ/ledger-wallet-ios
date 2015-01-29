@@ -17,7 +17,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         return localizedString("enter_security_card_value")
     }
     override var stepNumber: Int {
-        return 2
+        return 3
     }
     
     // MARK: Interface
