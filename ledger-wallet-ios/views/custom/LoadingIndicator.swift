@@ -20,18 +20,87 @@ class LoadingIndicator: View {
             layer.setNeedsLayout()
         }
     }
-    private let dotsColor = VisualFactory.Colors.softGrey
+    var animating: Bool { return timer != nil }
+    var animationDuration: NSTimeInterval = 0.15 {
+        didSet {
+            if animating {
+                stopAnimating()
+                timer?.invalidate()
+                timer = scheduledTimer()
+                startAnimating()
+            }
+        }
+    }
+    var preferredWidth: CGFloat = 50 {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    var dotsNormalColor = UIColor.blackColor()
+    var dotsHighlightedColor = UIColor.redColor()
+    private var timer: NSTimer? = nil
+    private var highlightedLayerIndex = -1
+    
+    // MARK: Animation
+    
+    func startAnimating() {
+        if (animating) {
+            return
+        }
+        
+        timer = scheduledTimer()
+    }
+    
+    func stopAnimating() {
+        if (!animating) {
+            return
+        }
+
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    private func scheduledTimer() -> NSTimer {
+        return NSTimer.scheduledTimerWithTimeInterval(animationDuration, target: self, selector: "timerFired", userInfo: nil, repeats: true)
+    }
+    
+    dynamic private func timerFired() {
+        let oldIndex = highlightedLayerIndex
+        highlightedLayerIndex++
+        if (highlightedLayerIndex >= layer.sublayers.count) {
+            highlightedLayerIndex = 0
+            if (highlightedLayerIndex >= layer.sublayers.count) {
+                return
+            }
+        }
+        
+        if (oldIndex >= 0) {
+            if let layer = layer.sublayers[oldIndex] as? CALayer {
+                CATransaction.begin()
+                CATransaction.setAnimationDuration(1.0)
+                layer.backgroundColor = dotsNormalColor.CGColor
+                CATransaction.commit()
+            }
+        }
+        if let layer = layer.sublayers[highlightedLayerIndex] as? CALayer {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            layer.backgroundColor = dotsHighlightedColor.CGColor
+            CATransaction.commit()
+        }
+    }
     
     // MARK: Layers
     
     private func generateLayers() {
         removeLayers()
+        highlightedLayerIndex = -1
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         for _ in 0..<dotsCount {
             let layer = CALayer()
             layer.bounds = CGRectZero
-            layer.backgroundColor = dotsColor.CGColor
+            layer.backgroundColor = dotsNormalColor.CGColor
             self.layer.addSublayer(layer)
         }
         CATransaction.commit()
@@ -73,11 +142,23 @@ class LoadingIndicator: View {
         CATransaction.commit()
     }
     
+    override func intrinsicContentSize() -> CGSize {
+        return CGSizeMake(preferredWidth, preferredWidth)
+    }
+    
     // MARK: Initialization
     
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        if (superview == nil) {
+            stopAnimating()
+        }
+    }
+    
     private func initialize() {
+        backgroundColor = UIColor.clearColor()
         generateLayers()
-        backgroundColor = VisualFactory.Colors.transparent
     }
     
     override init(frame: CGRect) {
