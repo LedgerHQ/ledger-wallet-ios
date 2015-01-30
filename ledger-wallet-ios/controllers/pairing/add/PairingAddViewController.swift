@@ -123,13 +123,14 @@ extension PairingAddViewController {
     
     // MARK: Steps management
     
-    private func navigateToNextStep(completion: ((Bool) -> Void)? = nil) {
-        navigateToStep(currentStepNumber + 1, completion: completion)
+    private func navigateToNextStep(dataToPass data: AnyObject? = nil, completion: ((Bool) -> Void)? = nil) {
+        navigateToStep(currentStepNumber + 1, dataToPass: data, completion: completion)
     }
     
-    private func navigateToStep(stepNumber: Int, completion: ((Bool) -> Void)? = nil) {
+    private func navigateToStep(stepNumber: Int, dataToPass data: AnyObject? = nil, completion: ((Bool) -> Void)? = nil) {
         // instantiate new view controller
         let newViewController = stepClasses[stepNumber].instantiateFromNib()
+        newViewController.data = data
         addChildViewController(newViewController)
         newViewController.didMoveToParentViewController(self)
         newViewController.view.frame = containerView.bounds
@@ -174,7 +175,7 @@ extension PairingAddViewController {
     func handleStepResult(object: AnyObject, stepViewController: PairingAddBaseStepViewController) {
         if (stepViewController is PairingAddScanStepViewController) {
             // go to connection
-            navigateToNextStep() { finished in
+            navigateToNextStep(dataToPass: nil) { finished in
                 // join room
                 self.pairingProtocolManager?.joinRoom(object as String)
                 self.pairingProtocolManager?.sendPublicKey()
@@ -182,7 +183,7 @@ extension PairingAddViewController {
         }
         else if (stepViewController is PairingAddCodeStepViewController) {
             // go to finialize
-            navigateToNextStep() { finished in
+            navigateToNextStep(dataToPass: nil) { finished in
                 // send challenge response
                 (self.pairingProtocolManager?.sendChallengeResponse())!
             }
@@ -205,22 +206,6 @@ extension PairingAddViewController {
     
 }
 
-extension PairingAddViewController {
-    
-    // MARK: CATransition delegate
-    
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
-        // remove previous view controller view
-        let previousStepViewController = anim.valueForKey("previousStepViewController") as? PairingAddBaseStepViewController
-        previousStepViewController?.view.removeFromSuperview()
-        
-        // call completion block
-        let completionBlock = anim.valueForKey("completionBlock") as? CompletionBlockWrapper
-        completionBlock?.closure(flag)
-    }
-    
-}
-
 extension PairingAddViewController: PairingProtocolManagerDelegate {
     
     // MARK: PairingProtocolManager delegate
@@ -239,6 +224,22 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
             // notify delegate
             completeWithOutcome(outcome)
         }
+    }
+    
+}
+
+extension PairingAddViewController {
+    
+    // MARK: CATransition delegate
+    
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        // remove previous view controller view
+        let previousStepViewController = anim.valueForKey("previousStepViewController") as? PairingAddBaseStepViewController
+        previousStepViewController?.view.removeFromSuperview()
+        
+        // call completion block
+        let completionBlock = anim.valueForKey("completionBlock") as? CompletionBlockWrapper
+        completionBlock?.closure(flag)
     }
     
 }

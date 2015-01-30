@@ -19,6 +19,7 @@ class PairingAddBaseStepViewController: BaseViewController {
     var finalizesFlow: Bool {
         return false
     }
+    var data: AnyObject? = nil
     
     final func notifyResult(object: AnyObject) {
         if let parent = parentViewController as? PairingAddViewController {
