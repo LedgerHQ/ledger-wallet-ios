@@ -39,12 +39,6 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
             indicationLabel?.removeFromSuperview()
             walletImageView?.removeFromSuperview()
         }
-    }
-    
-    // MARK: View lifecycle
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         
         nameTextField?.becomeFirstResponder()
     }
@@ -54,7 +48,6 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
 extension PairingAddNameStepViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        complete()
         return false
     }
     

@@ -15,15 +15,15 @@ class PairingAddViewController: BaseViewController {
     @IBOutlet private weak var stepIndicationLabel: Label!
     @IBOutlet private weak var bottomInsetConstraint: NSLayoutConstraint!
     
-    lazy private(set) var pairingAddManager: PairingAddManager = {
+    lazy private var pairingAddManager: PairingAddManager = {
         let manager = PairingAddManager()
         manager.delegate = self
         return manager
     }()
     private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        //PairingAddScanStepViewController.self,
-        //PairingAddConnectionStepViewController.self,
-        //PairingAddCodeStepViewController.self,
+        PairingAddScanStepViewController.self,
+        PairingAddConnectionStepViewController.self,
+        PairingAddCodeStepViewController.self,
         PairingAddFinalizeStepViewController.self,
         PairingAddNameStepViewController.self
     ]
@@ -116,9 +116,6 @@ class PairingAddViewController: BaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // TODO:
-        pairingAddManager.joinRoom("holymacaroni")
     }
     
 }
@@ -127,8 +124,8 @@ extension PairingAddViewController {
     
     // MARK: Steps management
     
-    private func navigateToStepWithClass(`class`: PairingAddBaseStepViewController.Type) {
-        navigateToStep((stepClasses as NSArray).indexOfObject(`class`))
+    private func navigateToNextStep() {
+        navigateToStep(currentStepNumber + 1)
     }
     
     private func navigateToStep(stepNumber: Int) {
@@ -169,6 +166,27 @@ extension PairingAddViewController {
         currentStepNumber = stepNumber
     }
     
+    func handleStepResult(object: AnyObject, stepViewController: PairingAddBaseStepViewController) {
+        if (stepViewController is PairingAddScanStepViewController) {
+            // go to connection
+            pairingAddManager.joinRoom(object as String)
+            navigateToNextStep()
+        }
+        else if (stepViewController is PairingAddConnectionStepViewController) {
+            // go to code
+            navigateToNextStep()
+        }
+        else if (stepViewController is PairingAddCodeStepViewController) {
+            // go to finalize
+            pairingAddManager.sendChallengeResponse()
+            navigateToNextStep()
+        }
+        else if (stepViewController is PairingAddFinalizeStepViewController) {
+            // go to name
+            navigateToNextStep()
+        }
+    }
+    
 }
 
 extension PairingAddViewController {
@@ -187,20 +205,21 @@ extension PairingAddViewController: PairingAddManagerDelegate {
     
     // MARK: PairingAddManager delegate
     
-    func pairingAddManagerDidJoinRoom(pairingAddManager: PairingAddManager) {
-        
-    }
-    
-    func pairingAddManagerDidReceiveChallenge(pairingAddManager: PairingAddManager, challenge: String) {
-        
+    func pairingAddManager(pairingAddManager: PairingAddManager, didReceiveChallenge challenge: String) {
+        handleStepResult(challenge, stepViewController: currentStepViewController!)
     }
     
     func pairingAddManager(pairingAddManager: PairingAddManager, didPairWithKey key: String?) {
-        
+        if let key = key {
+            handleStepResult(key, stepViewController: currentStepViewController!)
+        }
+        else {
+            cancel()
+        }
     }
     
     func pairingAddManager(pairingAddManager: PairingAddManager, didTerminateWithError hasError: Bool) {
-
+        cancel()
     }
     
 }

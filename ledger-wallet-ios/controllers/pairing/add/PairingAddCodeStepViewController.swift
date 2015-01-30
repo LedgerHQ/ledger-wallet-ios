@@ -34,12 +34,6 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Small) {
             indicationLabel?.removeFromSuperview()
         }
-    }
-    
-    // MARK: View lifecycle
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         
         pinCodeView?.becomeFirstResponder()
     }
@@ -50,7 +44,8 @@ extension PairingAddCodeStepViewController: PinCodeViewDelegate {
     // MARK: PinCodeView delegate
     
     func pinCodeViewDidComplete(pinCodeView: PinCodeView, text: String) {
-//        parentPairingViewController?.navigateToNextStep()
+        self.pinCodeView?.resignFirstResponder()
+        notifyResult(text)
     }
     
     func pinCodeView(pinCodeView: PinCodeView, didRequestNewIndex index: Int, placeholderChar: String?) {

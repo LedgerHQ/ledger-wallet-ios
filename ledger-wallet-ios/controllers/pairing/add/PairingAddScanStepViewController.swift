@@ -26,6 +26,10 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         super.configureView()
         
         barCodeReader.delegate = self
+        delayOnMainQueue(1.0) {
+            self.barCodeReader?.stopCapture()
+            self.notifyResult("holymacaroni")
+        }
     }
     
     // MARK: View lifecycle
@@ -49,11 +53,10 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
     // MARK: Barcode reader delegate
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String) {
+        // TODO: check that code is correct
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        println(code)
-        
         barCodeReader?.stopCapture()
-//        parentPairingViewController?.navigateToNextStep()
+        notifyResult(code)
     }
     
 }

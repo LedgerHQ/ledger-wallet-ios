@@ -201,8 +201,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-ic-rwA" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="122" y="15" width="358" height="55"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <rect key="frame" x="119" y="15" width="363" height="55"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2b-Nk-KjZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="108" height="55"/>
@@ -214,7 +214,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="kOi-zw-CaW" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                                <rect key="frame" x="118" y="0.0" width="240" height="55"/>
+                                                <rect key="frame" x="123" y="0.0" width="240" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="240" id="P4p-XC-lI3"/>
                                                 </constraints>
@@ -229,7 +229,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="v2b-Nk-KjZ" firstAttribute="leading" secondItem="D43-4X-hFN" secondAttribute="leading" id="GBb-1N-bdF"/>
-                                            <constraint firstItem="kOi-zw-CaW" firstAttribute="leading" secondItem="v2b-Nk-KjZ" secondAttribute="trailing" constant="10" id="I1V-uh-zDn"/>
+                                            <constraint firstItem="kOi-zw-CaW" firstAttribute="leading" secondItem="v2b-Nk-KjZ" secondAttribute="trailing" constant="15" id="I1V-uh-zDn"/>
                                             <constraint firstAttribute="bottom" secondItem="kOi-zw-CaW" secondAttribute="bottom" id="bHW-SE-Gm7"/>
                                             <constraint firstItem="v2b-Nk-KjZ" firstAttribute="top" secondItem="D43-4X-hFN" secondAttribute="top" id="bg3-PB-j8g"/>
                                             <constraint firstItem="kOi-zw-CaW" firstAttribute="top" secondItem="D43-4X-hFN" secondAttribute="top" id="cHE-EG-csw"/>

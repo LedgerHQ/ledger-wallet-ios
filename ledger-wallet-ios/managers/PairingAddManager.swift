@@ -10,8 +10,7 @@ import Foundation
 
 @objc protocol PairingAddManagerDelegate: class {
     
-    func pairingAddManagerDidJoinRoom(pairingAddManager: PairingAddManager)
-    func pairingAddManagerDidReceiveChallenge(pairingAddManager: PairingAddManager, challenge: String)
+    func pairingAddManager(pairingAddManager: PairingAddManager, didReceiveChallenge challenge: String)
     func pairingAddManager(pairingAddManager: PairingAddManager, didTerminateWithError hasError: Bool)
     func pairingAddManager(pairingAddManager: PairingAddManager, didPairWithKey key: String?)
     
@@ -19,16 +18,23 @@ import Foundation
 
 class PairingAddManager: BaseManager {
     
-    typealias Message = [String: AnyObject]
+    private typealias Message = [String: AnyObject]
+    private typealias MessageHandler = (Message) -> Void
     private enum MessageType: String {
         case Join = "join"
         case Identity = "identity"
         case Challenge = "challenge"
         case Pairing = "pairing"
+        case Disconnect = "disconnect"
     }
     
     weak var delegate: PairingAddManagerDelegate? = nil
     private var webSocket: JFRWebSocket? = nil
+    private let messagesHandlers: [MessageType: (PairingAddManager) -> MessageHandler] = [
+        MessageType.Challenge: handleChallengeMessage,
+        MessageType.Pairing: handlePairingMessage,
+        MessageType.Disconnect: handleDisconnectMessage
+    ]
     
     // MARK: Pairing management
     
@@ -44,7 +50,6 @@ class PairingAddManager: BaseManager {
         
         // send join message
         sendMessage(messageWithType(MessageType.Join, data: ["room": roomId]))
-        delegate?.pairingAddManagerDidJoinRoom(self)
     }
     
     func sendPublicKey() {
@@ -80,26 +85,29 @@ class PairingAddManager: BaseManager {
     private func handleChallengeMessage(message: Message) {
         if let dataString = message["data"] as? String {
             if let data = dataString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-                delegate?.pairingAddManagerDidReceiveChallenge(self, challenge: "1234")
+                delegate?.pairingAddManager(self, didReceiveChallenge: "1234")
             }
         }
     }
     
     private func handlePairingMessage(message: Message) {
         if let isSuccessful = message["is_successful"] as? Bool {
+            cleanUp()
             delegate?.pairingAddManager(self, didPairWithKey: isSuccessful ? "pairingkey" : nil)
         }
+    }
+    
+    private func handleDisconnectMessage(message: Message) {
+        cleanUp()
+        delegate?.pairingAddManager(self, didTerminateWithError: true)
     }
     
     private func receiveMessage(message: Message) {
         if let typeString = message["type"] as? String {
             if let messageType = MessageType(rawValue: typeString) {
-                // lookup for message type
-                if messageType == MessageType.Challenge {
-                    handleChallengeMessage(message)
-                }
-                else if messageType == MessageType.Pairing {
-                    handlePairingMessage(message)
+                // lookup form message table
+                if let handler = messagesHandlers[messageType] {
+                    handler(self)(message)
                 }
             }
         }

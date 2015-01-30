@@ -19,8 +19,11 @@ class PairingAddBaseStepViewController: BaseViewController {
     var finalizesFlow: Bool {
         return false
     }
-    var parentPairingViewController: PairingAddViewController? {
-        return parentViewController as? PairingAddViewController
+    
+    final func notifyResult(object: AnyObject) {
+        if let parent = parentViewController as? PairingAddViewController {
+            parent.handleStepResult(object, stepViewController: self)
+        }
     }
     
 }
