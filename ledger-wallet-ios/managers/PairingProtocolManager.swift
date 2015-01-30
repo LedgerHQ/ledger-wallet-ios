@@ -1,5 +1,5 @@
 //
-//  PairingAddManager.swift
+//  PairingProtocolManager.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 27/01/2015.
@@ -8,15 +8,22 @@
 
 import Foundation
 
-@objc protocol PairingAddManagerDelegate: class {
+protocol PairingProtocolManagerDelegate: class {
     
-    func pairingAddManager(pairingAddManager: PairingAddManager, didReceiveChallenge challenge: String)
-    func pairingAddManager(pairingAddManager: PairingAddManager, didTerminateWithError hasError: Bool)
-    func pairingAddManager(pairingAddManager: PairingAddManager, didPairWithKey key: String?)
+    func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didReceiveChallenge challenge: String)
+    func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didTerminateWithOutcome outcome: PairingProtocolManager.PairingOutcome)
     
 }
 
-class PairingAddManager: BaseManager {
+class PairingProtocolManager: BaseManager {
+    
+    enum PairingOutcome {
+        case DongleSucceeded
+        case DongleFailed
+        case DeviceTerminated
+        case DongleTerminated
+        case ServerDisconnected
+    }
     
     private typealias Message = [String: AnyObject]
     private typealias MessageHandler = (Message) -> Void
@@ -28,9 +35,9 @@ class PairingAddManager: BaseManager {
         case Disconnect = "disconnect"
     }
     
-    weak var delegate: PairingAddManagerDelegate? = nil
+    weak var delegate: PairingProtocolManagerDelegate? = nil
     private var webSocket: JFRWebSocket? = nil
-    private let messagesHandlers: [MessageType: (PairingAddManager) -> MessageHandler] = [
+    private let messagesHandlers: [MessageType: (PairingProtocolManager) -> MessageHandler] = [
         MessageType.Challenge: handleChallengeMessage,
         MessageType.Pairing: handlePairingMessage,
         MessageType.Disconnect: handleDisconnectMessage
@@ -70,6 +77,10 @@ class PairingAddManager: BaseManager {
         sendMessage(messageWithType(MessageType.Challenge, data: ["data": "challenge"]))
     }
     
+    func createNewPairingItemNamed(name: String) {
+        // TODO:
+    }
+    
     func terminate() {
         if (webSocket == nil) {
             return
@@ -77,7 +88,7 @@ class PairingAddManager: BaseManager {
         
         // destroy websocket
         cleanUp()
-        delegate?.pairingAddManager(self, didTerminateWithError: false)
+        delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
 
     // MARK: Pairing protocol implementation
@@ -85,7 +96,7 @@ class PairingAddManager: BaseManager {
     private func handleChallengeMessage(message: Message) {
         if let dataString = message["data"] as? String {
             if let data = dataString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-                delegate?.pairingAddManager(self, didReceiveChallenge: "1234")
+                delegate?.pairingProtocolManager(self, didReceiveChallenge: "1234")
             }
         }
     }
@@ -93,13 +104,13 @@ class PairingAddManager: BaseManager {
     private func handlePairingMessage(message: Message) {
         if let isSuccessful = message["is_successful"] as? Bool {
             cleanUp()
-            delegate?.pairingAddManager(self, didPairWithKey: isSuccessful ? "pairingkey" : nil)
+            delegate?.pairingProtocolManager(self, didTerminateWithOutcome: isSuccessful ? PairingOutcome.DongleSucceeded : PairingOutcome.DongleFailed)
         }
     }
     
     private func handleDisconnectMessage(message: Message) {
         cleanUp()
-        delegate?.pairingAddManager(self, didTerminateWithError: true)
+        delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DongleTerminated)
     }
     
     private func receiveMessage(message: Message) {
@@ -139,26 +150,26 @@ class PairingAddManager: BaseManager {
     
     deinit {
         cleanUp()
-        delegate?.pairingAddManager(self, didTerminateWithError: false)
+        delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
     
 }
 
-extension PairingAddManager: JFRWebSocketDelegate {
+extension PairingProtocolManager: JFRWebSocketDelegate {
     
     // MARK: WebSocket delegate
     
     func websocketDidDisconnect(socket: JFRWebSocket!, error: NSError!) {
         dispatch_async(dispatch_get_main_queue()) {
             self.cleanUp()
-            self.delegate?.pairingAddManager(self, didTerminateWithError: error != nil)
+            self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
         }
     }
     
     func websocketDidWriteError(socket: JFRWebSocket!, error: NSError!) {
         dispatch_async(dispatch_get_main_queue()) {
             self.cleanUp()
-            self.delegate?.pairingAddManager(self, didTerminateWithError: true)
+            self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
         }
     }
     

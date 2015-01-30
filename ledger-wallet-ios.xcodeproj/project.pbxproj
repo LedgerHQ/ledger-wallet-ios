@@ -17,7 +17,7 @@
 		373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
-		375A38071A77DA930082D917 /* PairingAddManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38061A77DA930082D917 /* PairingAddManager.swift */; };
+		375A38071A77DA930082D917 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38061A77DA930082D917 /* PairingProtocolManager.swift */; };
 		375A380A1A77DB200082D917 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38091A77DB200082D917 /* BaseManager.swift */; };
 		37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
 		37656F301A76A3F60042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
@@ -100,7 +100,7 @@
 		373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemTests.swift; sourceTree = "<group>"; };
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		375A38061A77DA930082D917 /* PairingAddManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingAddManager.swift; path = managers/PairingAddManager.swift; sourceTree = "<group>"; };
+		375A38061A77DA930082D917 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingProtocolManager.swift; path = managers/PairingProtocolManager.swift; sourceTree = "<group>"; };
 		375A38091A77DB200082D917 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; };
 		37656F2E1A76A3540042512D /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeychainItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionDialogViewController.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				375A38091A77DB200082D917 /* BaseManager.swift */,
-				375A38061A77DA930082D917 /* PairingAddManager.swift */,
+				375A38061A77DA930082D917 /* PairingProtocolManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -635,7 +635,7 @@
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				3724A3821A79383700E1B977 /* Common.swift in Sources */,
-				375A38071A77DA930082D917 /* PairingAddManager.swift in Sources */,
+				375A38071A77DA930082D917 /* PairingProtocolManager.swift in Sources */,
 				37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,

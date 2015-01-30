@@ -34,13 +34,13 @@
 
 "enter_security_card_value" = "Grab your security card and enter the matching value for each character.";
 
-"your_device_is_now_paired" = "That’s it! Your Ledger Wallet has been successfully paired with this device.";
+"your_device_is_now_paired" = "Pairing succeeded! To finish, please give a name to this Ledger Wallet.";
 
 "ledger_wallet_name" = "Ledger Wallet name";
 
 "my_ledger_wallet" = "My Ledger Wallet";
 
-"assign_a_name_to_this_ledger_wallet" = "Please give a name to this Ledger Wallet.";
+"assign_a_name_to_this_ledger_wallet" = "Type in a name to assign to this Ledger Wallet.";
 
 "enter_letter_or_value_matching_%@" = "Enter the letter or digit in the black box\nmatching “ %@ ” on your security card.";
 

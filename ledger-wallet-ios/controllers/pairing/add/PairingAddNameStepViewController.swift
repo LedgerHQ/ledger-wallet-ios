@@ -24,6 +24,14 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         return true
     }
     
+    // MARK: Actions
+    
+    override func complete() {
+        super.complete()
+        
+        notifyResult("this is a name")
+    }
+    
     // MARK: Interface
     
     override func configureView() {
@@ -48,6 +56,7 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
 extension PairingAddNameStepViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        complete()
         return false
     }
     
