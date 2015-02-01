@@ -23,15 +23,7 @@ class PairingAddViewController: BaseViewController {
     
     weak var delegate: PairingAddViewControllerDelegate? = nil
     private var pairingProtocolManager: PairingProtocolManager? = nil
-    private let stepClasses: [PairingAddBaseStepViewController.Type] = [
-        PairingAddScanStepViewController.self,
-        PairingAddConnectionStepViewController.self,
-        PairingAddCodeStepViewController.self,
-        PairingAddFinalizeStepViewController.self,
-        PairingAddNameStepViewController.self
-    ]
-    private var currentStepNumber = -1
-    private var currentStepViewController: PairingAddBaseStepViewController?
+    private var currentStepViewController: PairingAddBaseStepViewController? = nil
     
     // MARK: Actions
     
@@ -46,6 +38,15 @@ class PairingAddViewController: BaseViewController {
         
         // complete
         completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceTerminated)
+    }
+    
+    private func completeWithOutcome(outcome: PairingProtocolManager.PairingOutcome) {
+        // terminate pairing manager
+        pairingProtocolManager?.delegate = nil
+        pairingProtocolManager?.terminate()
+        
+        // notify delegate
+        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome)
     }
     
     // MARK: Interface
@@ -66,21 +67,7 @@ class PairingAddViewController: BaseViewController {
         pairingProtocolManager?.delegate = self
         
         // go to first step
-        navigateToNextStep()
-    }
-    
-    private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
-        bottomInsetConstraint?.constant = height
-        view.setNeedsLayout()
-        
-        if (animated) {
-            UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: options, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
-        else {
-            view.layoutIfNeeded()
-        }
+        navigateToStep(PairingAddScanStepViewController.self, dataToPass: nil, completion: nil)
     }
     
     // MARK: Keyboard management
@@ -101,6 +88,20 @@ class PairingAddViewController: BaseViewController {
         adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
     }
     
+    private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
+        bottomInsetConstraint?.constant = height
+        view.setNeedsLayout()
+        
+        if (animated) {
+            UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: options, animations: {
+                self.view.layoutIfNeeded()
+                }, completion: nil)
+        }
+        else {
+            view.layoutIfNeeded()
+        }
+    }
+    
     // MARK: Layout
     
     override func viewDidLayoutSubviews() {
@@ -113,6 +114,8 @@ class PairingAddViewController: BaseViewController {
 
 extension PairingAddViewController {
     
+    // MARK: Steps management
+    
     private class CompletionBlockWrapper {
         let closure: (Bool) -> Void
         
@@ -121,15 +124,9 @@ extension PairingAddViewController {
         }
     }
     
-    // MARK: Steps management
-    
-    private func navigateToNextStep(dataToPass data: AnyObject? = nil, completion: ((Bool) -> Void)? = nil) {
-        navigateToStep(currentStepNumber + 1, dataToPass: data, completion: completion)
-    }
-    
-    private func navigateToStep(stepNumber: Int, dataToPass data: AnyObject? = nil, completion: ((Bool) -> Void)? = nil) {
+    private func navigateToStep(stepClass: PairingAddBaseStepViewController.Type, dataToPass data: AnyObject?, completion: ((Bool) -> Void)?) {
         // instantiate new view controller
-        let newViewController = stepClasses[stepNumber].instantiateFromNib()
+        let newViewController = stepClass.instantiateFromNib()
         newViewController.data = data
         addChildViewController(newViewController)
         newViewController.didMoveToParentViewController(self)
@@ -167,15 +164,12 @@ extension PairingAddViewController {
         
         // update view
         updateView()
-        
-        // update current step
-        currentStepNumber = stepNumber
     }
     
     func handleStepResult(object: AnyObject, stepViewController: PairingAddBaseStepViewController) {
         if (stepViewController is PairingAddScanStepViewController) {
             // go to connection
-            navigateToNextStep(dataToPass: nil) { finished in
+            navigateToStep(PairingAddConnectionStepViewController.self, dataToPass: nil) { finished in
                 // join room
                 self.pairingProtocolManager?.joinRoom(object as String)
                 self.pairingProtocolManager?.sendPublicKey()
@@ -183,25 +177,25 @@ extension PairingAddViewController {
         }
         else if (stepViewController is PairingAddCodeStepViewController) {
             // go to finialize
-            navigateToNextStep(dataToPass: nil) { finished in
+            navigateToStep(PairingAddFinalizeStepViewController.self, dataToPass: nil) { finished in
                 // send challenge response
                 (self.pairingProtocolManager?.sendChallengeResponse())!
             }
         }
         else if (stepViewController is PairingAddNameStepViewController) {
             // save pairing item
-            pairingProtocolManager?.createNewPairingItemNamed(object as String)
-            completeWithOutcome(PairingProtocolManager.PairingOutcome.DongleSucceeded)
+            if let succeeded = pairingProtocolManager?.createNewPairingItemNamed(object as String) {
+                if (succeeded) {
+                    completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded)
+                }
+                else {
+                    completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceFailed)
+                }
+            }
+            else {
+                completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceFailed)
+            }
         }
-    }
-    
-    private func completeWithOutcome(outcome: PairingProtocolManager.PairingOutcome) {
-        // terminate pairing manager
-        pairingProtocolManager?.delegate = nil
-        pairingProtocolManager?.terminate()
-        
-        // notify delegate
-        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome)
     }
     
 }
@@ -212,13 +206,13 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
     
     func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didReceiveChallenge challenge: String) {
         // go to code
-        navigateToNextStep()
+        navigateToStep(PairingAddCodeStepViewController.self, dataToPass: nil, completion: nil)
     }
     
     func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didTerminateWithOutcome outcome: PairingProtocolManager.PairingOutcome) {
         if (outcome == PairingProtocolManager.PairingOutcome.DongleSucceeded) {
             // go to name
-            navigateToNextStep()
+            navigateToStep(PairingAddNameStepViewController.self, dataToPass: nil, completion: nil)
         }
         else {
             // notify delegate

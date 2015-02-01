@@ -45,7 +45,7 @@ class PairingListViewController: BaseViewController {
 
 extension PairingListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    // MARK: Tableview methods
+    // MARK: UITableview delegate, data source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3

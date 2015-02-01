@@ -20,8 +20,10 @@ class PairingProtocolManager: BaseManager {
     enum PairingOutcome {
         case DongleSucceeded
         case DongleFailed
-        case DeviceTerminated
         case DongleTerminated
+        case DeviceSucceeded
+        case DeviceFailed
+        case DeviceTerminated
         case ServerDisconnected
     }
     
@@ -45,7 +47,7 @@ class PairingProtocolManager: BaseManager {
     
     // MARK: Pairing management
     
-    func joinRoom(roomId: String, completion: ((success: Bool) -> Void)? = nil) {
+    func joinRoom(roomId: String) {
         if (webSocket != nil) {
             return
         }
@@ -77,8 +79,9 @@ class PairingProtocolManager: BaseManager {
         sendMessage(messageWithType(MessageType.Challenge, data: ["data": "challenge"]))
     }
     
-    func createNewPairingItemNamed(name: String) {
+    func createNewPairingItemNamed(name: String) -> Bool {
         // TODO:
+        return true
     }
     
     func terminate() {
