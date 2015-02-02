@@ -45,7 +45,7 @@
 		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
 		37A88F741A6E550F0036CF2A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F731A6E550F0036CF2A /* TextField.swift */; };
 		37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */; };
-		37ACFDEC1A79161B002E32FC /* EllipticCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEB1A79161B002E32FC /* EllipticCurve.swift */; };
+		37ACFDEC1A79161B002E32FC /* CryptoEllipticCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEB1A79161B002E32FC /* CryptoEllipticCurve.swift */; };
 		37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
 		37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
@@ -53,6 +53,8 @@
 		37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */; };
 		37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */; };
 		37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */; };
+		37BC84761A7F832200072B71 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84751A7F832200072B71 /* CryptoHash.swift */; };
+		37BC84781A7F8CDF00072B71 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
@@ -131,7 +133,7 @@
 		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
 		37A88F731A6E550F0036CF2A /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+Utils.swift"; sourceTree = "<group>"; };
-		37ACFDEB1A79161B002E32FC /* EllipticCurve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EllipticCurve.swift; path = crypto/EllipticCurve.swift; sourceTree = "<group>"; };
+		37ACFDEB1A79161B002E32FC /* CryptoEllipticCurve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEllipticCurve.swift; path = crypto/CryptoEllipticCurve.swift; sourceTree = "<group>"; };
 		37ACFDEE1A791810002E32FC /* JFRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFRWebSocket.h; path = vendor/jetfire/JFRWebSocket.h; sourceTree = "<group>"; };
 		37ACFDEF1A791810002E32FC /* JFRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFRWebSocket.m; path = vendor/jetfire/JFRWebSocket.m; sourceTree = "<group>"; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
@@ -140,6 +142,8 @@
 		37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddViewController.swift; sourceTree = "<group>"; };
 		37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListTableViewCell.swift; sourceTree = "<group>"; };
 		37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListViewController.swift; sourceTree = "<group>"; };
+		37BC84751A7F832200072B71 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
+		37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -322,7 +326,9 @@
 		37ACFDEA1A7915FF002E32FC /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				37ACFDEB1A79161B002E32FC /* EllipticCurve.swift */,
+				37ACFDEB1A79161B002E32FC /* CryptoEllipticCurve.swift */,
+				37BC84751A7F832200072B71 /* CryptoHash.swift */,
+				37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */,
 			);
 			name = Crypto;
 			sourceTree = "<group>";
@@ -611,6 +617,7 @@
 				37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
+				37BC84781A7F8CDF00072B71 /* CryptoEncode.swift in Sources */,
 				373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */,
 				373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */,
 				375A380A1A77DB200082D917 /* BaseManager.swift in Sources */,
@@ -619,7 +626,8 @@
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
 				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,
-				37ACFDEC1A79161B002E32FC /* EllipticCurve.swift in Sources */,
+				37ACFDEC1A79161B002E32FC /* CryptoEllipticCurve.swift in Sources */,
+				37BC84761A7F832200072B71 /* CryptoHash.swift in Sources */,
 				3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,
 				37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */,

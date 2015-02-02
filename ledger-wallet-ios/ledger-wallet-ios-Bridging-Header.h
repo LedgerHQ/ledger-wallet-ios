@@ -6,5 +6,8 @@
 #import "NSObject+Utils.h"
 #import "UIViewController+Init.h"
 
+// cocoa
+#import <CommonCrypto/CommonCrypto.h>
+
 // vendor
 #import "JFRWebSocket.h"
