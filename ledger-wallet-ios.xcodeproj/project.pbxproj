@@ -54,8 +54,9 @@
 		37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */; };
 		37BC84761A7F832200072B71 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84751A7F832200072B71 /* CryptoHash.swift */; };
 		37BC84781A7F8CDF00072B71 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */; };
-		37BC847A1A7FB71E00072B71 /* TransactionListenerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84791A7FB71E00072B71 /* TransactionListenerManager.swift */; };
+		37BC847A1A7FB71E00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84791A7FB71E00072B71 /* PairingTransactionsManager.swift */; };
 		37BC847C1A7FB75B00072B71 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC847B1A7FB75B00072B71 /* DeviceManager.swift */; };
+		37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84801A7FB81C00072B71 /* BaseModel.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
@@ -144,8 +145,9 @@
 		37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListViewController.swift; sourceTree = "<group>"; };
 		37BC84751A7F832200072B71 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
 		37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
-		37BC84791A7FB71E00072B71 /* TransactionListenerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionListenerManager.swift; path = managers/TransactionListenerManager.swift; sourceTree = "<group>"; };
+		37BC84791A7FB71E00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingTransactionsManager.swift; path = managers/PairingTransactionsManager.swift; sourceTree = "<group>"; };
 		37BC847B1A7FB75B00072B71 /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceManager.swift; path = managers/DeviceManager.swift; sourceTree = "<group>"; };
+		37BC84801A7FB81C00072B71 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -194,6 +196,7 @@
 		373E22D61A7681F100BAF63F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				37BC847F1A7FB81C00072B71 /* Base */,
 				373E22D71A7681F100BAF63F /* Keychain */,
 			);
 			name = Model;
@@ -216,7 +219,7 @@
 				375A38091A77DB200082D917 /* BaseManager.swift */,
 				37BC847B1A7FB75B00072B71 /* DeviceManager.swift */,
 				375A38061A77DA930082D917 /* PairingProtocolManager.swift */,
-				37BC84791A7FB71E00072B71 /* TransactionListenerManager.swift */,
+				37BC84791A7FB71E00072B71 /* PairingTransactionsManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -374,6 +377,15 @@
 			);
 			name = "Dongle List";
 			path = pairing/list;
+			sourceTree = "<group>";
+		};
+		37BC847F1A7FB81C00072B71 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				37BC84801A7FB81C00072B71 /* BaseModel.swift */,
+			);
+			name = Base;
+			path = base;
 			sourceTree = "<group>";
 		};
 		37EF91B31A6D3C47007DBBAF /* Base */ = {
@@ -640,7 +652,7 @@
 				37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */,
 				37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */,
 				37A88F741A6E550F0036CF2A /* TextField.swift in Sources */,
-				37BC847A1A7FB71E00072B71 /* TransactionListenerManager.swift in Sources */,
+				37BC847A1A7FB71E00072B71 /* PairingTransactionsManager.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
@@ -650,6 +662,7 @@
 				37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,
+				37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
 				3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */,
 				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
