@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeviceManager {
+class DeviceManager: BaseManager {
     
     enum HeightClass: CGFloat {
         case Small
