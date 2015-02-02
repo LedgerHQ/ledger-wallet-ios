@@ -57,7 +57,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
                 self.dimmingView.alpha = 1.0
                 self.backgroundView.center = self.dimmingView.center
             }, completion: { finished in
-                transitionContext.completeTransition(transitionContext.transitionWasCancelled())
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
         }
         else {
@@ -66,7 +66,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
                 self.dimmingView.alpha = 0.0
                 self.backgroundView.center = CGPointMake(self.dimmingView.center.x, self.dimmingView.bounds.size.height + self.backgroundView.bounds.size.height / 2.0)
             }, completion: { finished in
-                transitionContext.completeTransition(transitionContext.transitionWasCancelled())
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
         }
     }
