@@ -24,6 +24,30 @@ class PairingConfirmationDialogViewController: DialogViewController {
     @IBOutlet private weak var titleLabel: Label!
     @IBOutlet private weak var messageLabel: Label!
     
+    // MARK: Configuration
+    
+    func configureWithPairingOutcome(outcome: PairingProtocolManager.PairingOutcome) {
+        // default to error
+        messageType = MessageType.Error
+        localizedTitle = localizedString("PAIRING_FAILED")
+        
+        // configure message
+        switch outcome {
+        case .DeviceSucceeded:
+            messageType = MessageType.Success
+            localizedTitle = localizedString("PAIRING_SUCCEEDED")
+            localizedMessage = localizedString("success_pairing_named_%@") // TODO:
+        case .ServerDisconnected:
+            localizedMessage = localizedString("error_pairing_network")
+        case .DongleFailed:
+            localizedMessage = localizedString("error_pairing_wrong_validation_code")
+        case .DongleTerminated:
+            localizedMessage = localizedString("error_pairing_dongle_cancelled")
+        default:
+            localizedMessage = localizedString("error_pairing_unknown")
+        }
+    }
+    
     // MARK: Interface 
     
     override func updateView() {

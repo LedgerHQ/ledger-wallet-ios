@@ -8,13 +8,13 @@
 
 "ledger_wallet" = "Ledger Wallet";
 
-"PAIR_A_NEW_DEVICE" = "PAIR A NEW DEVICE";
-
 "CANCEL" = "CANCEL";
 
 "CONFIRM" = "CONFIRM";
 
 "CLOSE" = "CLOSE";
+
+"PAIR_A_NEW_DEVICE" = "PAIR A NEW DEVICE";
 
 "WAITING_FOR_AN_OPERATION..." = "WAITING FOR AN OPERATION...";
 
@@ -27,6 +27,10 @@
 "ESTABLISHING_CONNECTION..." = "ESTABLISHING CONNECTION...";
 
 "PAIRING_IN_PROGRESS..." = "PAIRING IN PROGRESS...";
+
+"PAIRING_SUCCEEDED" = "PAIRING SUCCEEDED";
+
+"PAIRING_FAILED" = "PAIRING FAILED";
 
 "this_operation_may_take_a_while" = "Please wait, this operation may take a while.";
 
@@ -47,3 +51,13 @@
 "your_device_is_creating_secure_connection" = "This device is now creating a secure connection with your Ledger Wallet.";
 
 "ledger_wallet_is_finalizing_pairing" = "Your Ledger Wallet is now finalizing the pairing process with this device.";
+
+"error_pairing_unknown" = "An unknown error occured.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occured.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "The security card validation code is incorrect. Please try again.";
+
+"success_pairing_named_%@" = "Your Ledger Wallet “%@” is now paired with your mobile device.";

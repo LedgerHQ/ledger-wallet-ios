@@ -67,8 +67,11 @@ extension PairingListViewController: PairingAddViewControllerDelegate {
         pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
         
         // handle outcome
-        // TODO:
-        
+        if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
+            let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
+            confirmationDialogViewController.configureWithPairingOutcome(outcome)
+            presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+        }
     }
     
 }
