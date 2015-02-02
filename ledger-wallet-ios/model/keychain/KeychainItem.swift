@@ -13,6 +13,7 @@ class KeychainItem {
     
     var valid: Bool { return persistentReference != nil }
     class var serviceIdentifier: String { return "" }
+    class var itemClass: String { return "" }
     private(set) var persistentReference: NSData!
     private(set) var data: NSData!
     private(set) var creationDate: NSDate!
@@ -61,6 +62,15 @@ class KeychainItem {
         return keychainItems
     }
     
+    class func fetchAllWithCompletion(completion: ([KeychainItem]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let items = self.fetchAll()
+            dispatch_async(dispatch_get_main_queue()) {
+                completion(items)
+            }
+        }
+    }
+    
     class func removeAll() -> Bool {
         // build query
         var query = defaultQuery()
@@ -96,7 +106,7 @@ class KeychainItem {
     
     private class func defaultQuery() -> [String: AnyObject] {
         return [
-            kSecClass: kSecClassGenericPassword,
+            kSecClass: itemClass,
             kSecAttrService: serviceIdentifier + (testEnvironment ? ".test" : "")
         ]
     }
