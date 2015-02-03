@@ -37,7 +37,7 @@ mkdir -p 'tmp'
 cd tmp
 
 CURRENTPATH=`pwd`
-ARCHS="i386"
+ARCHS="i386 x86_64 armv7 arm64"
 DEVELOPER=`xcode-select -print-path`
 
 if [ ! -d "$DEVELOPER" ]; then
@@ -69,6 +69,9 @@ mkdir -p "${CURRENTPATH}/lib"
 
 cp -r ../openssl openssl
 cd openssl
+
+ALLLIBSSL=""
+ALLLIBCRYPTO=""
 
 for ARCH in ${ARCHS}
 do
@@ -123,17 +126,12 @@ do
     set -e
 	make install >> "${LOG}" 2>&1
 	make clean >> "${LOG}" 2>&1
+
+	ALLLIBSSL="${ALLLIBSSL} ${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/libssl.a"
+	ALLLIBCRYPTO="${ALLLIBCRYPTO} ${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/libcrypto.a"
 done
 
 echo "Build library..."
-
-ALLLIBSSL=""
-ALLLIBCRYPTO=""
-for ARCH in ${ARCHS}
-do
-	ALLLIBSSL="${ALLLIBSSL} ${CURRENTPATH}/bin/iPhoneSimulator${SDKVERSION}-${ARCH}.sdk/lib/libssl.a"
-	ALLLIBCRYPTO="${ALLLIBCRYPTO} ${CURRENTPATH}/bin/iPhoneSimulator${SDKVERSION}-${ARCH}.sdk/lib/libcrypto.a"
-done
 
 lipo -create $ALLLIBSSL -output ${CURRENTPATH}/lib/libssl.a
 lipo -create $ALLLIBCRYPTO -output ${CURRENTPATH}/lib/libcrypto.a

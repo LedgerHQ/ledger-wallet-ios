@@ -59,6 +59,7 @@
 		37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */; };
 		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
+		37E7F5801A816A23006CA878 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E7F57F1A816A23006CA878 /* openssl.framework */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
 		37EF91C11A6D3C47007DBBAF /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */; };
@@ -151,6 +152,7 @@
 		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolManager.swift; sourceTree = "<group>"; };
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
+		37E7F57F1A816A23006CA878 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = vendor/openssl.framework; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NavigationBar.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -182,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E7F5801A816A23006CA878 /* openssl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +347,7 @@
 		37ACFDED1A7917FC002E32FC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				37E7F57F1A816A23006CA878 /* openssl.framework */,
 				37ACFDEE1A791810002E32FC /* JFRWebSocket.h */,
 				37ACFDEF1A791810002E32FC /* JFRWebSocket.m */,
 			);
@@ -824,6 +828,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
+				);
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -841,6 +849,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
+				);
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
