@@ -17,7 +17,6 @@
 		373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
-		375A38071A77DA930082D917 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38061A77DA930082D917 /* PairingProtocolManager.swift */; };
 		375A380A1A77DB200082D917 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38091A77DB200082D917 /* BaseManager.swift */; };
 		37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
 		37656F301A76A3F60042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
@@ -54,9 +53,11 @@
 		37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */; };
 		37BC84761A7F832200072B71 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84751A7F832200072B71 /* CryptoHash.swift */; };
 		37BC84781A7F8CDF00072B71 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */; };
-		37BC847A1A7FB71E00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84791A7FB71E00072B71 /* PairingTransactionsManager.swift */; };
 		37BC847C1A7FB75B00072B71 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC847B1A7FB75B00072B71 /* DeviceManager.swift */; };
 		37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84801A7FB81C00072B71 /* BaseModel.swift */; };
+		37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */; };
+		37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */; };
+		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
@@ -104,7 +105,6 @@
 		373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemTests.swift; sourceTree = "<group>"; };
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		375A38061A77DA930082D917 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingProtocolManager.swift; path = managers/PairingProtocolManager.swift; sourceTree = "<group>"; };
 		375A38091A77DB200082D917 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; };
 		37656F2E1A76A3540042512D /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeychainItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionDialogViewController.swift; sourceTree = "<group>"; };
@@ -145,9 +145,11 @@
 		37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListViewController.swift; sourceTree = "<group>"; };
 		37BC84751A7F832200072B71 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
 		37BC84771A7F8CDF00072B71 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
-		37BC84791A7FB71E00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairingTransactionsManager.swift; path = managers/PairingTransactionsManager.swift; sourceTree = "<group>"; };
 		37BC847B1A7FB75B00072B71 /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceManager.swift; path = managers/DeviceManager.swift; sourceTree = "<group>"; };
 		37BC84801A7FB81C00072B71 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePairingManager.swift; sourceTree = "<group>"; };
+		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolManager.swift; sourceTree = "<group>"; };
+		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -218,8 +220,7 @@
 			children = (
 				375A38091A77DB200082D917 /* BaseManager.swift */,
 				37BC847B1A7FB75B00072B71 /* DeviceManager.swift */,
-				375A38061A77DA930082D917 /* PairingProtocolManager.swift */,
-				37BC84791A7FB71E00072B71 /* PairingTransactionsManager.swift */,
+				37BC84841A7FE3DC00072B71 /* Pairing */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -349,7 +350,7 @@
 			name = Vendor;
 			sourceTree = "<group>";
 		};
-		37B9E4A91A67F98F0055E81A /* Add Dongle */ = {
+		37B9E4A91A67F98F0055E81A /* Pair Dongle */ = {
 			isa = PBXGroup;
 			children = (
 				37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */,
@@ -365,17 +366,17 @@
 				37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */,
 				37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */,
 			);
-			name = "Add Dongle";
+			name = "Pair Dongle";
 			path = pairing/add;
 			sourceTree = "<group>";
 		};
-		37B9E4AB1A67F98F0055E81A /* Dongle List */ = {
+		37B9E4AB1A67F98F0055E81A /* Pairing List */ = {
 			isa = PBXGroup;
 			children = (
 				37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */,
 				37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */,
 			);
-			name = "Dongle List";
+			name = "Pairing List";
 			path = pairing/list;
 			sourceTree = "<group>";
 		};
@@ -386,6 +387,17 @@
 			);
 			name = Base;
 			path = base;
+			sourceTree = "<group>";
+		};
+		37BC84841A7FE3DC00072B71 /* Pairing */ = {
+			isa = PBXGroup;
+			children = (
+				37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */,
+				37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */,
+				37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */,
+			);
+			name = Pairing;
+			path = managers/pairing;
 			sourceTree = "<group>";
 		};
 		37EF91B31A6D3C47007DBBAF /* Base */ = {
@@ -423,7 +435,7 @@
 			children = (
 				37F283941A655D3400F432CC /* Base */,
 				379CA0F61A71357700A9D426 /* Dialogs */,
-				37F283C51A656BB700F432CC /* Dongle Pairing */,
+				37F283C51A656BB700F432CC /* Pairing */,
 			);
 			name = Controllers;
 			path = controllers;
@@ -491,14 +503,14 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
-		37F283C51A656BB700F432CC /* Dongle Pairing */ = {
+		37F283C51A656BB700F432CC /* Pairing */ = {
 			isa = PBXGroup;
 			children = (
 				379CA1021A713B7100A9D426 /* Dialogs */,
-				37B9E4AB1A67F98F0055E81A /* Dongle List */,
-				37B9E4A91A67F98F0055E81A /* Add Dongle */,
+				37B9E4AB1A67F98F0055E81A /* Pairing List */,
+				37B9E4A91A67F98F0055E81A /* Pair Dongle */,
 			);
-			name = "Dongle Pairing";
+			name = Pairing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -618,6 +630,8 @@
 			files = (
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */,
+				37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */,
+				37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */,
 				37A2DBE31A7A85FD0045B639 /* PairingAddFinalizeStepViewController.swift in Sources */,
 				37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */,
 				37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */,
@@ -652,13 +666,11 @@
 				37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */,
 				37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */,
 				37A88F741A6E550F0036CF2A /* TextField.swift in Sources */,
-				37BC847A1A7FB71E00072B71 /* PairingTransactionsManager.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				3724A3821A79383700E1B977 /* Common.swift in Sources */,
-				375A38071A77DA930082D917 /* PairingProtocolManager.swift in Sources */,
 				37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,
@@ -672,6 +684,7 @@
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
 				37A88F671A692ED40036CF2A /* PairingAddCodeStepViewController.swift in Sources */,
 				37EF91C21A6D3C47007DBBAF /* NavigationItem.swift in Sources */,
+				37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */,
 				37F283AE1A655D3400F432CC /* UIColor+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

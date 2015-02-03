@@ -13,6 +13,8 @@ class PairingListViewController: BaseViewController {
     @IBOutlet private weak var actionBar: ActionBarView!
     @IBOutlet private weak var pairingStatusLabel: Label!
     
+    lazy private var pairingTransactionsManager: PairingTransactionsManager = PairingTransactionsManager()
+    
     // MARK: Actions
     
     @IBAction private func pairNewDongleButtonTouched(sender: AnyObject) {
@@ -22,7 +24,6 @@ class PairingListViewController: BaseViewController {
         navigationController.viewControllers = [addDongleViewController]
         presentViewController(navigationController, animated: true, completion: nil)
     }
-    
     
     // MARK: Interface
     
@@ -36,9 +37,24 @@ class PairingListViewController: BaseViewController {
     override func updateView() {
         super.updateView()
         
-        delayOnMainQueue(0.5) {
-            self.pairNewDongleButtonTouched(UIView())
-        }
+//        delayOnMainQueue(0.5) {
+//            let vc = PairingTransactionDialogViewController.instantiateFromNib()
+//            self.presentViewController(vc, animated: true, completion: nil)
+//        }
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        pairingTransactionsManager.startListening()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    
+        pairingTransactionsManager.stopListening()
     }
     
 }

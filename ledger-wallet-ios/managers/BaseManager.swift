@@ -23,7 +23,7 @@ class BaseManager: NSObject {
     }
     
     private struct Singleton {
-        private static private(set) var instances: [String: BaseManager] = [:]
+        private static var instances: [String: BaseManager] = [:]
     }
     
     override required init() {
