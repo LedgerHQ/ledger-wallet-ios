@@ -12,3 +12,8 @@
 // vendor
 #import "JFRWebSocket.h"
 #import "CoreBitcoin.h"
+#import <openssl/ec.h>
+#import <openssl/ecdh.h>
+#import <openssl/obj_mac.h>
+#import <openssl/bn.h>
+#import <openssl/rand.h>
