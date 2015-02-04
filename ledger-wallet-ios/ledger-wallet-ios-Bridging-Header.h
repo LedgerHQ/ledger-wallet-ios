@@ -11,3 +11,4 @@
 
 // vendor
 #import "JFRWebSocket.h"
+#import "CoreBitcoin.h"
