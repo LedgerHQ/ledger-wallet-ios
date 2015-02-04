@@ -60,13 +60,13 @@ class PairingProtocolManager: BasePairingManager {
         
         // generate public key
         if (publicKey == nil || privateKey == nil) {
-            let key = BTCKey()
+            let key = BitcoinKey()
             publicKey = key.publicKey
             privateKey = key.privateKey
         }
         
         // send public key
-        let message = messageWithType(MessageType.Identity, data: ["public_key": BTCHexFromData(publicKey)])
+        let message = messageWithType(MessageType.Identity, data: ["public_key": Crypto.Encode.base16StringFromData(publicKey!)])
         sendMessage(message, webSocket: webSocket)
     }
     

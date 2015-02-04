@@ -40,6 +40,8 @@ class PairingListViewController: BaseViewController {
 //        delayOnMainQueue(0.5) {
 //            self.pairNewDongleButtonTouched(UIView())
 //        }
+        
+        let btc = BitcoinKey()
     }
     
     // MARK: View lifecycle
