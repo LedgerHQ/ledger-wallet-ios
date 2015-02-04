@@ -12,7 +12,6 @@ class BasePairingManager: BaseManager {
     
     typealias Message = [String: AnyObject]
     typealias MessageHandler = (Message) -> Void
-    typealias CurriedMessageHandler = (BasePairingManager) -> (MessageHandler)
     
     enum MessageType: String {
         case Join = "join"
@@ -24,29 +23,42 @@ class BasePairingManager: BaseManager {
         case Connect = "connect"
         case Disconnect = "disconnect"
     }
-    private var messagesHandlers: [MessageType: CurriedMessageHandler] = [
-        MessageType.Challenge: handleChallengeMessage,
-        MessageType.Pairing: handlePairingMessage,
-        MessageType.Disconnect: handleDisconnectMessage,
-        MessageType.Connect: handleConnectMessage
-    ]
+    private let messagesHandlers: [MessageType: MessageHandler] = [:]
+    private(set) var lastSentMessage: Message? = nil
     
     // MARK: Messages management
-    
-    func handleChallengeMessage(message: Message) {
+
+    dynamic func handleChallengeMessage(message: Message) {
         
     }
     
-    func handlePairingMessage(message: Message) {
+    dynamic func handlePairingMessage(message: Message) {
         
     }
     
-    func handleDisconnectMessage(message: Message) {
+    dynamic func handleDisconnectMessage(message: Message) {
         
     }
     
-    func handleConnectMessage(message: Message) {
+    dynamic func handleConnectMessage(message: Message) {
         
+    }
+    
+    dynamic func handleRepeatMessage(message: Message) {
+
+    }
+    
+    // MARK: Initialization
+    
+    required init() {
+        super.init()
+        
+        let me = self
+        messagesHandlers.updateValue({ message in me.handleChallengeMessage(message) }, forKey: MessageType.Challenge)
+        messagesHandlers.updateValue({ message in me.handleConnectMessage(message) }, forKey: MessageType.Connect)
+        messagesHandlers.updateValue({ message in me.handleDisconnectMessage(message) }, forKey: MessageType.Disconnect)
+        messagesHandlers.updateValue({ message in me.handlePairingMessage(message) }, forKey: MessageType.Pairing)
+        messagesHandlers.updateValue({ message in me.handleRepeatMessage(message) }, forKey: MessageType.Repeat)
     }
     
 }
@@ -60,7 +72,7 @@ extension BasePairingManager {
             if let messageType = MessageType(rawValue: typeString) {
                 // lookup form message table
                 if let handler = messagesHandlers[messageType] {
-                    handler(self)(message)
+                    handler(message)
                 }
             }
         }
@@ -69,6 +81,7 @@ extension BasePairingManager {
     func sendMessage(message: Message, webSocket: JFRWebSocket) {
         if let JSONData = NSJSONSerialization.dataWithJSONObject(message, options: NSJSONWritingOptions.allZeros, error: nil) {
             webSocket.writeData(JSONData)
+            lastSentMessage = message
         }
     }
     

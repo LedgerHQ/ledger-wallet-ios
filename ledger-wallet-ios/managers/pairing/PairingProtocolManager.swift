@@ -29,21 +29,28 @@ class PairingProtocolManager: BasePairingManager {
     
     weak var delegate: PairingProtocolManagerDelegate? = nil
     private var webSocket: JFRWebSocket! = nil
+    private var webSocketURL = LedgerWebSocketURL
+    private var pairingId: String? = nil
+    private let peerPublicKey = LedgerDongleAttestationKeyData
+    private var publicKey: NSData? = nil
+    private var privateKey: NSData? = nil
     
     // MARK: Pairing management
     
-    func joinRoom(roomId: String) {
+    func joinRoom(pairingId: String) {
         if (webSocket != nil) {
             return
         }
         
         // create websocket
-        webSocket = JFRWebSocket(URL: NSURL(string: "ws://192.168.2.107:8080"), protocols: nil)
+        webSocket = JFRWebSocket(URL: NSURL(string: webSocketURL), protocols: nil)
         webSocket.delegate = self
         webSocket.connect()
         
         // send join message
-        sendMessage(messageWithType(MessageType.Join, data: ["room": roomId]), webSocket: webSocket)
+        self.pairingId = pairingId
+        let message = messageWithType(MessageType.Join, data: ["room": pairingId])
+        sendMessage(message, webSocket: webSocket)
     }
     
     func sendPublicKey() {
@@ -51,20 +58,43 @@ class PairingProtocolManager: BasePairingManager {
             return
         }
         
+        // generate public key
+        if (publicKey == nil || privateKey == nil) {
+            let key = BTCKey()
+            publicKey = key.publicKey
+            privateKey = key.privateKey
+        }
+        
         // send public key
-        sendMessage(messageWithType(MessageType.Identity, data: ["public_key": "key"]), webSocket: webSocket)
+        let message = messageWithType(MessageType.Identity, data: ["public_key": BTCHexFromData(publicKey)])
+        sendMessage(message, webSocket: webSocket)
     }
     
-    func sendChallengeResponse() {
+    func sendChallengeResponse(response: String) {
         if (webSocket == nil) {
             return
         }
         
         // send challenge response
-        sendMessage(messageWithType(MessageType.Challenge, data: ["data": "challenge"]), webSocket: webSocket)
+        sendMessage(messageWithType(MessageType.Challenge, data: ["data": response]), webSocket: webSocket)
+    }
+    
+    func canCreatePairingItemNamed(name: String) -> Bool {
+        let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
+        
+        for item in allItems {
+            if item.dongleName == name {
+                return false
+            }
+        }
+        return true
     }
     
     func createNewPairingItemNamed(name: String) -> Bool {
+        if (canCreatePairingItemNamed(name) == false) {
+            return false
+        }
+        
         // TODO:
         return true
     }
@@ -79,12 +109,30 @@ class PairingProtocolManager: BasePairingManager {
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
     
+    // MARK: Testing
+    
+    func setTestKeys(#publicKey: NSData, privateKey: NSData) {
+        self.publicKey = publicKey
+        self.privateKey = privateKey
+    }
+    
+    func setTestWebSocketURL(url: String) {
+        self.webSocketURL = url
+    }
+    
+    func setEnvironementIsTest(value: Bool) {
+        PairingKeychainItem.testEnvironment = value
+    }
+    
     // MARK: Initialization
     
     private func cleanUp() {
         webSocket?.delegate = nil
         webSocket?.disconnect()
         webSocket = nil
+        publicKey = nil
+        privateKey = nil
+        pairingId = nil
     }
     
     deinit {
@@ -116,6 +164,12 @@ extension PairingProtocolManager {
     override func handleDisconnectMessage(message: Message) {
         cleanUp()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DongleTerminated)
+    }
+    
+    override func handleRepeatMessage(message: Message) {
+        if let message = lastSentMessage {
+            sendMessage(message, webSocket: webSocket)
+        }
     }
     
 }

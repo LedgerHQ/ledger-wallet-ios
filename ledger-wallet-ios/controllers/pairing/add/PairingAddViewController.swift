@@ -179,13 +179,15 @@ extension PairingAddViewController {
             // go to finialize
             navigateToStep(PairingAddFinalizeStepViewController.self, dataToPass: nil) { finished in
                 // send challenge response
-                (self.pairingProtocolManager?.sendChallengeResponse())!
+                (self.pairingProtocolManager?.sendChallengeResponse(object as String))!
             }
         }
         else if (stepViewController is PairingAddNameStepViewController) {
             // save pairing item
-            if let succeeded = pairingProtocolManager?.createNewPairingItemNamed(object as String) {
-                if (succeeded) {
+            let name = object as String
+            if let canSave = pairingProtocolManager?.canCreatePairingItemNamed(name) {
+                let succeeded = pairingProtocolManager?.createNewPairingItemNamed(name)
+                if succeeded != nil && succeeded! == true {
                     completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded)
                 }
                 else {
