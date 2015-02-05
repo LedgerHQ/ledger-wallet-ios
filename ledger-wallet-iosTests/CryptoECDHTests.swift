@@ -16,8 +16,8 @@ class CryptoECDHTests: XCTestCase {
     let otherPrivateKey = Crypto.Encode.dataFromBase16String("2107cb67d49337fb9cf5e1585a308a72ba5aa17c6255010a01354f526b4e81cd")
     let otherPublicKey = Crypto.Encode.dataFromBase16String("040d1f94315fd489bbc233b75c69496d8f4aebcedfabb1937c312389750c9f096cd7a8bf42345800beeeb719bfb1c4b96ad57cd20aa22d33dfa59d3b4578aa9da2")
     
-    let remotePublicKey = Crypto.Encode.dataFromBase16String("045466dcc55ec90ebd40a7fb22744eea8c3725edfc6f850b936b1cc95687afd4594250d7bc122a27e93cb28049108bbbe8e383799eae1673b30309408b80b3f8b4")
-    let expectedSecret = Crypto.Encode.dataFromBase16String("3bea49377c5db248969188aa7fe8920f393a755b0282f46ad16e61c30078be17")
+    let remotePublicKey = Crypto.Encode.dataFromBase16String("0478c0837ded209265ea8131283585f71c5bddf7ffafe04ccddb8fe10b3edc7833d6dee70c3b9040e1a1a01c5cc04fcbf9b4de612e688d09245ef5f9135413cc1d")
+    let expectedSecret = Crypto.Encode.dataFromBase16String("ee0eb1f6dc57e36f95a3bc750d3b798c61c79870eefd7989dc27ec5f3f77d2ec")
     
     func testECDHAgreement() {
         let iKey1 = Crypto.Key(privateKey: privateKey)
@@ -32,7 +32,7 @@ class CryptoECDHTests: XCTestCase {
     }
     
     func testECDHRemoteAgreement() {
-        let iKey = Crypto.Key(privateKey: otherPublicKey)
+        let iKey = Crypto.Key(privateKey: privateKey)
         let pKey = Crypto.Key(publicKey: remotePublicKey)
         let secret = Crypto.ECDH.performAgreement(internalKey: iKey, peerKey: pKey).symmetricKey
         XCTAssertEqual(secret.length, 32, "secret1 size should be 32")
