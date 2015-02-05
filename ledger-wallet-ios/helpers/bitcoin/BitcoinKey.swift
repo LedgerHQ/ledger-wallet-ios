@@ -10,65 +10,61 @@ class BitcoinKey {
 
     private(set) var publicKey = NSData()
     private(set) var privateKey = NSData()
+    private var key = EC_KEY_new_by_curve_name(NID_secp256k1)
     
     // MARK: Key agreement
     
-    private func generateNewKeyPair() {
-        // generate key
-        let key = EC_KEY_new_by_curve_name(NID_secp256k1)
-        //EC_KEY_generate_key(key)
-        
-        let secret = NSMutableData(length: 32)!
-        RAND_bytes(UnsafeMutablePointer(secret.mutableBytes), 32)
-        let bignum_p = BN_bin2bn(UnsafeMutablePointer(secret.mutableBytes), Int32(secret.length), BN_new())
-
-        
-        let group = EC_KEY_get0_group(key)
-        var ctx = BN_CTX_new()
-        let pub_key = EC_POINT_new(group)
-        EC_POINT_mul(group, pub_key, bignum_p, nil, nil, ctx)
-        EC_KEY_set_private_key(key, bignum_p)
-        EC_KEY_set_public_key(key, pub_key)
-        EC_POINT_free(pub_key)
-        BN_CTX_free(ctx)
+    private func generateKeyPair() {
+        // generate new key pair
+        EC_KEY_generate_key(key)
+    }
     
+    private func generateKeysData() {
         // get private key
-        var bigNum = bignum_p
-        var numBytes = (BN_num_bits(bigNum) + 7) / 8
-        var data = NSMutableData(length: Int(numBytes))!
-        var copiedBytes = BN_bn2bin(bigNum, UnsafeMutablePointer(data.mutableBytes))
-        privateKey = data
+        let prKey = EC_KEY_get0_private_key(key)
+        if (prKey != nil) {
+            let prKeyBytes = (BN_num_bits(prKey) + 7) / 8
+            let privateKey = NSMutableData(length: Int(prKeyBytes))!
+            BN_bn2bin(prKey, UnsafeMutablePointer(privateKey.mutableBytes))
+            self.privateKey = privateKey
+        }
+        else {
+            self.privateKey = NSData()
+        }
         
         // get public key
-        var point = EC_KEY_get0_public_key(key)
-        EC_KEY_set_conv_form(key, POINT_CONVERSION_UNCOMPRESSED)
-        numBytes = i2o_ECPublicKey(key, nil)
-        data = NSMutableData(length: Int(numBytes))!
-        i2o_ECPublicKey(key, UnsafeMutablePointer(data.mutableBytes))
-        publicKey = data
-        
-        
-        println(privateKey)
-        println(publicKey)
-        
-        
-        // free key
-        EC_KEY_free(key)
+        let pKey = EC_KEY_get0_public_key(key)
+        if (pKey != nil) {
+            EC_KEY_set_conv_form(key, POINT_CONVERSION_UNCOMPRESSED)
+            let pKeyBytes = i2o_ECPublicKey(key, nil)
+            var publicKeyPointer = UnsafeMutablePointer<UInt8>.null()
+            i2o_ECPublicKey(key, &publicKeyPointer)
+            let publicKey = NSData(bytes: publicKeyPointer, length: Int(pKeyBytes))
+            CRYPTO_free(publicKeyPointer)
+            self.publicKey = publicKey
+        }
+        else {
+            if (self.privateKey.length == 0) {
+                self.publicKey = NSData()
+            }
+            else {
+                // compute public key from private key
+                // TODO:
+            }
+        }
     }
-    
-    func keyAgreementWithPublicKey(publicKey: NSData) -> NSData {
-        
-        return NSData()
-    }
-    
+
     // MARK: Initialization
     
     init() {
-        generateNewKeyPair()
+        generateKeyPair()
+        generateKeysData()
     }
     
     deinit {
-        
+        if (key != nil) {
+            EC_KEY_free(key)
+        }
     }
     
 }

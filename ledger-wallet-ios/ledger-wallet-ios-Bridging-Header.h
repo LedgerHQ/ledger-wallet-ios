@@ -17,3 +17,4 @@
 #import <openssl/obj_mac.h>
 #import <openssl/bn.h>
 #import <openssl/rand.h>
+#import <openssl/crypto.h>
