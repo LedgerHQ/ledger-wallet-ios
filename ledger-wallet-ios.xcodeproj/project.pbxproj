@@ -83,12 +83,15 @@
 		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
 		37A88F741A6E550F0036CF2A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F731A6E550F0036CF2A /* TextField.swift */; };
 		37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */; };
+		37ABFBCC1A836C8B0061E92D /* CryptoECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */; };
+		37ABFBCE1A836DA50061E92D /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCD1A836DA50061E92D /* CryptoKey.swift */; };
+		37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCD1A836DA50061E92D /* CryptoKey.swift */; };
+		37ABFBD01A836F110061E92D /* CryptoECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */; };
+		37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBD11A8375700061E92D /* CryptoKeyTests.swift */; };
 		37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
 		37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
-		37B537621A82996C0087AB43 /* BitcoinKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537611A82996C0087AB43 /* BitcoinKey.swift */; };
 		37B537641A8299EA0087AB43 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537631A8299EA0087AB43 /* CryptoData.swift */; };
 		37B537661A82A1AB0087AB43 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537651A82A1AB0087AB43 /* CryptoHash.swift */; };
-		37B5376B1A82A3250087AB43 /* BitcoinKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537611A82996C0087AB43 /* BitcoinKey.swift */; };
 		37B5376D1A82A5D20087AB43 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */; };
 		37B5376F1A82A5E50087AB43 /* CryptoCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5376E1A82A5E50087AB43 /* CryptoCommon.swift */; };
 		37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537631A8299EA0087AB43 /* CryptoData.swift */; };
@@ -258,9 +261,11 @@
 		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
 		37A88F731A6E550F0036CF2A /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+Utils.swift"; sourceTree = "<group>"; };
+		37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoECDH.swift; path = crypto/CryptoECDH.swift; sourceTree = "<group>"; };
+		37ABFBCD1A836DA50061E92D /* CryptoKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoKey.swift; path = crypto/CryptoKey.swift; sourceTree = "<group>"; };
+		37ABFBD11A8375700061E92D /* CryptoKeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoKeyTests.swift; sourceTree = "<group>"; };
 		37ACFDEE1A791810002E32FC /* JFRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFRWebSocket.h; path = vendor/jetfire/JFRWebSocket.h; sourceTree = "<group>"; };
 		37ACFDEF1A791810002E32FC /* JFRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFRWebSocket.m; path = vendor/jetfire/JFRWebSocket.m; sourceTree = "<group>"; };
-		37B537611A82996C0087AB43 /* BitcoinKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinKey.swift; sourceTree = "<group>"; };
 		37B537631A8299EA0087AB43 /* CryptoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoData.swift; path = crypto/CryptoData.swift; sourceTree = "<group>"; };
 		37B537651A82A1AB0087AB43 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
 		37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
@@ -458,6 +463,8 @@
 				37B537651A82A1AB0087AB43 /* CryptoHash.swift */,
 				37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */,
 				37B5376E1A82A5E50087AB43 /* CryptoCommon.swift */,
+				37ABFBCD1A836DA50061E92D /* CryptoKey.swift */,
+				37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */,
 			);
 			name = Crypto;
 			sourceTree = "<group>";
@@ -522,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				376F51211A8231F3001C6684 /* PairingProtocolManagerTests.swift */,
+				37ABFBD11A8375700061E92D /* CryptoKeyTests.swift */,
 				37B746A41A5D5020001373C5 /* WebSocketTests.swift */,
 				373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */,
 				3784FB1E1A5D2F5F0063A364 /* Supporting Files */,
@@ -577,15 +585,6 @@
 				376F500D1A821411001C6684 /* OpenSSL */,
 			);
 			name = Vendor;
-			sourceTree = "<group>";
-		};
-		37B537601A82996C0087AB43 /* Bitcoin */ = {
-			isa = PBXGroup;
-			children = (
-				37B537611A82996C0087AB43 /* BitcoinKey.swift */,
-			);
-			name = Bitcoin;
-			path = bitcoin;
 			sourceTree = "<group>";
 		};
 		37B9E4A91A67F98F0055E81A /* Pair Dongle */ = {
@@ -722,7 +721,6 @@
 		37F283BA1A655D7200F432CC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				37B537601A82996C0087AB43 /* Bitcoin */,
 				376F511C1A822DF6001C6684 /* Crypto */,
 				3798BA161A6E6C7C00F5B603 /* Allures */,
 				37F283BF1A655D7200F432CC /* Utils */,
@@ -867,6 +865,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37ABFBCC1A836C8B0061E92D /* CryptoECDH.swift in Sources */,
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */,
 				376F51121A82190E001C6684 /* BTCScript.m in Sources */,
@@ -956,9 +955,9 @@
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,
 				376F510C1A82190E001C6684 /* BTCOpcode.m in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
-				37B537621A82996C0087AB43 /* BitcoinKey.swift in Sources */,
 				37A88F671A692ED40036CF2A /* PairingAddCodeStepViewController.swift in Sources */,
 				37EF91C21A6D3C47007DBBAF /* NavigationItem.swift in Sources */,
+				37ABFBCE1A836DA50061E92D /* CryptoKey.swift in Sources */,
 				37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */,
 				376F50FD1A82190D001C6684 /* BTCBlock.m in Sources */,
 				37F283AE1A655D3400F432CC /* UIColor+Utils.swift in Sources */,
@@ -972,14 +971,16 @@
 				376F51221A8231F3001C6684 /* PairingProtocolManagerTests.swift in Sources */,
 				37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */,
 				37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */,
-				37B5376B1A82A3250087AB43 /* BitcoinKey.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
+				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
+				37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */,
 				376F51241A82326F001C6684 /* BasePairingManager.swift in Sources */,
 				37B537721A82A84C0087AB43 /* CryptoEncode.swift in Sources */,
 				37B537731A82A84C0087AB43 /* CryptoCommon.swift in Sources */,
 				37DD54031A823C3E00449CCA /* Common.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
 				37B537711A82A84C0087AB43 /* CryptoHash.swift in Sources */,
+				37ABFBD01A836F110061E92D /* CryptoECDH.swift in Sources */,
 				37656F301A76A3F60042512D /* KeychainItem.swift in Sources */,
 				376F51251A823379001C6684 /* BaseManager.swift in Sources */,
 				376F51261A823395001C6684 /* Blocks.swift in Sources */,

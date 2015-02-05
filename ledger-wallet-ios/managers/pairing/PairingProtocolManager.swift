@@ -35,6 +35,7 @@ class PairingProtocolManager: BasePairingManager {
     private var publicKey: NSData? = nil
     private var privateKey: NSData? = nil
     private var pairingSecret: NSData? = nil
+    private var sessionKey: NSData? = nil
     
     // MARK: Pairing management
     
@@ -61,7 +62,7 @@ class PairingProtocolManager: BasePairingManager {
         
         // generate public key
         if (publicKey == nil || privateKey == nil) {
-            let key = BitcoinKey()
+            let key = Crypto.Key()
             publicKey = key.publicKey
             privateKey = key.privateKey
         }
