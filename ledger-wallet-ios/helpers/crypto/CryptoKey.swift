@@ -10,12 +10,40 @@ extension Crypto {
     
     class Key {
         
+        var hasPublicKey: Bool { return publicKey.length > 0 }
+        var hasPrivateKey: Bool { return privateKey.length > 0 }
+        var hasSymmetricKey: Bool { return symmetricKey.length > 0 }
+        private(set) var isSymmetric = false
+        private(set) var isAsymmetric = false
+        
         private(set) var publicKey = NSData()
         private(set) var privateKey = NSData()
         private(set) var symmetricKey = NSData()
         private var key: COpaquePointer = nil
-        private(set) var isSymmetric = false
-        private(set) var isAsymmetric = false
+        
+        // MARK: Public methods
+        
+        func openSSLPublicKey() -> COpaquePointer {
+            let pKey = EC_KEY_get0_public_key(key)
+            if pKey != nil {
+                return pKey
+            }
+            return nil
+        }
+        
+        func openSSLPrivateKey() -> UnsafePointer<BIGNUM> {
+            let prKey = EC_KEY_get0_private_key(key)
+            if prKey != nil {
+                return prKey
+            }
+            return nil
+        }
+        
+        func openSSLKey() -> COpaquePointer {
+            return key
+        }
+        
+        // MARK: Private methods
         
         private func generateKeysData() {
             // get private key
@@ -68,23 +96,18 @@ extension Crypto {
         
         // MARK: Initialization
         
-        init(publicKey: NSData, privateKey: NSData) {
+        private init(publicKey: NSData, privateKey: NSData) {
             // create key
             key = EC_KEY_new_by_curve_name(NID_secp256k1)
             
             // define keys if provided
-            var newKeyPair = true
             if (publicKey.length > 0) {
                 definePublicKey(publicKey)
-                newKeyPair = false
             }
-            if (privateKey.length > 0) {
+            else if (privateKey.length > 0) {
                 definePrivateKey(privateKey)
-                newKeyPair = false
             }
-
-            // no keys were defined, generate new keypair
-            if (newKeyPair) {
+            else {
                 EC_KEY_generate_key(key)
             }
     
