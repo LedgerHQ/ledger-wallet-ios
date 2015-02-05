@@ -34,6 +34,7 @@ class PairingProtocolManager: BasePairingManager {
     private let peerPublicKey = LedgerDongleAttestationKeyData
     private var publicKey: NSData? = nil
     private var privateKey: NSData? = nil
+    private var pairingSecret: NSData? = nil
     
     // MARK: Pairing management
     
@@ -64,6 +65,9 @@ class PairingProtocolManager: BasePairingManager {
             publicKey = key.publicKey
             privateKey = key.privateKey
         }
+        
+        // compute secret
+        
         
         // send public key
         let message = messageWithType(MessageType.Identity, data: ["public_key": Crypto.Encode.base16StringFromData(publicKey!)])
@@ -133,6 +137,7 @@ class PairingProtocolManager: BasePairingManager {
         publicKey = nil
         privateKey = nil
         pairingId = nil
+        pairingSecret = nil
     }
     
     deinit {
