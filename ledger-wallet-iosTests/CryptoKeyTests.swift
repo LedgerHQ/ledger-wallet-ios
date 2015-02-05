@@ -29,30 +29,29 @@ class CryptoKeyTests: XCTestCase {
     func testSymmetricKeyDataEqual() {
         let key = Crypto.Key(symmetricKey: publicKey)
         XCTAssertEqual(publicKey, key.symmetricKey, "symmetric key data should be equal")
+        XCTAssertEqual(publicKey.length, key.symmetricKey.length, "symmetric key size should be the same")
     }
     
     func testPrivateKeyDataEqual() {
         let key = Crypto.Key(privateKey: privateKey)
         XCTAssertEqual(privateKey, key.privateKey, "private key data should be equal")
         XCTAssertEqual(publicKey, key.publicKey, "public key data should be equal")
+        XCTAssertEqual(key.privateKey.length, 32, "private key size should be 32")
     }
     
     func testPublicKeyDataEqual() {
         let key = Crypto.Key(publicKey: publicKey)
         XCTAssertEqual(publicKey, key.publicKey, "public key data should be equal")
         XCTAssertEqual(NSData(), key.privateKey, "private key data should be empty")
-    }
-    
-    func testPublicPrivateKeyDataEqual() {
-        let key = Crypto.Key(publicKey: publicKey, privateKey: privateKey)
-        XCTAssertEqual(publicKey, key.publicKey, "public key data should be equal")
-        XCTAssertEqual(privateKey, key.privateKey, "private key data should be equal")
+        XCTAssertEqual(key.publicKey.length, 65, "private key size should be 65")
     }
     
     func testNewKeyPair() {
         let key = Crypto.Key()
         XCTAssertNotEqual(NSData(), key.publicKey, "private key data should not be empty")
         XCTAssertNotEqual(NSData(), key.privateKey, "private key data should not be empty")
+        XCTAssertEqual(key.publicKey.length, 65, "private key size should be 65")
+        XCTAssertEqual(key.privateKey.length, 32, "private key size should be 32")
     }
     
 }
