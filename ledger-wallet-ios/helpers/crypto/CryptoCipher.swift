@@ -12,12 +12,12 @@ extension Crypto {
 
     class Cipher {
         
-        class func tripleDESCBCFromData(data: NSData, key1: NSData, key2: NSData, key3: NSData) -> NSData {
-            return objCTripleDESCBCFromData(data, key1, key2, key3)
+        class func tripleDESCBCFromData(data: NSData, key1: Crypto.Key, key2: Crypto.Key, key3: Crypto.Key) -> NSData {
+            return objCTripleDESCBCFromData(data, key1.symmetricKey, key2.symmetricKey, key3.symmetricKey)
         }
         
-        class func dataFromTripleDESCBC(data: NSData, key1: NSData, key2: NSData, key3: NSData) -> NSData {
-            return objCDataFromTripleDESCBC(data, key1, key2, key3)
+        class func dataFromTripleDESCBC(data: NSData, key1: Crypto.Key, key2: Crypto.Key, key3: Crypto.Key) -> NSData {
+            return objCDataFromTripleDESCBC(data, key1.symmetricKey, key2.symmetricKey, key3.symmetricKey)
         }
         
     }
