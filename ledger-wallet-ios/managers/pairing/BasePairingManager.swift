@@ -18,6 +18,8 @@ class BasePairingManager: BaseManager {
         case Identity = "identity"
         case Accept = "accept"
         case Repeat = "repeat"
+        case Request = "request"
+        case Response = "response"
         case Challenge = "challenge"
         case Pairing = "pairing"
         case Connect = "connect"
@@ -46,6 +48,10 @@ class BasePairingManager: BaseManager {
     
     dynamic func handleRepeatMessage(message: Message) {
 
+    }
+    
+    dynamic func handleRequestMessage(message: Message) {
+        
     }
     
     // MARK: -  Initialization
