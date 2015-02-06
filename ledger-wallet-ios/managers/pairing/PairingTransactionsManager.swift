@@ -16,8 +16,8 @@ protocol PairingTransactionsManagerDelegate: class {
 
 class PairingTransactionsManager: BasePairingManager {
     
-    private(set) var listening: Bool = false
     weak var delegate: PairingTransactionsManagerDelegate? = nil
+    private(set) var listening: Bool = false
     private var webSockets: [JFRWebSocket: PairingKeychainItem] = [:]
     
     // MARK: -  Transactions management
@@ -80,7 +80,7 @@ extension PairingTransactionsManager {
     }
     
     override func handleWebSocket(webSocket: JFRWebSocket, didDisconnectWithError error: NSError?) {
-        delayOnMainQueue(5.0) {
+        delayOnMainQueue(3.0) {
             println("CONNECt")
             webSocket.connect()
         }
