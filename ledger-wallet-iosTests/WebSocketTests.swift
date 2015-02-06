@@ -9,6 +9,7 @@
 import XCTest
 
 class WebSocketTests: XCTestCase, JFRWebSocketDelegate {
+    
     var websocket: JFRWebSocket!
     var connectExpectation: XCTestExpectation!
     var disconnectExpectation: XCTestExpectation!
