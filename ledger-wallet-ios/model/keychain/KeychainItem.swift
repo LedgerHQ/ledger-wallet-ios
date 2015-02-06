@@ -13,7 +13,7 @@ class KeychainItem {
     
     var valid: Bool { return persistentReference != nil }
     class var serviceIdentifier: String { return "" }
-    class var itemClass: String { return "" }
+    class var itemClass: String { return kSecClassGenericPassword }
     private(set) var persistentReference: NSData!
     private(set) var data: NSData!
     private(set) var creationDate: NSDate!
