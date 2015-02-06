@@ -12,7 +12,7 @@ import UIKit
 
 class Button: UIButton {
 
-    // MARK: Style management
+    // MARK: -  Style management
     
     override func setTitle(title: String?, forState state: UIControlState) {
         super.setTitle(title, forState: state)
@@ -20,7 +20,7 @@ class Button: UIButton {
         ViewStylist.stylizeView(self)
     }
     
-    // MARK: Localization
+    // MARK: -  Localization
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +32,7 @@ class Button: UIButton {
 
 extension Button {
     
-    // MARK: States tinted images automation
+    // MARK: -  States tinted images automation
     
     func setTintedImages(image: UIImage, tintColor: UIColor, darkenFactor: CGFloat = VisualFactory.Metrics.defaultDarkenFactor) {
         setImage(image.imageWithColor(tintColor), forState: UIControlState.Normal)

@@ -12,7 +12,7 @@ private var allureKey = "allure"
 
 extension UIView {
     
-    // MARK: Allure
+    // MARK: -  Allure
     
     @IBInspectable var allure: String? {
         get {

@@ -20,7 +20,7 @@ class PairingTransactionsManager: BasePairingManager {
     weak var delegate: PairingTransactionsManagerDelegate? = nil
     private var webSockets: [JFRWebSocket: PairingKeychainItem] = [:]
     
-    // MARK: Transactions management
+    // MARK: -  Transactions management
     
     func startListening() {
         if (listening) {
@@ -59,7 +59,7 @@ class PairingTransactionsManager: BasePairingManager {
         webSockets.removeAll()
     }
     
-    // MARK: Initialization
+    // MARK: -  Initialization
     
     deinit {
         destroyWebSockets()
@@ -69,7 +69,7 @@ class PairingTransactionsManager: BasePairingManager {
 
 extension PairingTransactionsManager {
     
-    // MARK: WebSocket delegate
+    // MARK: -  WebSocket delegate
     
     override func handleWebSocketDidConnect(webSocket: JFRWebSocket) {
         

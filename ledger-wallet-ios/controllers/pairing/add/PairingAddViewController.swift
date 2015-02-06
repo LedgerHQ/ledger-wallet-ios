@@ -25,7 +25,7 @@ class PairingAddViewController: BaseViewController {
     private var pairingProtocolManager: PairingProtocolManager? = nil
     private var currentStepViewController: PairingAddBaseStepViewController? = nil
     
-    // MARK: Actions
+    // MARK: -  Actions
     
     override func complete() {
         // complete current step view controller
@@ -49,7 +49,7 @@ class PairingAddViewController: BaseViewController {
         delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome)
     }
     
-    // MARK: Interface
+    // MARK: -  Interface
     
     override func updateView() {
         super.updateView()
@@ -70,7 +70,7 @@ class PairingAddViewController: BaseViewController {
         navigateToStep(PairingAddScanStepViewController.self, dataToPass: nil, completion: nil)
     }
     
-    // MARK: Keyboard management
+    // MARK: -  Keyboard management
     
     override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
         super.keyboardWillHide(userInfo)
@@ -102,7 +102,7 @@ class PairingAddViewController: BaseViewController {
         }
     }
     
-    // MARK: Layout
+    // MARK: -  Layout
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -114,7 +114,7 @@ class PairingAddViewController: BaseViewController {
 
 extension PairingAddViewController {
     
-    // MARK: Steps management
+    // MARK: -  Steps management
     
     private class CompletionBlockWrapper {
         let closure: (Bool) -> Void
@@ -204,7 +204,7 @@ extension PairingAddViewController {
 
 extension PairingAddViewController: PairingProtocolManagerDelegate {
     
-    // MARK: PairingProtocolManager delegate
+    // MARK: -  PairingProtocolManager delegate
     
     func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didReceiveChallenge challenge: String) {
         // go to code
@@ -226,7 +226,7 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
 
 extension PairingAddViewController {
     
-    // MARK: CATransition delegate
+    // MARK: -  CATransition delegate
     
     override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
         // remove previous view controller view

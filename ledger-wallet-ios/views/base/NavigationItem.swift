@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationItem: UINavigationItem {
     
-    // MARK: Style management
+    // MARK: -  Style management
     
     override var title: String? {
         didSet {
@@ -22,7 +22,7 @@ class NavigationItem: UINavigationItem {
         }
     }
     
-    // MARK: Localization
+    // MARK: -  Localization
     
     override func awakeFromNib() {
         super.awakeFromNib()

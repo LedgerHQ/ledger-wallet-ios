@@ -10,7 +10,7 @@ import Foundation
 
 class BaseManager: NSObject {
     
-    // MARK: Singleton
+    // MARK: -  Singleton
     
     class func sharedInstance() -> BaseManager {
         let className = self.className()

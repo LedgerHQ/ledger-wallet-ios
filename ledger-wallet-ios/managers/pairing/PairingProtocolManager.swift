@@ -34,7 +34,7 @@ class PairingProtocolManager: BasePairingManager {
     private var cryptor: PairingProtocolCryptor! = nil
     private var webSocket: JFRWebSocket! = nil
 
-    // MARK: Pairing management
+    // MARK: -  Pairing management
     
     func joinRoom(pairingId: String) {
         if (webSocket != nil) {
@@ -99,7 +99,7 @@ class PairingProtocolManager: BasePairingManager {
         return createNewPairingItemNamed(name)
     }
     
-    // MARK: Initialization
+    // MARK: -  Initialization
     
     private func disconnectWebSocket() {
         webSocket?.delegate = nil
@@ -116,7 +116,7 @@ class PairingProtocolManager: BasePairingManager {
 
 extension PairingProtocolManager {
     
-    // MARK: Messages management
+    // MARK: -  Messages management
     
     override func handleChallengeMessage(message: Message) {
         if let dataString = message["data"] as? String {
@@ -164,7 +164,7 @@ extension PairingProtocolManager {
 
 extension PairingProtocolManager {
     
-    // MARK: WebSocket delegate
+    // MARK: -  WebSocket delegate
     
     override func handleWebSocket(webSocket: JFRWebSocket, didDisconnectWithError error: NSError?) {
         self.disconnectWebSocket()

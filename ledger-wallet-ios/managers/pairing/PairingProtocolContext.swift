@@ -18,7 +18,7 @@ class PairingProtocolContext {
     let internalKey: Crypto.Key! = nil
     let attestationKey: Crypto.Key! = nil
     
-    // MARK: Keychain item management
+    // MARK: -  Keychain item management
     
     func canCreatePairingItemNamed(name: String) -> Bool {
         // check data integrity
@@ -45,7 +45,7 @@ class PairingProtocolContext {
         return true
     }
     
-    // MARK: Initialization
+    // MARK: -  Initialization
     
     init(internalKey: Crypto.Key, attestationKey: Crypto.Key) {
         self.internalKey = internalKey

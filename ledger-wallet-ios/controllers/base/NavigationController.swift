@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationController: UINavigationController {
     
-    // MARK: Status bar management
+    // MARK: -  Status bar management
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         if self.topViewController != nil {

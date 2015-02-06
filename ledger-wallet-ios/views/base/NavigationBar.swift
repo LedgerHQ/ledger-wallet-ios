@@ -12,7 +12,7 @@ import UIKit
 
 class NavigationBar: UINavigationBar {
     
-    // MARK: Content size
+    // MARK: -  Content size
     
     var barHeight: CGFloat {
         if (UIScreen.mainScreen().bounds.height <= 480) {
@@ -29,7 +29,7 @@ class NavigationBar: UINavigationBar {
         return CGSize(width: super.sizeThatFits(size).width, height: barHeight)
     }
     
-    // MARK: Layout
+    // MARK: -  Layout
     
     override func layoutSubviews() {
         super.layoutSubviews()
