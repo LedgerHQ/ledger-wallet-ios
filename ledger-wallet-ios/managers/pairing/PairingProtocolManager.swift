@@ -26,17 +26,14 @@ class PairingProtocolManager: BasePairingManager {
         case DeviceTerminated
         case ServerDisconnected
     }
-    
+
     weak var delegate: PairingProtocolManagerDelegate? = nil
-    private var webSocket: JFRWebSocket! = nil
-    private var webSocketURL = LedgerWebSocketURL
-    private var pairingId: String? = nil
-    private let peerPublicKey = LedgerDongleAttestationKeyData
-    private var publicKey: NSData? = nil
-    private var privateKey: NSData? = nil
-    private var pairingSecret: NSData? = nil
-    private var sessionKey: NSData? = nil
+    var webSocketURL: String! = nil
+    var context: PairingProtocolContext! = nil
     
+    private var cryptor: PairingProtocolCryptor! = nil
+    private var webSocket: JFRWebSocket! = nil
+
     // MARK: Pairing management
     
     func joinRoom(pairingId: String) {
@@ -45,12 +42,19 @@ class PairingProtocolManager: BasePairingManager {
         }
         
         // create websocket
+        if (webSocketURL == nil) { webSocketURL = LedgerWebSocketURL }
         webSocket = JFRWebSocket(URL: NSURL(string: webSocketURL), protocols: nil)
         webSocket.delegate = self
         webSocket.connect()
+
+        // create context
+        if (context == nil) { context = PairingProtocolContext() }
+        
+        // create cryptor 
+        cryptor = PairingProtocolCryptor()
         
         // send join message
-        self.pairingId = pairingId
+        context.pairingId = pairingId
         let message = messageWithType(MessageType.Join, data: ["room": pairingId])
         sendMessage(message, webSocket: webSocket)
     }
@@ -60,18 +64,8 @@ class PairingProtocolManager: BasePairingManager {
             return
         }
         
-        // generate public key
-        if (publicKey == nil || privateKey == nil) {
-            let key = Crypto.Key()
-            publicKey = key.publicKey
-            privateKey = key.privateKey
-        }
-        
-        // compute secret
-        
-        
         // send public key
-        let message = messageWithType(MessageType.Identity, data: ["public_key": Crypto.Encode.base16StringFromData(publicKey!)])
+        let message = messageWithType(MessageType.Identity, data: ["public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey)])
         sendMessage(message, webSocket: webSocket)
     }
     
@@ -80,28 +74,11 @@ class PairingProtocolManager: BasePairingManager {
             return
         }
         
+        // create encrypted data response
+        let encryptedData = cryptor.encryptedChallengeResponseDataFromChallengeString(response, nonce: context.nonce, sessionKey: context.sessionKey)
+        
         // send challenge response
-        sendMessage(messageWithType(MessageType.Challenge, data: ["data": response]), webSocket: webSocket)
-    }
-    
-    func canCreatePairingItemNamed(name: String) -> Bool {
-        let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
-        
-        for item in allItems {
-            if item.dongleName == name {
-                return false
-            }
-        }
-        return true
-    }
-    
-    func createNewPairingItemNamed(name: String) -> Bool {
-        if (canCreatePairingItemNamed(name) == false) {
-            return false
-        }
-        
-        // TODO:
-        return true
+        sendMessage(messageWithType(MessageType.Challenge, data: ["data": Crypto.Encode.base16StringFromData(encryptedData)]), webSocket: webSocket)
     }
     
     func terminate() {
@@ -110,39 +87,28 @@ class PairingProtocolManager: BasePairingManager {
         }
         
         // destroy websocket
-        cleanUp()
+        disconnectWebSocket()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
     
-    // MARK: Testing
-    
-    func setTestKeys(#publicKey: NSData, privateKey: NSData) {
-        self.publicKey = publicKey
-        self.privateKey = privateKey
+    func canCreatePairingItemNamed(name: String) -> Bool {
+        return context.canCreatePairingItemNamed(name)
     }
     
-    func setTestWebSocketURL(url: String) {
-        self.webSocketURL = url
-    }
-    
-    func setEnvironementIsTest(value: Bool) {
-        PairingKeychainItem.testEnvironment = value
+    func createNewPairingItemNamed(name: String) -> Bool {
+        return createNewPairingItemNamed(name)
     }
     
     // MARK: Initialization
     
-    private func cleanUp() {
+    private func disconnectWebSocket() {
         webSocket?.delegate = nil
         webSocket?.disconnect()
         webSocket = nil
-        publicKey = nil
-        privateKey = nil
-        pairingId = nil
-        pairingSecret = nil
     }
     
     deinit {
-        cleanUp()
+        disconnectWebSocket()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
     
@@ -154,21 +120,37 @@ extension PairingProtocolManager {
     
     override func handleChallengeMessage(message: Message) {
         if let dataString = message["data"] as? String {
-            if let data = dataString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-                delegate?.pairingProtocolManager(self, didReceiveChallenge: "1234")
-            }
+            // get data
+            let blob = Crypto.Encode.dataFromBase16String(dataString)
+            
+            // extract nonce and encrypted data
+            context.nonce = cryptor.nonceFromBlob(blob)
+            let encryptedData = cryptor.encryptedDataFromBlob(blob)
+            
+            // decrypt data
+            let decryptedData = cryptor.decryptData(encryptedData, sessionKey: context.sessionKey)
+            
+            // extract challenge, pairing key
+            let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
+            context.pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
+            
+            // create challenge string
+            let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
+            
+            // notify delegate
+            delegate?.pairingProtocolManager(self, didReceiveChallenge: challengeString)
         }
     }
     
     override func handlePairingMessage(message: Message) {
         if let isSuccessful = message["is_successful"] as? Bool {
-            cleanUp()
+            disconnectWebSocket()
             delegate?.pairingProtocolManager(self, didTerminateWithOutcome: isSuccessful ? PairingOutcome.DongleSucceeded : PairingOutcome.DongleFailed)
         }
     }
     
     override func handleDisconnectMessage(message: Message) {
-        cleanUp()
+        disconnectWebSocket()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DongleTerminated)
     }
     
@@ -185,12 +167,12 @@ extension PairingProtocolManager {
     // MARK: WebSocket delegate
     
     override func handleWebSocket(webSocket: JFRWebSocket, didDisconnectWithError error: NSError?) {
-        self.cleanUp()
+        self.disconnectWebSocket()
         self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
     }
     
     override func handleWebsocket(webSocket: JFRWebSocket, didWriteError error: NSError?) {
-        self.cleanUp()
+        self.disconnectWebSocket()
         self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
     }
     
