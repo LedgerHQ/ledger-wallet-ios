@@ -180,6 +180,7 @@
                     <connections>
                         <outlet property="actionBar" destination="wt8-T5-TCh" id="2X0-uB-bpj"/>
                         <outlet property="pairingStatusLabel" destination="rLQ-ec-6D3" id="7iG-ME-nqk"/>
+                        <outlet property="tableView" destination="kqf-Ck-Kn5" id="930-PD-iiC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>

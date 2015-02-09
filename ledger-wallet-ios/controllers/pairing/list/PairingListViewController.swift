@@ -12,10 +12,11 @@ class PairingListViewController: BaseViewController {
     
     @IBOutlet private weak var actionBar: ActionBarView!
     @IBOutlet private weak var pairingStatusLabel: Label!
+    @IBOutlet private weak var tableView: TableView!
     
-    lazy private var pairingTransactionsManager: PairingTransactionsManager = PairingTransactionsManager()
+    private var pairingKeychainItems: [PairingKeychainItem] = []
     
-    // MARK: -  Actions
+    // MARK: - Actions
     
     @IBAction private func pairNewDongleButtonTouched(sender: AnyObject) {
         let navigationController = NavigationController.instantiateFromStoryboard(storyboard)
@@ -25,7 +26,7 @@ class PairingListViewController: BaseViewController {
         presentViewController(navigationController, animated: true, completion: nil)
     }
     
-    // MARK: -  Interface
+    // MARK: - Interface
     
     override func configureView() {
         super.configureView()
@@ -42,18 +43,19 @@ class PairingListViewController: BaseViewController {
 //        }
     }
     
-    // MARK: -  View lifecycle
+    // MARK: - Model
+    
+    override func updateModel() {
+        
+    }
+    
+    // MARK: - View lifecycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        pairingTransactionsManager.startListening()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    
-        pairingTransactionsManager.stopListening()
+        updateModel()
+        updateView()
     }
     
 }

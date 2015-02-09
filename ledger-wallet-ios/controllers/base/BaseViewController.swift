@@ -42,6 +42,12 @@ class BaseViewController: UIViewController {
 
     }
     
+    // MARK: - Model
+    
+    func updateModel() {
+        
+    }
+    
     // MARK: -  Layout 
     
     override func viewDidLayoutSubviews() {
