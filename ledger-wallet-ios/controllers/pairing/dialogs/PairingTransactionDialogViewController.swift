@@ -10,6 +10,14 @@ import UIKit
 
 class PairingTransactionDialogViewController: DialogViewController {
     
+    var transactionInfo: PairingTransactionInfo? = nil
     
+    // MARK: - Interface
+    
+    override func updateView() {
+        super.updateView()
+        
+        
+    }
     
 }

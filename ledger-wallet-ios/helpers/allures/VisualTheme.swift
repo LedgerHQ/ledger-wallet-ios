@@ -170,6 +170,12 @@ struct VisualTheme {
             let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.lightGrey, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.lightGrey.darkerColor(), forState: UIControlState.Highlighted)
+        },
+        "rounded.red": { button in
+            VisualTheme.buttonAllures["rounded"]?(button)
+            let roundedButton = button as RoundedButton
+            roundedButton.setFillColor(VisualFactory.Colors.invalidRed, forState: UIControlState.Normal)
+            roundedButton.setFillColor(VisualFactory.Colors.invalidRed.darkerColor(), forState: UIControlState.Highlighted)
         }
     ]
     
