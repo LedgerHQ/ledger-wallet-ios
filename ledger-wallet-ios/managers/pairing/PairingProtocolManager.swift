@@ -91,12 +91,8 @@ class PairingProtocolManager: BasePairingManager {
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
     
-    func canCreatePairingItemNamed(name: String) -> Bool {
-        return context.canCreatePairingItemNamed(name)
-    }
-    
     func createNewPairingItemNamed(name: String) -> Bool {
-        return createNewPairingItemNamed(name)
+        return context.createPairingKeychainItemNamed(name)
     }
     
     // MARK: -  Initialization

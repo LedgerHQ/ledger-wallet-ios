@@ -20,12 +20,7 @@ class PairingProtocolContext {
     
     // MARK: -  Keychain item management
     
-    func canCreatePairingItemNamed(name: String) -> Bool {
-        // check data integrity
-        if (pairingId == nil || pairingKey == nil) {
-            return false
-        }
-        
+    class func canCreatePairingKeychainItemNamed(name: String) -> Bool {
         // check if this name already exists
         let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
         for item in allItems {
@@ -36,8 +31,9 @@ class PairingProtocolContext {
         return true
     }
     
-    func createNewPairingItemNamed(name: String) -> Bool {
-        if (canCreatePairingItemNamed(name) == false) {
+    func createPairingKeychainItemNamed(name: String) -> Bool {
+        // check data integrity
+        if (pairingId == nil || pairingKey == nil) {
             return false
         }
         

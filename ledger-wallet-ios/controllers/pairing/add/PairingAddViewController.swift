@@ -185,21 +185,16 @@ extension PairingAddViewController {
         else if (stepViewController is PairingAddNameStepViewController) {
             // save pairing item
             let name = object as String
-            if let canSave = pairingProtocolManager?.canCreatePairingItemNamed(name) {
-                let succeeded = pairingProtocolManager?.createNewPairingItemNamed(name)
-                if succeeded != nil && succeeded! == true {
-                    completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded)
-                }
-                else {
-                    completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceFailed)
-                }
+            let succeeded = pairingProtocolManager?.createNewPairingItemNamed(name)
+            if succeeded != nil && succeeded! == true {
+                completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded)
             }
             else {
                 completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceFailed)
             }
         }
     }
-    
+
 }
 
 extension PairingAddViewController: PairingProtocolManagerDelegate {
