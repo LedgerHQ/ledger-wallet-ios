@@ -24,7 +24,7 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         return true
     }
     
-    // MARK: -  Actions
+    // MARK: - Actions
     
     override func complete() {
         super.complete()
@@ -32,7 +32,7 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         notifyResult("this is a name")
     }
     
-    // MARK: -  Interface
+    // MARK: - Interface
     
     override func configureView() {
         super.configureView()

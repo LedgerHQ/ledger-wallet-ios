@@ -18,7 +18,7 @@ class KeychainItem {
     private(set) var data: NSData!
     private(set) var creationDate: NSDate!
     
-    // MARK: -  Test environment
+    // MARK: - Test environment
     
     class var testEnvironment: Bool {
         get {
@@ -32,7 +32,7 @@ class KeychainItem {
         private static var testEnvironment = false
     }
     
-    // MARK: -  Static methods
+    // MARK: - Static methods
     
     class func fetchAll() -> [KeychainItem] {
         // build query
@@ -111,7 +111,7 @@ class KeychainItem {
         ]
     }
     
-    // MARK: -  Instance methods
+    // MARK: - Instance methods
     
     func remove() -> Bool {
         // build query
@@ -131,7 +131,7 @@ class KeychainItem {
         creationDate = nil
     }
     
-    // MARK: -  Initialization
+    // MARK: - Initialization
     
     func initialize(attributes: [String: AnyObject], data: NSData) -> Bool {
         return true

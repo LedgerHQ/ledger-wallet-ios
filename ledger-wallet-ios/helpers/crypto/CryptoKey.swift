@@ -21,7 +21,7 @@ extension Crypto {
         private(set) var symmetricKey = NSData()
         private var key: COpaquePointer = nil
         
-        // MARK: -  Public methods
+        // MARK: - Public methods
         
         func openSSLPublicKey() -> COpaquePointer {
             let pKey = EC_KEY_get0_public_key(key)
@@ -43,7 +43,7 @@ extension Crypto {
             return key
         }
         
-        // MARK: -  Private methods
+        // MARK: - Private methods
         
         private func generateKeysData() {
             // get private key
@@ -94,7 +94,7 @@ extension Crypto {
             BN_CTX_free(ctx)
         }
         
-        // MARK: -  Initialization
+        // MARK: - Initialization
         
         private init(publicKey: NSData, privateKey: NSData) {
             // create key

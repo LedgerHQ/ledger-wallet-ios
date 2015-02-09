@@ -21,14 +21,14 @@ class DialogViewController: BaseViewController {
         return UIEdgeInsetsMake(dialogContentPadding.top + dialogContainerMargin.top, dialogContentPadding.left + dialogContainerMargin.left, dialogContentPadding.bottom + dialogContainerMargin.bottom, dialogContentPadding.right + dialogContainerMargin.right)
     }
     
-    // MARK: -  Content size
+    // MARK: - Content size
     
     func dialogLayoutSize(constraintedSize size: CGSize) -> CGSize {
         let contentSize = view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
         return CGSizeMake(contentSize.width + dialogContentPadding.left + dialogContentPadding.right, contentSize.height + dialogContentPadding.top + dialogContentPadding.bottom)
     }
     
-    // MARK: -  Initialization
+    // MARK: - Initialization
     
     private func initialize() {
         transitioningDelegate = self
@@ -51,7 +51,7 @@ class DialogViewController: BaseViewController {
 
 extension DialogViewController: UIViewControllerTransitioningDelegate {
     
-    // MARK: -  Transitioning delegate
+    // MARK: - Transitioning delegate
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dialogAnimationController

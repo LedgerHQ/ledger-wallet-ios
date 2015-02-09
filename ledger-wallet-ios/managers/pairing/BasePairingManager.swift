@@ -28,7 +28,7 @@ class BasePairingManager: BaseManager {
     private let messagesHandlers: [MessageType: MessageHandler] = [:]
     private(set) var lastSentMessage: Message? = nil
     
-    // MARK: -  Messages management
+    // MARK: - Messages management
 
     dynamic func handleChallengeMessage(message: Message, webSocket: JFRWebSocket) {
         
@@ -54,7 +54,7 @@ class BasePairingManager: BaseManager {
         
     }
     
-    // MARK: -  Initialization
+    // MARK: - Initialization
     
     required init() {
         super.init()
@@ -71,7 +71,7 @@ class BasePairingManager: BaseManager {
 
 extension BasePairingManager {
     
-    // MARK: -  Messages management
+    // MARK: - Messages management
     
     func receiveMessage(message: Message, webSocket: JFRWebSocket) {
         if let typeString = message["type"] as? String {
@@ -105,7 +105,7 @@ extension BasePairingManager {
 
 extension BasePairingManager: JFRWebSocketDelegate {
 
-     // MARK: -  WebSocket delegate
+     // MARK: - WebSocket delegate
 
     func websocket(socket: JFRWebSocket!, didReceiveData data: NSData!) {
         dispatchAsyncOnMainQueue() {
