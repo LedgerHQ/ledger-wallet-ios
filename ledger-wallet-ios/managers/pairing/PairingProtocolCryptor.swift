@@ -11,6 +11,7 @@ import Foundation
 class PairingProtocolCryptor {
     
     let sessionKeyBytesLength = 16
+    let pairingKeyBytesLength = 16
     let nonceBytesLength = 8
     let challengeBytesLength = 4
     
@@ -41,8 +42,9 @@ class PairingProtocolCryptor {
     
     func splitSessionKey(sessionKey: Crypto.Key) -> (Crypto.Key, Crypto.Key) {
         // split session key
-        let key1 = Crypto.Key(symmetricKey: sessionKey.symmetricKey.subdataWithRange(NSMakeRange(0, 8)))
-        let key2 = Crypto.Key(symmetricKey: sessionKey.symmetricKey.subdataWithRange(NSMakeRange(8, 8)))
+        let (data1, data2) = Crypto.Data.splitDataInTwo(sessionKey.symmetricKey)
+        let key1 = Crypto.Key(symmetricKey: data1)
+        let key2 = Crypto.Key(symmetricKey: data2)
         return (key1, key2)
     }
     
@@ -61,7 +63,7 @@ class PairingProtocolCryptor {
     }
     
     func pairingKeyFromDecryptedData(data: NSData) -> Crypto.Key {
-        return Crypto.Key(symmetricKey: data.subdataWithRange(NSMakeRange(challengeBytesLength, data.length - challengeBytesLength)))
+        return Crypto.Key(symmetricKey: data.subdataWithRange(NSMakeRange(challengeBytesLength, pairingKeyBytesLength)))
     }
     
     func encryptedChallengeResponseDataFromChallengeString(challenge: String, nonce: NSData, sessionKey: Crypto.Key) -> NSData {

@@ -44,7 +44,7 @@ class PairingProtocolCryptorTests: XCTestCase {
         
         // test pairing key
         let pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
-        let expectedPairingKey = Crypto.Encode.dataFromBase16String("73a521e635b622506a67ea3dd8ec8c3d4ccddb8f")
+        let expectedPairingKey = Crypto.Encode.dataFromBase16String("73a521e635b622506a67ea3dd8ec8c3d")
         XCTAssertEqual(pairingKey.symmetricKey, expectedPairingKey, "pairing keys should be equal")
         
         // test challenge response
@@ -86,7 +86,7 @@ class PairingProtocolCryptorTests: XCTestCase {
         
         // test pairing key
         let pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
-        let expectedPairingKey = Crypto.Encode.dataFromBase16String("6032d5032c905f39447bc3f28a043a994ccddb8f")
+        let expectedPairingKey = Crypto.Encode.dataFromBase16String("6032d5032c905f39447bc3f28a043a99")
         XCTAssertEqual(pairingKey.symmetricKey, expectedPairingKey, "pairing keys should be equal")
         
         // test challenge response

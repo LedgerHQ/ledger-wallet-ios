@@ -51,7 +51,7 @@ class PairingProtocolManager: BasePairingManager {
         if (context == nil) { context = PairingProtocolContext() }
         
         // create cryptor 
-        cryptor = PairingProtocolCryptor()
+        if (cryptor == nil) { cryptor = PairingProtocolCryptor() }
         
         // send join message
         context.pairingId = pairingId
@@ -118,7 +118,7 @@ extension PairingProtocolManager {
     
     // MARK: -  Messages management
     
-    override func handleChallengeMessage(message: Message) {
+    override func handleChallengeMessage(message: Message, webSocket: JFRWebSocket) {
         if let dataString = message["data"] as? String {
             // get data
             let blob = Crypto.Encode.dataFromBase16String(dataString)
@@ -142,19 +142,19 @@ extension PairingProtocolManager {
         }
     }
     
-    override func handlePairingMessage(message: Message) {
+    override func handlePairingMessage(message: Message, webSocket: JFRWebSocket) {
         if let isSuccessful = message["is_successful"] as? Bool {
             disconnectWebSocket()
             delegate?.pairingProtocolManager(self, didTerminateWithOutcome: isSuccessful ? PairingOutcome.DongleSucceeded : PairingOutcome.DongleFailed)
         }
     }
     
-    override func handleDisconnectMessage(message: Message) {
+    override func handleDisconnectMessage(message: Message, webSocket: JFRWebSocket) {
         disconnectWebSocket()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DongleTerminated)
     }
     
-    override func handleRepeatMessage(message: Message) {
+    override func handleRepeatMessage(message: Message, webSocket: JFRWebSocket) {
         if let message = lastSentMessage {
             sendMessage(message, webSocket: webSocket)
         }
@@ -174,16 +174,6 @@ extension PairingProtocolManager {
     override func handleWebsocket(webSocket: JFRWebSocket, didWriteError error: NSError?) {
         self.disconnectWebSocket()
         self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
-    }
-    
-    override func handleWebSocket(webSocket: JFRWebSocket, didReceiveMessage message: String) {
-        // retreive data from string
-        if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            // create Message representation from data
-            if let message = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as? Message {
-                self.receiveMessage(message)
-            }
-        }
     }
     
 }

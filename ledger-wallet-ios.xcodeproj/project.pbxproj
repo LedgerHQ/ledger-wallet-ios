@@ -62,6 +62,8 @@
 		376F51241A82326F001C6684 /* BasePairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */; };
 		376F51251A823379001C6684 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38091A77DB200082D917 /* BaseManager.swift */; };
 		376F51261A823395001C6684 /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
+		377E810E1A89124E00010B37 /* BitcoinAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA95681A88D347009C3EE4 /* BitcoinAddress.swift */; };
+		377E810F1A89126700010B37 /* BitcoinCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */; };
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
 		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
@@ -82,6 +84,12 @@
 		37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */; };
 		37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */; };
 		37A88F741A6E550F0036CF2A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A88F731A6E550F0036CF2A /* TextField.swift */; };
+		37AA95621A88B703009C3EE4 /* PairingTransactionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA95611A88B703009C3EE4 /* PairingTransactionInfo.swift */; };
+		37AA95641A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA95631A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift */; };
+		37AA95651A88CF88009C3EE4 /* PairingTransactionsCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */; };
+		37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA95611A88B703009C3EE4 /* PairingTransactionInfo.swift */; };
+		37AA95691A88D347009C3EE4 /* BitcoinAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA95681A88D347009C3EE4 /* BitcoinAddress.swift */; };
+		37AA956B1A88D356009C3EE4 /* BitcoinCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */; };
 		37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */; };
 		37ABFBCC1A836C8B0061E92D /* CryptoECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */; };
 		37ABFBCE1A836DA50061E92D /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCD1A836DA50061E92D /* CryptoKey.swift */; };
@@ -272,6 +280,10 @@
 		37A88F6A1A6948610036CF2A /* PairingAddNameStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddNameStepViewController.swift; sourceTree = "<group>"; };
 		37A88F6C1A6948980036CF2A /* PairingAddNameStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddNameStepViewController.xib; sourceTree = "<group>"; };
 		37A88F731A6E550F0036CF2A /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		37AA95611A88B703009C3EE4 /* PairingTransactionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionInfo.swift; sourceTree = "<group>"; };
+		37AA95631A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptorTest.swift; sourceTree = "<group>"; };
+		37AA95681A88D347009C3EE4 /* BitcoinAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinAddress.swift; path = bitcoin/BitcoinAddress.swift; sourceTree = "<group>"; };
+		37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinCommon.swift; path = bitcoin/BitcoinCommon.swift; sourceTree = "<group>"; };
 		37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+Utils.swift"; sourceTree = "<group>"; };
 		37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoECDH.swift; path = crypto/CryptoECDH.swift; sourceTree = "<group>"; };
 		37ABFBCD1A836DA50061E92D /* CryptoKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CryptoKey.swift; path = crypto/CryptoKey.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -481,10 +493,10 @@
 		376F511C1A822DF6001C6684 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
+				37B5376E1A82A5E50087AB43 /* CryptoCommon.swift */,
 				37B537631A8299EA0087AB43 /* CryptoData.swift */,
 				37B537651A82A1AB0087AB43 /* CryptoHash.swift */,
 				37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */,
-				37B5376E1A82A5E50087AB43 /* CryptoCommon.swift */,
 				37ABFBCD1A836DA50061E92D /* CryptoKey.swift */,
 				37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */,
 				37ABFBD71A83C8F50061E92D /* CryptoCipher.swift */,
@@ -555,6 +567,7 @@
 			children = (
 				376F51211A8231F3001C6684 /* PairingProtocolManagerTests.swift */,
 				37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */,
+				37AA95631A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift */,
 				37ABFBD51A83B85D0061E92D /* CryptoHashTests.swift */,
 				37ABFBDA1A83C9540061E92D /* CryptoCipherTests.swift */,
 				37ABFBD11A8375700061E92D /* CryptoKeyTests.swift */,
@@ -604,6 +617,15 @@
 			);
 			name = Dialogs;
 			path = pairing/dialogs;
+			sourceTree = "<group>";
+		};
+		37AA95671A88D2FB009C3EE4 /* Bitcoin */ = {
+			isa = PBXGroup;
+			children = (
+				37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */,
+				37AA95681A88D347009C3EE4 /* BitcoinAddress.swift */,
+			);
+			name = Bitcoin;
 			sourceTree = "<group>";
 		};
 		37ACFDED1A7917FC002E32FC /* Vendor */ = {
@@ -664,6 +686,7 @@
 				37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */,
 				37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */,
 				37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */,
+				37AA95611A88B703009C3EE4 /* PairingTransactionInfo.swift */,
 			);
 			name = Pairing;
 			path = managers/pairing;
@@ -753,6 +776,7 @@
 		37F283BA1A655D7200F432CC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				37AA95671A88D2FB009C3EE4 /* Bitcoin */,
 				376F511C1A822DF6001C6684 /* Crypto */,
 				3798BA161A6E6C7C00F5B603 /* Allures */,
 				37F283BF1A655D7200F432CC /* Utils */,
@@ -922,6 +946,7 @@
 				37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
 				379CA0F81A7135A300A9D426 /* DialogViewController.swift in Sources */,
+				37AA95691A88D347009C3EE4 /* BitcoinAddress.swift in Sources */,
 				37EF91C11A6D3C47007DBBAF /* NavigationBar.swift in Sources */,
 				37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
@@ -972,6 +997,7 @@
 				3724A3821A79383700E1B977 /* Common.swift in Sources */,
 				37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */,
 				376F51141A82190E001C6684 /* BTCTransaction.m in Sources */,
+				37AA95621A88B703009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
 				376F51061A82190E001C6684 /* BTCHashID.m in Sources */,
 				376F510D1A82190E001C6684 /* BTCOutpoint.m in Sources */,
@@ -998,6 +1024,7 @@
 				37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */,
 				376F50FD1A82190D001C6684 /* BTCBlock.m in Sources */,
 				37F283AE1A655D3400F432CC /* UIColor+Utils.swift in Sources */,
+				37AA956B1A88D356009C3EE4 /* BitcoinCommon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1006,20 +1033,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				376F51221A8231F3001C6684 /* PairingProtocolManagerTests.swift in Sources */,
+				37AA95651A88CF88009C3EE4 /* PairingTransactionsCryptor.swift in Sources */,
 				37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */,
 				37ABFBE11A850F2C0061E92D /* PairingProtocolCryptor.swift in Sources */,
 				37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
+				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */,
 				376F51241A82326F001C6684 /* BasePairingManager.swift in Sources */,
 				37ABFBE41A85138A0061E92D /* PairingProtocolContext.swift in Sources */,
 				37B537721A82A84C0087AB43 /* CryptoEncode.swift in Sources */,
 				37B537731A82A84C0087AB43 /* CryptoCommon.swift in Sources */,
 				37DD54031A823C3E00449CCA /* Common.swift in Sources */,
+				377E810E1A89124E00010B37 /* BitcoinAddress.swift in Sources */,
+				377E810F1A89126700010B37 /* BitcoinCommon.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
 				37B537711A82A84C0087AB43 /* CryptoHash.swift in Sources */,
 				37ABFBD01A836F110061E92D /* CryptoECDH.swift in Sources */,
+				37AA95641A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift in Sources */,
 				37ABFBD41A83A2270061E92D /* CryptoECDHTests.swift in Sources */,
 				37ABFBD91A83C9400061E92D /* CryptoCipher.swift in Sources */,
 				37ABFBDB1A83C9540061E92D /* CryptoCipherTests.swift in Sources */,

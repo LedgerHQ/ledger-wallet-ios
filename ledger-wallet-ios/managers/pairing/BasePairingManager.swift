@@ -11,7 +11,7 @@ import Foundation
 class BasePairingManager: BaseManager {
     
     typealias Message = [String: AnyObject]
-    typealias MessageHandler = (Message) -> Void
+    typealias MessageHandler = (Message, JFRWebSocket) -> Void
     
     enum MessageType: String {
         case Join = "join"
@@ -30,27 +30,27 @@ class BasePairingManager: BaseManager {
     
     // MARK: -  Messages management
 
-    dynamic func handleChallengeMessage(message: Message) {
+    dynamic func handleChallengeMessage(message: Message, webSocket: JFRWebSocket) {
         
     }
     
-    dynamic func handlePairingMessage(message: Message) {
+    dynamic func handlePairingMessage(message: Message, webSocket: JFRWebSocket) {
         
     }
     
-    dynamic func handleDisconnectMessage(message: Message) {
+    dynamic func handleDisconnectMessage(message: Message, webSocket: JFRWebSocket) {
         
     }
     
-    dynamic func handleConnectMessage(message: Message) {
+    dynamic func handleConnectMessage(message: Message, webSocket: JFRWebSocket) {
         
     }
     
-    dynamic func handleRepeatMessage(message: Message) {
+    dynamic func handleRepeatMessage(message: Message, webSocket: JFRWebSocket) {
 
     }
     
-    dynamic func handleRequestMessage(message: Message) {
+    dynamic func handleRequestMessage(message: Message, webSocket: JFRWebSocket) {
         
     }
     
@@ -60,11 +60,11 @@ class BasePairingManager: BaseManager {
         super.init()
         
         let me = self
-        messagesHandlers.updateValue({ message in me.handleChallengeMessage(message) }, forKey: MessageType.Challenge)
-        messagesHandlers.updateValue({ message in me.handleConnectMessage(message) }, forKey: MessageType.Connect)
-        messagesHandlers.updateValue({ message in me.handleDisconnectMessage(message) }, forKey: MessageType.Disconnect)
-        messagesHandlers.updateValue({ message in me.handlePairingMessage(message) }, forKey: MessageType.Pairing)
-        messagesHandlers.updateValue({ message in me.handleRepeatMessage(message) }, forKey: MessageType.Repeat)
+        messagesHandlers.updateValue({ message, webSocket in me.handleChallengeMessage(message, webSocket: webSocket) }, forKey: MessageType.Challenge)
+        messagesHandlers.updateValue({ message, webSocket in me.handleConnectMessage(message, webSocket: webSocket) }, forKey: MessageType.Connect)
+        messagesHandlers.updateValue({ message, webSocket in me.handleDisconnectMessage(message, webSocket: webSocket) }, forKey: MessageType.Disconnect)
+        messagesHandlers.updateValue({ message, webSocket in me.handlePairingMessage(message, webSocket: webSocket) }, forKey: MessageType.Pairing)
+        messagesHandlers.updateValue({ message, webSocket in me.handleRepeatMessage(message, webSocket: webSocket) }, forKey: MessageType.Repeat)
     }
     
 }
@@ -73,12 +73,12 @@ extension BasePairingManager {
     
     // MARK: -  Messages management
     
-    func receiveMessage(message: Message) {
+    func receiveMessage(message: Message, webSocket: JFRWebSocket) {
         if let typeString = message["type"] as? String {
             if let messageType = MessageType(rawValue: typeString) {
                 // lookup form message table
                 if let handler = messagesHandlers[messageType] {
-                    handler(message)
+                    handler(message, webSocket)
                 }
             }
         }
@@ -142,7 +142,13 @@ extension BasePairingManager: JFRWebSocketDelegate {
     }
     
     func handleWebSocket(webSocket: JFRWebSocket, didReceiveMessage message: String) {
-        
+        // retreive data from string
+        if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            // create Message representation from data
+            if let message = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as? Message {
+                self.receiveMessage(message, webSocket: webSocket)
+            }
+        }
     }
     
     func handleWebSocketDidConnect(webSocket: JFRWebSocket) {
