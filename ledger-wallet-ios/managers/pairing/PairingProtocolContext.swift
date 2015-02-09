@@ -29,7 +29,7 @@ class PairingProtocolContext {
         // check if this name already exists
         let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
         for item in allItems {
-            if item.dongleName == name {
+            if item.dongleName == name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
                 return false
             }
         }
@@ -41,8 +41,18 @@ class PairingProtocolContext {
             return false
         }
         
-        // TODO:
-        return true
+        let itemAttributes = [
+            "pairing_id": pairingId,
+            "pairing_key": pairingKey,
+            "dongle_name": name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        ]
+        
+        if let itemData = NSJSONSerialization.dataWithJSONObject(itemAttributes, options: nil, error: nil) {
+            let item = PairingKeychainItem.add(itemData) as? PairingKeychainItem
+            return item != nil
+        }
+        
+        return false
     }
     
     // MARK: -  Initialization
