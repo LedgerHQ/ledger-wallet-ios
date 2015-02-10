@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fN9-2h-qPz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FKx-8I-SVn">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -18,10 +18,40 @@
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8qw-uL-hhM" kind="relationship" relationship="rootViewController" id="a8p-Xt-jgY"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xNv-zl-377" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="703" y="-270"/>
+        </scene>
+        <!--Pairing Home View Controller-->
+        <scene sceneID="mOQ-8b-0Cc">
+            <objects>
+                <viewController storyboardIdentifier="PairingHomeViewController" id="8qw-uL-hhM" userLabel="Pairing Home View Controller" customClass="PairingHomeViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pjc-Cw-w9L"/>
+                        <viewControllerLayoutGuide type="bottom" id="0qz-5Q-7Ad"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gQ5-ed-wry" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" title="ledger_wallet" id="kiE-ye-FE2" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="titleAllure" value="navigationBar.largeTitle"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4yh-7b-DR0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="703" y="437"/>
         </scene>
         <!--Pairing List View Controller-->
         <scene sceneID="OgS-3y-xXk">
@@ -38,7 +68,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baV-lU-9nl" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="110"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ledger_wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT6-JM-Ncb" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ledger_wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT6-JM-Ncb" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="249" y="35" width="102" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -47,7 +77,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.largeTitle"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_pairing_status_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLQ-ec-6D3" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_status_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLQ-ec-6D3" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="257" y="66" width="86" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -69,10 +99,10 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.nightBlue"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="509" width="600" height="91"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="171" y="25" width="259" height="41"/>
                                         <state key="normal" title="PAIR_A_NEW_LEDGER_WALLET" image="icon_device">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,7 +125,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="110" width="600" height="399"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -104,7 +134,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3y0-t4-g0T" id="A5z-Hr-SbJ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sophie's Wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K23-Gm-dq2" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sophie's Wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K23-Gm-dq2" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="19" width="105" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -113,8 +143,8 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="largeTitle"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Paired on 12/05/2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Pz-8Z0" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="45" width="117" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paired on 12/05/2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Pz-8Z0" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="41" width="117" height="25"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -185,12 +215,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1412" y="-272"/>
+            <point key="canvasLocation" x="1449" y="437"/>
         </scene>
-        <!--PAIR_A_NEW_DEVICE-->
+        <!--Pairing Add View Controller-->
         <scene sceneID="bMR-Jm-tId">
             <objects>
-                <viewController storyboardIdentifier="PairingAddViewController" id="4D7-MK-KIs" customClass="PairingAddViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PairingAddViewController" id="4D7-MK-KIs" userLabel="Pairing Add View Controller" customClass="PairingAddViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iSE-R5-Iv6"/>
                         <viewControllerLayoutGuide type="bottom" id="Gt9-6m-NXK"/>
@@ -199,13 +229,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-ic-rwA" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-ic-rwA" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="119" y="15" width="363" height="55"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" misplaced="YES" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2b-Nk-KjZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2b-Nk-KjZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="108" height="55"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -214,7 +244,7 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="hugeNumber.grey"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="kOi-zw-CaW" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="kOi-zw-CaW" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="123" y="0.0" width="240" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="240" id="P4p-XC-lI3"/>
@@ -255,7 +285,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-CG-e38" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-CG-e38" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="85" width="600" height="451"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -319,7 +349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SGO-in-bCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2117" y="-272"/>
+            <point key="canvasLocation" x="2154" y="437"/>
         </scene>
     </scenes>
     <resources>

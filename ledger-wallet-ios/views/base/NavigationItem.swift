@@ -10,13 +10,15 @@ import UIKit
 
 class NavigationItem: UINavigationItem {
     
+    @IBInspectable var titleAllure: String = "navigationBar.title"
+    
     // MARK: - Style management
     
     override var title: String? {
         didSet {
             let label = (self.titleView as? Label) ?? Label()
             label.text = title ?? ""
-            label.allure = "navigationBar.title"
+            label.allure = titleAllure
             label.sizeToFit()
             self.titleView = label
         }

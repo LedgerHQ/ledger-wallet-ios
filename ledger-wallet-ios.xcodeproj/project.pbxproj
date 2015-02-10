@@ -64,9 +64,15 @@
 		376F51261A823395001C6684 /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
 		377E810E1A89124E00010B37 /* BitcoinAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA95681A88D347009C3EE4 /* BitcoinAddress.swift */; };
 		377E810F1A89126700010B37 /* BitcoinCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */; };
+		377E81141A8A010C00010B37 /* PairingHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377E81131A8A010C00010B37 /* PairingHomeViewController.swift */; };
+		377E81161A8A01C400010B37 /* PairingHomeBaseContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377E81151A8A01C400010B37 /* PairingHomeBaseContentViewController.swift */; };
+		377E81181A8A048200010B37 /* PairingHomeWaitingContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377E81171A8A048200010B37 /* PairingHomeWaitingContentViewController.swift */; };
+		377E811A1A8A04A000010B37 /* PairingHomeEmptyContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377E81191A8A04A000010B37 /* PairingHomeEmptyContentViewController.swift */; };
+		377E811D1A8A0D6E00010B37 /* PairingHomeEmptyContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377E811C1A8A0D6E00010B37 /* PairingHomeEmptyContentViewController.xib */; };
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
 		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
+		378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */; };
 		3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */; };
 		3798BA1B1A6E6C7C00F5B603 /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */; };
 		3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */; };
@@ -256,6 +262,11 @@
 		376F50F51A82190D001C6684 /* NSData+BTCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+BTCData.h"; path = "vendor/corebitcoin/CoreBitcoin/NSData+BTCData.h"; sourceTree = "<group>"; };
 		376F50F61A82190D001C6684 /* NSData+BTCData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+BTCData.m"; path = "vendor/corebitcoin/CoreBitcoin/NSData+BTCData.m"; sourceTree = "<group>"; };
 		376F51211A8231F3001C6684 /* PairingProtocolManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolManagerTests.swift; sourceTree = "<group>"; };
+		377E81131A8A010C00010B37 /* PairingHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingHomeViewController.swift; sourceTree = "<group>"; };
+		377E81151A8A01C400010B37 /* PairingHomeBaseContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingHomeBaseContentViewController.swift; sourceTree = "<group>"; };
+		377E81171A8A048200010B37 /* PairingHomeWaitingContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingHomeWaitingContentViewController.swift; sourceTree = "<group>"; };
+		377E81191A8A04A000010B37 /* PairingHomeEmptyContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingHomeEmptyContentViewController.swift; sourceTree = "<group>"; };
+		377E811C1A8A0D6E00010B37 /* PairingHomeEmptyContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingHomeEmptyContentViewController.xib; sourceTree = "<group>"; };
 		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		3784FB051A5D2F5E0063A364 /* ledger-wallet-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ledger-wallet-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB091A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -263,6 +274,7 @@
 		3784FB111A5D2F5F0063A364 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3784FB1A1A5D2F5F0063A364 /* ledger-wallet-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ledger-wallet-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingHomeWaitingContentViewController.xib; sourceTree = "<group>"; };
 		3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStylist.swift; sourceTree = "<group>"; };
 		3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VisualTheme.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -504,6 +516,20 @@
 				37ABFBDE1A84C4AC0061E92D /* CryptoCipher.h */,
 			);
 			name = Crypto;
+			sourceTree = "<group>";
+		};
+		377E81121A8A010C00010B37 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				377E81131A8A010C00010B37 /* PairingHomeViewController.swift */,
+				377E81151A8A01C400010B37 /* PairingHomeBaseContentViewController.swift */,
+				377E81191A8A04A000010B37 /* PairingHomeEmptyContentViewController.swift */,
+				377E811C1A8A0D6E00010B37 /* PairingHomeEmptyContentViewController.xib */,
+				377E81171A8A048200010B37 /* PairingHomeWaitingContentViewController.swift */,
+				378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */,
+			);
+			name = Home;
+			path = pairing/home;
 			sourceTree = "<group>";
 		};
 		378205D51A60196C00F6CA45 /* Resources */ = {
@@ -800,6 +826,7 @@
 			isa = PBXGroup;
 			children = (
 				379CA1021A713B7100A9D426 /* Dialogs */,
+				377E81121A8A010C00010B37 /* Home */,
 				37B9E4AB1A67F98F0055E81A /* Pairing List */,
 				37B9E4A91A67F98F0055E81A /* Pair Dongle */,
 			);
@@ -896,6 +923,7 @@
 				37F283681A6406A900F432CC /* Localizable.strings in Resources */,
 				3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */,
 				37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */,
+				377E811D1A8A0D6E00010B37 /* PairingHomeEmptyContentViewController.xib in Resources */,
 				37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */,
 				379CA1061A713BB900A9D426 /* PairingConfirmationDialogViewController.xib in Resources */,
 				37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */,
@@ -903,6 +931,7 @@
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
 				37A2DBE51A7A86080045B639 /* PairingAddFinalizeStepViewController.xib in Resources */,
 				37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */,
+				378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */,
 				378205D41A60195E00F6CA45 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -941,6 +970,7 @@
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,
 				373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */,
+				377E81141A8A010C00010B37 /* PairingHomeViewController.swift in Sources */,
 				376F50FA1A82190D001C6684 /* BTCBigNumber.m in Sources */,
 				37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */,
 				37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */,
@@ -953,10 +983,12 @@
 				37B5376F1A82A5E50087AB43 /* CryptoCommon.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
 				376F510F1A82190E001C6684 /* BTCProcessor.m in Sources */,
+				377E81181A8A048200010B37 /* PairingHomeWaitingContentViewController.swift in Sources */,
 				376F50FE1A82190E001C6684 /* BTCBlockchainInfo.m in Sources */,
 				376F51051A82190E001C6684 /* BTCErrors.m in Sources */,
 				376F50F91A82190D001C6684 /* BTCBase58.m in Sources */,
 				373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */,
+				377E81161A8A01C400010B37 /* PairingHomeBaseContentViewController.swift in Sources */,
 				373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */,
 				375A380A1A77DB200082D917 /* BaseManager.swift in Sources */,
 				37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */,
@@ -968,6 +1000,7 @@
 				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,
 				376F51161A82190E001C6684 /* BTCTransactionInput.m in Sources */,
 				37B537661A82A1AB0087AB43 /* CryptoHash.swift in Sources */,
+				377E811A1A8A04A000010B37 /* PairingHomeEmptyContentViewController.swift in Sources */,
 				3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */,
 				376F50FC1A82190D001C6684 /* BTCBlindSignature.m in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,

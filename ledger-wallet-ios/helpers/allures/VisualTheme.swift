@@ -115,6 +115,15 @@ struct VisualTheme {
         "small.softGrey.centered": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGreyCentered)
         },
+        "largeIndication": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeIndication)
+        },
+        "largeIndication.grey": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeIndicationGrey)
+        },
+        "largeIndication.grey.centered": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeIndicationGreyCentered)
+        },
         "largeTitle": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeTitle)
         },
@@ -123,7 +132,11 @@ struct VisualTheme {
         },
         "sectionTitle": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.sectionTitle)
+        },
+        "huge": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.huge)
         }
+
     ]
     
     // MARK: - Button allures
@@ -147,6 +160,12 @@ struct VisualTheme {
         "icon.grey": { button in
             VisualTheme.buttonAllures["icon"]?(button)
             button.setTintedImages(button.imageForState(UIControlState.Normal)!, tintColor: VisualFactory.Colors.lightGrey, darkenFactor: VisualFactory.Metrics.Factors.Darken.veryStrong)
+        },
+        "small.softGrey": { button in
+            var hightlightedStyle = VisualFactory.TextAttributes.smallSoftGrey
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.extraStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.smallSoftGrey), forState: UIControlState.Normal)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Highlighted), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
         "rounded": { button in
             let roundedButton = button as RoundedButton
@@ -183,9 +202,9 @@ struct VisualTheme {
     
     static let textFieldAllures: [String: TextFieldAllure] = [
         "hugeName": { textField in
-            var placeholderAttributes = VisualFactory.TextAttributes.hugeName
+            var placeholderAttributes = VisualFactory.TextAttributes.huge
             placeholderAttributes.updateValue(VisualFactory.Colors.lightGrey, forKey: NSForegroundColorAttributeName)
-            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.hugeName)
+            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.huge)
             textField.attributedPlaceholder = NSAttributedString(string: textField.readablePlaceholder(), attributes: placeholderAttributes)
             textField.tintColor = VisualFactory.Colors.black
             textField.borderStyle = UITextBorderStyle.None

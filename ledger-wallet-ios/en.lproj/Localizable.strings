@@ -32,6 +32,10 @@
 
 "PAIRING_FAILED" = "PAIRING FAILED";
 
+"MANAGE_PAIRED_DEVICES" = "MANAGE PAIRED DEVICES";
+
+"waiting_for_transactions..." = "Waiting for transactions...";
+
 "this_operation_may_take_a_while" = "Please wait, this operation may take a while.";
 
 "scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Chrome application.";
@@ -61,3 +65,11 @@
 "error_pairing_wrong_validation_code" = "The security card validation code is incorrect. Please try again.";
 
 "success_pairing_named_%@" = "Your Ledger Wallet “%@” is now paired with your mobile device.";
+
+"no_paired_device" = "No paired device";
+
+"to_enable_second_factor_pair_device" = "To enable second factor validation,\npair your Ledger Wallet with this device.";
+
+"transactions_will_automatically_appear" = "Transactions will automatically appear\nwhen manual validation is required.";
+
+"need_help_visit_help_center" = "Need help? Visit our help center.";

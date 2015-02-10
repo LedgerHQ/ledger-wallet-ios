@@ -44,7 +44,7 @@ struct VisualFactory {
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.medium.rawValue),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = 5
+                paragraph.lineSpacing = Metrics.LineSpacings.small
                 return paragraph
             }()
         ]
@@ -74,7 +74,7 @@ struct VisualFactory {
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = 8
+                paragraph.lineSpacing = Metrics.LineSpacings.large
                 return paragraph
                 }()
         ]
@@ -116,6 +116,31 @@ struct VisualFactory {
             ]
         )
         
+        static let largeIndication = [
+            NSForegroundColorAttributeName: Colors.black,
+            NSKernAttributeName: -Fonts.Kernings.small,
+            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.almostLarge.rawValue),
+            NSParagraphStyleAttributeName: {
+                let paragraph = NSMutableParagraphStyle()
+                paragraph.lineSpacing = Metrics.LineSpacings.medium
+                return paragraph
+                }()
+        ]
+        
+        static let largeIndicationGrey: TextAttribute = TextAttributes.extend(largeIndication, withAttributes: [
+                NSForegroundColorAttributeName: Colors.darkGrey
+            ]
+        )
+        
+        static let largeIndicationGreyCentered: TextAttribute = TextAttributes.extend(largeIndicationGrey, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = (largeIndicationGrey[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
+            ]
+        )
+        
         static let hugeNumberGrey = [
             NSForegroundColorAttributeName: Colors.darkGrey,
             NSKernAttributeName: -Fonts.Kernings.small,
@@ -134,10 +159,10 @@ struct VisualFactory {
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostLarge.rawValue)
         ]
         
-        static let hugeName = [
+        static let huge = [
             NSForegroundColorAttributeName: Colors.black,
             NSKernAttributeName: -Fonts.Kernings.veryLarge,
-            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.extraHuge.rawValue)
+            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.megaLarge.rawValue)
         ]
         
         static let sectionTitle = [
@@ -195,6 +220,7 @@ struct VisualFactory {
             case extraLarge = 18
             case almostUltraLarge = 19
             case ultraLarge = 20
+            case megaLarge = 24
             case extraHuge = 27
             case ultraHuge = 42
         }
@@ -272,6 +298,12 @@ struct VisualFactory {
             static let small:CGFloat = 20
             static let almostMedium:CGFloat = 25
             static let medium:CGFloat = 30
+        }
+        
+        struct LineSpacings {
+            static let small:CGFloat = 4
+            static let medium:CGFloat = 6
+            static let large:CGFloat = 8
         }
         
         struct Durations {

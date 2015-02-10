@@ -51,10 +51,10 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.centered"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8z5-Za-l3m" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8z5-Za-l3m" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="115" y="346" width="207" height="41"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-Zj-cLi" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-Zj-cLi" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="103" y="0.0" width="104" height="41"/>
                             <state key="normal" title="CONFIRM">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -63,7 +63,7 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-Gt-hMZ" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-Gt-hMZ" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="93" height="41"/>
                             <state key="normal" title="CANCEL">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
