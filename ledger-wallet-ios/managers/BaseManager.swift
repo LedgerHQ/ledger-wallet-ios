@@ -9,23 +9,21 @@
 import Foundation
 
 class BaseManager: NSObject {
+
+    private static var instances: [String: BaseManager] = [:]
     
     // MARK: - Singleton
     
     class func sharedInstance() -> BaseManager {
         let className = self.className()
-        if let instance = Singleton.instances[className] {
+        if let instance = instances[className] {
             return instance
         }
         let instance: BaseManager = self()
-        Singleton.instances[className] = instance
+        instances[className] = instance
         return instance
     }
-    
-    private struct Singleton {
-        private static var instances: [String: BaseManager] = [:]
-    }
-    
+
     override required init() {
    
     }
