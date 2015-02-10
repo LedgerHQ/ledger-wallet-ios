@@ -18,7 +18,7 @@ protocol BarCodeReaderViewDelegate: class {
 class BarCodeReaderView: View {
     
     private var previewLayer: AVCaptureVideoPreviewLayer {
-        return layer as AVCaptureVideoPreviewLayer
+        return layer as! AVCaptureVideoPreviewLayer
     }
     weak var delegate: BarCodeReaderViewDelegate?
     var listensAppNotifications = true

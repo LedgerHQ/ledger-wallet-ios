@@ -15,14 +15,14 @@ class PairingProtocolContext {
     var sessionKey: Crypto.Key! = nil
     var nonce: NSData! = nil
     
-    let internalKey: Crypto.Key! = nil
-    let attestationKey: Crypto.Key! = nil
+    let internalKey: Crypto.Key
+    let attestationKey: Crypto.Key
     
     // MARK: - Keychain item management
     
     class func canCreatePairingKeychainItemNamed(name: String) -> Bool {
         // check if this name already exists
-        let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
+        let allItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for item in allItems {
             if item.dongleName == name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
                 return false

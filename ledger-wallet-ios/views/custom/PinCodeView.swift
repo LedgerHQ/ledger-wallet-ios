@@ -91,7 +91,7 @@ class PinCodeView: View {
 
     // MARK: - Responder
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
         
         _textField.becomeFirstResponder()
@@ -159,7 +159,9 @@ class PinCodeView: View {
             // draw content
             let boxCenter = CGPointMake(CGRectGetMidX(boxRect), CGRectGetMidY(boxRect))
             if (i == (_textField.text as NSString).length) {
-                drawLetter((placeholder as NSString?)?.substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.semiboldFontWithSize(VisualFactory.Fonts.Sizes.ultraHuge.rawValue), color: strokeColor)
+                if let thePlaceholder = placeholder {
+                    drawLetter((thePlaceholder as! NSString).substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.semiboldFontWithSize(VisualFactory.Fonts.Sizes.ultraHuge.rawValue), color: strokeColor)
+                }
             }
             else if (i < (_textField.text as NSString).length) {
                 let dotPath = UIBezierPath(ovalInRect: CGRectInset(CGRectMake(boxCenter.x, boxCenter.y, 0, 0), -dotRadius / 2.0, -dotRadius / 2.0))
@@ -167,7 +169,9 @@ class PinCodeView: View {
                 dotPath.fill()
             }
             else {
-                drawLetter((placeholder as NSString?)?.substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.lightFontWithSize(VisualFactory.Fonts.Sizes.ultraHuge.rawValue), color: strokeColor)
+                if let thePlaceholder = placeholder {
+                    drawLetter((thePlaceholder as! NSString).substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.lightFontWithSize(VisualFactory.Fonts.Sizes.ultraHuge.rawValue), color: strokeColor)
+                }
             }
         }
     }

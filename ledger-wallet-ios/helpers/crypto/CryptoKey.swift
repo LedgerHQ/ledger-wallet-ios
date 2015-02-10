@@ -63,7 +63,7 @@ extension Crypto {
             if (pKey != nil) {
                 EC_KEY_set_conv_form(key, POINT_CONVERSION_UNCOMPRESSED)
                 let pKeyBytes = i2o_ECPublicKey(key, nil)
-                var publicKeyPointer = UnsafeMutablePointer<UInt8>.null()
+                var publicKeyPointer: UnsafeMutablePointer<UInt8> = nil
                 i2o_ECPublicKey(key, &publicKeyPointer)
                 let publicKey = NSData(bytes: publicKeyPointer, length: Int(pKeyBytes))
                 CRYPTO_free(publicKeyPointer)

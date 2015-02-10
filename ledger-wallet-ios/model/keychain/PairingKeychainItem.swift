@@ -11,7 +11,7 @@ import Foundation
 class PairingKeychainItem: KeychainItem {
     
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
-    override class var itemClass: String { return kSecClassGenericPassword }
+    override class var itemClass: String { return kSecClassGenericPassword as! String }
     private(set) var pairingKey: Crypto.Key!
     private(set) var pairingId: String!
     private(set) var dongleName: String!

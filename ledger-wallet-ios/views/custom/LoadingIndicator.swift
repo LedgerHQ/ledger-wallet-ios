@@ -128,7 +128,7 @@ class LoadingIndicator: View {
         if (layer.sublayers == nil) {
             return
         }
-        for layer in self.layer.sublayers as [CALayer] {
+        for layer in self.layer.sublayers as! [CALayer] {
             closure(layer)
         }
     }

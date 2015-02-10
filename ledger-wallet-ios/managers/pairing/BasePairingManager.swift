@@ -25,7 +25,7 @@ class BasePairingManager: BaseManager {
         case Connect = "connect"
         case Disconnect = "disconnect"
     }
-    private let messagesHandlers: [MessageType: MessageHandler] = [:]
+    private var messagesHandlers: [MessageType: MessageHandler] = [:]
     private(set) var lastSentMessage: Message? = nil
     
     // MARK: - Messages management

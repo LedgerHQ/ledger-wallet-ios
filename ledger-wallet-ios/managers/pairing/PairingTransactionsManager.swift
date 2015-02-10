@@ -82,7 +82,7 @@ class PairingTransactionsManager: BasePairingManager {
         
         // rebuild websockets
         let exemptedPairingItem = exceptions ?? []
-        let pairingItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
+        let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for pairingItem in pairingItems {
             if (exemptedPairingItem.filter({ element in element.pairingId == pairingItem.pairingId }).count > 0) {
                 continue

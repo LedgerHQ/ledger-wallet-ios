@@ -51,7 +51,7 @@ struct VisualFactory {
         
         static let mediumCentered: TextAttribute = TextAttributes.extend(medium, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (medium[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                let paragraph = (medium[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
@@ -81,7 +81,7 @@ struct VisualFactory {
         
         static let smallCentered: TextAttribute = TextAttributes.extend(small, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (small[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                let paragraph = (small[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
@@ -95,7 +95,7 @@ struct VisualFactory {
         
         static let smallGreyCentered: TextAttribute = TextAttributes.extend(smallGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (smallGrey[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                let paragraph = (smallGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
@@ -109,7 +109,7 @@ struct VisualFactory {
         
         static let smallSoftGreyCentered: TextAttribute = TextAttributes.extend(smallSoftGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (smallSoftGrey[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                let paragraph = (smallSoftGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
@@ -134,7 +134,7 @@ struct VisualFactory {
         
         static let largeIndicationGreyCentered: TextAttribute = TextAttributes.extend(largeIndicationGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (largeIndicationGrey[NSParagraphStyleAttributeName] as NSParagraphStyle).mutableCopy() as NSMutableParagraphStyle
+                let paragraph = (largeIndicationGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()

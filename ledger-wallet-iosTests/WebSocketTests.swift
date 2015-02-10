@@ -51,7 +51,7 @@ class WebSocketTests: XCTestCase, JFRWebSocketDelegate {
         expectation = expectationWithDescription("test echo")
         message = "this is an echo test"
         websocket.writeString(message)
-        waitForExpectationsWithTimeout(10.0, nil)
+        waitForExpectationsWithTimeout(10.0, handler: nil)
     }
     
     override func tearDown() {
