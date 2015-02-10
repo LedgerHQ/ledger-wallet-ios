@@ -43,9 +43,8 @@ class PairingProtocolContext {
             "dongle_name": name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         ]
         
-        if let itemData = NSJSONSerialization.dataWithJSONObject(itemAttributes, options: nil, error: nil) {
-            let item = PairingKeychainItem.add(itemData) as? PairingKeychainItem
-            return item != nil
+        if let itemData = JSON.dataFromJSONObject(itemAttributes), item = PairingKeychainItem.add(itemData) as? PairingKeychainItem {
+            return true
         }
         
         return false

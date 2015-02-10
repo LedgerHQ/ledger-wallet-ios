@@ -85,7 +85,7 @@ extension BasePairingManager {
     }
     
     func sendMessage(message: Message, webSocket: JFRWebSocket) {
-        if let JSONData = NSJSONSerialization.dataWithJSONObject(message, options: NSJSONWritingOptions.allZeros, error: nil) {
+        if let JSONData = JSON.dataFromJSONObject(message) {
             webSocket.writeData(JSONData)
             lastSentMessage = message
         }
@@ -145,7 +145,7 @@ extension BasePairingManager: JFRWebSocketDelegate {
         // retreive data from string
         if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             // create Message representation from data
-            if let message = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as? Message {
+            if let message = JSON.JSONObjectFromData(data) as? Message {
                 self.receiveMessage(message, webSocket: webSocket)
             }
         }

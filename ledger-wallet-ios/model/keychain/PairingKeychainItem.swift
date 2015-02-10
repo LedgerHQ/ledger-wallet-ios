@@ -17,7 +17,7 @@ class PairingKeychainItem: KeychainItem {
     private(set) var dongleName: String!
 
     override func initialize(attributes: [String: AnyObject], data: NSData) -> Bool {
-        if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as? [String: AnyObject] {
+        if let JSON = JSON.JSONObjectFromData(data) as? [String: AnyObject] {
             if let pairingKey = JSON["pairing_key"] as? String {
                 self.pairingKey = Crypto.Key(symmetricKey: Crypto.Encode.dataFromBase16String(pairingKey))
             }
