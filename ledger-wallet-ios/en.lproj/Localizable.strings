@@ -32,6 +32,8 @@
 
 "PAIRING_FAILED" = "PAIRING FAILED";
 
+"PAIRED_DEVICES" = "PAIRED DEVICES";
+
 "MANAGE_PAIRED_DEVICES" = "MANAGE PAIRED DEVICES";
 
 "waiting_for_transactions..." = "Waiting for transactions...";

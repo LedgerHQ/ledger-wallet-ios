@@ -15,12 +15,22 @@ class PairingListViewController: BaseViewController {
     
     private var pairingKeychainItems: [PairingKeychainItem] = []
 
+    // MARK: - Actions
+    
+    @IBAction func pairNewDeviceButtonTouched() {
+        Navigator.Pairing.presentAddViewController(fromViewController: self, delegate: self)
+    }
+    
+    override func complete() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // MARK: - Interface
     
     override func configureView() {
         super.configureView()
         
-        actionBar.borderPosition = ActionBarView.BorderPosition.Bottom
+        actionBar.borderPosition = ActionBarView.BorderPosition.Top
     }
 
     // MARK: - Model
@@ -51,6 +61,24 @@ extension PairingListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(PairingListTableViewCell.className(), forIndexPath: indexPath) as! PairingListTableViewCell
         return cell
+    }
+    
+}
+
+extension PairingListViewController: PairingAddViewControllerDelegate {
+    
+    // MARK: - PairingAddViewController delegate
+    
+    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome) {
+        // dismiss
+        pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
+        
+        // handle outcome
+        if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
+            let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
+            confirmationDialogViewController.configureWithPairingOutcome(outcome)
+            presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+        }
     }
     
 }

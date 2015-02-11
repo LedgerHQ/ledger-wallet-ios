@@ -52,5 +52,9 @@ class Navigator {
             })
         }
         
+        class func presentListViewController(#fromViewController: BaseViewController) {
+            Navigator.presentEmbeddedViewControllerOfClass(PairingListViewController.self, fromViewController: fromViewController)
+        }
+        
     }
 }

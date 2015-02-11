@@ -11,7 +11,7 @@ import Foundation
 class PairingHomeWaitingContentViewController: PairingHomeBaseContentViewController {
     
     @IBAction private func managePairedDevicesButtonTouched() {
-        
+        Navigator.Pairing.presentListViewController(fromViewController: parentHomeViewController)
     }
     
 }
