@@ -102,14 +102,18 @@ class PairingTransactionsManager: BasePairingManager {
                 continue
             }
             webSocket.delegate = nil
-            webSocket.disconnect()
+            if webSocket.isConnected {
+                webSocket.disconnect()
+            }
         }
         webSockets.removeAll()
     }
     
     private func destroyCurrentTransactionWebSocket() {
         currentTransactionWebSocket?.delegate = nil
-        currentTransactionWebSocket?.disconnect()
+        if let isConnected = currentTransactionWebSocket?.isConnected where isConnected == true {
+            currentTransactionWebSocket?.disconnect()
+        }
         currentTransactionWebSocket = nil
         currentTransactionPairingKeychainItem = nil
         currentTransactionInfo = nil
