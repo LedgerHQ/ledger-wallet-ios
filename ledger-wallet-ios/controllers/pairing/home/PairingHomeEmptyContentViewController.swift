@@ -10,6 +10,28 @@ import Foundation
 
 class PairingHomeEmptyContentViewController: PairingHomeBaseContentViewController {
     
+    // MARK: - Actions
     
+    @IBAction private func pairNewDeviceButtonTouched() {
+        Navigator.Pairing.presentAddViewController(fromViewController: parentHomeViewController, delegate: self)
+    }
+    
+}
+
+extension PairingHomeEmptyContentViewController: PairingAddViewControllerDelegate {
+    
+    // MARK: - PairingAddViewController delegate
+    
+    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome) {
+        // dismiss
+        pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
+        
+        // handle outcome
+        if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
+            let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
+            confirmationDialogViewController.configureWithPairingOutcome(outcome)
+            parentHomeViewController.presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+        }
+    }
     
 }

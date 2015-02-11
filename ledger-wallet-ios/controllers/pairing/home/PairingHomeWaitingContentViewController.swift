@@ -10,5 +10,8 @@ import Foundation
 
 class PairingHomeWaitingContentViewController: PairingHomeBaseContentViewController {
     
+    @IBAction private func managePairedDevicesButtonTouched() {
+        
+    }
     
 }

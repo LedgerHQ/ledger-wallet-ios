@@ -11,38 +11,18 @@ import UIKit
 class PairingListViewController: BaseViewController {
     
     @IBOutlet private weak var actionBar: ActionBarView!
-    @IBOutlet private weak var pairingStatusLabel: Label!
     @IBOutlet private weak var tableView: TableView!
     
     private var pairingKeychainItems: [PairingKeychainItem] = []
-    
-    // MARK: - Actions
-    
-    @IBAction private func pairNewDongleButtonTouched(sender: AnyObject) {
-        let navigationController = NavigationController.instantiateFromStoryboard(storyboard)
-        let addDongleViewController = PairingAddViewController.instantiateFromStoryboard(storyboard)
-        addDongleViewController.delegate = self
-        navigationController.viewControllers = [addDongleViewController]
-        presentViewController(navigationController, animated: true, completion: nil)
-    }
-    
+
     // MARK: - Interface
     
     override func configureView() {
         super.configureView()
         
-        actionBar.borderPosition = ActionBarView.BorderPosition.Top
-        pairingStatusLabel.text = localizedString("WAITING_FOR_AN_OPERATION")
+        actionBar.borderPosition = ActionBarView.BorderPosition.Bottom
     }
-    
-    override func updateView() {
-        super.updateView()
-//        
-//        delayOnMainQueue(0.5) {
-//            self.pairNewDongleButtonTouched(UIView())
-//        }
-    }
-    
+
     // MARK: - Model
     
     override func updateModel() {
@@ -71,24 +51,6 @@ extension PairingListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(PairingListTableViewCell.className(), forIndexPath: indexPath) as! PairingListTableViewCell
         return cell
-    }
-    
-}
-
-extension PairingListViewController: PairingAddViewControllerDelegate {
-    
-    // MARK: - PairingAddViewController delegate
-    
-    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome) {
-        // dismiss
-        pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
-        
-        // handle outcome
-        if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
-            let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
-            confirmationDialogViewController.configureWithPairingOutcome(outcome)
-            presentViewController(confirmationDialogViewController, animated: true, completion: nil)
-        }
     }
     
 }

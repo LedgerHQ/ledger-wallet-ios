@@ -35,6 +35,9 @@
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="pairNewDeviceButtonTouched" destination="-1" eventType="touchUpInside" id="AEV-hm-f6q"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to_enable_second_factor_pair_device" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Gh0-fS-lMN" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="185" y="176" width="230" height="27"/>
@@ -73,6 +76,9 @@
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.softGrey"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="visitHelpCenter" destination="-1" eventType="touchUpInside" id="oI4-Gj-qsA"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

@@ -56,9 +56,9 @@
 
 "ledger_wallet_is_finalizing_pairing" = "Your Ledger Wallet is now finalizing the pairing process with this device.";
 
-"error_pairing_unknown" = "An unknown error occured.\nPlease try again later.";
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
 
-"error_pairing_network" = "A network error occured.\nPlease check your internet connection.";
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
 
 "error_pairing_dongle_cancelled" = "The Ledger Wallet Chrome application cancelled the pairing process.";
 

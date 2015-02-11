@@ -13,7 +13,12 @@
 
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard
 {
-    return [storyboard instantiateViewControllerWithIdentifier:[self className]];
+    return [self instantiateFromStoryboard:storyboard identifier:[self className]];
+}
+
++ (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard identifier:(NSString *)identifier
+{
+    return [storyboard instantiateViewControllerWithIdentifier:identifier];
 }
 
 + (instancetype)instantiateFromNib
@@ -23,7 +28,12 @@
 
 + (instancetype)instantiateFromNibNamed:(NSString *)name
 {
-    return [[[self class] alloc] initWithNibName:name bundle:nil];
+    return [self instantiateFromNibNamed:name bundle:nil];
+}
+
++ (instancetype)instantiateFromNibNamed:(NSString *)name bundle:(NSBundle *)bundle
+{
+    return [[[self class] alloc] initWithNibName:name bundle:bundle];
 }
 
 @end

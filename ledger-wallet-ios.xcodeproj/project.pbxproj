@@ -99,6 +99,8 @@
 		37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */; };
 		37AB9EC51A8A438200A48951 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC41A8A438200A48951 /* JSON.swift */; };
 		37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC41A8A438200A48951 /* JSON.swift */; };
+		37AB9EC91A8A605500A48951 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC81A8A605500A48951 /* Navigation.swift */; };
+		37AB9ECE1A8B566900A48951 /* UIViewController+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */; };
 		37ABFBCC1A836C8B0061E92D /* CryptoECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */; };
 		37ABFBCE1A836DA50061E92D /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCD1A836DA50061E92D /* CryptoKey.swift */; };
 		37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCD1A836DA50061E92D /* CryptoKey.swift */; };
@@ -153,7 +155,7 @@
 		37F283621A64064100F432CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F283601A64064100F432CC /* Main.storyboard */; };
 		37F283651A64064A00F432CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37F283631A64064A00F432CC /* LaunchScreen.xib */; };
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
-		37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283951A655D3400F432CC /* NavigationController.swift */; };
+		37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283951A655D3400F432CC /* BaseNavigationController.swift */; };
 		37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283961A655D3400F432CC /* BaseViewController.swift */; };
 		37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283981A655D3400F432CC /* Dictionary+Utils.swift */; };
 		37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283991A655D3400F432CC /* UIButton+Utils.swift */; };
@@ -161,7 +163,6 @@
 		37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839B1A655D3400F432CC /* UILabel+Utils.swift */; };
 		37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839C1A655D3400F432CC /* UIView+Allure.swift */; };
 		37F283C41A655D7200F432CC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283C01A655D7200F432CC /* Localization.swift */; };
-		37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F283CF1A656FEF00F432CC /* UIViewController+Init.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -300,6 +301,9 @@
 		37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinCommon.swift; path = bitcoin/BitcoinCommon.swift; sourceTree = "<group>"; };
 		37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+Utils.swift"; sourceTree = "<group>"; };
 		37AB9EC41A8A438200A48951 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		37AB9EC81A8A605500A48951 /* Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
+		37AB9ECC1A8B566900A48951 /* UIViewController+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Init.h"; sourceTree = "<group>"; };
+		37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Init.m"; sourceTree = "<group>"; };
 		37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoECDH.swift; path = crypto/CryptoECDH.swift; sourceTree = "<group>"; };
 		37ABFBCD1A836DA50061E92D /* CryptoKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CryptoKey.swift; path = crypto/CryptoKey.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37ABFBD11A8375700061E92D /* CryptoKeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoKeyTests.swift; sourceTree = "<group>"; };
@@ -346,7 +350,7 @@
 		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283641A64064A00F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		37F283951A655D3400F432CC /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		37F283951A655D3400F432CC /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F283961A655D3400F432CC /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F283981A655D3400F432CC /* Dictionary+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utils.swift"; sourceTree = "<group>"; };
 		37F283991A655D3400F432CC /* UIButton+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Utils.swift"; sourceTree = "<group>"; };
@@ -354,8 +358,6 @@
 		37F2839B1A655D3400F432CC /* UILabel+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Utils.swift"; sourceTree = "<group>"; };
 		37F2839C1A655D3400F432CC /* UIView+Allure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIView+Allure.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F283C01A655D7200F432CC /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		37F283CE1A656FEF00F432CC /* UIViewController+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Init.h"; sourceTree = "<group>"; };
-		37F283CF1A656FEF00F432CC /* UIViewController+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Init.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -766,7 +768,7 @@
 			isa = PBXGroup;
 			children = (
 				37F283961A655D3400F432CC /* BaseViewController.swift */,
-				37F283951A655D3400F432CC /* NavigationController.swift */,
+				37F283951A655D3400F432CC /* BaseNavigationController.swift */,
 			);
 			name = Base;
 			path = base;
@@ -781,12 +783,12 @@
 				37F2839B1A655D3400F432CC /* UILabel+Utils.swift */,
 				3798BA1D1A6E6D8800F5B603 /* UITextField+Utils.swift */,
 				37F2839C1A655D3400F432CC /* UIView+Allure.swift */,
-				37F283CE1A656FEF00F432CC /* UIViewController+Init.h */,
-				37F283CF1A656FEF00F432CC /* UIViewController+Init.m */,
 				37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */,
 				37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */,
 				373E22CD1A72490D00BAF63F /* NSObject+Utils.h */,
 				373E22CE1A72490D00BAF63F /* NSObject+Utils.m */,
+				37AB9ECC1A8B566900A48951 /* UIViewController+Init.h */,
+				37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */,
 			);
 			name = Extensions;
 			path = extensions;
@@ -821,6 +823,7 @@
 				373E22CB1A71517C00BAF63F /* Blocks.swift */,
 				3724A3811A79383700E1B977 /* Common.swift */,
 				37AB9EC41A8A438200A48951 /* JSON.swift */,
+				37AB9EC81A8A605500A48951 /* Navigation.swift */,
 			);
 			name = Utils;
 			path = utils;
@@ -969,7 +972,6 @@
 				37A2DBE31A7A85FD0045B639 /* PairingAddFinalizeStepViewController.swift in Sources */,
 				37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */,
 				37B537641A8299EA0087AB43 /* CryptoData.swift in Sources */,
-				37F283D01A656FEF00F432CC /* UIViewController+Init.m in Sources */,
 				37ABFBDD1A84C2F00061E92D /* CryptoCipher.m in Sources */,
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,
@@ -1001,7 +1003,8 @@
 				37B5376D1A82A5D20087AB43 /* CryptoEncode.swift in Sources */,
 				376F50FB1A82190D001C6684 /* BTCBitcoinURL.m in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
-				37F283AA1A655D3400F432CC /* NavigationController.swift in Sources */,
+				37AB9EC91A8A605500A48951 /* Navigation.swift in Sources */,
+				37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */,
 				376F51161A82190E001C6684 /* BTCTransactionInput.m in Sources */,
 				37AB9EC51A8A438200A48951 /* JSON.swift in Sources */,
 				37B537661A82A1AB0087AB43 /* CryptoHash.swift in Sources */,
@@ -1010,6 +1013,7 @@
 				376F50FC1A82190D001C6684 /* BTCBlindSignature.m in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,
 				37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */,
+				37AB9ECE1A8B566900A48951 /* UIViewController+Init.m in Sources */,
 				376F510A1A82190E001C6684 /* BTCNetwork.m in Sources */,
 				37EF91CA1A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift in Sources */,
 				376F51131A82190E001C6684 /* BTCScriptMachine.m in Sources */,

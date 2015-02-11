@@ -10,6 +10,12 @@ import Foundation
 
 class PairingHomeBaseContentViewController: BaseViewController {
     
+    var parentHomeViewController: PairingHomeViewController {
+        return self.parentViewController as! PairingHomeViewController
+    }
     
+    @IBAction private func visitHelpCenter() {
+        UIApplication.sharedApplication().openURL(NSURL(string: LedgerHelpCenterURL)!)
+    }
     
 }

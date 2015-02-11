@@ -12,7 +12,9 @@
 @interface UIViewController (Init)
 
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard;
++ (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard identifier:(NSString *)identifier;
 + (instancetype)instantiateFromNib;
 + (instancetype)instantiateFromNibNamed:(NSString *)name;
++ (instancetype)instantiateFromNibNamed:(NSString *)name bundle:(NSBundle *)bundle;
 
 @end
