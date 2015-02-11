@@ -12,6 +12,7 @@ class PairingHomeViewController: BaseViewController {
     
     lazy private var pairingTransactionsManager = PairingTransactionsManager()
     private var currentContentViewController: PairingHomeBaseContentViewController! = nil
+    private var pairingTransactionDialogViewController: PairingTransactionDialogViewController? = nil
     
     // MARK: - Content
     
@@ -27,6 +28,14 @@ class PairingHomeViewController: BaseViewController {
         currentContentViewController?.didMoveToParentViewController(self)
         view.addSubview(currentContentViewController.view)
         view.setNeedsLayout()
+    }
+    
+    // MARK: - Interface
+    
+    override func configureView() {
+        super.configureView()
+        
+        pairingTransactionsManager.delegate = self
     }
     
     // MARK: - Layout
@@ -54,6 +63,41 @@ class PairingHomeViewController: BaseViewController {
         super.viewWillDisappear(animated)
     
         pairingTransactionsManager.stopListening()
+    }
+    
+}
+
+extension PairingHomeViewController: PairingTransactionsManagerDelegate {
+    
+    // MARK: - PairingTransactionsManager delagate
+
+    func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, didReceiveNewTransactionInfo transactionInfo: PairingTransactionInfo) {
+        pairingTransactionDialogViewController = PairingTransactionDialogViewController.instantiateFromNib()
+        pairingTransactionDialogViewController?.delegate = self
+        pairingTransactionDialogViewController?.transactionInfo = transactionInfo
+        presentViewController(pairingTransactionDialogViewController!, animated: true, completion: nil)
+    }
+    
+    func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, dongleDidCancelCurrentTransactionInfo transactionInfo: PairingTransactionInfo) {
+        pairingTransactionDialogViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+}
+
+extension PairingHomeViewController: PairingTransactionDialogViewControllerDelegate {
+    
+    // MARK: - PairingTransactionDialogViewController delegate
+    
+    func pairingTransactionDialogViewController(pairingTransactionDialogViewController: PairingTransactionDialogViewController, didConfirmTransactionInfo transactionInfo: PairingTransactionInfo) {
+        pairingTransactionsManager.confirmTransaction(transactionInfo)
+        pairingTransactionDialogViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.pairingTransactionDialogViewController = nil
+    }
+    
+    func pairingTransactionDialogViewController(pairingTransactionDialogViewController: PairingTransactionDialogViewController, didRejectTransactionInfo transactionInfo: PairingTransactionInfo) {
+        pairingTransactionsManager.rejectTransaction(transactionInfo)
+        pairingTransactionDialogViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.pairingTransactionDialogViewController = nil
     }
     
 }

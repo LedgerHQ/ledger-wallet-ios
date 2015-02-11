@@ -161,9 +161,14 @@ struct VisualFactory {
         
         static let huge = [
             NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.veryLarge,
-            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.megaLarge.rawValue)
+            NSKernAttributeName: -Fonts.Kernings.large,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.megaLarge.rawValue)
         ]
+        
+        static let hugeLight: TextAttribute = TextAttributes.extend(huge, withAttributes: [
+                NSFontAttributeName: Fonts.lightFontWithSize((huge[NSFontAttributeName] as! UIFont).pointSize)
+            ]
+        )
         
         static let sectionTitle = [
             NSForegroundColorAttributeName: Colors.black,

@@ -10,8 +10,8 @@ import Foundation
 
 protocol PairingTransactionsManagerDelegate: class {
     
-    func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, didReceiveNewTransactionInfo: PairingTransactionInfo)
-    func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, dongleDidCancelCurrentTransactionInfo: PairingTransactionInfo)
+    func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, didReceiveNewTransactionInfo transactionInfo: PairingTransactionInfo)
+    func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, dongleDidCancelCurrentTransactionInfo transactionInfo: PairingTransactionInfo)
     
 }
 
@@ -54,7 +54,7 @@ class PairingTransactionsManager: BasePairingManager {
     }
     
     private func handleTransaction(transactionInfo: PairingTransactionInfo, confirm: Bool) {
-        if (!isConfirmingTransaction || transactionInfo != currentTransactionInfo) {
+        if (!isConfirmingTransaction || transactionInfo !== currentTransactionInfo) {
             return
         }
         
@@ -121,6 +121,9 @@ class PairingTransactionsManager: BasePairingManager {
         currentTransactionWebSocket = webSocket
         currentTransactionPairingKeychainItem = webSockets[webSocket]!
         
+        // assign transaction info
+        transactionInfo.dongleName = currentTransactionPairingKeychainItem!.dongleName
+        
         // destroy all webSockets excepted this one
         destroyWebSockets(excepted: [webSocket])
         
@@ -157,6 +160,7 @@ extension PairingTransactionsManager {
             if let pairingKeychainItem = webSockets[webSocket] {
                 // get transaction info from blob
                 if let transactionInfo = cryptor.transactionInfoFromEncryptedBlob(blob, pairingKey: pairingKeychainItem.pairingKey) {
+                    // accept transaction info
                     acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
                 }
             }

@@ -8,14 +8,16 @@
 
 import Foundation
 
-class PairingTransactionInfo: Equatable {
+final class PairingTransactionInfo: Mockable {
     
     let pinCode: String
     let recipientAddress: String
     let changeAmount: Bitcoin.Amount
     let feesAmount: Bitcoin.Amount
     let outputsAmount: Bitcoin.Amount
-    
+    let transactionDate: NSDate
+    var dongleName: String = ""
+
     private let pinBytesLength = 4
     private let feesBytesLength = 8
     private let outputsBytesLength = 8
@@ -41,6 +43,7 @@ class PairingTransactionInfo: Equatable {
             self.changeAmount = BTCBigNumber(unsignedData: changeData).int64value
             self.feesAmount = BTCBigNumber(unsignedData: feesData).int64value
             self.outputsAmount = BTCBigNumber(unsignedData: outputsData).int64value
+            self.transactionDate = NSDate()
         }
         else {
             self.recipientAddress = ""
@@ -48,12 +51,25 @@ class PairingTransactionInfo: Equatable {
             self.changeAmount = 0
             self.feesAmount = 0
             self.outputsAmount = 0
+            self.transactionDate = NSDate()
             return nil
         }
     }
     
-}
-
-func ==(lhs: PairingTransactionInfo, rhs: PairingTransactionInfo) -> Bool {
-    return true
+    // MARK: - Mock
+    
+    class func testObject() -> Self {
+        return self()
+    }
+    
+    private init() {
+        recipientAddress = "1Ax9jk7pPt1ZcVcyAcgbYgE3k91443TLjU"
+        pinCode = "abcd"
+        changeAmount = 0
+        feesAmount = 0
+        outputsAmount = 123000000
+        dongleName = "Sophie's Wallet"
+        transactionDate = NSDate()
+    }
+    
 }

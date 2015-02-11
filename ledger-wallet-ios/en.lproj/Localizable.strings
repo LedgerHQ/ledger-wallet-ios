@@ -14,6 +14,8 @@
 
 "CLOSE" = "CLOSE";
 
+"REJECT" = "REJECT";
+
 "PAIR_A_NEW_DEVICE" = "PAIR A NEW DEVICE";
 
 "WAITING_FOR_AN_OPERATION..." = "WAITING FOR AN OPERATION...";
@@ -75,3 +77,5 @@
 "transactions_will_automatically_appear" = "Transactions will automatically appear\nwhen manual validation is required.";
 
 "need_help_visit_help_center" = "Need help? Visit our help center.";
+
+"requested_on_%@" = "requested on %@";

@@ -10,6 +10,6 @@ import Foundation
 
 class Bitcoin {
     
-    typealias Amount = Int64
+    typealias Amount = BTCAmount
     
 }

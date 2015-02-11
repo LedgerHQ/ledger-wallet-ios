@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AudioToolbox
 
 class DeviceManager: BaseManager {
     
@@ -30,6 +31,10 @@ class DeviceManager: BaseManager {
         case 568.0: return HeightClass.Medium
         default: return HeightClass.Large
         }
+    }
+    
+    class func vibrate() {
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
 }

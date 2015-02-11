@@ -135,6 +135,9 @@ struct VisualTheme {
         },
         "huge": { label in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.huge)
+        },
+        "huge.light": { label in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.hugeLight)
         }
 
     ]
