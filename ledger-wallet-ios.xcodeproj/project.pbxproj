@@ -15,6 +15,16 @@
 		373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
 		373E22DB1A76895C00BAF63F /* KeychainItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */; };
 		373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
+		37414B031A8CAAE000CE0795 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B021A8CAAE000CE0795 /* HTTPClient.swift */; };
+		37414B041A8CAAE000CE0795 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B021A8CAAE000CE0795 /* HTTPClient.swift */; };
+		37414B061A8CC73A00CE0795 /* HTTPClientDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B051A8CC73A00CE0795 /* HTTPClientDataTask.swift */; };
+		37414B071A8CC73A00CE0795 /* HTTPClientDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B051A8CC73A00CE0795 /* HTTPClientDataTask.swift */; };
+		37414B0C1A8CD8AA00CE0795 /* HTTPClientTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B0B1A8CD8AA00CE0795 /* HTTPClientTask.swift */; };
+		37414B0D1A8CD8AA00CE0795 /* HTTPClientTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B0B1A8CD8AA00CE0795 /* HTTPClientTask.swift */; };
+		37414B101A8CD97100CE0795 /* RemoteNotificationsRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B0F1A8CD97100CE0795 /* RemoteNotificationsRestClient.swift */; };
+		37414B111A8CD97100CE0795 /* RemoteNotificationsRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B0F1A8CD97100CE0795 /* RemoteNotificationsRestClient.swift */; };
+		37414B141A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */; };
+		37414B151A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */; };
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
 		375A380A1A77DB200082D917 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38091A77DB200082D917 /* BaseManager.swift */; };
@@ -187,6 +197,11 @@
 		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingKeychainItem.swift; sourceTree = "<group>"; };
 		373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemTests.swift; sourceTree = "<group>"; };
+		37414B021A8CAAE000CE0795 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		37414B051A8CC73A00CE0795 /* HTTPClientDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientDataTask.swift; sourceTree = "<group>"; };
+		37414B0B1A8CD8AA00CE0795 /* HTTPClientTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
+		37414B0F1A8CD97100CE0795 /* RemoteNotificationsRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsRestClient.swift; sourceTree = "<group>"; };
+		37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRestClient.swift; sourceTree = "<group>"; };
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingIndicator.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		375A38091A77DB200082D917 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -404,6 +419,37 @@
 			path = keychain;
 			sourceTree = "<group>";
 		};
+		37414B001A8CAAA900CE0795 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				37414B011A8CAAA900CE0795 /* Base */,
+				37414B0E1A8CD94500CE0795 /* Rest Clients */,
+			);
+			name = Networking;
+			path = networking;
+			sourceTree = "<group>";
+		};
+		37414B011A8CAAA900CE0795 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				37414B021A8CAAE000CE0795 /* HTTPClient.swift */,
+				37414B0B1A8CD8AA00CE0795 /* HTTPClientTask.swift */,
+				37414B051A8CC73A00CE0795 /* HTTPClientDataTask.swift */,
+				37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */,
+			);
+			name = Base;
+			path = base;
+			sourceTree = "<group>";
+		};
+		37414B0E1A8CD94500CE0795 /* Rest Clients */ = {
+			isa = PBXGroup;
+			children = (
+				37414B0F1A8CD97100CE0795 /* RemoteNotificationsRestClient.swift */,
+			);
+			name = "Rest Clients";
+			path = rest_clients;
+			sourceTree = "<group>";
+		};
 		375A38081A77DA9A0082D917 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +623,7 @@
 				378205D51A60196C00F6CA45 /* Resources */,
 				373E22D61A7681F100BAF63F /* Model */,
 				375A38081A77DA9A0082D917 /* Managers */,
+				37414B001A8CAAA900CE0795 /* Networking */,
 				37F283931A655D3400F432CC /* Controllers */,
 				37F283A41A655D3400F432CC /* Views */,
 				37F283BA1A655D7200F432CC /* Helpers */,
@@ -974,6 +1021,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37ABFBE31A85101F0061E92D /* PairingProtocolContext.swift in Sources */,
+				37414B101A8CD97100CE0795 /* RemoteNotificationsRestClient.swift in Sources */,
 				37ABFBCC1A836C8B0061E92D /* CryptoECDH.swift in Sources */,
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				37ABFBE01A8503B10061E92D /* PairingProtocolCryptor.swift in Sources */,
@@ -981,6 +1029,7 @@
 				37C723B11A851E49002CF49D /* PairingTransactionsCryptor.swift in Sources */,
 				376F51121A82190E001C6684 /* BTCScript.m in Sources */,
 				376F51151A82190E001C6684 /* BTCTransactionBuilder.m in Sources */,
+				37414B031A8CAAE000CE0795 /* HTTPClient.swift in Sources */,
 				376F50F81A82190D001C6684 /* BTCAddress.m in Sources */,
 				37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */,
 				376F51041A82190E001C6684 /* BTCEncryptedMessage.m in Sources */,
@@ -992,6 +1041,7 @@
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,
 				373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */,
+				37414B0C1A8CD8AA00CE0795 /* HTTPClientTask.swift in Sources */,
 				377E81141A8A010C00010B37 /* PairingHomeViewController.swift in Sources */,
 				376F50FA1A82190D001C6684 /* BTCBigNumber.m in Sources */,
 				37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */,
@@ -1063,6 +1113,7 @@
 				376F510D1A82190E001C6684 /* BTCOutpoint.m in Sources */,
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,
 				376F51071A82190E001C6684 /* BTCKey.m in Sources */,
+				37414B141A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */,
 				376F51181A82190E001C6684 /* NS+BTCBase58.m in Sources */,
 				37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */,
 				376F51171A82190E001C6684 /* BTCTransactionOutput.m in Sources */,
@@ -1075,6 +1126,7 @@
 				37BC847C1A7FB75B00072B71 /* DeviceManager.swift in Sources */,
 				3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */,
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,
+				37414B061A8CC73A00CE0795 /* HTTPClientDataTask.swift in Sources */,
 				37ABFBD81A83C8F50061E92D /* CryptoCipher.swift in Sources */,
 				376F510C1A82190E001C6684 /* BTCOpcode.m in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
@@ -1092,6 +1144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37414B0D1A8CD8AA00CE0795 /* HTTPClientTask.swift in Sources */,
 				376F51221A8231F3001C6684 /* PairingProtocolManagerTests.swift in Sources */,
 				37AA95651A88CF88009C3EE4 /* PairingTransactionsCryptor.swift in Sources */,
 				37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */,
@@ -1102,6 +1155,7 @@
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */,
+				37414B151A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */,
 				37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */,
 				376F51241A82326F001C6684 /* BasePairingManager.swift in Sources */,
 				37ABFBE41A85138A0061E92D /* PairingProtocolContext.swift in Sources */,
@@ -1109,6 +1163,7 @@
 				37B537731A82A84C0087AB43 /* CryptoCommon.swift in Sources */,
 				37DD54031A823C3E00449CCA /* Common.swift in Sources */,
 				377E810E1A89124E00010B37 /* BitcoinAddress.swift in Sources */,
+				37414B041A8CAAE000CE0795 /* HTTPClient.swift in Sources */,
 				377E810F1A89126700010B37 /* BitcoinCommon.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
 				37B537711A82A84C0087AB43 /* CryptoHash.swift in Sources */,
@@ -1123,7 +1178,9 @@
 				376F51261A823395001C6684 /* Blocks.swift in Sources */,
 				376F51231A823266001C6684 /* PairingProtocolManager.swift in Sources */,
 				37ABFBE61A8514390061E92D /* PairingProtocolCryptorTests.swift in Sources */,
+				37414B111A8CD97100CE0795 /* RemoteNotificationsRestClient.swift in Sources */,
 				373E22DB1A76895C00BAF63F /* KeychainItemTests.swift in Sources */,
+				37414B071A8CC73A00CE0795 /* HTTPClientDataTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
