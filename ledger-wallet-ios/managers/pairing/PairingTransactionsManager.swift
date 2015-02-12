@@ -84,7 +84,7 @@ class PairingTransactionsManager: BasePairingManager {
         let exemptedPairingItem = exceptions ?? []
         let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for pairingItem in pairingItems {
-            if (exemptedPairingItem.filter({ element in element.pairingId == pairingItem.pairingId }).count > 0) {
+            if (contains(exemptedPairingItem, pairingItem)) {
                 continue
             }
             let webSocket = JFRWebSocket(URL: NSURL(string: webSocketsURL)!, protocols: nil)

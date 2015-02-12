@@ -28,3 +28,11 @@ class PairingKeychainItem: KeychainItem {
     }
     
 }
+
+extension PairingKeychainItem: Equatable {
+
+}
+
+func ==(lhs: PairingKeychainItem, rhs: PairingKeychainItem) -> Bool {
+    return lhs.pairingId == rhs.pairingId
+}
