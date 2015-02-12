@@ -12,7 +12,7 @@ class HTTPClient {
     
     var autoStartsRequest = true
     var timeoutInterval: NSTimeInterval = 30
-    var additionalHeaders: [String: AnyObject]? = nil
+    var additionalHeaders: [String: String]? = nil
     var session: NSURLSession {
         if _session == nil {
             _session = NSURLSession(configuration: preferredSessionConfiguration(), delegate: preferredSessionDelegate(), delegateQueue: preferredSessionDelegateQueue())
@@ -51,7 +51,10 @@ class HTTPClient {
         encoding.encode(request, parameters: parameters)
         
         // create data task
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void)? = (completionHandler == nil) ? nil : { data, response, error in
+            completionHandler?(data, request, response as? NSHTTPURLResponse, error)
+        }
+        let task = session.dataTaskWithRequest(request, completionHandler: handler)
         
         // launch it if necessary
         if autoStartsRequest {
@@ -66,6 +69,12 @@ class HTTPClient {
         let request = NSMutableURLRequest()
         request.URL = NSURL(string: URL)
         request.HTTPMethod = method.rawValue
+        request.timeoutInterval = timeoutInterval
+        if let additionalHeaders = additionalHeaders {
+            for (key, value) in additionalHeaders {
+                request.addValue(value, forHTTPHeaderField: key)
+            }
+        }
         return request
     }
     
@@ -74,7 +83,6 @@ class HTTPClient {
     private func preferredSessionConfiguration() -> NSURLSessionConfiguration? {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
         configuration.timeoutIntervalForRequest = timeoutInterval
-        configuration.HTTPAdditionalHeaders = additionalHeaders
         return configuration
     }
     

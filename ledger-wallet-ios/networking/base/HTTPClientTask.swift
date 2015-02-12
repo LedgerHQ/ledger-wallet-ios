@@ -12,7 +12,7 @@ extension HTTPClient {
     
     class Task {
         
-        typealias CompletionHandler = (NSData?, NSURLResponse?, NSError?) -> Void
+        typealias CompletionHandler = (NSData?, NSURLRequest, NSHTTPURLResponse?, NSError?) -> Void
         typealias Parameters = [String: AnyObject]
      
         enum Method: String {

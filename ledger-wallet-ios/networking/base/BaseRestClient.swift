@@ -13,6 +13,12 @@ class BaseRestClient: BaseManager {
     private let baseURL = LedgerAPIBaseURL
     lazy private var httpClient = HTTPClient()
     
+    private enum HeaderFields: String {
+        case Platform = "X-Ledger-Platform"
+        case Environment = "X-Ledger-Environment"
+        case Locale = "X-Ledger-Locale"
+    }
+    
     // MARK: - Requests management
     
     func get(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
@@ -46,7 +52,11 @@ class BaseRestClient: BaseManager {
     required init() {
         super.init()
         
-        httpClient.additionalHeaders = [:] //TODO:
+        httpClient.additionalHeaders = [
+            HeaderFields.Platform.rawValue: "ios",
+            HeaderFields.Environment.rawValue: inDebugMode() ? "dev" : "prod",
+            HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
+        ]
     }
     
 }
