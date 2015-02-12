@@ -75,7 +75,7 @@ class PairingTransactionsManager: BasePairingManager {
     
     private func initilizeWebSockets(excepted exceptions: [PairingKeychainItem]? = nil) {
         // initialize websocket URL
-        if (webSocketsURL == nil) { webSocketsURL = LedgerWebSocketURL }
+        if (webSocketsURL == nil) { webSocketsURL = LedgerWebSocketBaseURL }
         
         // create cryptor
         if (cryptor == nil) { cryptor = PairingTransactionsCryptor() }

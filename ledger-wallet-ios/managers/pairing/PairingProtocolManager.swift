@@ -42,7 +42,7 @@ class PairingProtocolManager: BasePairingManager {
         }
         
         // create websocket
-        if (webSocketURL == nil) { webSocketURL = LedgerWebSocketURL }
+        if (webSocketURL == nil) { webSocketURL = LedgerWebSocketBaseURL }
         webSocket = JFRWebSocket(URL: NSURL(string: webSocketURL), protocols: nil)
         webSocket.delegate = self
         webSocket.connect()
