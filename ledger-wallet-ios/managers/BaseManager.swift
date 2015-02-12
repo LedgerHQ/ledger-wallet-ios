@@ -14,12 +14,16 @@ class BaseManager: NSObject {
     
     // MARK: - Singleton
     
-    class func sharedInstance() -> BaseManager {
+    class func sharedInstance() -> Self {
+        return sharedInstance(self)
+    }
+    
+    private class func sharedInstance<T: BaseManager>(type: T.Type) -> T {
         let className = self.className()
-        if let instance = instances[className] {
+        if let instance = instances[className] as? T {
             return instance
         }
-        let instance: BaseManager = self()
+        let instance = T()
         instances[className] = instance
         return instance
     }
