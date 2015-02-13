@@ -54,7 +54,7 @@ class BaseRestClient: BaseManager {
         
         httpClient.additionalHeaders = [
             HeaderFields.Platform.rawValue: "ios",
-            HeaderFields.Environment.rawValue: inDebugMode() ? "dev" : "prod",
+            HeaderFields.Environment.rawValue: ApplicationManager.isInDebug() ? "dev" : "prod",
             HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
         ]
     }
