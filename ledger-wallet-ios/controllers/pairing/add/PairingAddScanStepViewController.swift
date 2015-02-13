@@ -25,10 +25,6 @@ class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         super.configureView()
         
         barCodeReader.delegate = self
-        delayOnMainQueue(1.0) {
-            self.barCodeReader?.stopCapture()
-            self.notifyResult("holymacaroni")
-        }
     }
     
     // MARK: - View lifecycle
@@ -52,10 +48,17 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
     // MARK: - Barcode reader delegate
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String) {
-        // TODO: check that code is correct
-        DeviceManager.vibrate()
-        barCodeReader?.stopCapture()
-        notifyResult(code)
+        // check that code is correct
+        if let data = Crypto.Encode.dataFromBase16String(code) where data.length == 17 {
+            let subData = data.subdataWithRange(NSMakeRange(0, 16))
+            let checksum = data.subdataWithRange(NSMakeRange(16, 1))
+            let computedChecksum = Crypto.Hash.SHA256FromData(subData)
+            if (computedChecksum.length == 32 && computedChecksum.subdataWithRange(NSMakeRange(0, 1)) == checksum) {
+                DeviceManager.vibrate()
+                barCodeReader?.stopCapture()
+                notifyResult(code)
+            }
+        }
     }
     
 }
