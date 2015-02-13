@@ -25,6 +25,8 @@
 		37414B111A8CD97100CE0795 /* RemoteNotificationsRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B0F1A8CD97100CE0795 /* RemoteNotificationsRestClient.swift */; };
 		37414B141A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */; };
 		37414B151A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */; };
+		37414B171A8D0B9300CE0795 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B161A8D0B9300CE0795 /* NotificationsManager.swift */; };
+		37414B181A8D0B9300CE0795 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B161A8D0B9300CE0795 /* NotificationsManager.swift */; };
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
 		375A380A1A77DB200082D917 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A38091A77DB200082D917 /* BaseManager.swift */; };
@@ -149,6 +151,8 @@
 		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
 		37C723B11A851E49002CF49D /* PairingTransactionsCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */; };
 		37DD54031A823C3E00449CCA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
+		37DF00761A8E119B00712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
+		37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37E7F5801A816A23006CA878 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E7F57F1A816A23006CA878 /* openssl.framework */; };
 		37EE4D901A8B721A0085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
@@ -202,6 +206,7 @@
 		37414B0B1A8CD8AA00CE0795 /* HTTPClientTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
 		37414B0F1A8CD97100CE0795 /* RemoteNotificationsRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsRestClient.swift; sourceTree = "<group>"; };
 		37414B131A8CDD9D00CE0795 /* BaseRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRestClient.swift; sourceTree = "<group>"; };
+		37414B161A8D0B9300CE0795 /* NotificationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsManager.swift; path = managers/NotificationsManager.swift; sourceTree = "<group>"; };
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingIndicator.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		375A38091A77DB200082D917 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -352,6 +357,7 @@
 		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingTransactionsManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptor.swift; sourceTree = "<group>"; };
+		37DF00751A8E119B00712AB1 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationManager.swift; path = managers/ApplicationManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37E7F57F1A816A23006CA878 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = vendor/openssl.framework; sourceTree = "<group>"; };
 		37EE4D8F1A8B721A0085CE49 /* Mockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
@@ -455,6 +461,8 @@
 			children = (
 				375A38091A77DB200082D917 /* BaseManager.swift */,
 				37BC847B1A7FB75B00072B71 /* DeviceManager.swift */,
+				37414B161A8D0B9300CE0795 /* NotificationsManager.swift */,
+				37DF00751A8E119B00712AB1 /* ApplicationManager.swift */,
 				37BC84841A7FE3DC00072B71 /* Pairing */,
 			);
 			name = Managers;
@@ -954,6 +962,9 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = X6LFS5BQKN;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.Keychain = {
 								enabled = 0;
 							};
@@ -1087,6 +1098,7 @@
 				376F51131A82190E001C6684 /* BTCScriptMachine.m in Sources */,
 				376F51001A82190E001C6684 /* BTCChainCom.m in Sources */,
 				3798BA1B1A6E6C7C00F5B603 /* VisualFactory.swift in Sources */,
+				37DF00761A8E119B00712AB1 /* ApplicationManager.swift in Sources */,
 				376F51091A82190E001C6684 /* BTCMnemonic.m in Sources */,
 				376F51101A82190E001C6684 /* BTCProtocolSerialization.m in Sources */,
 				376F50FF1A82190E001C6684 /* BTCBlockHeader.m in Sources */,
@@ -1116,6 +1128,7 @@
 				37414B141A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */,
 				376F51181A82190E001C6684 /* NS+BTCBase58.m in Sources */,
 				37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */,
+				37414B171A8D0B9300CE0795 /* NotificationsManager.swift in Sources */,
 				376F51171A82190E001C6684 /* BTCTransactionOutput.m in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
 				376F51031A82190E001C6684 /* BTCData.m in Sources */,
@@ -1153,6 +1166,7 @@
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
+				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */,
 				37414B151A8CDD9D00CE0795 /* BaseRestClient.swift in Sources */,
@@ -1172,6 +1186,7 @@
 				37ABFBD41A83A2270061E92D /* CryptoECDHTests.swift in Sources */,
 				37ABFBD91A83C9400061E92D /* CryptoCipher.swift in Sources */,
 				37ABFBDB1A83C9540061E92D /* CryptoCipherTests.swift in Sources */,
+				37414B181A8D0B9300CE0795 /* NotificationsManager.swift in Sources */,
 				37656F301A76A3F60042512D /* KeychainItem.swift in Sources */,
 				376F51251A823379001C6684 /* BaseManager.swift in Sources */,
 				37ABFBD61A83B85D0061E92D /* CryptoHashTests.swift in Sources */,
@@ -1320,7 +1335,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1336,8 +1350,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
