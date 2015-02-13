@@ -31,17 +31,17 @@ class PairingProtocolContext {
         return true
     }
     
-    func createPairingKeychainItemNamed(name: String) -> Bool {
+    func createPairingKeychainItemNamed(name: String) -> PairingKeychainItem? {
         // check data integrity
         if (pairingId == nil || pairingKey == nil) {
-            return false
+            return nil
         }
         
         let pairingKeychainItem = PairingKeychainItem.create()
         pairingKeychainItem.pairingKey = pairingKey
         pairingKeychainItem.pairingId = pairingId
         pairingKeychainItem.dongleName = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        return true
+        return pairingKeychainItem
     }
     
     // MARK: - Initialization

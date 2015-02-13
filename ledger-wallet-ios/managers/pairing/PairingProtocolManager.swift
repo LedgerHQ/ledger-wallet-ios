@@ -94,7 +94,7 @@ class PairingProtocolManager: BasePairingManager {
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
     }
     
-    func createNewPairingItemNamed(name: String) -> Bool {
+    func createNewPairingItemNamed(name: String) -> PairingKeychainItem? {
         return context.createPairingKeychainItemNamed(name)
     }
     

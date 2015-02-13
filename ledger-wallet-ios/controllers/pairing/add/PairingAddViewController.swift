@@ -10,7 +10,7 @@ import UIKit
 
 protocol PairingAddViewControllerDelegate: class {
     
-    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome)
+    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?)
     
 }
 
@@ -37,16 +37,16 @@ class PairingAddViewController: BaseViewController {
         currentStepViewController?.cancel()
         
         // complete
-        completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceTerminated)
+        completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceTerminated, pairingItem: nil)
     }
     
-    private func completeWithOutcome(outcome: PairingProtocolManager.PairingOutcome) {
+    private func completeWithOutcome(outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // terminate pairing manager
         pairingProtocolManager?.delegate = nil
         pairingProtocolManager?.terminate()
         
         // notify delegate
-        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome)
+        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome, pairingItem: nil)
     }
     
     // MARK: - Interface
@@ -185,11 +185,11 @@ extension PairingAddViewController {
         else if (stepViewController is PairingAddNameStepViewController) {
             // save pairing item
             let name = object as! String
-            if let succeeded = pairingProtocolManager?.createNewPairingItemNamed(name) where succeeded == true {
-                completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded)
+            if let item = pairingProtocolManager?.createNewPairingItemNamed(name) {
+                completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded, pairingItem: item)
             }
             else {
-                completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceFailed)
+                completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceFailed, pairingItem: nil)
             }
         }
     }
@@ -212,7 +212,7 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
         }
         else {
             // notify delegate
-            completeWithOutcome(outcome)
+            completeWithOutcome(outcome, pairingItem: nil)
         }
     }
     

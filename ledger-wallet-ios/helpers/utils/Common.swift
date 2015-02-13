@@ -9,7 +9,7 @@
 import Foundation
 
 // URLs
-let LedgerWebSocketBaseURL = "ws://192.168.2.107:8080"
+let LedgerWebSocketBaseURL = "wss://ws02.ledgerwallet.com" //"ws://192.168.2.107:8080"
 let LedgerAPIBaseURL = "https://api02.ledgerwallet.com"
 let LedgerHelpCenterURL = "http://support.ledgerwallet.com"
 

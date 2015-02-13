@@ -22,7 +22,7 @@ extension PairingHomeEmptyContentViewController: PairingAddViewControllerDelegat
     
     // MARK: - PairingAddViewController delegate
     
-    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome) {
+    func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // dismiss
         pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
         
