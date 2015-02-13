@@ -15,7 +15,7 @@ class BasePairingManager: BaseManager {
     
     enum MessageType: String {
         case Join = "join"
-        case Identity = "identity"
+        case Identify = "identify"
         case Accept = "accept"
         case Repeat = "repeat"
         case Request = "request"
@@ -86,7 +86,7 @@ extension BasePairingManager {
     
     func sendMessage(message: Message, webSocket: JFRWebSocket) {
         if let JSONData = JSON.dataFromJSONObject(message) {
-            webSocket.writeData(JSONData)
+            webSocket.writeString(Crypto.Data.stringFromData(JSONData))
             lastSentMessage = message
         }
     }

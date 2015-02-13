@@ -53,6 +53,9 @@ class PairingProtocolManager: BasePairingManager {
         // create cryptor 
         if (cryptor == nil) { cryptor = PairingProtocolCryptor() }
         
+        // compute session key
+        context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, attestationKey: context.attestationKey)
+        
         // send join message
         context.pairingId = pairingId
         let message = messageWithType(MessageType.Join, data: ["room": pairingId])
@@ -65,7 +68,7 @@ class PairingProtocolManager: BasePairingManager {
         }
         
         // send public key
-        let message = messageWithType(MessageType.Identity, data: ["public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey)])
+        let message = messageWithType(MessageType.Identify, data: ["public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey)])
         sendMessage(message, webSocket: webSocket)
     }
     

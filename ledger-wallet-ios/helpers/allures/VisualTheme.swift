@@ -204,10 +204,10 @@ struct VisualTheme {
     // MARK: - TextField allures
     
     static let textFieldAllures: [String: TextFieldAllure] = [
-        "hugeName": { textField in
-            var placeholderAttributes = VisualFactory.TextAttributes.huge
+        "huge.light": { textField in
+            var placeholderAttributes = VisualFactory.TextAttributes.hugeLight
             placeholderAttributes.updateValue(VisualFactory.Colors.lightGrey, forKey: NSForegroundColorAttributeName)
-            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.huge)
+            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.hugeLight)
             textField.attributedPlaceholder = NSAttributedString(string: textField.readablePlaceholder(), attributes: placeholderAttributes)
             textField.tintColor = VisualFactory.Colors.black
             textField.borderStyle = UITextBorderStyle.None

@@ -176,7 +176,7 @@ extension PairingAddViewController {
             }
         }
         else if (stepViewController is PairingAddCodeStepViewController) {
-            // go to finialize
+            // go to finalize
             navigateToStep(PairingAddFinalizeStepViewController.self, dataToPass: nil) { finished in
                 // send challenge response
                 (self.pairingProtocolManager?.sendChallengeResponse(object as! String))!
@@ -202,7 +202,7 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
     
     func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didReceiveChallenge challenge: String) {
         // go to code
-        navigateToStep(PairingAddCodeStepViewController.self, dataToPass: nil, completion: nil)
+        navigateToStep(PairingAddCodeStepViewController.self, dataToPass: challenge, completion: nil)
     }
     
     func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didTerminateWithOutcome outcome: PairingProtocolManager.PairingOutcome) {

@@ -28,7 +28,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         pinCodeView?.restrictedCharacterSet = NSCharacterSet.hexadecimalCharacterSet()
         pinCodeView?.delegate = self
         pinCodeView?.length = 4
-        pinCodeView?.placeholder = "x5Ht"
+        pinCodeView?.placeholder = data as? String
     
         // remove invisible views
         if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Small) {
