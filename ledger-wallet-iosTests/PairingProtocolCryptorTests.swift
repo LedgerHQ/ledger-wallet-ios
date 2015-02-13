@@ -17,7 +17,7 @@ class PairingProtocolCryptorTests: XCTestCase {
         let cryptor = PairingProtocolCryptor()
         
         // test session key
-        let sessionKey = cryptor.sessionKeyForKeys(Crypto.Key(privateKey: privateKey), attestationKey: Crypto.Key(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: Crypto.Key(privateKey: privateKey), attestationKey: Crypto.Key(publicKey: attestationKey))
         let expectedSessionKey = Crypto.Encode.dataFromBase16String("75b8ada16eb5f8ea253a1b793a04e03c")
         XCTAssertEqual(sessionKey.symmetricKey, expectedSessionKey, "session keys should be equal")
         
@@ -59,7 +59,7 @@ class PairingProtocolCryptorTests: XCTestCase {
         let cryptor = PairingProtocolCryptor()
         
         // test session key
-        let sessionKey = cryptor.sessionKeyForKeys(Crypto.Key(privateKey: privateKey), attestationKey: Crypto.Key(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: Crypto.Key(privateKey: privateKey), attestationKey: Crypto.Key(publicKey: attestationKey))
         let expectedSessionKey = Crypto.Encode.dataFromBase16String("75b8ada16eb5f8ea253a1b793a04e03c")
         XCTAssertEqual(sessionKey.symmetricKey, expectedSessionKey, "session keys should be equal")
         

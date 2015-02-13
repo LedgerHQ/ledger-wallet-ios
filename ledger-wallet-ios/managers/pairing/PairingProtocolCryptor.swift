@@ -17,7 +17,7 @@ class PairingProtocolCryptor {
     
     // MARK: - Session key
     
-    func sessionKeyForKeys(internalKey: Crypto.Key, attestationKey: Crypto.Key) -> Crypto.Key {
+    func sessionKeyForKeys(#internalKey: Crypto.Key, attestationKey: Crypto.Key) -> Crypto.Key {
         // compute shared secret
         let secretKey = Crypto.ECDH.performAgreement(internalKey: internalKey, peerKey: attestationKey)
         
@@ -93,7 +93,7 @@ class PairingProtocolCryptor {
             pointer.memory = pointer.memory + 0x30 // add '0'
             pointer = pointer.successor()
         }
-        return NSString(data: dataCopy, encoding: NSUTF8StringEncoding)! as! String
+        return NSString(data: dataCopy, encoding: NSASCIIStringEncoding)! as! String
     }
     
     func challengeDataFromChallengeString(challenge: String) -> NSData {
