@@ -12,6 +12,7 @@ class PairingKeychainItem: KeychainItem {
     
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
     override class var itemClass: String { return kSecClassGenericPassword as! String }
+    override var isValid: Bool { return super.isValid && pairingId != nil && pairingKey != nil && dongleName != nil }
     
     var pairingKey: Crypto.Key? {
         get {
@@ -43,6 +44,22 @@ class PairingKeychainItem: KeychainItem {
         }
         set {
             setValue(pairingId, forKey: "dongle_name")
+        }
+    }
+    var deviceToken: NSData? {
+        get {
+            if let value = valueForKey("device_token") {
+                return Crypto.Encode.dataFromBase16String(value)
+            }
+            return nil
+        }
+        set {
+            if let deviceToken = newValue {
+                setValue(Crypto.Encode.base16StringFromData(deviceToken), forKey: "device_token")
+            }
+            else {
+                setValue(nil, forKey: "device_token")
+            }
         }
     }
 }

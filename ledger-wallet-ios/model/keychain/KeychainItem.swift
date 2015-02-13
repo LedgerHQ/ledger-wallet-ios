@@ -11,7 +11,7 @@ import Security
 
 class KeychainItem {
     
-    var valid: Bool { return persistentReference != nil }
+    var isValid: Bool { return persistentReference != nil && creationDate != nil }
     var count: Int { return keysAndValues.count }
     class var serviceIdentifier: String { return "" }
     class var itemClass: String { return kSecClassGenericPassword as! String }
@@ -55,7 +55,9 @@ class KeychainItem {
                 for item in items {
                     // try to build keychain item with given attributes
                     let keychainItem = self(attributes: item)
-                    keychainItems.append(keychainItem)
+                    if keychainItem.isValid {
+                        keychainItems.append(keychainItem)
+                    }
                 }
             }
         }
@@ -170,6 +172,14 @@ class KeychainItem {
         creationDate = attributes[kSecAttrCreationDate as! String] as! NSDate
         let data = attributes[kSecValueData as! String] as? NSData
         load(data)
+    }
+    
+}
+
+extension KeychainItem: Printable {
+    
+    var description: String {
+        return "KeychainItem: \(keysAndValues)"
     }
     
 }

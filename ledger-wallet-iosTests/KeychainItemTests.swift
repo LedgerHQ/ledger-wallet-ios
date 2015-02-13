@@ -29,7 +29,7 @@ class KeychainItemTests: XCTestCase {
     
     func testAddValid() {
         let item = KeychainItem.create()
-        XCTAssertTrue(item.valid, "Keychain item is invalid")
+        XCTAssertTrue(item.isValid, "Keychain item is invalid")
     }
     
     func testRemoveCount() {
@@ -41,7 +41,7 @@ class KeychainItemTests: XCTestCase {
     func testRemoveInvalid() {
         let item = KeychainItem.create()
         item.destroy()
-        XCTAssertTrue(!item.valid, "Keychain item is valid")
+        XCTAssertTrue(!item.isValid, "Keychain item is valid")
     }
     
     func testFetchAllCount() {
