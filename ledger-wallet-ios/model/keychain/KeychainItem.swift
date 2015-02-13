@@ -12,11 +12,12 @@ import Security
 class KeychainItem {
     
     var valid: Bool { return persistentReference != nil }
+    var count: Int { return keysAndValues.count }
     class var serviceIdentifier: String { return "" }
     class var itemClass: String { return kSecClassGenericPassword as! String }
-    private(set) var persistentReference: NSData!
-    private(set) var data: NSData!
-    private(set) var creationDate: NSDate!
+    private(set) var creationDate: NSDate! = nil
+    private var persistentReference: NSData! = nil
+    private var keysAndValues: [String: String] = [:]
     
     // MARK: - Test environment
     
@@ -53,9 +54,8 @@ class KeychainItem {
                 // loop through all returned items
                 for item in items {
                     // try to build keychain item with given attributes
-                    if let keychainItem = self(attributes: item) {
-                        keychainItems.append(keychainItem)
-                    }
+                    let keychainItem = self(attributes: item)
+                    keychainItems.append(keychainItem)
                 }
             }
         }
@@ -71,7 +71,7 @@ class KeychainItem {
         }
     }
     
-    class func removeAll() -> Bool {
+    class func destroyAll() -> Bool {
         // build query
         var query = defaultQuery()
         
@@ -80,26 +80,20 @@ class KeychainItem {
         return status == errSecSuccess || status == errSecItemNotFound
     }
     
-    class func add(data: NSData) -> KeychainItem? {
+    class func create() -> Self {
         // build query
         var query = defaultQuery()
         query.updateValue(kSecAttrAccessibleWhenUnlocked, forKey: kSecAttrAccessible as! String)
-        query.updateValue(data, forKey: kSecValueData as! String)
         query.updateValue(NSUUID().UUIDString, forKey: kSecAttrAccount as! String)
-        query.updateValue(true, forKey: kSecReturnData as! String)
         query.updateValue(true, forKey: kSecReturnAttributes as! String)
         query.updateValue(true, forKey: kSecReturnPersistentRef as! String)
         
         // perform keychain query
         var result: AnyObject? = nil
         let status = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
-        if (status == errSecSuccess) {
-            // try to build keychain item with given attributes
-            if let item = result as? [String: AnyObject], keychainItem = self(attributes: item) {
-                return keychainItem
-            }
-        }
-        return nil
+        let item = result as! [String: AnyObject]
+        let keychainItem = self(attributes: item)
+        return keychainItem
     }
     
     private class func defaultQuery() -> [String: AnyObject] {
@@ -111,7 +105,26 @@ class KeychainItem {
     
     // MARK: - Instance methods
     
-    func remove() -> Bool {
+    func setValue(value: String?, forKey key: String) {
+        if (value != nil) {
+            keysAndValues[key] = value!
+            save()
+        }
+        else {
+            removeValueForKey(key)
+        }
+    }
+    
+    func valueForKey(key: String) -> String? {
+        return keysAndValues[key]
+    }
+    
+    func removeValueForKey(key: String) {
+        keysAndValues.removeValueForKey(key)
+        save()
+    }
+
+    func destroy() -> Bool {
         // build query
         var query: [String: AnyObject] = [(kSecValuePersistentRef as! String): persistentReference]
         
@@ -123,25 +136,40 @@ class KeychainItem {
         return status == errSecSuccess
     }
     
+    private func save() {
+        // build query
+        var query: [String: AnyObject] = [(kSecValuePersistentRef as! String): persistentReference]
+        
+        // perform request
+        let data = JSON.dataFromJSONObject(keysAndValues)!
+        let attributes = [(kSecValueData as! String): data]
+        let status = SecItemUpdate(query, attributes)
+    }
+    
+    private func load(data: NSData?) {
+        if (data == nil) {
+            return
+        }
+        if let keysAndValues = JSON.JSONObjectFromData(data!) as? [String: String] {
+            for (key, value) in keysAndValues {
+                self.keysAndValues.updateValue(value, forKey: key)
+            }
+        }
+    }
+    
     private func clear() {
+        keysAndValues.removeAll(keepCapacity: false)
         persistentReference = nil
-        data = nil
         creationDate = nil
     }
     
     // MARK: - Initialization
     
-    func initialize(attributes: [String: AnyObject], data: NSData) -> Bool {
-        return true
-    }
-    
-    required init?(attributes: [String: AnyObject]) {
-        persistentReference = attributes[kSecValuePersistentRef as! String] as? NSData
-        data = attributes[kSecValueData as! String] as? NSData
-        creationDate = attributes[kSecAttrCreationDate as! String] as? NSDate
-        if (persistentReference == nil || data == nil || creationDate == nil || !initialize(attributes, data: data!)) {
-            return nil
-        }
+    required init(attributes: [String: AnyObject]) {
+        persistentReference = attributes[kSecValuePersistentRef as! String] as! NSData
+        creationDate = attributes[kSecAttrCreationDate as! String] as! NSDate
+        let data = attributes[kSecValueData as! String] as? NSData
+        load(data)
     }
     
 }

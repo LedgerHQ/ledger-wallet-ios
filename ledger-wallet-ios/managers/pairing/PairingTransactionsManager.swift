@@ -126,7 +126,7 @@ class PairingTransactionsManager: BasePairingManager {
         currentTransactionPairingKeychainItem = webSockets[webSocket]!
         
         // assign transaction info
-        transactionInfo.dongleName = currentTransactionPairingKeychainItem!.dongleName
+        transactionInfo.dongleName = currentTransactionPairingKeychainItem!.dongleName!
         
         // destroy all webSockets excepted this one
         destroyWebSockets(excepted: [webSocket])
@@ -163,7 +163,7 @@ extension PairingTransactionsManager {
             // get pairing item
             if let pairingKeychainItem = webSockets[webSocket] {
                 // get transaction info from blob
-                if let transactionInfo = cryptor.transactionInfoFromEncryptedBlob(blob, pairingKey: pairingKeychainItem.pairingKey) {
+                if let transactionInfo = cryptor.transactionInfoFromEncryptedBlob(blob, pairingKey: pairingKeychainItem.pairingKey!) {
                     // accept transaction info
                     acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
                 }
@@ -192,7 +192,7 @@ extension PairingTransactionsManager {
             // get pairing item
             if let pairingKeychainItem = webSockets[webSocket] {
                 // join room
-                sendMessage(messageWithType(MessageType.Join, data: ["room": pairingKeychainItem.pairingId]), webSocket: webSocket)
+                sendMessage(messageWithType(MessageType.Join, data: ["room": pairingKeychainItem.pairingId!]), webSocket: webSocket)
                 
                 // send repeat message
                 sendMessage(messageWithType(MessageType.Repeat, data: nil), webSocket: webSocket)

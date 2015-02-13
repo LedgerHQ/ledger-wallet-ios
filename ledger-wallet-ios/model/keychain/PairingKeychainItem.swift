@@ -12,21 +12,39 @@ class PairingKeychainItem: KeychainItem {
     
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
     override class var itemClass: String { return kSecClassGenericPassword as! String }
-    private(set) var pairingKey: Crypto.Key!
-    private(set) var pairingId: String!
-    private(set) var dongleName: String!
-
-    override func initialize(attributes: [String: AnyObject], data: NSData) -> Bool {
-        if let JSON = JSON.JSONObjectFromData(data) as? [String: AnyObject] {
-            if let pairingKey = JSON["pairing_key"] as? String {
-                self.pairingKey = Crypto.Key(symmetricKey: Crypto.Encode.dataFromBase16String(pairingKey))
-            }
-            pairingId = JSON["pairing_id"] as? String
-            dongleName = JSON["dongle_name"] as? String
-        }
-        return (pairingKey != nil && pairingId != nil && dongleName != nil)
-    }
     
+    var pairingKey: Crypto.Key? {
+        get {
+            if let value = valueForKey("pairing_key") {
+                return Crypto.Key(symmetricKey: Crypto.Encode.dataFromBase16String(value))
+            }
+            return nil
+        }
+        set {
+            if let pairingKey = newValue?.symmetricKey {
+                setValue(Crypto.Encode.base16StringFromData(pairingKey), forKey: "pairing_key")
+            }
+            else {
+                setValue(nil, forKey: "pairing_key")
+            }
+        }
+    }
+    var pairingId: String? {
+        get {
+            return valueForKey("pairing_id")
+        }
+        set {
+            setValue(pairingId, forKey: "pairing_id")
+        }
+    }
+    var dongleName: String? {
+        get {
+            return valueForKey("dongle_name")
+        }
+        set {
+            setValue(pairingId, forKey: "dongle_name")
+        }
+    }
 }
 
 extension PairingKeychainItem: Equatable {

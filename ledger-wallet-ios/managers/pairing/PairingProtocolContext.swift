@@ -37,17 +37,11 @@ class PairingProtocolContext {
             return false
         }
         
-        let itemAttributes = [
-            "pairing_id": pairingId,
-            "pairing_key": pairingKey,
-            "dongle_name": name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        ]
-        
-        if let itemData = JSON.dataFromJSONObject(itemAttributes), item = PairingKeychainItem.add(itemData) as? PairingKeychainItem {
-            return true
-        }
-        
-        return false
+        let pairingKeychainItem = PairingKeychainItem.create()
+        pairingKeychainItem.pairingKey = pairingKey
+        pairingKeychainItem.pairingId = pairingId
+        pairingKeychainItem.dongleName = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return true
     }
     
     // MARK: - Initialization
