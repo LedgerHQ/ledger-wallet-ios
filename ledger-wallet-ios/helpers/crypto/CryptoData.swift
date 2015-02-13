@@ -12,11 +12,11 @@ extension Crypto {
     
     class Data {
         
-        class func dataFromString(string: String, encoding: NSStringEncoding = NSUTF8StringEncoding) -> NSData {
+        class func dataFromString(string: String, encoding: NSStringEncoding = NSUTF8StringEncoding) -> NSData! {
             return string.dataUsingEncoding(encoding, allowLossyConversion: false)!
         }
         
-        class func stringFromData(data: NSData, encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
+        class func stringFromData(data: NSData, encoding: NSStringEncoding = NSUTF8StringEncoding) -> String! {
             return NSString(data: data, encoding: encoding)! as! String
         }
         
