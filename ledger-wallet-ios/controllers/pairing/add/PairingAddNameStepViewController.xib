@@ -18,11 +18,11 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sgn-Bg-r8t" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="20" y="210" width="560" height="182"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sgn-Bg-r8t" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="20" y="215" width="560" height="171"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="assign_a_name_to_this_ledger_wallet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="MFK-J3-5mh" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="157" width="560" height="25"/>
+                            <rect key="frame" x="0.0" y="146" width="560" height="25"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -31,11 +31,17 @@
                             </userDefinedRuntimeAttributes>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_nano" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-W8-Rck">
-                            <rect key="frame" x="144" y="53" width="396" height="84"/>
+                            <rect key="frame" x="196" y="53" width="344" height="73"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="84" id="JYH-bS-xdG"/>
                                 <constraint firstAttribute="width" constant="396" id="x4a-Cd-0LS"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="JYH-bS-xdG"/>
+                                    <exclude reference="x4a-Cd-0LS"/>
+                                </mask>
+                            </variation>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="my_ledger_wallet" borderStyle="roundedRect" placeholder="ledger_wallet_name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JA2-qu-hty" customClass="TextField" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="560" height="33"/>

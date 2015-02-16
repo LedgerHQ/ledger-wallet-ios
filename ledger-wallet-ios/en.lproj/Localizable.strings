@@ -10,6 +10,8 @@
 
 "CANCEL" = "CANCEL";
 
+"OK" = "OK";
+
 "CONFIRM" = "CONFIRM";
 
 "CLOSE" = "CLOSE";
@@ -81,3 +83,7 @@
 "requested_on_%@" = "Requested on %@";
 
 "paired_on_%@" = "Paired on %@";
+
+"you_need_to_provide_a_dongle_name" = "You need to provide a unique name for this Ledger Wallet.";
+
+"a_dongle_with_this_name_already_exists" = "A Ledger Wallet with this name already exists in your paired devices list.";

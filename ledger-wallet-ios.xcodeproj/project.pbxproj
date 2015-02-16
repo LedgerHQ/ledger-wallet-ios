@@ -139,6 +139,7 @@
 		37B537711A82A84C0087AB43 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537651A82A1AB0087AB43 /* CryptoHash.swift */; };
 		37B537721A82A84C0087AB43 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */; };
 		37B537731A82A84C0087AB43 /* CryptoCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5376E1A82A5E50087AB43 /* CryptoCommon.swift */; };
+		37B604CE1A9226FA00E6AD78 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B604CD1A9226FA00E6AD78 /* AlertController.swift */; };
 		37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B746A41A5D5020001373C5 /* WebSocketTests.swift */; };
 		37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */; };
 		37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */; };
@@ -345,6 +346,7 @@
 		37B537651A82A1AB0087AB43 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
 		37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
 		37B5376E1A82A5E50087AB43 /* CryptoCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoCommon.swift; path = crypto/CryptoCommon.swift; sourceTree = "<group>"; };
+		37B604CD1A9226FA00E6AD78 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Colorize.swift"; sourceTree = "<group>"; };
 		37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -819,6 +821,7 @@
 				37EF91C91A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift */,
 				37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */,
 				3745D7801A796CE100762F80 /* LoadingIndicator.swift */,
+				37B604CD1A9226FA00E6AD78 /* AlertController.swift */,
 			);
 			name = Custom;
 			path = custom;
@@ -1107,6 +1110,7 @@
 				37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */,
 				37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */,
 				37A88F741A6E550F0036CF2A /* TextField.swift in Sources */,
+				37B604CE1A9226FA00E6AD78 /* AlertController.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
 				376F510E1A82190E001C6684 /* BTCPriceSource.m in Sources */,
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,

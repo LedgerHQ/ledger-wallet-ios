@@ -29,10 +29,37 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     override func complete() {
         super.complete()
         
-        notifyResult("this is a name")
+        // verify entered name
+        if checkThatNameIsUnique(nameTextField.text) {
+            notifyResult(nameTextField.text)
+        }
     }
     
     // MARK: - Interface
+    
+    private func checkThatNameIsUnique(name: String) -> Bool {
+        let message:String?
+        
+        // create message
+        if (count(name) == 0) {
+            message = localizedString("you_need_to_provide_a_dongle_name")
+        }
+        else if (!PairingProtocolContext.canCreatePairingKeychainItemNamed(name)) {
+            message = localizedString("a_dongle_with_this_name_already_exists")
+        }
+        else {
+            message = nil
+        }
+        
+        // show message if necessary
+        if message != nil {
+            let alertController = AlertController(title: message, message: nil)
+            alertController.addAction(AlertController.Action(title: localizedString("OK"), style: .Default, handler: nil))
+            alertController.presentFromViewController(self, animated: true)
+            return false
+        }
+        return true
+    }
     
     override func configureView() {
         super.configureView()

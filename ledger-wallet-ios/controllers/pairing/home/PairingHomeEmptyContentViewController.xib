@@ -19,7 +19,7 @@
                     <rect key="frame" x="0.0" y="136" width="600" height="279"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="no_paired_device" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <rect key="frame" x="220" y="0.0" width="160" height="33"/>
+                            <rect key="frame" x="217" y="0.0" width="166" height="33"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -56,13 +56,17 @@
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="Gh0-fS-lMN" secondAttribute="centerX" id="0rA-GY-YAW"/>
                         <constraint firstItem="ma6-jW-Nhh" firstAttribute="top" secondItem="RYS-7p-qUt" secondAttribute="bottom" constant="35" id="2gP-Aq-V8q"/>
+                        <constraint firstItem="RYS-7p-qUt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D6l-Zy-Y6f" secondAttribute="leading" constant="20" id="5Km-nv-h2E"/>
                         <constraint firstAttribute="trailing" secondItem="ma6-jW-Nhh" secondAttribute="trailing" constant="40" id="6Az-0Q-heD"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RYS-7p-qUt" secondAttribute="trailing" constant="20" id="Hb4-bn-tB5"/>
                         <constraint firstAttribute="bottom" secondItem="yhn-5j-dRV" secondAttribute="bottom" id="PSP-1B-kYX"/>
                         <constraint firstAttribute="centerX" secondItem="yhn-5j-dRV" secondAttribute="centerX" id="kQ1-Jx-A8m"/>
                         <constraint firstItem="yhn-5j-dRV" firstAttribute="top" secondItem="Gh0-fS-lMN" secondAttribute="bottom" constant="35" id="kRh-bo-sCx"/>
                         <constraint firstAttribute="centerX" secondItem="RYS-7p-qUt" secondAttribute="centerX" id="pOG-hG-SYX"/>
+                        <constraint firstItem="Gh0-fS-lMN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D6l-Zy-Y6f" secondAttribute="leading" constant="20" id="rXH-4K-6aP"/>
                         <constraint firstItem="Gh0-fS-lMN" firstAttribute="top" secondItem="ma6-jW-Nhh" secondAttribute="bottom" constant="35" id="v8C-jC-wuh"/>
                         <constraint firstItem="RYS-7p-qUt" firstAttribute="top" secondItem="D6l-Zy-Y6f" secondAttribute="top" id="y8Z-wU-j10"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gh0-fS-lMN" secondAttribute="trailing" constant="20" id="yKr-zP-FXU"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.transparent"/>
