@@ -29,7 +29,7 @@ extension PairingHomeEmptyContentViewController: PairingAddViewControllerDelegat
         // handle outcome
         if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
             let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
-            confirmationDialogViewController.configureWithPairingOutcome(outcome)
+            confirmationDialogViewController.configureWithPairingOutcome(outcome, pairingItem: pairingItem)
             parentHomeViewController.presentViewController(confirmationDialogViewController, animated: true, completion: nil)
         }
     }

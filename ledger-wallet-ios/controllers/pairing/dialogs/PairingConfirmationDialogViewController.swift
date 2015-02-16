@@ -26,7 +26,7 @@ class PairingConfirmationDialogViewController: DialogViewController {
     
     // MARK: - Configuration
     
-    func configureWithPairingOutcome(outcome: PairingProtocolManager.PairingOutcome) {
+    func configureWithPairingOutcome(outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // default to error
         messageType = MessageType.Error
         localizedTitle = localizedString("PAIRING_FAILED")
@@ -36,7 +36,7 @@ class PairingConfirmationDialogViewController: DialogViewController {
         case .DeviceSucceeded:
             messageType = MessageType.Success
             localizedTitle = localizedString("PAIRING_SUCCEEDED")
-            localizedMessage = localizedString("success_pairing_named_%@") // TODO:
+            localizedMessage = String(format: localizedString("success_pairing_named_%@"), pairingItem?.dongleName ?? "")
         case .ServerDisconnected:
             localizedMessage = localizedString("error_pairing_network")
         case .DongleFailed:
