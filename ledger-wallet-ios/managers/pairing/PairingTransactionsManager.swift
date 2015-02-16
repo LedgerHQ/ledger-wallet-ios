@@ -19,7 +19,7 @@ class PairingTransactionsManager: BasePairingManager {
     
     weak var delegate: PairingTransactionsManagerDelegate? = nil
     private var webSockets: [JFRWebSocket: PairingKeychainItem] = [:]
-    private var webSocketsURL: String! = nil
+    private var webSocketsBaseURL: String! = nil
     private var cryptor: PairingTransactionsCryptor! = nil
     private var isConfirmingTransaction: Bool { return currentTransactionInfo != nil && currentTransactionWebSocket != nil && currentTransactionPairingKeychainItem != nil }
     private var currentTransactionInfo: PairingTransactionInfo? = nil
@@ -75,7 +75,8 @@ class PairingTransactionsManager: BasePairingManager {
     
     private func initilizeWebSockets(excepted exceptions: [PairingKeychainItem]? = nil) {
         // initialize websocket URL
-        if (webSocketsURL == nil) { webSocketsURL = LedgerWebSocketBaseURL }
+        if (webSocketsBaseURL == nil) { webSocketsBaseURL = LedgerWebSocketBaseURL }
+        let finalURL = webSocketsBaseURL.stringByAppendingPathComponent("/2fa/channels")
         
         // create cryptor
         if (cryptor == nil) { cryptor = PairingTransactionsCryptor() }
@@ -87,7 +88,7 @@ class PairingTransactionsManager: BasePairingManager {
             if (contains(exemptedPairingItem, pairingItem)) {
                 continue
             }
-            let webSocket = JFRWebSocket(URL: NSURL(string: webSocketsURL)!, protocols: nil)
+            let webSocket = JFRWebSocket(URL: NSURL(string: finalURL)!, protocols: nil)
             webSocket.delegate = self
             webSocket.connect()
             webSockets[webSocket] = pairingItem

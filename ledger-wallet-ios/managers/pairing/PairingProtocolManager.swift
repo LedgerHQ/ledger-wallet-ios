@@ -28,7 +28,7 @@ class PairingProtocolManager: BasePairingManager {
     }
 
     weak var delegate: PairingProtocolManagerDelegate? = nil
-    var webSocketURL: String! = nil
+    var webSocketBaseURL: String! = nil
     var context: PairingProtocolContext! = nil
     
     private var cryptor: PairingProtocolCryptor! = nil
@@ -42,8 +42,9 @@ class PairingProtocolManager: BasePairingManager {
         }
         
         // create websocket
-        if (webSocketURL == nil) { webSocketURL = LedgerWebSocketBaseURL }
-        webSocket = JFRWebSocket(URL: NSURL(string: webSocketURL), protocols: nil)
+        if (webSocketBaseURL == nil) { webSocketBaseURL = LedgerWebSocketBaseURL }
+        let finalURL = webSocketBaseURL.stringByAppendingPathComponent("/2fa/channels")
+        webSocket = JFRWebSocket(URL: NSURL(string: finalURL), protocols: nil)
         webSocket.delegate = self
         webSocket.connect()
 

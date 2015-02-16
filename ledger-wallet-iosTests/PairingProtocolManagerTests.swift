@@ -15,7 +15,7 @@ class PairingProtocolManagerTests: XCTestCase, PairingProtocolManagerDelegate {
     let privateKey = Crypto.Encode.dataFromBase16String("b208b83b23edfff327bb6e0098eeaa0a5c87a599d5d8b24ff2734d2aac8bbdde")
     let attestationKey = Crypto.Encode.dataFromBase16String("04e69fd3c044865200e66f124b5ea237c918503931bee070edfcab79a00a25d6b5a09afbee902b4b763ecf1f9c25f82d6b0cf72bce3faf98523a1066948f1a395f")
 
-    let webSocketURL = "ws://192.168.2.107:8080"
+    let webSocketBaseURL = "ws://192.168.2.107:8080"
     let roomName = "holymacaroni"
     let challengeResponse = "abcd"
     let dongleName = "My new Pairing"
@@ -31,7 +31,7 @@ class PairingProtocolManagerTests: XCTestCase, PairingProtocolManagerDelegate {
         pairingProtocolManager = PairingProtocolManager()
         pairingProtocolManager.delegate = self
         pairingProtocolManager.context = PairingProtocolContext(internalKey: Crypto.Key(privateKey: privateKey), attestationKey: Crypto.Key(publicKey: attestationKey))
-        pairingProtocolManager.webSocketURL = webSocketURL
+        pairingProtocolManager.webSocketBaseURL = webSocketBaseURL
     }
     
     func testPairingProtocol() {
