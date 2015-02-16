@@ -78,4 +78,6 @@
 
 "need_help_visit_help_center" = "Need help? Visit our help center.";
 
-"requested_on_%@" = "requested on %@";
+"requested_on_%@" = "Requested on %@";
+
+"paired_on_%@" = "Paired on %@";

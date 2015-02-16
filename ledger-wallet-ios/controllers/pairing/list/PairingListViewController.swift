@@ -33,10 +33,16 @@ class PairingListViewController: BaseViewController {
         actionBar.borderPosition = ActionBarView.BorderPosition.Top
     }
 
+    override func updateView() {
+        super.updateView()
+        
+        tableView?.reloadData()
+    }
+    
     // MARK: - Model
     
     override func updateModel() {
-        
+        pairingKeychainItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
     }
     
     // MARK: - View lifecycle
@@ -55,11 +61,12 @@ extension PairingListViewController: UITableViewDelegate, UITableViewDataSource 
     // MARK: - UITableview delegate, data source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return pairingKeychainItems.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(PairingListTableViewCell.className(), forIndexPath: indexPath) as! PairingListTableViewCell
+        cell.configureWithPairingItem(pairingKeychainItems[indexPath.row])
         return cell
     }
     

@@ -12,5 +12,10 @@ class PairingListTableViewCell: TableViewCell {
     
     @IBOutlet private weak var dongleTitleLabel: Label!
     @IBOutlet private weak var pairingDateLabel: Label!
+ 
+    func configureWithPairingItem(pairingItem: PairingKeychainItem) {
+        dongleTitleLabel?.text = pairingItem.dongleName!
+        pairingDateLabel?.text = String(format: localizedString("paired_on_%@"), NSDateFormatter.localizedStringFromDate(pairingItem.creationDate, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle))
+    }
     
 }
