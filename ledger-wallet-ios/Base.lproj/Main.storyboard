@@ -106,6 +106,9 @@
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="icon.grey"/>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="deleteButtonTouched:" destination="3y0-t4-g0T" eventType="touchUpInside" id="fIw-dn-oei"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>

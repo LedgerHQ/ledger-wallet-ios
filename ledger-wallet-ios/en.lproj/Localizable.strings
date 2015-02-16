@@ -40,6 +40,10 @@
 
 "MANAGE_PAIRED_DEVICES" = "MANAGE PAIRED DEVICES";
 
+"yes" = "Yes";
+
+"no" = "No";
+
 "waiting_for_transactions..." = "Waiting for transactions...";
 
 "this_operation_may_take_a_while" = "Please wait, this operation may take a while.";
@@ -87,3 +91,5 @@
 "you_need_to_provide_a_dongle_name" = "You need to provide a unique name for this Ledger Wallet.";
 
 "a_dongle_with_this_name_already_exists" = "A Ledger Wallet with this name already exists in your paired devices list.";
+
+"deleting_this_dongle_pairing" = "Deleting this Ledger Wallet will disable its second factor validation. Are you sure you want to continue?";

@@ -67,7 +67,37 @@ extension PairingListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(PairingListTableViewCell.className(), forIndexPath: indexPath) as! PairingListTableViewCell
         cell.configureWithPairingItem(pairingKeychainItems[indexPath.row])
+        cell.delegate = self
         return cell
+    }
+    
+}
+
+extension PairingListViewController: PairingListTableViewCellDelegate {
+    
+    // MARK: - PairingListTableViewCell delegate
+    
+    func pairingListTableViewCellDidTapDeleteButton(pairingListTableViewCell: PairingListTableViewCell) {
+        if let indexPath = tableView.indexPathForCell(pairingListTableViewCell) {
+            // ask confirmation
+            unowned let weakSelf = self
+            let alertController = AlertController(title: localizedString("deleting_this_dongle_pairing"), message: nil)
+            alertController.addAction(AlertController.Action(title: localizedString("no"), style: .Cancel, handler: nil))
+            alertController.addAction(AlertController.Action(title: localizedString("yes"), style: .Destructive, handler: { action in
+                // delete model
+                weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row).destroy()
+                
+                if (weakSelf.pairingKeychainItems.count == 1) {
+                    // dismiss
+                    weakSelf.complete()
+                }
+                else {
+                    // delete row
+                    weakSelf.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+                }
+            }))
+            alertController.presentFromViewController(self, animated: true)
+        }
     }
     
 }
