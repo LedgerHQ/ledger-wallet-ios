@@ -65,6 +65,7 @@ class BasePairingManager: BaseManager {
         messagesHandlers.updateValue({ message, webSocket in me.handleDisconnectMessage(message, webSocket: webSocket) }, forKey: MessageType.Disconnect)
         messagesHandlers.updateValue({ message, webSocket in me.handlePairingMessage(message, webSocket: webSocket) }, forKey: MessageType.Pairing)
         messagesHandlers.updateValue({ message, webSocket in me.handleRepeatMessage(message, webSocket: webSocket) }, forKey: MessageType.Repeat)
+        messagesHandlers.updateValue({ message, webSocket in me.handleRequestMessage(message, webSocket: webSocket) }, forKey: MessageType.Request)
     }
     
 }
