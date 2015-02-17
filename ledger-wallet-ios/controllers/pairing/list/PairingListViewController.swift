@@ -85,7 +85,13 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
             alertController.addAction(AlertController.Action(title: localizedString("cancel"), style: .Cancel, handler: nil))
             alertController.addAction(AlertController.Action(title: localizedString("delete"), style: .Destructive, handler: { action in
                 // delete model
-                weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row).destroy()
+                let pairingItem = weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row)
+                
+                // unregister pairing item push token
+                NotificationsManager.sharedInstance().unregisterDeviceTokenFromPairedDongle(pairingItem)
+                
+                // destroy pairing item
+                pairingItem.destroy()
                 
                 // delete row
                 weakSelf.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)

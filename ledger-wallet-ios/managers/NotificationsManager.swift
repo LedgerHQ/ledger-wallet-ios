@@ -10,7 +10,7 @@ import Foundation
 
 class NotificationsManager: BaseManager {
     
-    func registerNotificationsTypes() {
+    func registerForRemoteNotifications() {
         let application = UIApplication.sharedApplication()
         if (application.respondsToSelector("isRegisteredForRemoteNotifications"))
         {
