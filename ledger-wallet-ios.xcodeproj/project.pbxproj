@@ -1372,7 +1372,7 @@
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e55926b6-4d58-436f-b2a0-6d0c428e2e42";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 			};
 			name = Release;
