@@ -10,6 +10,8 @@
 		3724A3821A79383700E1B977 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */; };
 		3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */; };
+		373BA3131A9385B800849B6E /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BA3121A9385B800849B6E /* WebSocket.swift */; };
+		373BA3141A9385BB00849B6E /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BA3121A9385B800849B6E /* WebSocket.swift */; };
 		373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
 		373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
@@ -197,6 +199,7 @@
 		3724A3811A79383700E1B977 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddConnectionStepViewController.swift; sourceTree = "<group>"; };
 		3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddConnectionStepViewController.xib; sourceTree = "<group>"; };
+		373BA3121A9385B800849B6E /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = vendor/starscream/WebSocket.swift; sourceTree = "<group>"; };
 		373E22CB1A71517C00BAF63F /* Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
 		373E22CD1A72490D00BAF63F /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		373E22CE1A72490D00BAF63F /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
@@ -407,6 +410,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		373BA3111A9385A900849B6E /* Starscream */ = {
+			isa = PBXGroup;
+			children = (
+				373BA3121A9385B800849B6E /* WebSocket.swift */,
+			);
+			name = Starscream;
+			sourceTree = "<group>";
+		};
 		373E22D61A7681F100BAF63F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,6 +737,7 @@
 		37ACFDED1A7917FC002E32FC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				373BA3111A9385A900849B6E /* Starscream */,
 				376F50AC1A821842001C6684 /* CoreBitcoin */,
 				376F500E1A82141F001C6684 /* JFRWebSocket */,
 				376F500D1A821411001C6684 /* OpenSSL */,
@@ -1114,6 +1126,7 @@
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
 				376F510E1A82190E001C6684 /* BTCPriceSource.m in Sources */,
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
+				373BA3131A9385B800849B6E /* WebSocket.swift in Sources */,
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
 				376F510B1A82190E001C6684 /* BTCNumberFormatter.m in Sources */,
 				376F51021A82190E001C6684 /* BTCCurvePoint.m in Sources */,
@@ -1170,6 +1183,7 @@
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
+				373BA3141A9385BB00849B6E /* WebSocket.swift in Sources */,
 				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */,

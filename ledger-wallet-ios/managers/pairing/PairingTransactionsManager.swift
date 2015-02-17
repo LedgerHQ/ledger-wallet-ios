@@ -18,12 +18,12 @@ protocol PairingTransactionsManagerDelegate: class {
 class PairingTransactionsManager: BasePairingManager {
     
     weak var delegate: PairingTransactionsManagerDelegate? = nil
-    private var webSockets: [JFRWebSocket: PairingKeychainItem] = [:]
+    private var webSockets: [WebSocket: PairingKeychainItem] = [:]
     private var webSocketsBaseURL: String! = nil
     private var cryptor: PairingTransactionsCryptor! = nil
     private var isConfirmingTransaction: Bool { return currentTransactionInfo != nil && currentTransactionWebSocket != nil && currentTransactionPairingKeychainItem != nil }
     private var currentTransactionInfo: PairingTransactionInfo? = nil
-    private var currentTransactionWebSocket: JFRWebSocket? = nil
+    private var currentTransactionWebSocket: WebSocket? = nil
     private var currentTransactionPairingKeychainItem: PairingKeychainItem? = nil
     
     // MARK: - Transactions management
@@ -87,14 +87,14 @@ class PairingTransactionsManager: BasePairingManager {
             if (contains(exemptedPairingItem, pairingItem)) {
                 continue
             }
-            let webSocket = JFRWebSocket(URL: NSURL(string: webSocketsBaseURL)!.URLByAppendingPathComponent("/2fa/channels"), protocols: nil)
+            let webSocket = WebSocket(url: NSURL(string: webSocketsBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
             webSocket.delegate = self
             webSocket.connect()
             webSockets[webSocket] = pairingItem
         }
     }
     
-    private func destroyWebSockets(excepted exceptions: [JFRWebSocket]? = nil) {
+    private func destroyWebSockets(excepted exceptions: [WebSocket]? = nil) {
         // destroy webSockets
         let exemptedWebSockets = exceptions ?? []
         for (webSocket, pairingItem) in webSockets {
@@ -119,7 +119,7 @@ class PairingTransactionsManager: BasePairingManager {
         currentTransactionInfo = nil
     }
     
-    private func acceptTransactionInfo(transactionInfo: PairingTransactionInfo, fromWebSocket webSocket: JFRWebSocket) {
+    private func acceptTransactionInfo(transactionInfo: PairingTransactionInfo, fromWebSocket webSocket: WebSocket) {
         // retain transaction info
         currentTransactionInfo = transactionInfo
         currentTransactionWebSocket = webSocket
@@ -150,7 +150,7 @@ extension PairingTransactionsManager {
     
     // MARK: Messages management
     
-    override func handleRequestMessage(message: Message, webSocket: JFRWebSocket) {
+    override func handleRequestMessage(message: Message, webSocket: WebSocket) {
         if (isConfirmingTransaction) {
             return
         }
@@ -171,7 +171,7 @@ extension PairingTransactionsManager {
         }
     }
     
-    override func handleDisconnectMessage(message: Message, webSocket: JFRWebSocket) {
+    override func handleDisconnectMessage(message: Message, webSocket: WebSocket) {
         if (isConfirmingTransaction) {
             // notify delegate
             self.delegate?.pairingTransactionsManager(self, dongleDidCancelCurrentTransactionInfo: currentTransactionInfo!)
@@ -187,7 +187,7 @@ extension PairingTransactionsManager {
     
     // MARK: - WebSocket delegate
     
-    override func handleWebSocketDidConnect(webSocket: JFRWebSocket) {
+    override func handleWebSocketDidConnect(webSocket: WebSocket) {
         if (!isConfirmingTransaction) {
             // get pairing item
             if let pairingKeychainItem = webSockets[webSocket] {
@@ -200,7 +200,7 @@ extension PairingTransactionsManager {
         }
     }
     
-    override func handleWebSocket(webSocket: JFRWebSocket, didDisconnectWithError error: NSError?) {
+    override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         if (isConfirmingTransaction) {
             // notify delegate
             self.delegate?.pairingTransactionsManager(self, dongleDidCancelCurrentTransactionInfo: currentTransactionInfo!)

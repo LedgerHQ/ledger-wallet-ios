@@ -11,7 +11,7 @@ import Foundation
 class BasePairingManager: BaseManager {
     
     typealias Message = [String: AnyObject]
-    typealias MessageHandler = (Message, JFRWebSocket) -> Void
+    typealias MessageHandler = (Message, WebSocket) -> Void
     
     enum MessageType: String {
         case Join = "join"
@@ -30,27 +30,27 @@ class BasePairingManager: BaseManager {
     
     // MARK: - Messages management
 
-    dynamic func handleChallengeMessage(message: Message, webSocket: JFRWebSocket) {
+    dynamic func handleChallengeMessage(message: Message, webSocket: WebSocket) {
         
     }
     
-    dynamic func handlePairingMessage(message: Message, webSocket: JFRWebSocket) {
+    dynamic func handlePairingMessage(message: Message, webSocket: WebSocket) {
         
     }
     
-    dynamic func handleDisconnectMessage(message: Message, webSocket: JFRWebSocket) {
+    dynamic func handleDisconnectMessage(message: Message, webSocket: WebSocket) {
         
     }
     
-    dynamic func handleConnectMessage(message: Message, webSocket: JFRWebSocket) {
+    dynamic func handleConnectMessage(message: Message, webSocket: WebSocket) {
         
     }
     
-    dynamic func handleRepeatMessage(message: Message, webSocket: JFRWebSocket) {
+    dynamic func handleRepeatMessage(message: Message, webSocket: WebSocket) {
 
     }
     
-    dynamic func handleRequestMessage(message: Message, webSocket: JFRWebSocket) {
+    dynamic func handleRequestMessage(message: Message, webSocket: WebSocket) {
         
     }
     
@@ -73,7 +73,7 @@ extension BasePairingManager {
     
     // MARK: - Messages management
     
-    func receiveMessage(message: Message, webSocket: JFRWebSocket) {
+    func receiveMessage(message: Message, webSocket: WebSocket) {
         if let typeString = message["type"] as? String {
             if let messageType = MessageType(rawValue: typeString) {
                 // lookup form message table
@@ -84,7 +84,7 @@ extension BasePairingManager {
         }
     }
     
-    func sendMessage(message: Message, webSocket: JFRWebSocket) {
+    func sendMessage(message: Message, webSocket: WebSocket) {
         if let JSONData = JSON.dataFromJSONObject(message) {
             webSocket.writeString(Crypto.Data.stringFromData(JSONData))
             lastSentMessage = message
@@ -103,45 +103,33 @@ extension BasePairingManager {
     
 }
 
-extension BasePairingManager: JFRWebSocketDelegate {
+extension BasePairingManager: WebSocketDelegate {
 
      // MARK: - WebSocket delegate
 
-    func websocket(socket: JFRWebSocket!, didReceiveData data: NSData!) {
-        dispatchAsyncOnMainQueue() {
-            self.handleWebSocket(socket, didReceiveData: data)
-        }
-    }
-    
-    func websocket(socket: JFRWebSocket!, didReceiveMessage string: String!) {
-        dispatchAsyncOnMainQueue() {
-            self.handleWebSocket(socket, didReceiveMessage: string)
-        }
-    }
-    
-    func websocketDidConnect(socket: JFRWebSocket!) {
+    func websocketDidConnect(socket: WebSocket) {
         dispatchAsyncOnMainQueue() {
             self.handleWebSocketDidConnect(socket)
         }
     }
     
-    func websocketDidDisconnect(socket: JFRWebSocket!, error: NSError!) {
+    func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         dispatchAsyncOnMainQueue() {
             self.handleWebSocket(socket, didDisconnectWithError: error)
         }
     }
     
-    func websocketDidWriteError(socket: JFRWebSocket!, error: NSError!) {
+    func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         dispatchAsyncOnMainQueue() {
-            self.websocketDidWriteError(socket, error: error)
+            self.handleWebSocket(socket, didReceiveMessage: text)
         }
     }
     
-    func handleWebSocket(webSocket: JFRWebSocket, didReceiveData data: NSData) {
+    func websocketDidReceiveData(socket: WebSocket, data: NSData) {
         
     }
     
-    func handleWebSocket(webSocket: JFRWebSocket, didReceiveMessage message: String) {
+    func handleWebSocket(webSocket: WebSocket, didReceiveMessage message: String) {
         // retreive data from string
         if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             // create Message representation from data
@@ -151,15 +139,11 @@ extension BasePairingManager: JFRWebSocketDelegate {
         }
     }
     
-    func handleWebSocketDidConnect(webSocket: JFRWebSocket) {
+    func handleWebSocketDidConnect(webSocket: WebSocket) {
         
     }
     
-    func handleWebSocket(webSocket: JFRWebSocket, didDisconnectWithError error: NSError?) {
-        
-    }
-    
-    func handleWebsocket(webSocket: JFRWebSocket, didWriteError error: NSError?) {
+    func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         
     }
 

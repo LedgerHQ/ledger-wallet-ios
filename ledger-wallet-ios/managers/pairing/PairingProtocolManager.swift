@@ -32,7 +32,7 @@ class PairingProtocolManager: BasePairingManager {
     var context: PairingProtocolContext! = nil
     
     private var cryptor: PairingProtocolCryptor! = nil
-    private var webSocket: JFRWebSocket! = nil
+    private var webSocket: WebSocket! = nil
 
     // MARK: - Pairing management
     
@@ -43,7 +43,7 @@ class PairingProtocolManager: BasePairingManager {
         
         // create websocket
         if (webSocketBaseURL == nil) { webSocketBaseURL = LedgerWebSocketBaseURL }
-        webSocket = JFRWebSocket(URL: NSURL(string: webSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"), protocols: nil)
+        webSocket = WebSocket(url: NSURL(string: webSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
         webSocket.delegate = self
         webSocket.connect()
 
@@ -119,7 +119,7 @@ extension PairingProtocolManager {
     
     // MARK: - Messages management
     
-    override func handleChallengeMessage(message: Message, webSocket: JFRWebSocket) {
+    override func handleChallengeMessage(message: Message, webSocket: WebSocket) {
         if let dataString = message["data"] as? String {
             // get data
             let blob = Crypto.Encode.dataFromBase16String(dataString)
@@ -143,19 +143,19 @@ extension PairingProtocolManager {
         }
     }
     
-    override func handlePairingMessage(message: Message, webSocket: JFRWebSocket) {
+    override func handlePairingMessage(message: Message, webSocket: WebSocket) {
         if let isSuccessful = message["is_successful"] as? Bool {
             disconnectWebSocket()
             delegate?.pairingProtocolManager(self, didTerminateWithOutcome: isSuccessful ? PairingOutcome.DongleSucceeded : PairingOutcome.DongleFailed)
         }
     }
     
-    override func handleDisconnectMessage(message: Message, webSocket: JFRWebSocket) {
+    override func handleDisconnectMessage(message: Message, webSocket: WebSocket) {
         disconnectWebSocket()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DongleTerminated)
     }
     
-    override func handleRepeatMessage(message: Message, webSocket: JFRWebSocket) {
+    override func handleRepeatMessage(message: Message, webSocket: WebSocket) {
         if let message = lastSentMessage {
             sendMessage(message, webSocket: webSocket)
         }
@@ -167,12 +167,7 @@ extension PairingProtocolManager {
     
     // MARK: - WebSocket delegate
     
-    override func handleWebSocket(webSocket: JFRWebSocket, didDisconnectWithError error: NSError?) {
-        self.disconnectWebSocket()
-        self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
-    }
-    
-    override func handleWebsocket(webSocket: JFRWebSocket, didWriteError error: NSError?) {
+    override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         self.disconnectWebSocket()
         self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
     }
