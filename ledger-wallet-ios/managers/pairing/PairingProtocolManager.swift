@@ -43,8 +43,7 @@ class PairingProtocolManager: BasePairingManager {
         
         // create websocket
         if (webSocketBaseURL == nil) { webSocketBaseURL = LedgerWebSocketBaseURL }
-        let finalURL = webSocketBaseURL.stringByAppendingPathComponent("/2fa/channels")
-        webSocket = JFRWebSocket(URL: NSURL(string: finalURL), protocols: nil)
+        webSocket = JFRWebSocket(URL: NSURL(string: webSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"), protocols: nil)
         webSocket.delegate = self
         webSocket.connect()
 

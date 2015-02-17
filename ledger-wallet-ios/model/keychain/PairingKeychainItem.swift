@@ -35,7 +35,7 @@ class PairingKeychainItem: KeychainItem {
             return valueForKey("pairing_id")
         }
         set {
-            setValue(pairingId, forKey: "pairing_id")
+            setValue(newValue, forKey: "pairing_id")
         }
     }
     var dongleName: String? {
@@ -43,7 +43,7 @@ class PairingKeychainItem: KeychainItem {
             return valueForKey("dongle_name")
         }
         set {
-            setValue(pairingId, forKey: "dongle_name")
+            setValue(newValue, forKey: "dongle_name")
         }
     }
     var deviceToken: NSData? {

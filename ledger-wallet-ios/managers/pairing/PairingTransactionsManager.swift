@@ -76,7 +76,6 @@ class PairingTransactionsManager: BasePairingManager {
     private func initilizeWebSockets(excepted exceptions: [PairingKeychainItem]? = nil) {
         // initialize websocket URL
         if (webSocketsBaseURL == nil) { webSocketsBaseURL = LedgerWebSocketBaseURL }
-        let finalURL = webSocketsBaseURL.stringByAppendingPathComponent("/2fa/channels")
         
         // create cryptor
         if (cryptor == nil) { cryptor = PairingTransactionsCryptor() }
@@ -88,7 +87,7 @@ class PairingTransactionsManager: BasePairingManager {
             if (contains(exemptedPairingItem, pairingItem)) {
                 continue
             }
-            let webSocket = JFRWebSocket(URL: NSURL(string: finalURL)!, protocols: nil)
+            let webSocket = JFRWebSocket(URL: NSURL(string: webSocketsBaseURL)!.URLByAppendingPathComponent("/2fa/channels"), protocols: nil)
             webSocket.delegate = self
             webSocket.connect()
             webSockets[webSocket] = pairingItem

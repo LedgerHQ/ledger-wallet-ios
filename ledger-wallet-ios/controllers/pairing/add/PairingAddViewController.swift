@@ -46,7 +46,7 @@ class PairingAddViewController: BaseViewController {
         pairingProtocolManager?.terminate()
         
         // notify delegate
-        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome, pairingItem: nil)
+        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome, pairingItem: pairingItem)
     }
     
     // MARK: - Interface

@@ -44,6 +44,10 @@
 
 "no" = "No";
 
+"cancel" = "Cancel";
+
+"delete" = "Delete";
+
 "waiting_for_transactions..." = "Waiting for transactions...";
 
 "this_operation_may_take_a_while" = "Please wait, this operation may take a while.";

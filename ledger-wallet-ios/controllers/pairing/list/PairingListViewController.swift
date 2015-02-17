@@ -82,18 +82,20 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
             // ask confirmation
             unowned let weakSelf = self
             let alertController = AlertController(title: localizedString("deleting_this_dongle_pairing"), message: nil)
-            alertController.addAction(AlertController.Action(title: localizedString("no"), style: .Cancel, handler: nil))
-            alertController.addAction(AlertController.Action(title: localizedString("yes"), style: .Destructive, handler: { action in
+            alertController.addAction(AlertController.Action(title: localizedString("cancel"), style: .Cancel, handler: nil))
+            alertController.addAction(AlertController.Action(title: localizedString("delete"), style: .Destructive, handler: { action in
                 // delete model
                 weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row).destroy()
                 
-                if (weakSelf.pairingKeychainItems.count == 1) {
-                    // dismiss
-                    weakSelf.complete()
-                }
-                else {
-                    // delete row
-                    weakSelf.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+                // delete row
+                weakSelf.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+                
+                // dismiss if empty
+                if (weakSelf.pairingKeychainItems.count == 0) {
+                    delayOnMainQueue(0.25) {
+                        // dismiss
+                        weakSelf.complete()
+                    }
                 }
             }))
             alertController.presentFromViewController(self, animated: true)

@@ -44,7 +44,7 @@ class BaseRestClient: BaseManager {
     // MARK - URL management
     
     private func baseURLWithPath(path: String) -> String {
-        return baseURL.stringByAppendingPathComponent(path)
+        return baseURL.stringByAppendingString(path)
     }
     
     // MARK: - Initialization
