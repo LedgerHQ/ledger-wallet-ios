@@ -52,7 +52,13 @@ class HTTPClient {
         
         // create data task
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void)? = (completionHandler == nil) ? nil : { data, response, error in
-            completionHandler?(data, request, response as? NSHTTPURLResponse, error)
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            var finalError = error
+            if finalError == nil && statusCode < 200 && statusCode > 299 {
+                finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
+            }
+            completionHandler?(data, request, httpResponse, finalError)
         }
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
         
