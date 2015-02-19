@@ -33,7 +33,7 @@ class PairingProtocolManager: BasePairingManager {
     
     private var cryptor: PairingProtocolCryptor! = nil
     private var webSocket: WebSocket! = nil
-
+    
     // MARK: - Pairing management
     
     func joinRoom(pairingId: String) {
@@ -102,6 +102,7 @@ class PairingProtocolManager: BasePairingManager {
     
     private func disconnectWebSocket() {
         webSocket?.delegate = nil
+        ignoresWebSocketDelegate = true
         if let isConnected = webSocket?.isConnected where isConnected == true {
             webSocket?.disconnect()
         }

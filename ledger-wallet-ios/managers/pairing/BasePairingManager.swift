@@ -27,6 +27,7 @@ class BasePairingManager: BaseManager {
     }
     private var messagesHandlers: [MessageType: MessageHandler] = [:]
     private(set) var lastSentMessage: Message? = nil
+    var ignoresWebSocketDelegate = false
     
     // MARK: - Messages management
 
@@ -109,28 +110,42 @@ extension BasePairingManager: WebSocketDelegate {
      // MARK: - WebSocket delegate
 
     func websocketDidConnect(socket: WebSocket) {
+        if (ignoresWebSocketDelegate) {
+            return
+        }
         dispatchAsyncOnMainQueue() {
             self.handleWebSocketDidConnect(socket)
         }
     }
     
     func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+        if (ignoresWebSocketDelegate) {
+            return
+        }
         dispatchAsyncOnMainQueue() {
             self.handleWebSocket(socket, didDisconnectWithError: error)
         }
     }
     
     func websocketDidReceiveMessage(socket: WebSocket, text: String) {
+        if (ignoresWebSocketDelegate) {
+            return
+        }
         dispatchAsyncOnMainQueue() {
             self.handleWebSocket(socket, didReceiveMessage: text)
         }
     }
     
     func websocketDidReceiveData(socket: WebSocket, data: NSData) {
-        
+        if (ignoresWebSocketDelegate) {
+            return
+        }
     }
     
     func handleWebSocket(webSocket: WebSocket, didReceiveMessage message: String) {
+        if (ignoresWebSocketDelegate) {
+            return
+        }
         // retreive data from string
         if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             // create Message representation from data
