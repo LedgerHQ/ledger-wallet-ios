@@ -131,8 +131,6 @@
 		37ABFBE31A85101F0061E92D /* PairingProtocolContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */; };
 		37ABFBE41A85138A0061E92D /* PairingProtocolContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */; };
 		37ABFBE61A8514390061E92D /* PairingProtocolCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */; };
-		37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
-		37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ACFDEF1A791810002E32FC /* JFRWebSocket.m */; };
 		37B537641A8299EA0087AB43 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537631A8299EA0087AB43 /* CryptoData.swift */; };
 		37B537661A82A1AB0087AB43 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537651A82A1AB0087AB43 /* CryptoHash.swift */; };
 		37B5376D1A82A5D20087AB43 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */; };
@@ -342,8 +340,6 @@
 		37ABFBDF1A8503B10061E92D /* PairingProtocolCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolCryptor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolContext.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolCryptorTests.swift; sourceTree = "<group>"; };
-		37ACFDEE1A791810002E32FC /* JFRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFRWebSocket.h; path = vendor/jetfire/JFRWebSocket.h; sourceTree = "<group>"; };
-		37ACFDEF1A791810002E32FC /* JFRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFRWebSocket.m; path = vendor/jetfire/JFRWebSocket.m; sourceTree = "<group>"; };
 		37B537631A8299EA0087AB43 /* CryptoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoData.swift; path = crypto/CryptoData.swift; sourceTree = "<group>"; };
 		37B537651A82A1AB0087AB43 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
 		37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
@@ -485,15 +481,6 @@
 				37E7F57F1A816A23006CA878 /* openssl.framework */,
 			);
 			name = OpenSSL;
-			sourceTree = "<group>";
-		};
-		376F500E1A82141F001C6684 /* JFRWebSocket */ = {
-			isa = PBXGroup;
-			children = (
-				37ACFDEE1A791810002E32FC /* JFRWebSocket.h */,
-				37ACFDEF1A791810002E32FC /* JFRWebSocket.m */,
-			);
-			name = JFRWebSocket;
 			sourceTree = "<group>";
 		};
 		376F50AC1A821842001C6684 /* CoreBitcoin */ = {
@@ -736,7 +723,6 @@
 			children = (
 				373BA3111A9385A900849B6E /* Starscream */,
 				376F50AC1A821842001C6684 /* CoreBitcoin */,
-				376F500E1A82141F001C6684 /* JFRWebSocket */,
 				376F500D1A821411001C6684 /* OpenSSL */,
 			);
 			name = Vendor;
@@ -1130,7 +1116,6 @@
 				37F283C41A655D7200F432CC /* Localization.swift in Sources */,
 				376F50F71A82190D001C6684 /* BTC256.m in Sources */,
 				3724A3821A79383700E1B977 /* Common.swift in Sources */,
-				37ACFDF01A791810002E32FC /* JFRWebSocket.m in Sources */,
 				376F51141A82190E001C6684 /* BTCTransaction.m in Sources */,
 				37AA95621A88B703009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				379CA1041A713B7100A9D426 /* PairingConfirmationDialogViewController.swift in Sources */,
@@ -1175,7 +1160,6 @@
 				37AA95651A88CF88009C3EE4 /* PairingTransactionsCryptor.swift in Sources */,
 				37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */,
 				37ABFBE11A850F2C0061E92D /* PairingProtocolCryptor.swift in Sources */,
-				37ACFDF11A79246E002E32FC /* JFRWebSocket.m in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,

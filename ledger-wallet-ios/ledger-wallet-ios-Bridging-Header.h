@@ -11,7 +11,6 @@
 #import <CommonCrypto/CommonCrypto.h>
 
 // vendor
-#import "JFRWebSocket.h"
 #import "CoreBitcoin.h"
 #import <openssl/ec.h>
 #import <openssl/ecdh.h>
