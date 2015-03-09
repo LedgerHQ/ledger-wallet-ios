@@ -52,7 +52,7 @@ class HTTPClient {
         
         // create data task
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void)? = (completionHandler == nil) ? nil : { data, response, error in
-            let httpResponse = response as! NSHTTPURLResponse
+            let httpResponse = response as NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
             var finalError = error
             if finalError == nil && statusCode < 200 && statusCode > 299 {

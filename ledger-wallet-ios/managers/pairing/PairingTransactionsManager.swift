@@ -82,7 +82,7 @@ class PairingTransactionsManager: BasePairingManager {
         
         // rebuild websockets
         let exemptedPairingItem = exceptions ?? []
-        let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
+        let pairingItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
         for pairingItem in pairingItems {
             if (contains(exemptedPairingItem, pairingItem)) {
                 continue
@@ -111,8 +111,10 @@ class PairingTransactionsManager: BasePairingManager {
     
     private func destroyCurrentTransactionWebSocket() {
         currentTransactionWebSocket?.delegate = nil
-        if let isConnected = currentTransactionWebSocket?.isConnected where isConnected == true {
-            currentTransactionWebSocket?.disconnect()
+        if let isConnected = currentTransactionWebSocket?.isConnected {
+            if isConnected == true {
+                currentTransactionWebSocket?.disconnect()
+            }
         }
         currentTransactionWebSocket = nil
         currentTransactionPairingKeychainItem = nil

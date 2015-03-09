@@ -10,8 +10,10 @@ import Foundation
 
 class BaseManager: NSObject {
 
-    private static var instances: [String: BaseManager] = [:]
-    
+    private struct Singleton {
+        private static var instances: [String: BaseManager] = [:]
+    }
+
     // MARK: - Singleton
     
     class func sharedInstance() -> Self {
@@ -20,12 +22,12 @@ class BaseManager: NSObject {
     
     private class func sharedInstance<T: BaseManager>(type: T.Type) -> T {
         let className = self.className()
-        if let instance = instances[className] as? T {
-            return instance
+        if let instance = Singleton.instances[className] {
+            return instance as T
         }
-        let instance = T()
-        instances[className] = instance
-        return instance
+        let instance = self()
+        Singleton.instances[className] = instance
+        return instance as T
     }
 
     override required init() {

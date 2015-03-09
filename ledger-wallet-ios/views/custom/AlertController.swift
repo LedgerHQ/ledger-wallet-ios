@@ -44,13 +44,16 @@ class AlertController: NSObject {
 
     }
     
+    private struct SharedControllers {
+        private static var sharedControllers: [UIAlertView: AlertController] = [:]
+    }
+    
     let style: Style
     let title: String?
     let message: String?
     private var actions: [Action] = []
     private var alertController: UIAlertController! = nil
     private var alertView: UIAlertView! = nil
-    private static var sharedControllers: [UIAlertView: AlertController] = [:]
     
     class func usesSystemAlertController() -> Bool {
         return NSClassFromString("UIAlertController") != nil
@@ -71,9 +74,10 @@ class AlertController: NSObject {
             // ios >= 8
             alertController = UIAlertController(title: title, message: message, preferredStyle: AlertController.UIAlertControllerStyleForStyle(style))
             for action in actions {
-                alertController.addAction(UIAlertAction(title: action.title, style: Action.UIAlertActionForStyle(action.style), handler: action.handler == nil ? nil : { _ in
-                    action.handler?(action)
-                }))
+                let alertAction = UIAlertAction(title: action.title, style: Action.UIAlertActionForStyle(action.style), handler: action.handler == nil ? nil : { _ in
+                    (action.handler?(action))!
+                })
+                alertController.addAction(alertAction)
             }
             viewController.presentViewController(alertController, animated: animated, completion: nil)
         }
@@ -90,7 +94,7 @@ class AlertController: NSObject {
             alertView.show()
             
             // add to shared pool
-            AlertController.sharedControllers[alertView] = self
+            SharedControllers.sharedControllers[alertView] = self
         }
     }
     
@@ -109,12 +113,12 @@ extension AlertController: UIAlertViewDelegate {
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         // call handler
-        let alertController = AlertController.sharedControllers[alertView]
+        let alertController = SharedControllers.sharedControllers[alertView]
         let action = alertController?.actions[buttonIndex]
         action?.handler?(action!)
         
         // remove from shared pool
-        AlertController.sharedControllers[alertView] = nil
+        SharedControllers.sharedControllers[alertView] = nil
     }
     
 }

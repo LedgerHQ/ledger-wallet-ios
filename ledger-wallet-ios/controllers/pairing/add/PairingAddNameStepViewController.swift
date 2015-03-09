@@ -38,10 +38,10 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     // MARK: - Interface
     
     private func checkThatNameIsUnique(name: String) -> Bool {
-        let message:String?
+        var message:String? = nil
         
         // create message
-        if (count(name) == 0) {
+        if (countElements(name) == 0) { // TODO: Fix in Swift 1.2
             message = localizedString("you_need_to_provide_a_dongle_name")
         }
         else if (!PairingProtocolContext.canCreatePairingKeychainItemNamed(name)) {

@@ -22,7 +22,7 @@ class PairingProtocolContext {
     
     class func canCreatePairingKeychainItemNamed(name: String) -> Bool {
         // check if this name already exists
-        let allItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
+        let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
         for item in allItems {
             if item.dongleName == name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
                 return false

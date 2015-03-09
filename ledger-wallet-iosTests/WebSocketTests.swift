@@ -8,9 +8,9 @@
 
 import XCTest
 
-class WebSocketTests: XCTestCase, JFRWebSocketDelegate {
+class WebSocketTests: XCTestCase, WebSocketDelegate {
     
-    var websocket: JFRWebSocket!
+    var websocket: WebSocket!
     var connectExpectation: XCTestExpectation!
     var disconnectExpectation: XCTestExpectation!
     
@@ -20,7 +20,7 @@ class WebSocketTests: XCTestCase, JFRWebSocketDelegate {
     override func setUp() {
         super.setUp()
         if let url = NSURL(string: "ws://echo.websocket.org") {
-            websocket = JFRWebSocket(URL: url, protocols: nil)
+            websocket = WebSocket(url: url)
             websocket.delegate = self
             connectExpectation = expectationWithDescription("websocket connect")
             websocket.connect()
@@ -34,17 +34,21 @@ class WebSocketTests: XCTestCase, JFRWebSocketDelegate {
         }
     }
     
-    func websocketDidConnect(socket: JFRWebSocket!) {
+    func websocketDidConnect(socket: WebSocket) {
         connectExpectation.fulfill()
     }
     
-    func websocketDidDisconnect(socket: JFRWebSocket!, error: NSError!) {
+    func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         disconnectExpectation.fulfill()
     }
     
-    func websocket(socket: JFRWebSocket!, didReceiveMessage string: String!) {
-        XCTAssert(string == message, "echo mismatch")
+    func websocketDidReceiveMessage(socket: WebSocket, text: String) {
+        XCTAssert(text == message, "echo mismatch")
         expectation.fulfill()
+    }
+    
+    func websocketDidReceiveData(socket: WebSocket, data: NSData) {
+        
     }
 
     func testEcho() {

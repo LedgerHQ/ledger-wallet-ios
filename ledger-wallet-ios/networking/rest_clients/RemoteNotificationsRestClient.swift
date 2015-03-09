@@ -13,14 +13,14 @@ class RemoteNotificationsRestClient: BaseRestClient {
     // MARK: - Push token management
     
     func registerDeviceToken(token: NSData, toPairingId pairingId: String, completion: ((Bool) -> Void)?) {
-        post("/2fa/pairings/\(pairingId)/push_token", parameters: ["push_token": Crypto.Encode.base16StringFromData(token)]) { data, request, response, error in
-            completion?(error == nil && response != nil)
+        post("/2fa/pairings/\(pairingId)/push_token", parameters: ["push_token": Crypto.Encode.base16StringFromData(token)], encoding: .JSON) { data, request, response, error in
+            (completion?(error == nil && response != nil))!
         }
     }
     
-    func unregisterDeviceToken(token: NSData, fromPairingId pairingId: String, completion: ((Bool) -> Void)?) {
+    func unregisterDeviceTokenFromPairingId(pairingId: String, completion: ((Bool) -> Void)?) {
         delete("/2fa/pairings/\(pairingId)/push_token") { data, request, response, error in
-            completion?(error == nil && response != nil)
+            (completion?(error == nil && response != nil))!
         }
     }
     

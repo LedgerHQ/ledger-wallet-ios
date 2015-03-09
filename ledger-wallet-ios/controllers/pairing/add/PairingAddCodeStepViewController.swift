@@ -51,7 +51,7 @@ extension PairingAddCodeStepViewController: PinCodeViewDelegate {
     func pinCodeView(pinCodeView: PinCodeView, didRequestNewIndex index: Int, placeholderChar: String?) {
         if let char = placeholderChar {
             let indication = NSString(format: localizedString("enter_letter_or_value_matching_%@"), char)
-            indicationLabel?.text = Optional(indication as! String)
+            indicationLabel?.text = Optional(indication as String)
         }
         else {
             indicationLabel?.text = ""

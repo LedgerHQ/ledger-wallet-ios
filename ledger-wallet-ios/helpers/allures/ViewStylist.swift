@@ -13,11 +13,11 @@ class ViewStylist {
     class func stylizeView(view: UIView) {
         switch view {
         case is Label:
-            relookLabel(view as! Label)
+            relookLabel(view as Label)
         case is Button:
-            relookButton(view as! Button)
+            relookButton(view as Button)
         case is TextField:
-            relookTextField(view as! TextField)
+            relookTextField(view as TextField)
         default:
             relookView(view)
         }

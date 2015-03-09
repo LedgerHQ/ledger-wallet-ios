@@ -42,7 +42,7 @@ class PairingListViewController: BaseViewController {
     // MARK: - Model
     
     override func updateModel() {
-        pairingKeychainItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
+        pairingKeychainItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
     }
     
     // MARK: - View lifecycle
@@ -65,7 +65,7 @@ extension PairingListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(PairingListTableViewCell.className(), forIndexPath: indexPath) as! PairingListTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(PairingListTableViewCell.className(), forIndexPath: indexPath) as PairingListTableViewCell
         cell.configureWithPairingItem(pairingKeychainItems[indexPath.row])
         cell.delegate = self
         return cell

@@ -18,7 +18,7 @@ class Navigator {
     }
     
     class func embedViewControllerInNavigationController<T: BaseViewController>(viewController: T) -> BaseNavigationController {
-        let navigationController = BaseNavigationController.new()
+        let navigationController = BaseNavigationController.newInstance()
         navigationController.viewControllers = [viewController]
         return navigationController
     }
@@ -48,7 +48,7 @@ class Navigator {
         
         class func presentAddViewController(#fromViewController: BaseViewController, delegate: PairingAddViewControllerDelegate) {
             Navigator.presentEmbeddedViewControllerOfClass(PairingAddViewController.self, fromViewController: fromViewController, configuration: { viewController, navigationController in
-                (viewController as! PairingAddViewController).delegate = delegate
+                (viewController as PairingAddViewController).delegate = delegate
             })
         }
         

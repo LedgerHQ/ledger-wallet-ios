@@ -30,30 +30,30 @@ struct VisualTheme {
             view.opaque = false
         },
         "actionBar.grey": { view in
-            let actionBar = view as! ActionBarView
+            let actionBar = view as ActionBarView
             actionBar.backgroundColor = VisualFactory.Colors.extraLightGrey
             actionBar.borderColor = VisualFactory.Colors.veryLightGrey
         },
         "tableView.transparent": { view in
-            let tableView = view as! TableView
+            let tableView = view as TableView
             tableView.backgroundColor = VisualFactory.Colors.transparent
             tableView.separatorColor = VisualFactory.Colors.lightGrey
             tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Paddings.small, 0, VisualFactory.Metrics.Paddings.small)
         },
         "tableViewCell.transparent": { view in
-            let tableViewCell = view as! TableViewCell
+            let tableViewCell = view as TableViewCell
             tableViewCell.contentView.backgroundColor = VisualFactory.Colors.transparent
             tableViewCell.backgroundColor = VisualFactory.Colors.transparent
         },
         "navigationBar.nightBlue": { view in
-            let navigationBar = view as! NavigationBar
+            let navigationBar = view as NavigationBar
             navigationBar.translucent = false
             navigationBar.shadowImage = UIImage()
             navigationBar.barTintColor = VisualFactory.Colors.nightBlue
             navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         },
         "pinCodeView.grey": { view in
-            let pinCodeView = view as! PinCodeView
+            let pinCodeView = view as PinCodeView
             pinCodeView.boxSize = CGSizeMake(55.0, 75.0)
             pinCodeView.highlightedColor = VisualFactory.Colors.invalidRed
             pinCodeView.filledColor = VisualFactory.Colors.darkGrey
@@ -63,7 +63,7 @@ struct VisualTheme {
             pinCodeView.dotRadius = 15.0
         },
         "loadingIndicator.grey": { view in
-            let loadingIndicator = view as! LoadingIndicator
+            let loadingIndicator = view as LoadingIndicator
             loadingIndicator.dotsHighlightedColor = VisualFactory.Colors.darkGreyBlue
             loadingIndicator.dotsNormalColor = VisualFactory.Colors.lightGrey
             loadingIndicator.animationDuration = VisualFactory.Metrics.Durations.Animations.veryShort
@@ -147,13 +147,13 @@ struct VisualTheme {
     static let buttonAllures: [String: ButtonAllure] = [
         "navigationBar.grey": { button in
             var hightlightedStyle = VisualFactory.TextAttributes.navigationBarText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarText), forState: UIControlState.Normal)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
         "navigationBar.white": { button in
             var hightlightedStyle = VisualFactory.TextAttributes.navigationBarWhiteText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarWhiteText), forState: UIControlState.Normal)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
@@ -166,12 +166,12 @@ struct VisualTheme {
         },
         "small.softGrey": { button in
             var hightlightedStyle = VisualFactory.TextAttributes.smallSoftGrey
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.extraStrong), forKey: NSForegroundColorAttributeName)
+            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.extraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.smallSoftGrey), forState: UIControlState.Normal)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Highlighted), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
         },
         "rounded": { button in
-            let roundedButton = button as! RoundedButton
+            let roundedButton = button as RoundedButton
             roundedButton.adjustsImageWhenHighlighted = false
             roundedButton.borderRadius = VisualFactory.Metrics.BordersRadii.medium
             roundedButton.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
@@ -183,19 +183,19 @@ struct VisualTheme {
         },
         "rounded.green": { button in
             VisualTheme.buttonAllures["rounded"]?(button)
-            let roundedButton = button as! RoundedButton
+            let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.actionGreen.darkerColor(), forState: UIControlState.Highlighted)
         },
         "rounded.grey": { button in
             VisualTheme.buttonAllures["rounded"]?(button)
-            let roundedButton = button as! RoundedButton
+            let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.lightGrey, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.lightGrey.darkerColor(), forState: UIControlState.Highlighted)
         },
         "rounded.red": { button in
             VisualTheme.buttonAllures["rounded"]?(button)
-            let roundedButton = button as! RoundedButton
+            let roundedButton = button as RoundedButton
             roundedButton.setFillColor(VisualFactory.Colors.invalidRed, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.invalidRed.darkerColor(), forState: UIControlState.Highlighted)
         }

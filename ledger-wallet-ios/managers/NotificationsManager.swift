@@ -31,15 +31,15 @@ class NotificationsManager: BaseManager {
     
     func registerDeviceTokenToPairedDongles(token: NSData) {
         // loop through all pairing keychain items
-        let allItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
+        let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
         for item in allItems {
             // if pairing item has no (or outdated) device token
             if item.deviceToken == nil || item.deviceToken! != token {
-                RemoteNotificationsRestClient.sharedInstance().registerDeviceToken(token, toPairingId: item.pairingId!, completion: { success in
+                RemoteNotificationsRestClient.sharedInstance().registerDeviceToken(token, toPairingId: item.pairingId!) { success in
                     if (success) {
                         item.deviceToken = token
                     }
-                })
+                }
             }
         }
     }
@@ -47,7 +47,9 @@ class NotificationsManager: BaseManager {
     func unregisterDeviceTokenFromPairedDongle(pairingItem: PairingKeychainItem) {
         // if pairing item already registered a device token
         if (pairingItem.deviceToken != nil) {
-            RemoteNotificationsRestClient.sharedInstance().unregisterDeviceToken(pairingItem.deviceToken!, fromPairingId: pairingItem.pairingId!, completion: nil)
+            RemoteNotificationsRestClient.sharedInstance().unregisterDeviceTokenFromPairingId(pairingItem.pairingId!) { success in
+            
+            }
         }
     }
     

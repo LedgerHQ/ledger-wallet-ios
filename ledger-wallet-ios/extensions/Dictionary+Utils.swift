@@ -12,7 +12,7 @@ extension Dictionary {
     
     mutating func merge<K, V>(dict: [K: V]) {
         for (k, v) in dict {
-            self.updateValue(v as! Value, forKey: k as! Key)
+            self.updateValue(v as Value, forKey: k as Key)
         }
     }
     

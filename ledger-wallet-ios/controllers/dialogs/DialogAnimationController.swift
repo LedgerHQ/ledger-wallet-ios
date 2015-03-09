@@ -34,8 +34,8 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
 
             // compute optimal sizes
             let contentView = toViewController.view
-            let backgroundViewSize = (toViewController as! DialogViewController).dialogLayoutSize(constraintedSize: containerView.bounds.size)
-            let padding = (toViewController as! DialogViewController).dialogContentPadding
+            let backgroundViewSize = (toViewController as DialogViewController).dialogLayoutSize(constraintedSize: containerView.bounds.size)
+            let padding = (toViewController as DialogViewController).dialogContentPadding
 
             // create background view
             backgroundView = UIView()

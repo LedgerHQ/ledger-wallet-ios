@@ -154,6 +154,7 @@
 		37DD54031A823C3E00449CCA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		37DF00761A8E119B00712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
 		37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
+		37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37E7F5801A816A23006CA878 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E7F57F1A816A23006CA878 /* openssl.framework */; };
 		37EE4D901A8B721A0085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
@@ -1162,6 +1163,7 @@
 				37ABFBE11A850F2C0061E92D /* PairingProtocolCryptor.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
+				37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
 				373BA3141A9385BB00849B6E /* WebSocket.swift in Sources */,
 				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,

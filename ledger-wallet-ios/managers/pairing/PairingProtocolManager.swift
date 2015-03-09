@@ -103,8 +103,10 @@ class PairingProtocolManager: BasePairingManager {
     private func disconnectWebSocket() {
         webSocket?.delegate = nil
         ignoresWebSocketDelegate = true
-        if let isConnected = webSocket?.isConnected where isConnected == true {
-            webSocket?.disconnect()
+        if let isConnected = webSocket?.isConnected {
+            if isConnected == true {
+                webSocket?.disconnect()
+            }
         }
         webSocket = nil
     }
