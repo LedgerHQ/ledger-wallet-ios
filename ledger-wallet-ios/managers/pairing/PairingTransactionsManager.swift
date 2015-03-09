@@ -59,7 +59,11 @@ class PairingTransactionsManager: BasePairingManager {
         }
         
         // send response
-        sendMessage(messageWithType(MessageType.Response, data: ["is_accepted": confirm, "pin": currentTransactionInfo!.pinCode]), webSocket: currentTransactionWebSocket!)
+        var data:[String: AnyObject] = ["is_accepted": confirm]
+        if confirm {
+            data["pin"] = currentTransactionInfo!.pinCode
+        }
+        sendMessage(messageWithType(MessageType.Response, data: data), webSocket: currentTransactionWebSocket!)
         
         // start listening
         initilizeWebSockets(excepted: [currentTransactionPairingKeychainItem!])
