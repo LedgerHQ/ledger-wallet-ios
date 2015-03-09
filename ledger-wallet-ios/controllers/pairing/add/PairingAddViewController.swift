@@ -187,7 +187,7 @@ extension PairingAddViewController {
             let name = object as String
             if let item = pairingProtocolManager?.createNewPairingItemNamed(name) {
                 // register remote notifications
-                NotificationsManager.sharedInstance().registerForRemoteNotifications()
+                RemoteNotificationsManager.sharedInstance().registerForRemoteNotifications()
                 
                 // complete
                 completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded, pairingItem: item)

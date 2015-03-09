@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BasePairingManager: BaseManager {
+class BasePairingManager: NSObject {
     
     typealias Message = [String: AnyObject]
     typealias MessageHandler = (Message, WebSocket) -> Void
@@ -24,7 +24,7 @@ class BasePairingManager: BaseManager {
         case Pairing = "pairing"
         case Connect = "connect"
         case Disconnect = "disconnect"
-    }
+    }   
     private var messagesHandlers: [MessageType: MessageHandler] = [:]
     private(set) var lastSentMessage: Message? = nil
     var ignoresWebSocketDelegate = false
@@ -57,7 +57,7 @@ class BasePairingManager: BaseManager {
     
     // MARK: - Initialization
     
-    required init() {
+    override init() {
         super.init()
         
         unowned let me = self

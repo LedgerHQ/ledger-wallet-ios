@@ -10,7 +10,16 @@ import Foundation
 
 class ApplicationManager: BaseManager {
     
-    class func isInDebug() -> Bool {
+    var UUID: String {
+        if let uuid = preferences.stringForKey("uuid") {
+            return uuid
+        }
+        let uuid = NSUUID().UUIDString
+        preferences.setObject(uuid, forKey: "uuid")
+        return uuid
+    }
+    
+    var isInDebug: Bool {
         #if DEBUG
             return true
             #else
@@ -18,8 +27,12 @@ class ApplicationManager: BaseManager {
         #endif
     }
     
-    class func isInProduction() -> Bool {
-        return !isInDebug()
+    var isInProduction: Bool {
+        return !isInDebug
     }
     
+    var bundleIdentifier: String {
+        return NSBundle.mainBundle().bundleIdentifier ?? ""
+    }
+
 }

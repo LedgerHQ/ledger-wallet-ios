@@ -2,36 +2,20 @@
 //  BaseManager.swift
 //  ledger-wallet-ios
 //
-//  Created by Nicolas Bigot on 27/01/2015.
+//  Created by Nicolas Bigot on 09/03/2015.
 //  Copyright (c) 2015 Ledger. All rights reserved.
 //
 
 import Foundation
 
-class BaseManager: NSObject {
-
-    private struct Singleton {
-        private static var instances: [String: BaseManager] = [:]
-    }
-
-    // MARK: - Singleton
+class BaseManager: SharableObject {
     
-    class func sharedInstance() -> Self {
-        return sharedInstance(self)
-    }
-    
-    private class func sharedInstance<T: BaseManager>(type: T.Type) -> T {
-        let className = self.className()
-        if let instance = Singleton.instances[className] {
-            return instance as T
+    var preferences: Preferences {
+        if (_preferences == nil) {
+            _preferences = Preferences(storeName: self.className())
         }
-        let instance = self()
-        Singleton.instances[className] = instance
-        return instance as T
+        return _preferences
     }
-
-    override required init() {
-   
-    }
+    private var _preferences: Preferences! = nil
     
 }

@@ -1,5 +1,5 @@
 //
-//  NotificationsManager.swift
+//  RemoteNotificationsManager.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 12/02/2015.
@@ -8,7 +8,9 @@
 
 import Foundation
 
-class NotificationsManager: BaseManager {
+class RemoteNotificationsManager: BaseManager {
+    
+    // MARK: - Common
     
     func registerForRemoteNotifications() {
         let application = UIApplication.sharedApplication()
@@ -28,6 +30,8 @@ class NotificationsManager: BaseManager {
     func handleNewDeviceToken(token: NSData) {
         registerDeviceTokenToPairedDongles(token)
     }
+    
+    // MARK: - Pairing
     
     func registerDeviceTokenToPairedDongles(token: NSData) {
         // loop through all pairing keychain items

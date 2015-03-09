@@ -41,7 +41,7 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         var message:String? = nil
         
         // create message
-        if (countElements(name) == 0) { // TODO: Fix in Swift 1.2
+        if name.isEmpty {
             message = localizedString("you_need_to_provide_a_dongle_name")
         }
         else if (!PairingProtocolContext.canCreatePairingKeychainItemNamed(name)) {
@@ -67,10 +67,10 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         nameTextField?.delegate = self
         
         // remove invisible views
-        if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Medium) {
+        if (DeviceManager.sharedInstance().screenHeightClass == DeviceManager.HeightClass.Medium) {
             indicationLabel?.removeFromSuperview()
         }
-        if (DeviceManager.screenHeightClass() == DeviceManager.HeightClass.Small) {
+        if (DeviceManager.sharedInstance().screenHeightClass == DeviceManager.HeightClass.Small) {
             indicationLabel?.removeFromSuperview()
             walletImageView?.removeFromSuperview()
         }

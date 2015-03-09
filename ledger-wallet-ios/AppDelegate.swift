@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         // register remote notifications
-        NotificationsManager.sharedInstance().registerForRemoteNotifications()
+        RemoteNotificationsManager.sharedInstance().registerForRemoteNotifications()
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // refresh device token
-        NotificationsManager.sharedInstance().handleNewDeviceToken(deviceToken)
+        RemoteNotificationsManager.sharedInstance().handleNewDeviceToken(deviceToken)
     }
 
 }

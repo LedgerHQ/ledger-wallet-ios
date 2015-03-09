@@ -8,11 +8,11 @@
 
 import Foundation
 
-class BaseRestClient: BaseManager {
+class BaseRestClient: SharableObject {
     
     private let baseURL = LedgerAPIBaseURL
     lazy private var httpClient = HTTPClient()
-    
+
     private enum HeaderFields: String {
         case Platform = "X-Ledger-Platform"
         case Environment = "X-Ledger-Environment"
@@ -54,7 +54,7 @@ class BaseRestClient: BaseManager {
         
         httpClient.additionalHeaders = [
             HeaderFields.Platform.rawValue: "ios",
-            HeaderFields.Environment.rawValue: ApplicationManager.isInDebug() ? "dev" : "prod",
+            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance().isInDebug ? "dev" : "prod",
             HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
         ]
     }

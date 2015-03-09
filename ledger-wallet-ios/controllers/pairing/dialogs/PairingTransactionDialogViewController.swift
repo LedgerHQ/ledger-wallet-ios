@@ -26,7 +26,7 @@ class PairingTransactionDialogViewController: DialogViewController {
     weak var delegate: PairingTransactionDialogViewControllerDelegate? = nil
     var transactionInfo: PairingTransactionInfo! = nil {
         didSet {
-            if (transactionInfo != nil) { DeviceManager.vibrate() }
+            if (transactionInfo != nil) { DeviceManager.sharedInstance().vibrate() }
         }
     }
     

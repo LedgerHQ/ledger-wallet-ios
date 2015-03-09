@@ -15,4 +15,9 @@
     return [[NSStringFromClass(self) componentsSeparatedByString:@"."] lastObject];
 }
 
+- (NSString *)className
+{
+    return [self.class className];
+}
+
 @end

@@ -11,5 +11,6 @@
 @interface NSObject (Utils)
 
 + (NSString *)className;
+- (NSString *)className;
 
 @end

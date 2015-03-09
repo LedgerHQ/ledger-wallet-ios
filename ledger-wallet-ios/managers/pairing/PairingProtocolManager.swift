@@ -68,7 +68,13 @@ class PairingProtocolManager: BasePairingManager {
         }
         
         // send public key
-        let message = messageWithType(MessageType.Identify, data: ["public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey)])
+        let data = [
+            "public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey),
+            "platform": "ios",
+            "uuid": ApplicationManager.sharedInstance().UUID,
+            "name": DeviceManager.sharedInstance().deviceName
+        ]
+        let message = messageWithType(MessageType.Identify, data: data)
         sendMessage(message, webSocket: webSocket)
     }
     
