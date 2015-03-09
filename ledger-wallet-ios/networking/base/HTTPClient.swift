@@ -20,6 +20,7 @@ class HTTPClient {
         return _session
     }
     private var _session: NSURLSession! = nil
+    private var logsRequests = ApplicationManager.isInDebug()
     
     // MARK: - Tasks management
     
@@ -58,8 +59,10 @@ class HTTPClient {
             if finalError == nil && statusCode < 200 && statusCode > 299 {
                 finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
             }
+            self.logResponse(httpResponse, request: request, data: data, error: error)
             completionHandler?(data, request, httpResponse, finalError)
         }
+        logRequest(request)
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
         
         // launch it if necessary
@@ -67,6 +70,16 @@ class HTTPClient {
             task.resume()
         }
         return task
+    }
+    
+    // MARK: - Log
+    
+    private func logRequest(request: NSURLRequest) {
+        println("HTTPClient: -> \(request.HTTPMethod!) \(request.URL)")
+    }
+    
+    private func logResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
+        println("HTTPClient: <- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL)")
     }
     
     // MARK: - Requests

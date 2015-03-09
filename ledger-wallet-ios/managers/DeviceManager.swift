@@ -11,7 +11,7 @@ import AudioToolbox
 
 class DeviceManager: BaseManager {
     
-    enum HeightClass: CGFloat {
+    enum HeightClass {
         case Small
         case Medium
         case Large

@@ -18,4 +18,8 @@ class ApplicationManager: BaseManager {
         #endif
     }
     
+    class func isInProduction() -> Bool {
+        return !isInDebug()
+    }
+    
 }
