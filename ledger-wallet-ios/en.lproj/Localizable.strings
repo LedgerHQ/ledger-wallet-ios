@@ -82,6 +82,8 @@
 
 "error_pairing_wrong_validation_code" = "The security card validation code is incorrect.";
 
+"error_pairing_timeout" = "The pairing process took too much time (timeout).";
+
 "success_pairing_named_%@" = "Your Ledger Wallet “%@” is now paired with your mobile device.";
 
 "no_paired_device" = "No paired device";

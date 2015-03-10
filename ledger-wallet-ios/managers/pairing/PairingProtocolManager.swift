@@ -25,14 +25,30 @@ class PairingProtocolManager: BasePairingManager {
         case DeviceFailed
         case DeviceTerminated
         case ServerDisconnected
+        case ServerTimeout
     }
 
     weak var delegate: PairingProtocolManagerDelegate? = nil
     var webSocketBaseURL: String! = nil
     var context: PairingProtocolContext! = nil
-    
     private var cryptor: PairingProtocolCryptor! = nil
     private var webSocket: WebSocket! = nil
+    
+    // MARK: - Initialization
+    
+    override init() {
+        super.init()
+        ignoresTimeout = false
+    }
+    
+    deinit {
+        disconnectWebSocket()
+        delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
+    }
+    
+}
+
+extension PairingProtocolManager {
     
     // MARK: - Pairing management
     
@@ -46,11 +62,11 @@ class PairingProtocolManager: BasePairingManager {
         webSocket = WebSocket(url: NSURL(string: webSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
         webSocket.delegate = self
         webSocket.connect()
-
+        
         // create context
         if (context == nil) { context = PairingProtocolContext() }
         
-        // create cryptor 
+        // create cryptor
         if (cryptor == nil) { cryptor = PairingProtocolCryptor() }
         
         // compute session key
@@ -104,8 +120,6 @@ class PairingProtocolManager: BasePairingManager {
         return context.createPairingKeychainItemNamed(name)
     }
     
-    // MARK: - Initialization
-    
     private func disconnectWebSocket() {
         webSocket?.delegate = nil
         ignoresWebSocketDelegate = true
@@ -117,9 +131,15 @@ class PairingProtocolManager: BasePairingManager {
         webSocket = nil
     }
     
-    deinit {
+}
+
+extension PairingProtocolManager {
+    
+    // MARK: - Timeout management
+    
+    override func handleWebsocketTimeout() {
         disconnectWebSocket()
-        delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DeviceTerminated)
+        delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerTimeout)
     }
     
 }

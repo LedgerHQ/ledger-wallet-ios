@@ -24,10 +24,13 @@ class BasePairingManager: NSObject {
         case Pairing = "pairing"
         case Connect = "connect"
         case Disconnect = "disconnect"
-    }   
+    }
+    
+    var ignoresTimeout = true
+    var ignoresWebSocketDelegate = false
     private var messagesHandlers: [MessageType: MessageHandler] = [:]
     private(set) var lastSentMessage: Message? = nil
-    var ignoresWebSocketDelegate = false
+    private var timeoutTimer: NSTimer? = nil
     
     // MARK: - Messages management
 
@@ -73,6 +76,32 @@ class BasePairingManager: NSObject {
 
 extension BasePairingManager {
     
+    // MARK: - Timeout management
+    
+    func handleWebsocketTimeout() {
+        
+    }
+    
+    private dynamic func notifyTimeout() {
+        handleWebsocketTimeout()
+        stopTimeoutTimer()
+    }
+    
+    private func startTimeoutTimer() {
+        if ignoresTimeout || timeoutTimer != nil && timeoutTimer!.valid {
+            return
+        }
+        timeoutTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "notifyTimeout", userInfo: nil, repeats: false)
+    }
+    
+    private func stopTimeoutTimer() {
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
+    }
+}
+
+extension BasePairingManager {
+    
     // MARK: - Messages management
     
     func receiveMessage(message: Message, webSocket: WebSocket) {
@@ -80,6 +109,7 @@ extension BasePairingManager {
             if let messageType = MessageType(rawValue: typeString) {
                 // lookup form message table
                 if let handler = messagesHandlers[messageType] {
+                    stopTimeoutTimer()
                     handler(message, webSocket)
                 }
             }
@@ -88,6 +118,7 @@ extension BasePairingManager {
     
     func sendMessage(message: Message, webSocket: WebSocket) {
         if let JSONData = JSON.dataFromJSONObject(message) {
+            startTimeoutTimer()
             webSocket.writeString(Crypto.Data.stringFromData(JSONData))
             lastSentMessage = message
         }

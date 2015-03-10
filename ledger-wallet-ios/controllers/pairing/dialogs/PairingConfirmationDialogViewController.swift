@@ -43,6 +43,8 @@ class PairingConfirmationDialogViewController: DialogViewController {
             localizedMessage = localizedString("error_pairing_wrong_validation_code")
         case .DongleTerminated:
             localizedMessage = localizedString("error_pairing_dongle_cancelled")
+        case .ServerTimeout:
+            localizedMessage = localizedString("error_pairing_timeout")
         default:
             localizedMessage = localizedString("error_pairing_unknown")
         }

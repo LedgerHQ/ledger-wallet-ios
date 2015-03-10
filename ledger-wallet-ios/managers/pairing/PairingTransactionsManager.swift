@@ -26,6 +26,16 @@ class PairingTransactionsManager: BasePairingManager {
     private var currentTransactionWebSocket: WebSocket? = nil
     private var currentTransactionPairingKeychainItem: PairingKeychainItem? = nil
     
+    // MARK: - Initialization
+    
+    deinit {
+        stopListening()
+    }
+    
+}
+
+extension PairingTransactionsManager {
+    
     // MARK: - Transactions management
     
     func startListening() -> Bool {
@@ -142,12 +152,6 @@ class PairingTransactionsManager: BasePairingManager {
         
         // notify delegate
         self.delegate?.pairingTransactionsManager(self, didReceiveNewTransactionInfo: currentTransactionInfo!)
-    }
-    
-    // MARK: - Initialization
-    
-    deinit {
-        stopListening()
     }
     
 }
