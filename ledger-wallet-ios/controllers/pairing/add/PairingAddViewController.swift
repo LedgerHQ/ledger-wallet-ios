@@ -53,7 +53,7 @@ class PairingAddViewController: BaseViewController {
     
     override func updateView() {
         super.updateView()
-        
+
         navigationItem.rightBarButtonItem?.customView?.hidden = !currentStepViewController!.finalizesFlow
         stepNumberLabel?.text = "\(currentStepViewController!.stepNumber)."
         stepIndicationLabel?.text = currentStepViewController!.stepIndication
@@ -70,36 +70,18 @@ class PairingAddViewController: BaseViewController {
         navigateToStep(PairingAddScanStepViewController.self, dataToPass: nil, completion: nil)
     }
     
-    // MARK: - Keyboard management
+    // MARK: - View lifecycle
     
-    override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
-        super.keyboardWillHide(userInfo)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
-        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
-        adjustContentInset(0, duration: duration, options: options, animated: true)
+        ApplicationManager.sharedInstance().disablesIdleTimer = true
     }
     
-    override func keyboardWillShow(userInfo: [NSObject : AnyObject]) {
-        super.keyboardWillShow(userInfo)
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
-        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
-        adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
-    }
-    
-    private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
-        bottomInsetConstraint?.constant = height
-        view.setNeedsLayout()
-        
-        if (animated) {
-            UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: options, animations: {
-                self.view.layoutIfNeeded()
-                }, completion: nil)
-        }
-        else {
-            view.layoutIfNeeded()
-        }
+        ApplicationManager.sharedInstance().disablesIdleTimer = false
     }
     
     // MARK: - Layout
@@ -218,6 +200,42 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
         else {
             // notify delegate
             completeWithOutcome(outcome, pairingItem: nil)
+        }
+    }
+    
+}
+
+extension PairingAddViewController {
+    
+    // MARK: - Keyboard management
+    
+    override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
+        super.keyboardWillHide(userInfo)
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
+        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
+        adjustContentInset(0, duration: duration, options: options, animated: true)
+    }
+    
+    override func keyboardWillShow(userInfo: [NSObject : AnyObject]) {
+        super.keyboardWillShow(userInfo)
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
+        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
+        adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
+    }
+    
+    private func adjustContentInset(height: CGFloat, duration: NSTimeInterval, options: UIViewAnimationOptions, animated: Bool) {
+        bottomInsetConstraint?.constant = height
+        view.setNeedsLayout()
+        
+        if (animated) {
+            UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: options, animations: {
+                self.view.layoutIfNeeded()
+                }, completion: nil)
+        }
+        else {
+            view.layoutIfNeeded()
         }
     }
     

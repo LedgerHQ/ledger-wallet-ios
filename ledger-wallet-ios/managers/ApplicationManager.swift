@@ -35,4 +35,13 @@ class ApplicationManager: BaseManager {
         return NSBundle.mainBundle().bundleIdentifier ?? ""
     }
 
+    var disablesIdleTimer: Bool {
+        get {
+            return UIApplication.sharedApplication().idleTimerDisabled
+        }
+        set {
+            UIApplication.sharedApplication().idleTimerDisabled = newValue
+        }
+    }
+    
 }
