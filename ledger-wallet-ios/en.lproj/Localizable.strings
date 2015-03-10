@@ -102,4 +102,4 @@
 
 "a_dongle_with_this_name_already_exists" = "A Ledger Wallet with this name already exists in your paired devices list.";
 
-"deleting_this_dongle_pairing" = "Deleting this Ledger Wallet will disable its second factor validation. Are you sure you want to continue?";
+"deleting_this_dongle_pairing" = "By deleting this Ledger Wallet, you will no longer be able to manually validate outgoing transactions from this mobile phone.\nDo you want to continue?";
