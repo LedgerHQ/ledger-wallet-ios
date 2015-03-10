@@ -54,7 +54,8 @@ class PairingAddViewController: BaseViewController {
     override func updateView() {
         super.updateView()
 
-        navigationItem.rightBarButtonItem?.customView?.hidden = !currentStepViewController!.finalizesFlow
+        navigationItem.leftBarButtonItem?.customView?.hidden = !currentStepViewController!.cancellable
+        navigationItem.rightBarButtonItem?.customView?.hidden = !currentStepViewController!.finalizable
         stepNumberLabel?.text = "\(currentStepViewController!.stepNumber)."
         stepIndicationLabel?.text = currentStepViewController!.stepIndication
     }

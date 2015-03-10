@@ -20,8 +20,11 @@ class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     override var stepNumber: Int {
         return 5
     }
-    override var finalizesFlow: Bool {
+    override var finalizable: Bool {
         return true
+    }
+    override var cancellable: Bool {
+        return false
     }
     
     // MARK: - Actions

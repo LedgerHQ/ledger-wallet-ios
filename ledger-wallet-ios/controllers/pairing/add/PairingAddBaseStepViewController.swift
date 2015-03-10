@@ -16,8 +16,11 @@ class PairingAddBaseStepViewController: BaseViewController {
     var stepIndication: String {
         return ""
     }
-    var finalizesFlow: Bool {
+    var finalizable: Bool {
         return false
+    }
+    var cancellable: Bool {
+        return true
     }
     var data: AnyObject? = nil
     
