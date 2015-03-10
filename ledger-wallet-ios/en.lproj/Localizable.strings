@@ -76,7 +76,7 @@
 
 "error_pairing_dongle_cancelled" = "The Ledger Wallet Chrome application cancelled the pairing process.";
 
-"error_pairing_wrong_validation_code" = "The security card validation code is incorrect. Please try again.";
+"error_pairing_wrong_validation_code" = "The security card validation code is incorrect.";
 
 "success_pairing_named_%@" = "Your Ledger Wallet “%@” is now paired with your mobile device.";
 
