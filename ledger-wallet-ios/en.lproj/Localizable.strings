@@ -6,6 +6,8 @@
   Copyright (c) 2015 Ledger. All rights reserved.
 */
 
+/* Common */
+
 "ledger_wallet" = "Ledger Wallet";
 
 "CANCEL" = "CANCEL";
@@ -18,6 +20,16 @@
 
 "REJECT" = "REJECT";
 
+"yes" = "Yes";
+
+"no" = "No";
+
+"cancel" = "Cancel";
+
+"delete" = "Delete";
+
+/* Pairing */
+
 "PAIR_A_NEW_DEVICE" = "PAIR A NEW DEVICE";
 
 "WAITING_FOR_AN_OPERATION..." = "WAITING FOR AN OPERATION...";
@@ -28,10 +40,6 @@
 
 "CONFIRM_OPERATION" = "CONFIRM OPERATION";
 
-"ESTABLISHING_CONNECTION..." = "ESTABLISHING CONNECTION...";
-
-"PAIRING_IN_PROGRESS..." = "PAIRING IN PROGRESS...";
-
 "PAIRING_SUCCEEDED" = "PAIRING SUCCEEDED";
 
 "PAIRING_FAILED" = "PAIRING FAILED";
@@ -40,13 +48,9 @@
 
 "MANAGE_PAIRED_DEVICES" = "MANAGE PAIRED DEVICES";
 
-"yes" = "Yes";
+"pairing_in_progress..." = "Pairing in progress...";
 
-"no" = "No";
-
-"cancel" = "Cancel";
-
-"delete" = "Delete";
+"establishing_connection..." = "Establishing connection...";
 
 "waiting_for_transactions..." = "Waiting for transactions...";
 
