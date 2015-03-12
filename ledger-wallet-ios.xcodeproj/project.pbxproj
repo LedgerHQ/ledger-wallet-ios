@@ -150,6 +150,43 @@
 		37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */; };
 		37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */; };
 		37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */; };
+		37BAF2FA1AB196450084B832 /* BitcoinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */; };
+		37BAF2FB1AB1964F0084B832 /* CryptoCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBDC1A84C2F00061E92D /* CryptoCipher.m */; };
+		37BAF2FC1AB1975F0084B832 /* BTC256.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50AE1A82190D001C6684 /* BTC256.m */; };
+		37BAF2FD1AB1975F0084B832 /* BTCAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B01A82190D001C6684 /* BTCAddress.m */; };
+		37BAF2FE1AB1975F0084B832 /* BTCBase58.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B21A82190D001C6684 /* BTCBase58.m */; };
+		37BAF2FF1AB1975F0084B832 /* BTCBigNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B41A82190D001C6684 /* BTCBigNumber.m */; };
+		37BAF3001AB1975F0084B832 /* BTCBitcoinURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B61A82190D001C6684 /* BTCBitcoinURL.m */; };
+		37BAF3011AB1975F0084B832 /* BTCBlindSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B81A82190D001C6684 /* BTCBlindSignature.m */; };
+		37BAF3021AB1975F0084B832 /* BTCBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50BA1A82190D001C6684 /* BTCBlock.m */; };
+		37BAF3031AB1975F0084B832 /* BTCBlockchainInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50BC1A82190D001C6684 /* BTCBlockchainInfo.m */; };
+		37BAF3041AB1975F0084B832 /* BTCBlockHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50BE1A82190D001C6684 /* BTCBlockHeader.m */; };
+		37BAF3051AB1975F0084B832 /* BTCChainCom.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50C01A82190D001C6684 /* BTCChainCom.m */; };
+		37BAF3061AB1975F0084B832 /* BTCCurrencyConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50C21A82190D001C6684 /* BTCCurrencyConverter.m */; };
+		37BAF3071AB1975F0084B832 /* BTCCurvePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50C41A82190D001C6684 /* BTCCurvePoint.m */; };
+		37BAF3081AB1975F0084B832 /* BTCData.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50C61A82190D001C6684 /* BTCData.m */; };
+		37BAF3091AB1975F0084B832 /* BTCEncryptedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50C81A82190D001C6684 /* BTCEncryptedMessage.m */; };
+		37BAF30A1AB1975F0084B832 /* BTCErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50CA1A82190D001C6684 /* BTCErrors.m */; };
+		37BAF30B1AB1975F0084B832 /* BTCHashID.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50CC1A82190D001C6684 /* BTCHashID.m */; };
+		37BAF30C1AB1975F0084B832 /* BTCKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50CE1A82190D001C6684 /* BTCKey.m */; };
+		37BAF30D1AB1975F0084B832 /* BTCKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50D01A82190D001C6684 /* BTCKeychain.m */; };
+		37BAF30E1AB1975F0084B832 /* BTCMnemonic.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50D21A82190D001C6684 /* BTCMnemonic.m */; };
+		37BAF30F1AB1975F0084B832 /* BTCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50D41A82190D001C6684 /* BTCNetwork.m */; };
+		37BAF3101AB1975F0084B832 /* BTCNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50D61A82190D001C6684 /* BTCNumberFormatter.m */; };
+		37BAF3111AB1975F0084B832 /* BTCOpcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50D81A82190D001C6684 /* BTCOpcode.m */; };
+		37BAF3121AB1975F0084B832 /* BTCOutpoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50DA1A82190D001C6684 /* BTCOutpoint.m */; };
+		37BAF3131AB1975F0084B832 /* BTCPriceSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50DC1A82190D001C6684 /* BTCPriceSource.m */; };
+		37BAF3141AB1975F0084B832 /* BTCProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50DE1A82190D001C6684 /* BTCProcessor.m */; };
+		37BAF3151AB1975F0084B832 /* BTCProtocolSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50E01A82190D001C6684 /* BTCProtocolSerialization.m */; };
+		37BAF3161AB1975F0084B832 /* BTCQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50E21A82190D001C6684 /* BTCQRCode.m */; };
+		37BAF3171AB1975F0084B832 /* BTCScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50E41A82190D001C6684 /* BTCScript.m */; };
+		37BAF3181AB1975F0084B832 /* BTCScriptMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50E61A82190D001C6684 /* BTCScriptMachine.m */; };
+		37BAF3191AB1975F0084B832 /* BTCTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50E91A82190D001C6684 /* BTCTransaction.m */; };
+		37BAF31A1AB1975F0084B832 /* BTCTransactionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50EB1A82190D001C6684 /* BTCTransactionBuilder.m */; };
+		37BAF31B1AB1975F0084B832 /* BTCTransactionInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50ED1A82190D001C6684 /* BTCTransactionInput.m */; };
+		37BAF31C1AB1975F0084B832 /* BTCTransactionOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50EF1A82190D001C6684 /* BTCTransactionOutput.m */; };
+		37BAF31D1AB1975F0084B832 /* NS+BTCBase58.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50F41A82190D001C6684 /* NS+BTCBase58.m */; };
+		37BAF31E1AB1975F0084B832 /* NSData+BTCData.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50F61A82190D001C6684 /* NSData+BTCData.m */; };
 		37BC847C1A7FB75B00072B71 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC847B1A7FB75B00072B71 /* DeviceManager.swift */; };
 		37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84801A7FB81C00072B71 /* BaseModel.swift */; };
 		37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */; };
@@ -1168,30 +1205,50 @@
 			buildActionMask = 2147483647;
 			files = (
 				376F51221A8231F3001C6684 /* PairingProtocolManagerTests.swift in Sources */,
+				37BAF30D1AB1975F0084B832 /* BTCKeychain.m in Sources */,
+				37BAF3151AB1975F0084B832 /* BTCProtocolSerialization.m in Sources */,
+				37BAF2FA1AB196450084B832 /* BitcoinFormatter.swift in Sources */,
+				37BAF31D1AB1975F0084B832 /* NS+BTCBase58.m in Sources */,
 				37AA95651A88CF88009C3EE4 /* PairingTransactionsCryptor.swift in Sources */,
 				378E5C641AADF78700A0C9A8 /* HTTPClientTask.swift in Sources */,
 				378E5C601AADF78700A0C9A8 /* HTTPClient.swift in Sources */,
 				37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */,
 				37ABFBE11A850F2C0061E92D /* PairingProtocolCryptor.swift in Sources */,
+				37BAF3011AB1975F0084B832 /* BTCBlindSignature.m in Sources */,
+				37BAF3101AB1975F0084B832 /* BTCNumberFormatter.m in Sources */,
 				378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
+				37BAF2FF1AB1975F0084B832 /* BTCBigNumber.m in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
 				37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */,
 				378E5C5A1AADF76100A0C9A8 /* BaseRestClient.swift in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
+				37BAF3051AB1975F0084B832 /* BTCChainCom.m in Sources */,
 				373BA3141A9385BB00849B6E /* WebSocket.swift in Sources */,
 				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */,
+				37BAF31C1AB1975F0084B832 /* BTCTransactionOutput.m in Sources */,
 				37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */,
+				37BAF3081AB1975F0084B832 /* BTCData.m in Sources */,
+				37BAF3041AB1975F0084B832 /* BTCBlockHeader.m in Sources */,
 				376F51241A82326F001C6684 /* BasePairingManager.swift in Sources */,
+				37BAF3141AB1975F0084B832 /* BTCProcessor.m in Sources */,
+				37BAF3091AB1975F0084B832 /* BTCEncryptedMessage.m in Sources */,
 				37ABFBE41A85138A0061E92D /* PairingProtocolContext.swift in Sources */,
 				37B537721A82A84C0087AB43 /* CryptoEncode.swift in Sources */,
+				37BAF3171AB1975F0084B832 /* BTCScript.m in Sources */,
+				37BAF3001AB1975F0084B832 /* BTCBitcoinURL.m in Sources */,
+				37BAF30A1AB1975F0084B832 /* BTCErrors.m in Sources */,
+				37BAF3121AB1975F0084B832 /* BTCOutpoint.m in Sources */,
 				37B537731A82A84C0087AB43 /* CryptoCommon.swift in Sources */,
 				37DD54031A823C3E00449CCA /* Common.swift in Sources */,
+				37BAF2FE1AB1975F0084B832 /* BTCBase58.m in Sources */,
+				37BAF3161AB1975F0084B832 /* BTCQRCode.m in Sources */,
 				377E810E1A89124E00010B37 /* BitcoinAddress.swift in Sources */,
 				377E810F1A89126700010B37 /* BitcoinCommon.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
+				37BAF31B1AB1975F0084B832 /* BTCTransactionInput.m in Sources */,
 				378E5C621AADF78700A0C9A8 /* HTTPClientDataTask.swift in Sources */,
 				378E5C6B1AAE032900A0C9A8 /* DeviceManager.swift in Sources */,
 				37B537711A82A84C0087AB43 /* CryptoHash.swift in Sources */,
@@ -1199,15 +1256,32 @@
 				37AA95641A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift in Sources */,
 				37ABFBD41A83A2270061E92D /* CryptoECDHTests.swift in Sources */,
 				37ABFBD91A83C9400061E92D /* CryptoCipher.swift in Sources */,
+				37BAF31E1AB1975F0084B832 /* NSData+BTCData.m in Sources */,
+				37BAF3031AB1975F0084B832 /* BTCBlockchainInfo.m in Sources */,
+				37BAF3021AB1975F0084B832 /* BTCBlock.m in Sources */,
+				37BAF3131AB1975F0084B832 /* BTCPriceSource.m in Sources */,
+				37BAF31A1AB1975F0084B832 /* BTCTransactionBuilder.m in Sources */,
+				37BAF2FB1AB1964F0084B832 /* CryptoCipher.m in Sources */,
+				37BAF2FD1AB1975F0084B832 /* BTCAddress.m in Sources */,
 				37ABFBDB1A83C9540061E92D /* CryptoCipherTests.swift in Sources */,
 				37414B181A8D0B9300CE0795 /* RemoteNotificationsManager.swift in Sources */,
 				37656F301A76A3F60042512D /* KeychainItem.swift in Sources */,
 				378E5C541AADEF7C00A0C9A8 /* SharableObject.swift in Sources */,
 				378E5C571AADEFBE00A0C9A8 /* Preferences.swift in Sources */,
+				37BAF2FC1AB1975F0084B832 /* BTC256.m in Sources */,
+				37BAF30F1AB1975F0084B832 /* BTCNetwork.m in Sources */,
 				37ABFBD61A83B85D0061E92D /* CryptoHashTests.swift in Sources */,
+				37BAF3181AB1975F0084B832 /* BTCScriptMachine.m in Sources */,
+				37BAF3191AB1975F0084B832 /* BTCTransaction.m in Sources */,
+				37BAF3111AB1975F0084B832 /* BTCOpcode.m in Sources */,
 				376F51261A823395001C6684 /* Blocks.swift in Sources */,
+				37BAF30E1AB1975F0084B832 /* BTCMnemonic.m in Sources */,
 				376F51231A823266001C6684 /* PairingProtocolManager.swift in Sources */,
+				37BAF3071AB1975F0084B832 /* BTCCurvePoint.m in Sources */,
 				37ABFBE61A8514390061E92D /* PairingProtocolCryptorTests.swift in Sources */,
+				37BAF30B1AB1975F0084B832 /* BTCHashID.m in Sources */,
+				37BAF3061AB1975F0084B832 /* BTCCurrencyConverter.m in Sources */,
+				37BAF30C1AB1975F0084B832 /* BTCKey.m in Sources */,
 				37414B111A8CD97100CE0795 /* RemoteNotificationsRestClient.swift in Sources */,
 				373E22DB1A76895C00BAF63F /* KeychainItemTests.swift in Sources */,
 			);
@@ -1362,6 +1436,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e55926b6-4d58-436f-b2a0-6d0c428e2e42";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};

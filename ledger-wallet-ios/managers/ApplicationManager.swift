@@ -44,4 +44,14 @@ class ApplicationManager: BaseManager {
         }
     }
     
+    func handleFirstLaunch() {
+        // if app hasn't been launched before
+        if !preferences.boolForKey("already_launched") {
+            preferences.setBool(true, forKey: "already_launched")
+            
+            // delete all pairing keychain items
+            PairingKeychainItem.destroyAll()
+        }
+    }
+    
 }

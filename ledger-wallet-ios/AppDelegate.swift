@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // handle first app launch
+        ApplicationManager.sharedInstance().handleFirstLaunch()
+        
         // handle entry point without being embedded in a navigation controller
         if let viewController = window?.rootViewController as? BaseViewController {
             window?.rootViewController = Navigator.embedViewControllerInNavigationController(viewController)
