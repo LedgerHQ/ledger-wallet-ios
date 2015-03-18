@@ -25,6 +25,17 @@ final class PairingTransactionInfo: Mockable {
     private let recipientByteLength = 1
     
     init?(decryptedBlob: NSData) {
+        // check that we have minimum bytes
+        if decryptedBlob.length <= (pinBytesLength + feesBytesLength + outputsBytesLength + changeBytesLength + recipientByteLength) {
+            self.recipientAddress = ""
+            self.pinCode = ""
+            self.changeAmount = 0
+            self.feesAmount = 0
+            self.outputsAmount = 0
+            self.transactionDate = NSDate()
+            return nil
+        }
+        
         // get transaction data
         var offset = 0
         let pinCodeData = decryptedBlob.subdataWithRange(NSMakeRange(offset, pinBytesLength)); offset += pinBytesLength
@@ -33,6 +44,18 @@ final class PairingTransactionInfo: Mockable {
         let changeData = decryptedBlob.subdataWithRange(NSMakeRange(offset, changeBytesLength)); offset += changeBytesLength
         let recipientDataLengthData = decryptedBlob.subdataWithRange(NSMakeRange(offset, recipientByteLength)); offset += recipientByteLength
         let recipientBytesLength = Int(UnsafePointer<UInt8>(recipientDataLengthData.bytes).memory)
+        
+        // check that we have enough left bytes
+        if (offset + recipientBytesLength > decryptedBlob.length) {
+            self.recipientAddress = ""
+            self.pinCode = ""
+            self.changeAmount = 0
+            self.feesAmount = 0
+            self.outputsAmount = 0
+            self.transactionDate = NSDate()
+            return nil
+        }
+        
         let recipientData = decryptedBlob.subdataWithRange(NSMakeRange(offset, recipientBytesLength)); offset += recipientBytesLength
         
         // validate recipient address
