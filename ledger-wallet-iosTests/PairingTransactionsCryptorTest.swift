@@ -12,7 +12,7 @@ import XCTest
 class PairingTransactionsCryptorTest: XCTestCase {
     
     func testCrypto1() {
-        let pairingKey = Crypto.Key(symmetricKey: Crypto.Encode.dataFromBase16String("abcdef"))
+        let pairingKey = Crypto.Key(symmetricKey: Crypto.Encode.dataFromBase16String("abcdef")!)
         let cryptor = PairingTransactionsCryptor()
         
         // test empty transaction info

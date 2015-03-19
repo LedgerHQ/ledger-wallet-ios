@@ -14,29 +14,29 @@ extension Crypto {
         
         // MARK: - Base 16
         
-        class func dataFromBase16String(string: String) -> NSData! {
+        class func dataFromBase16String(string: String) -> NSData? {
             return BTCDataFromHex(string)
         }
         
-        class func base16StringFromData(data: NSData) -> String! {
+        class func base16StringFromData(data: NSData) -> String? {
             return BTCHexFromData(data)
         }
         
         // MARK: - Base 58
 
-        class func dataFromBase58CheckString(string: String) -> NSData! {
+        class func dataFromBase58CheckString(string: String) -> NSData? {
             return BTCDataFromBase58Check(string)
         }
         
-        class func base58CheckStringFromData(data: NSData) -> String! {
+        class func base58CheckStringFromData(data: NSData) -> String? {
             return BTCBase58CheckStringWithData(data)
         }
         
-        class func dataFromBase58String(string: String) -> NSData! {
+        class func dataFromBase58String(string: String) -> NSData? {
             return BTCDataFromBase58(string)
         }
         
-        class func base58StringFromData(data: NSData) -> String! {
+        class func base58StringFromData(data: NSData) -> String? {
             return BTCBase58StringWithData(data)
         }
         

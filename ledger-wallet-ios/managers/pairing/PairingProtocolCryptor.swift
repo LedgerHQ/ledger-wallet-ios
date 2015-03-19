@@ -78,7 +78,7 @@ class PairingProtocolCryptor {
         decryptedData.appendData(challengeData)
         
         // add 0x00 * 4
-        decryptedData.appendData(Crypto.Encode.dataFromBase16String("00000000"))
+        decryptedData.appendData(Crypto.Encode.dataFromBase16String("00000000")!)
         
         // encrypt data
         let encryptedData = encryptData(decryptedData, sessionKey: sessionKey)
@@ -102,7 +102,7 @@ class PairingProtocolCryptor {
         for i in 0..<string.length {
             computedString = computedString + "0" + string.substringWithRange(NSMakeRange(i, 1))
         }
-        return Crypto.Encode.dataFromBase16String(computedString)
+        return Crypto.Encode.dataFromBase16String(computedString)!
     }
 
 }

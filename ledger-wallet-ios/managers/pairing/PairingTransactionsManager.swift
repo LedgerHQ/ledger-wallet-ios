@@ -168,14 +168,14 @@ extension PairingTransactionsManager {
         // get base 16 string
         if let dataString = message["second_factor_data"] as? String {
             // get encrypted blob
-            let blob = Crypto.Encode.dataFromBase16String(dataString)
-            
-            // get pairing item
-            if let pairingKeychainItem = webSockets[webSocket] {
-                // get transaction info from blob
-                if let transactionInfo = cryptor.transactionInfoFromEncryptedBlob(blob, pairingKey: pairingKeychainItem.pairingKey!) {
-                    // accept transaction info
-                    acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
+            if let blob = Crypto.Encode.dataFromBase16String(dataString) {
+                // get pairing item
+                if let pairingKeychainItem = webSockets[webSocket] {
+                    // get transaction info from blob
+                    if let transactionInfo = cryptor.transactionInfoFromEncryptedBlob(blob, pairingKey: pairingKeychainItem.pairingKey!) {
+                        // accept transaction info
+                        acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
+                    }
                 }
             }
         }

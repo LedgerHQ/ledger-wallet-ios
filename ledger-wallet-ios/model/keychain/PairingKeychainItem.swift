@@ -17,7 +17,9 @@ class PairingKeychainItem: KeychainItem {
     var pairingKey: Crypto.Key? {
         get {
             if let value = valueForKey("pairing_key") {
-                return Crypto.Key(symmetricKey: Crypto.Encode.dataFromBase16String(value))
+                if let keyData = Crypto.Encode.dataFromBase16String(value) {
+                    return Crypto.Key(symmetricKey: keyData)
+                }
             }
             return nil
         }

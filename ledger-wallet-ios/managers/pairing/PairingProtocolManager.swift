@@ -85,7 +85,7 @@ extension PairingProtocolManager {
         
         // send public key
         let data = [
-            "public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey),
+            "public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey)!,
             "platform": "ios",
             "uuid": ApplicationManager.sharedInstance().UUID,
             "name": DeviceManager.sharedInstance().deviceName
@@ -103,7 +103,9 @@ extension PairingProtocolManager {
         let encryptedData = cryptor.encryptedChallengeResponseDataFromChallengeString(response, nonce: context.nonce, sessionKey: context.sessionKey)
         
         // send challenge response
-        sendMessage(messageWithType(MessageType.Challenge, data: ["data": Crypto.Encode.base16StringFromData(encryptedData)]), webSocket: webSocket)
+        if let encryptedDataBase16String = Crypto.Encode.base16StringFromData(encryptedData) {
+            sendMessage(messageWithType(MessageType.Challenge, data: ["data": encryptedDataBase16String]), webSocket: webSocket)
+        }
     }
     
     func terminate() {
@@ -151,24 +153,24 @@ extension PairingProtocolManager {
     override func handleChallengeMessage(message: Message, webSocket: WebSocket) {
         if let dataString = message["data"] as? String {
             // get data
-            let blob = Crypto.Encode.dataFromBase16String(dataString)
-            
-            // extract nonce and encrypted data
-            context.nonce = cryptor.nonceFromBlob(blob)
-            let encryptedData = cryptor.encryptedDataFromBlob(blob)
-            
-            // decrypt data
-            let decryptedData = cryptor.decryptData(encryptedData, sessionKey: context.sessionKey)
-            
-            // extract challenge, pairing key
-            let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
-            context.pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
-            
-            // create challenge string
-            let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
-            
-            // notify delegate
-            delegate?.pairingProtocolManager(self, didReceiveChallenge: challengeString)
+            if let blob = Crypto.Encode.dataFromBase16String(dataString) {
+                // extract nonce and encrypted data
+                context.nonce = cryptor.nonceFromBlob(blob)
+                let encryptedData = cryptor.encryptedDataFromBlob(blob)
+                
+                // decrypt data
+                let decryptedData = cryptor.decryptData(encryptedData, sessionKey: context.sessionKey)
+                
+                // extract challenge, pairing key
+                let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
+                context.pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
+                
+                // create challenge string
+                let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
+                
+                // notify delegate
+                delegate?.pairingProtocolManager(self, didReceiveChallenge: challengeString)
+            }
         }
     }
     
