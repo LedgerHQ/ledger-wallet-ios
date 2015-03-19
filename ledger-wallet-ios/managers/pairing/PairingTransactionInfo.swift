@@ -58,11 +58,12 @@ final class PairingTransactionInfo: Mockable {
         
         let recipientData = decryptedBlob.subdataWithRange(NSMakeRange(offset, recipientBytesLength)); offset += recipientBytesLength
         
-        // validate recipient address
+        // validate data
         let recipientAddress = Crypto.Data.stringFromData(recipientData)
-        if Bitcoin.Address.verifyPublicAddress(recipientAddress) == true {
-            self.recipientAddress = recipientAddress
-            self.pinCode = Crypto.Data.stringFromData(pinCodeData)
+        let pinCode = Crypto.Data.stringFromData(pinCodeData)
+        if pinCode != nil && recipientAddress != nil && Bitcoin.Address.verifyPublicAddress(recipientAddress!) == true {
+            self.recipientAddress = recipientAddress!
+            self.pinCode = pinCode!
             self.changeAmount = BTCBigNumber(unsignedData: changeData).int64value
             self.feesAmount = BTCBigNumber(unsignedData: feesData).int64value
             self.outputsAmount = BTCBigNumber(unsignedData: outputsData).int64value
