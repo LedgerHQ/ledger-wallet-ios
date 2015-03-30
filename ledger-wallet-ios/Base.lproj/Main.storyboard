@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8qw-uL-hhM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8qw-uL-hhM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--Pairing Home View Controller-->
@@ -47,9 +47,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="445" width="600" height="91"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="171" y="25" width="259" height="41"/>
-                                        <state key="normal" title="PAIR_A_NEW_LEDGER_WALLET" image="icon_device">
+                                        <state key="normal" title="PAIR_A_LEDGER_WALLET" image="icon_device">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -79,7 +79,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3y0-t4-g0T" id="A5z-Hr-SbJ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sophie's Wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K23-Gm-dq2" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_dongle_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K23-Gm-dq2" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="20" width="95" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -101,7 +101,7 @@
                                                         <action selector="deleteButtonTouched:" destination="3y0-t4-g0T" eventType="touchUpInside" id="fIw-dn-oei"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paired on 12/05/2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Pz-8Z0" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_pairing_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Pz-8Z0" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="43" width="117" height="25"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -152,7 +152,7 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="PAIRED_DEVICES" id="w8H-fc-KEz" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <navigationItem key="navigationItem" title="PAIRED_LEDGER_WALLETS" id="w8H-fc-KEz" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <barButtonItem key="rightBarButtonItem" id="tf0-Rn-f9t">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BNV-Zd-FDh" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="-23" y="-15" width="133" height="30"/>
@@ -269,7 +269,7 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="PAIR_A_NEW_DEVICE" id="tDa-QY-nzN" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <navigationItem key="navigationItem" title="PAIR_A_LEDGER_WALLET" id="tDa-QY-nzN" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <barButtonItem key="leftBarButtonItem" id="vcY-KN-6Qz">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Eze-Et-Bgt" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="-23" y="-15" width="133" height="30"/>
