@@ -62,7 +62,7 @@
 
 "assign_a_name_to_this_ledger_wallet" = "Choisissez un nom pour ce Ledger Wallet.";
 
-"enter_letter_or_value_matching_%@" = "Entrez la lettre ou le chiffre dans la case noire\ncorrespondant à \" %@ \" sur votre carte de sécurité.";
+"enter_letter_or_value_matching_%@" = "Entrez la lettre ou le chiffre dans la case noire correspondant à \" %@ \" sur votre carte de sécurité.";
 
 "your_device_is_creating_secure_connection" = "Ce smartphone crée une connexion sécurisée avec votre Ledger Wallet.";
 
@@ -81,7 +81,7 @@
 "success_pairing_named_%@" = "Votre Ledger Wallet “%@” est maintenant associé avec ce smartphone.";
 
 "no_paired_ledger_wallet" = "Aucun Ledger Wallet associé";
-
+ 
 "to_enable_second_factor_pair_device" = "Pour activer le second facteur d'authentification mobile, associez votre Ledger Wallet avec ce smartphone.";
 
 "transactions_will_automatically_appear" = "Les transactions apparaîtront automatiquement quand une validation manuelle est requise.";

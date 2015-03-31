@@ -116,13 +116,13 @@ extension PairingListViewController: PairingAddViewControllerDelegate {
     
     func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // dismiss
-        pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
-        
-        // handle outcome
-        if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
-            let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
-            confirmationDialogViewController.configureWithPairingOutcome(outcome, pairingItem: pairingItem)
-            presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+        pairingAddViewController.dismissViewControllerAnimated(true) {
+            // handle outcome
+            if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
+                let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
+                confirmationDialogViewController.configureWithPairingOutcome(outcome, pairingItem: pairingItem)
+                self.presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+            }
         }
     }
     
