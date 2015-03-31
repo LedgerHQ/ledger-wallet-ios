@@ -23,14 +23,16 @@ extension PairingHomeEmptyContentViewController: PairingAddViewControllerDelegat
     // MARK: - PairingAddViewController delegate
     
     func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
-        // dismiss
-        pairingAddViewController.dismissViewControllerAnimated(true, completion: nil)
+        let parentHomeViewController = self.parentHomeViewController
         
-        // handle outcome
-        if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
-            let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
-            confirmationDialogViewController.configureWithPairingOutcome(outcome, pairingItem: pairingItem)
-            parentHomeViewController.presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+        // dismiss
+        pairingAddViewController.dismissViewControllerAnimated(true) {
+            // handle outcome
+            if outcome != PairingProtocolManager.PairingOutcome.DeviceTerminated {
+                let confirmationDialogViewController = PairingConfirmationDialogViewController.instantiateFromNib()
+                confirmationDialogViewController.configureWithPairingOutcome(outcome, pairingItem: pairingItem)
+                parentHomeViewController.presentViewController(confirmationDialogViewController, animated: true, completion: nil)
+            }
         }
     }
     

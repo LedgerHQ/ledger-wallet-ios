@@ -62,7 +62,7 @@
 
 "assign_a_name_to_this_ledger_wallet" = "Choose a name to assign to this Ledger Wallet.";
 
-"enter_letter_or_value_matching_%@" = "Enter the letter or digit in the black box\nmatching “ %@ ” on your security card.";
+"enter_letter_or_value_matching_%@" = "Enter the letter or digit in the black box matching “ %@ ” on your security card.";
 
 "your_device_is_creating_secure_connection" = "This smartphone is creating a secure connection with your Ledger Wallet.";
 
@@ -82,9 +82,9 @@
 
 "no_paired_ledger_wallet" = "No paired Ledger Wallet";
 
-"to_enable_second_factor_pair_device" = "To enable second factor validation,\npair your Ledger Wallet with this smartphone.";
+"to_enable_second_factor_pair_device" = "To enable second factor validation, pair your Ledger Wallet with this smartphone.";
 
-"transactions_will_automatically_appear" = "Transactions will automatically appear\nwhen manual validation is required.";
+"transactions_will_automatically_appear" = "Transactions will automatically appear when manual validation is required.";
 
 "need_help_visit_help_center" = "Need help? Visit our help center.";
 
