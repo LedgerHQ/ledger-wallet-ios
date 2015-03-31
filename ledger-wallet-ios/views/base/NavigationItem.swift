@@ -30,8 +30,6 @@ class NavigationItem: UINavigationItem {
         super.awakeFromNib()
         
         self.title = localizedString(self.title ?? "")
-        self.leftBarButtonItem?.customView?.sizeToFit()
-        self.rightBarButtonItem?.customView?.sizeToFit()
     }
     
 }

@@ -55,7 +55,9 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="Gh0-fS-lMN" secondAttribute="centerX" id="0rA-GY-YAW"/>
+                        <constraint firstItem="Gh0-fS-lMN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D6l-Zy-Y6f" secondAttribute="leading" constant="20" id="1H9-IO-b9p"/>
                         <constraint firstAttribute="centerX" secondItem="ma6-jW-Nhh" secondAttribute="centerX" id="6T5-sz-U3d"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gh0-fS-lMN" secondAttribute="trailing" constant="20" id="KTA-DI-ifQ"/>
                         <constraint firstItem="ma6-jW-Nhh" firstAttribute="top" secondItem="D6l-Zy-Y6f" secondAttribute="top" id="MGs-KA-SUi"/>
                         <constraint firstAttribute="bottom" secondItem="yhn-5j-dRV" secondAttribute="bottom" id="PSP-1B-kYX"/>
                         <constraint firstItem="RYS-7p-qUt" firstAttribute="top" secondItem="ma6-jW-Nhh" secondAttribute="bottom" constant="35" id="erd-QU-htw"/>

@@ -401,6 +401,7 @@
 		37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BasePairingManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingTransactionsManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptor.swift; sourceTree = "<group>"; };
 		37DF00751A8E119B00712AB1 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationManager.swift; path = managers/ApplicationManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1028,6 +1029,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 3784FAFC1A5D2F5E0063A364;
 			productRefGroup = 3784FB061A5D2F5E0063A364 /* Products */;
@@ -1310,6 +1312,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				37F283691A6406A900F432CC /* en */,
+				37BDAE901ACB0C1100DA2E45 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -50,6 +50,14 @@ class BaseViewController: UIViewController {
     
     // MARK: - Layout 
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        // resize navigation items
+        self.navigationItem.leftBarButtonItem?.customView?.sizeToFit()
+        self.navigationItem.rightBarButtonItem?.customView?.sizeToFit()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

@@ -20,6 +20,8 @@
 
 "REJECT" = "REJECT";
 
+"DONE" = "DONE";
+
 "yes" = "Yes";
 
 "no" = "No";
