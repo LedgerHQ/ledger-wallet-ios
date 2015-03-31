@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingTransactionDialogViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -20,8 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="436" height="387"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CONFIRM_OPERATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-2p-dm7" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="142" y="116" width="152" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONFIRM_TRANSACTION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-2p-dm7" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="133" y="116" width="170" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -29,7 +29,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="sectionTitle"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_ledger_wallet_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nF-aI-wQH" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ledger_wallet_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nF-aI-wQH" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="149" y="167" width="139" height="24"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -38,7 +38,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_transaction_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ece-Hq-lEG" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_transaction_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ece-Hq-lEG" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="168" y="291" width="101" height="25"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -47,7 +47,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.grey"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_receipient_address_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxF-wJ-VCI" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_receipient_address_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxF-wJ-VCI" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="68" y="264" width="300" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="9yc-AN-sqK"/>
@@ -59,10 +59,10 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.centered"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8z5-Za-l3m" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8z5-Za-l3m" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="118" y="346" width="200" height="41"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-Zj-cLi" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-Zj-cLi" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="96" y="0.0" width="104" height="41"/>
                             <state key="normal" title="CONFIRM">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -74,7 +74,7 @@
                                 <action selector="complete" destination="-1" eventType="touchUpInside" id="HYl-XF-CHc"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-Gt-hMZ" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-Gt-hMZ" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="86" height="41"/>
                             <state key="normal" title="REJECT">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -101,8 +101,8 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.transparent"/>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="_amount_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0o-99-GU5" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="170" y="191" width="97" height="33"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_amount_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0o-99-GU5" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="168" y="191" width="101" height="33"/>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -110,7 +110,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="huge"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon_arrow_bottom_grey" translatesAutoresizingMaskIntoConstraints="NO" id="bc8-bn-gta">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_arrow_bottom_grey" translatesAutoresizingMaskIntoConstraints="NO" id="bc8-bn-gta">
                     <rect key="frame" x="214" y="234" width="9" height="20"/>
                 </imageView>
             </subviews>
