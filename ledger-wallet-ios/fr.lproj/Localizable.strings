@@ -84,7 +84,7 @@
  
 "to_enable_second_factor_pair_device" = "Pour activer le second facteur d'authentification mobile, associez votre Ledger Wallet avec ce smartphone.";
 
-"transactions_will_automatically_appear" = "Les transactions apparaîtront automatiquement quand une validation manuelle est requise.";
+"transactions_will_automatically_appear" = "Les transactions apparaîtront automatiquement quand une validation manuelle sera requise.";
 
 "need_help_visit_help_center" = "Besoin d'aide? Visitez notre centre d'aide.";
 
