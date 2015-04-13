@@ -193,12 +193,12 @@
 		37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */; };
 		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
 		37C723B11A851E49002CF49D /* PairingTransactionsCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */; };
+		37C903351ADBC43E001517ED /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C903341ADBC43E001517ED /* OpenSSL.framework */; };
 		37DD54031A823C3E00449CCA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		37DF00761A8E119B00712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
 		37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
 		37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
-		37E7F5801A816A23006CA878 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E7F57F1A816A23006CA878 /* openssl.framework */; };
 		37EE4D901A8B721A0085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
 		37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
 		37EE4D951A8B96F40085CE49 /* BitcoinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */; };
@@ -403,9 +403,9 @@
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingTransactionsManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptor.swift; sourceTree = "<group>"; };
+		37C903341ADBC43E001517ED /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = vendor/OpenSSL.framework; sourceTree = "<group>"; };
 		37DF00751A8E119B00712AB1 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationManager.swift; path = managers/ApplicationManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		37E7F57F1A816A23006CA878 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = vendor/openssl.framework; sourceTree = "<group>"; };
 		37EE4D8F1A8B721A0085CE49 /* Mockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
 		37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinFormatter.swift; path = bitcoin/BitcoinFormatter.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -436,7 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37E7F5801A816A23006CA878 /* openssl.framework in Frameworks */,
+				37C903351ADBC43E001517ED /* OpenSSL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,7 +513,7 @@
 		376F500D1A821411001C6684 /* OpenSSL */ = {
 			isa = PBXGroup;
 			children = (
-				37E7F57F1A816A23006CA878 /* openssl.framework */,
+				37C903341ADBC43E001517ED /* OpenSSL.framework */,
 			);
 			name = OpenSSL;
 			sourceTree = "<group>";
@@ -1418,6 +1418,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
+				);
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1434,6 +1438,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
+				);
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

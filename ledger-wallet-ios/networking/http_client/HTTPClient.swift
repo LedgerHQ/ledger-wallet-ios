@@ -75,11 +75,11 @@ class HTTPClient {
     // MARK: - Log
     
     private func logRequest(request: NSURLRequest) {
-        println("HTTPClient: -> \(request.HTTPMethod!) \(request.URL)")
+        println("HTTPClient: -> \(request.HTTPMethod!) \(request.URL!)")
     }
     
     private func logResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
-        println("HTTPClient: <- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL)")
+        println("HTTPClient: <- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
     }
     
     // MARK: - Requests

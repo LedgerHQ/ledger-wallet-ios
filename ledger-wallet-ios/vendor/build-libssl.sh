@@ -29,7 +29,7 @@ SDKVERSION=`xcrun -sdk iphoneos --show-sdk-version`														  #
 #																		  #
 ###########################################################################
 
-FWNAME=openssl
+FWNAME=OpenSSL
 
 rm -rf 'tmp'
 rm -rf $FWNAME.framework
@@ -67,8 +67,8 @@ mkdir -p "${CURRENTPATH}/src"
 mkdir -p "${CURRENTPATH}/bin"
 mkdir -p "${CURRENTPATH}/lib"
 
-cp -r ../openssl openssl
-cd openssl
+cp -r ../OpenSSL OpenSSL
+cd OpenSSL
 
 ALLLIBSSL=""
 ALLLIBCRYPTO=""
@@ -140,7 +140,7 @@ mkdir -p ${CURRENTPATH}/include
 cp -R ${CURRENTPATH}/bin/iPhoneSimulator${SDKVERSION}-i386.sdk/include/openssl ${CURRENTPATH}/include/
 echo "Building done."
 echo "Cleaning up..."
-rm -rf ${CURRENTPATH}/src/openssl
+rm -rf ${CURRENTPATH}/src/OpenSSL
 echo "Done."
 
 cd $CURRENTPATH

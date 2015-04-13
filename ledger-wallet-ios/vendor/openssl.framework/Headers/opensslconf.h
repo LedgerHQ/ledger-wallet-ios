@@ -107,8 +107,8 @@ extern "C" {
 
 #if !(defined(VMS) || defined(__VMS)) /* VMS uses logical names instead */
 #if defined(HEADER_CRYPTLIB_H) && !defined(OPENSSLDIR)
-#define ENGINESDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/vendor/tmp/bin/iPhoneSimulator8.1-i386.sdk/lib/engines"
-#define OPENSSLDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/vendor/tmp/bin/iPhoneSimulator8.1-i386.sdk"
+#define ENGINESDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/vendor/tmp/bin/iPhoneSimulator8.3-i386.sdk/lib/engines"
+#define OPENSSLDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/vendor/tmp/bin/iPhoneSimulator8.3-i386.sdk"
 #endif
 #endif
 
