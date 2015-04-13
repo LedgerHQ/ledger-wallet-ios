@@ -64,9 +64,9 @@ final class PairingTransactionInfo: Mockable {
         if pinCode != nil && recipientAddress != nil && Bitcoin.Address.verifyPublicAddress(recipientAddress!) == true {
             self.recipientAddress = recipientAddress!
             self.pinCode = pinCode!
-            self.changeAmount = BTCBigNumber(unsignedData: changeData).int64value
-            self.feesAmount = BTCBigNumber(unsignedData: feesData).int64value
-            self.outputsAmount = BTCBigNumber(unsignedData: outputsData).int64value
+            self.changeAmount = BTCBigNumber(unsignedBigEndian: changeData).int64value
+            self.feesAmount = BTCBigNumber(unsignedBigEndian: feesData).int64value
+            self.outputsAmount = BTCBigNumber(unsignedBigEndian: outputsData).int64value
             self.transactionDate = NSDate()
         }
         else {
