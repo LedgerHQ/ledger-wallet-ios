@@ -17,7 +17,10 @@ extension Crypto {
         }
         
         class func stringFromData(data: NSData, encoding: NSStringEncoding = NSUTF8StringEncoding) -> String? {
-            return NSString(data: data, encoding: encoding)
+            if let string = NSString(data: data, encoding: encoding) {
+                return string as String
+            }
+            return nil
         }
         
         class func splitDataInTwo(data: NSData) -> (NSData, NSData)  {

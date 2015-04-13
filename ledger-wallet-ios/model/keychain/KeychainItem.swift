@@ -65,15 +65,6 @@ class KeychainItem {
         return keychainItems
     }
     
-    class func fetchAllWithCompletion(completion: ([KeychainItem]) -> Void) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let items = self.fetchAll()
-            dispatch_async(dispatch_get_main_queue()) {
-                completion(items)
-            }
-        }
-    }
-    
     class func destroyAll() -> Bool {
         // build query
         var query = defaultQuery()
@@ -94,7 +85,7 @@ class KeychainItem {
         // perform keychain query
         var result: AnyObject? = nil
         let status = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
-        let item = result as [String: AnyObject]
+        let item = result as! [String: AnyObject]
         let keychainItem = self(attributes: item)
         return keychainItem
     }
@@ -110,9 +101,7 @@ class KeychainItem {
     
     func setValue(value: String?, forKey key: String) {
         if (value != nil) {
-            var newDict = keysAndValues // TODO: Fix in Swift 1.2
-            newDict[key] = value!
-            keysAndValues = newDict
+            keysAndValues[key] = value!
             saveIfNeeded()
         }
         else {
@@ -138,10 +127,11 @@ class KeychainItem {
         
         // clear itself
         clear()
+        
         return status == errSecSuccess
     }
     
-    private func save() {
+    private func save() -> Bool {
         // build query
         var query: [String: AnyObject] = [(kSecValuePersistentRef as String): persistentReference]
         
@@ -149,6 +139,8 @@ class KeychainItem {
         let data = JSON.dataFromJSONObject(keysAndValues)!
         let attributes = [(kSecValueData as String): data]
         let status = SecItemUpdate(query, attributes)
+        
+        return status == errSecSuccess
     }
     
     private func saveIfNeeded() {
@@ -177,8 +169,8 @@ class KeychainItem {
     // MARK: - Initialization
     
     required init(attributes: [String: AnyObject]) {
-        persistentReference = attributes[kSecValuePersistentRef as String] as NSData
-        creationDate = attributes[kSecAttrCreationDate as String] as NSDate
+        persistentReference = attributes[kSecValuePersistentRef as String] as! NSData
+        creationDate = attributes[kSecAttrCreationDate as String] as! NSDate
         let data = attributes[kSecValueData as String] as? NSData
         load(data)
     }

@@ -24,27 +24,27 @@ class HTTPClient {
     
     // MARK: - Tasks management
     
-    func get(URL: String, completionHandler: Task.CompletionHandler?, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL) -> DataTask {
-        return performDataRequest(.GET, URL: URL, completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+    func get(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+        return performDataRequest(.GET, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func post(URL: String, completionHandler: Task.CompletionHandler?, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL) -> DataTask {
-        return performDataRequest(.POST, URL: URL, completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+    func post(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+        return performDataRequest(.POST, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func delete(URL: String, completionHandler: Task.CompletionHandler?, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL) -> DataTask {
-        return performDataRequest(.DELETE, URL: URL, completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+    func delete(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+        return performDataRequest(.DELETE, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func head(URL: String, completionHandler: Task.CompletionHandler?, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL) -> DataTask {
-        return performDataRequest(.HEAD, URL: URL, completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+    func head(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+        return performDataRequest(.HEAD, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func put(URL: String, completionHandler: Task.CompletionHandler?, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL) -> DataTask {
-        return performDataRequest(.PUT, URL: URL, completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+    func put(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+        return performDataRequest(.PUT, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    private func performDataRequest(method: Task.Method, URL: String, completionHandler: Task.CompletionHandler?, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL) -> DataTask {
+    private func performDataRequest(method: Task.Method, URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
         // create request
         let request = defaultRequest(method, URL: URL)
         
@@ -53,7 +53,7 @@ class HTTPClient {
         
         // create data task
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void)? = (completionHandler == nil) ? nil : { data, response, error in
-            let httpResponse = response as NSHTTPURLResponse
+            let httpResponse = response as! NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
             var finalError = error
             if finalError == nil && statusCode < 200 && statusCode > 299 {

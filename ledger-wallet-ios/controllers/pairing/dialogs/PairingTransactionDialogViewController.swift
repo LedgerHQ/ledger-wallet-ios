@@ -55,7 +55,7 @@ class PairingTransactionDialogViewController: DialogViewController {
         receipientAddressLabel?.text = transactionInfo.recipientAddress
         dongleNameLabel?.text = transactionInfo.dongleName
         amountLabel?.text = Bitcoin.Formatter.stringFromAmount(transactionInfo.outputsAmount)
-        transactionDateLabel?.text = NSString(format: localizedString("requested_on_%@"), NSDateFormatter.localizedStringFromDate(transactionInfo.transactionDate, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle))
+        transactionDateLabel?.text = NSString(format: localizedString("requested_on_%@"), NSDateFormatter.localizedStringFromDate(transactionInfo.transactionDate, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)) as String
     }
     
 }

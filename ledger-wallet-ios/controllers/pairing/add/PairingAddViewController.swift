@@ -154,7 +154,7 @@ extension PairingAddViewController {
             // go to connection
             navigateToStep(PairingAddConnectionStepViewController.self, dataToPass: nil) { finished in
                 // join room
-                self.pairingProtocolManager?.joinRoom(object as String)
+                self.pairingProtocolManager?.joinRoom(object as! String)
                 self.pairingProtocolManager?.sendPublicKey()
             }
         }
@@ -162,12 +162,12 @@ extension PairingAddViewController {
             // go to finalize
             navigateToStep(PairingAddFinalizeStepViewController.self, dataToPass: nil) { finished in
                 // send challenge response
-                (self.pairingProtocolManager?.sendChallengeResponse(object as String))!
+                (self.pairingProtocolManager?.sendChallengeResponse(object as! String))!
             }
         }
         else if (stepViewController is PairingAddNameStepViewController) {
             // save pairing item
-            let name = object as String
+            let name = object as! String
             if let item = pairingProtocolManager?.createNewPairingItemNamed(name) {
                 // register remote notifications
                 RemoteNotificationsManager.sharedInstance().registerForRemoteNotifications()
@@ -213,16 +213,16 @@ extension PairingAddViewController {
     override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
         super.keyboardWillHide(userInfo)
         
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
-        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
         adjustContentInset(0, duration: duration, options: options, animated: true)
     }
     
     override func keyboardWillShow(userInfo: [NSObject : AnyObject]) {
         super.keyboardWillShow(userInfo)
         
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as NSNumber).doubleValue
-        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as NSNumber).integerValue << 16))
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
         adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
     }
     

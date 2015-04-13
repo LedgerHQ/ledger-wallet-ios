@@ -35,7 +35,7 @@ class RemoteNotificationsManager: BaseManager {
     
     func registerDeviceTokenToPairedDongles(token: NSData) {
         // loop through all pairing keychain items
-        let allItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
+        let allItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for item in allItems {
             // if pairing item has no (or outdated) device token
             if item.deviceToken == nil || item.deviceToken! != token {

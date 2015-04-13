@@ -22,23 +22,23 @@ class BaseRestClient: SharableObject {
     // MARK: - Requests management
     
     func get(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.get(baseURLWithPath(path), completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+        return httpClient.get(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
     func post(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .JSON, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.post(baseURLWithPath(path), completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+        return httpClient.post(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
     func head(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.head(baseURLWithPath(path), completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+        return httpClient.head(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
     func delete(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.delete(baseURLWithPath(path), completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+        return httpClient.delete(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
     func put(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .JSON, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.put(baseURLWithPath(path), completionHandler: completionHandler, parameters: parameters, encoding: encoding)
+        return httpClient.put(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
     // MARK - URL management

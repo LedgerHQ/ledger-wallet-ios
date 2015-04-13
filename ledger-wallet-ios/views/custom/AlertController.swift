@@ -44,16 +44,13 @@ class AlertController: NSObject {
 
     }
     
-    private struct SharedControllers {
-        private static var sharedControllers: [UIAlertView: AlertController] = [:]
-    }
-    
     let style: Style
     let title: String?
     let message: String?
     private var actions: [Action] = []
     private var alertController: UIAlertController! = nil
     private var alertView: UIAlertView! = nil
+    private static var sharedControllers: [UIAlertView: AlertController] = [:]
     
     class func usesSystemAlertController() -> Bool {
         return NSClassFromString("UIAlertController") != nil
@@ -94,7 +91,7 @@ class AlertController: NSObject {
             alertView.show()
             
             // add to shared pool
-            SharedControllers.sharedControllers[alertView] = self
+            AlertController.sharedControllers[alertView] = self
         }
     }
     
@@ -113,12 +110,12 @@ extension AlertController: UIAlertViewDelegate {
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         // call handler
-        let alertController = SharedControllers.sharedControllers[alertView]
+        let alertController = AlertController.sharedControllers[alertView]
         let action = alertController?.actions[buttonIndex]
         action?.handler?(action!)
         
         // remove from shared pool
-        SharedControllers.sharedControllers[alertView] = nil
+        AlertController.sharedControllers[alertView] = nil
     }
     
 }

@@ -96,7 +96,7 @@ extension PairingTransactionsManager {
         
         // rebuild websockets
         let exemptedPairingItem = exceptions ?? []
-        let pairingItems = PairingKeychainItem.fetchAll() as [PairingKeychainItem]
+        let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for pairingItem in pairingItems {
             if (contains(exemptedPairingItem, pairingItem)) {
                 continue

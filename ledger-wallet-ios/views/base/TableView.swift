@@ -8,8 +8,6 @@
 
 import UIKit
 
-@IBDesignable
-
 class TableView: UITableView {
     
 }

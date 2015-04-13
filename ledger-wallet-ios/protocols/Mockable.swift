@@ -10,6 +10,6 @@ import Foundation
 
 protocol Mockable {
     
-    class func testObject() -> Self
+    static func testObject() -> Self
     
 }

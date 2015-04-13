@@ -8,8 +8,6 @@
 
 import UIKit
 
-@IBDesignable
-
 class View: UIView {
     
 }

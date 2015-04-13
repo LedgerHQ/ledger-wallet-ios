@@ -91,7 +91,7 @@ class PinCodeView: View {
 
     // MARK: - Responder
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
         
         _textField.becomeFirstResponder()
@@ -191,7 +191,7 @@ class PinCodeView: View {
         initialize()
     }
     
-    override init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         initialize()

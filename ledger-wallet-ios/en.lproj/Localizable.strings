@@ -96,4 +96,4 @@
 
 "a_dongle_with_this_name_already_exists" = "This name is already used by another paired Ledger Wallet.";
 
-"deleting_this_dongle_pairing" = "By deleting this Ledger Wallet, you will no longer be able to manually validate transactions from this smartphone.\nDo you want to continue?";
+"deleting_this_dongle_pairing" = "By deleting this paired Ledger Wallet, you will no longer be able to manually validate transactions from this smartphone.\nDo you want to continue?";

@@ -87,7 +87,7 @@ class PairingProtocolCryptor {
     }
     
     func challengeStringFromChallengeData(data: NSData) -> String {
-        var dataCopy = data.mutableCopy() as NSMutableData
+        var dataCopy = data.mutableCopy() as! NSMutableData
         var pointer = UnsafeMutablePointer<UInt8>(dataCopy.mutableBytes)
         for i in 0..<data.length {
             pointer.memory = pointer.memory + 0x30 // add '0'

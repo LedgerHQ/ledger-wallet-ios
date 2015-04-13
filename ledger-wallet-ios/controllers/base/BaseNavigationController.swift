@@ -27,7 +27,7 @@ extension BaseNavigationController {
     
     class func newInstance() -> BaseNavigationController {
         let navigationController = BaseNavigationController(navigationBarClass: NavigationBar.self, toolbarClass: nil)
-        (navigationController.navigationBar as NavigationBar).allure = "navigationBar.nightBlue"
+        (navigationController.navigationBar as! NavigationBar).allure = "navigationBar.nightBlue"
         return navigationController
     }
     

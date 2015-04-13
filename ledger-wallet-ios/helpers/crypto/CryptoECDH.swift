@@ -28,7 +28,7 @@ extension Crypto {
             let secret = NSMutableData(length: Int(secretSize))!
             
             // compute secret 
-            ECDH_compute_key(UnsafeMutablePointer(secret.mutableBytes), UInt(secretSize), pPKey, iKey, nil)
+            ECDH_compute_key(UnsafeMutablePointer<Void>(secret.mutableBytes), Int(secretSize), pPKey, iKey, nil)
             
             // finalize
             return Crypto.Key(symmetricKey: secret)
