@@ -1,9 +1,9 @@
-[submodule "ledger-wallet-ios/vendor/starscream"]
-	path = ledger-wallet-ios/vendor/starscream
-	url = git@github.com:daltoniam/Starscream.git
-[submodule "ledger-wallet-ios/vendor/CoreBitcoin"]
-	path = ledger-wallet-ios/vendor/CoreBitcoin
+[submodule "ledger-wallet-ios/Vendor/CoreBitcoin"]
+	path = ledger-wallet-ios/Vendor/CoreBitcoin
 	url = git@github.com:oleganza/CoreBitcoin.git
-[submodule "ledger-wallet-ios/vendor/OpenSSL"]
-	path = ledger-wallet-ios/vendor/OpenSSL
+[submodule "ledger-wallet-ios/Vendor/OpenSSL"]
+	path = ledger-wallet-ios/Vendor/OpenSSL
 	url = git@github.com:openssl/openssl.git
+[submodule "ledger-wallet-ios/Vendor/Starscream"]
+	path = ledger-wallet-ios/Vendor/Starscream
+	url = git@github.com:daltoniam/Starscream.git
