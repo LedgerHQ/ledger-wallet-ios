@@ -19,9 +19,12 @@
 		3730736C1B2ECD6200DDFE5A /* BTCMerkleTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073611B2ECD6200DDFE5A /* BTCMerkleTree.m */; };
 		3730736E1B2ECD6200DDFE5A /* BTCPaymentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073651B2ECD6200DDFE5A /* BTCPaymentRequest.m */; };
 		3730736F1B2ECD6200DDFE5A /* BTCProtocolBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073671B2ECD6200DDFE5A /* BTCProtocolBuffers.m */; };
-		373073751B2ECF7400DDFE5A /* BTCAssetID.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073721B2ECF7400DDFE5A /* BTCAssetID.m */; };
+		373073751B2ECF7400DDFE5A /* BTCAssetID.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073721B2ECF7400DDFE5A /* BTCAssetID.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		373073761B2ECF7400DDFE5A /* BTCAssetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073741B2ECF7400DDFE5A /* BTCAssetType.m */; };
 		373073771B2ECFA700DDFE5A /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073561B2ECCFC00DDFE5A /* Security.swift */; };
+		373073791B2EDF0700DDFE5A /* BTCAssetID.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073721B2ECF7400DDFE5A /* BTCAssetID.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		3730737A1B2EDF2200DDFE5A /* BTCAssetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073741B2ECF7400DDFE5A /* BTCAssetType.m */; };
+		3730737B1B2EDF2B00DDFE5A /* BTCAssetAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073591B2ECD6200DDFE5A /* BTCAssetAddress.m */; };
 		373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CB1A71517C00BAF63F /* Blocks.swift */; };
 		373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E22D81A7681F100BAF63F /* PairingKeychainItem.swift */; };
@@ -698,7 +701,6 @@
 		3784FB071A5D2F5E0063A364 /* ledger-wallet-ios */ = {
 			isa = PBXGroup;
 			children = (
-				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				378205D51A60196C00F6CA45 /* Resources */,
 				373E22D61A7681F100BAF63F /* Model */,
 				375A38081A77DA9A0082D917 /* Managers */,
@@ -717,6 +719,7 @@
 		3784FB081A5D2F5F0063A364 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */,
 				3784FB091A5D2F5F0063A364 /* Info.plist */,
 			);
@@ -1282,6 +1285,7 @@
 				37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
 				37BAF3051AB1975F0084B832 /* BTCChainCom.m in Sources */,
+				3730737B1B2EDF2B00DDFE5A /* BTCAssetAddress.m in Sources */,
 				379A12CF1B2AE8A900D6E8DA /* HTTPClientDataTask.swift in Sources */,
 				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
@@ -1334,12 +1338,14 @@
 				37ABFBD61A83B85D0061E92D /* CryptoHashTests.swift in Sources */,
 				37BAF3181AB1975F0084B832 /* BTCScriptMachine.m in Sources */,
 				37BAF3191AB1975F0084B832 /* BTCTransaction.m in Sources */,
+				373073791B2EDF0700DDFE5A /* BTCAssetID.m in Sources */,
 				37BAF3111AB1975F0084B832 /* BTCOpcode.m in Sources */,
 				376F51261A823395001C6684 /* Blocks.swift in Sources */,
 				37BAF30E1AB1975F0084B832 /* BTCMnemonic.m in Sources */,
 				376F51231A823266001C6684 /* PairingProtocolManager.swift in Sources */,
 				37BAF3071AB1975F0084B832 /* BTCCurvePoint.m in Sources */,
 				37ABFBE61A8514390061E92D /* PairingProtocolCryptorTests.swift in Sources */,
+				3730737A1B2EDF2200DDFE5A /* BTCAssetType.m in Sources */,
 				37BAF30B1AB1975F0084B832 /* BTCHashID.m in Sources */,
 				37BAF3061AB1975F0084B832 /* BTCCurrencyConverter.m in Sources */,
 				37BAF30C1AB1975F0084B832 /* BTCKey.m in Sources */,
@@ -1476,7 +1482,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Bigot (886TTS479K)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
@@ -1486,7 +1492,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "922c5f12-cace-4a16-8562-2fc280897443";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -1496,7 +1501,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Epic Dream SAS (X6LFS5BQKN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
@@ -1506,7 +1511,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e55926b6-4d58-436f-b2a0-6d0c428e2e42";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};
@@ -1527,7 +1531,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
 			};
 			name = Debug;
