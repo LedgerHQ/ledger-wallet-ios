@@ -134,7 +134,7 @@ class PinCodeView: View {
         for var i = 0; i < length; ++i {
             // draw box
             let boxRect = CGRectMake(CGFloat(i) * (boxSize.width - borderDecal + boxSpacing) + borderDecal, borderDecal, boxSize.width - borderDecal * 2, boxSize.height - borderDecal * 2)
-            let boxPath = UIBezierPath(roundedRect: boxRect, cornerRadius: VisualFactory.Metrics.BordersRadii.large)
+            let boxPath = UIBezierPath(roundedRect: boxRect, cornerRadius: VisualFactory.Metrics.BordersRadius.Large)
             boxPath.lineWidth = borderWidth
             var fillColor: UIColor!
             var strokeColor: UIColor!
@@ -160,7 +160,7 @@ class PinCodeView: View {
             let boxCenter = CGPointMake(CGRectGetMidX(boxRect), CGRectGetMidY(boxRect))
             if (i == (_textField.text as NSString).length) {
                 if let thePlaceholder = placeholder {
-                    drawLetter((thePlaceholder as NSString).substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.semiboldFontWithSize(VisualFactory.Fonts.Sizes.ultraHuge.rawValue), color: strokeColor)
+                    drawLetter((thePlaceholder as NSString).substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.semiboldFontWithSize(VisualFactory.Fonts.Size.UltraHuge), color: strokeColor)
                 }
             }
             else if (i < (_textField.text as NSString).length) {
@@ -170,7 +170,7 @@ class PinCodeView: View {
             }
             else {
                 if let thePlaceholder = placeholder {
-                    drawLetter((thePlaceholder as NSString).substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.lightFontWithSize(VisualFactory.Fonts.Sizes.ultraHuge.rawValue), color: strokeColor)
+                    drawLetter((thePlaceholder as NSString).substringWithRange(NSMakeRange(i, 1)) ?? "", point: boxCenter, font: VisualFactory.Fonts.lightFontWithSize(VisualFactory.Fonts.Size.UltraHuge), color: strokeColor)
                 }
             }
         }
@@ -179,7 +179,7 @@ class PinCodeView: View {
     // MARK: - Initialization
     
     private func initialize() {
-        backgroundColor = VisualFactory.Colors.transparent
+        backgroundColor = VisualFactory.Colors.Transparent
         addSubview(_textField)
         _textField.delegate = self
         observeTextFieldNotifications(true)

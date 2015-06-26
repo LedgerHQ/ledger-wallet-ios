@@ -32,7 +32,7 @@ extension Button {
     
     // MARK: - States tinted images automation
     
-    func setTintedImages(image: UIImage, tintColor: UIColor, darkenFactor: CGFloat = VisualFactory.Metrics.defaultDarkenFactor) {
+    func setTintedImages(image: UIImage, tintColor: UIColor, darkenFactor: CGFloat = VisualFactory.Factors.Darken.Default) {
         setImage(image.imageWithColor(tintColor), forState: UIControlState.Normal)
         setImage(image.imageWithColor(tintColor.darkerColor(factor: darkenFactor)), forState: UIControlState.Highlighted)
     }

@@ -27,7 +27,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             
             // create dimming view
             dimmingView = UIView()
-            dimmingView.backgroundColor = VisualFactory.Colors.black.colorWithAlphaComponent(0.3)
+            dimmingView.backgroundColor = VisualFactory.Colors.Black.colorWithAlphaComponent(0.3)
             dimmingView.frame = containerView.bounds
             dimmingView.alpha = 0.0
             containerView.addSubview(dimmingView)
@@ -40,10 +40,10 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             // create background view
             backgroundView = UIView()
             backgroundView.backgroundColor = contentView.backgroundColor
-            backgroundView.layer.cornerRadius = VisualFactory.Metrics.defaultBorderRadius
+            backgroundView.layer.cornerRadius = VisualFactory.Metrics.BordersRadius.Default
             backgroundView.layer.shadowColor = UIColor.blackColor().CGColor
             backgroundView.layer.shadowOffset = CGSizeZero
-            backgroundView.layer.shadowRadius = VisualFactory.Metrics.Paddings.almostSmall
+            backgroundView.layer.shadowRadius = VisualFactory.Metrics.Padding.AlmostSmall
             backgroundView.layer.shadowOpacity = 0.2
             backgroundView.frame = CGRectMake((dimmingView.bounds.size.width - backgroundViewSize.width) / 2.0, dimmingView.bounds.size.height, backgroundViewSize.width, backgroundViewSize.height)
             dimmingView.addSubview(backgroundView)
@@ -73,7 +73,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
         if (transitionContext.isAnimated()) {
-            return VisualFactory.Metrics.Durations.Animations.long
+            return VisualFactory.Durations.Animation.Long
         }
         return 0
     }

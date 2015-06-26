@@ -12,19 +12,26 @@ class NavigationBar: UINavigationBar {
     
     // MARK: - Content size
     
-    var barHeight: CGFloat {
-        if (UIScreen.mainScreen().bounds.height <= 480) {
-            return VisualFactory.Metrics.Views.NavigationBar.smallNavigationBarHeight
-        }
-        return VisualFactory.Metrics.defaultNavigationBarHeight
-    }
-    
     override func intrinsicContentSize() -> CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight)
     }
     
     override func sizeThatFits(size: CGSize) -> CGSize {
         return CGSize(width: super.sizeThatFits(size).width, height: barHeight)
+    }
+    
+    private var barHeight: CGFloat {
+        let bounds: CGRect
+        if UIScreen.mainScreen().respondsToSelector("nativeBounds") {
+            bounds = UIScreen.mainScreen().nativeBounds
+        }
+        else {
+            bounds = UIScreen.mainScreen().bounds
+        }
+        if bounds.height <= 480 {
+            return VisualFactory.Metrics.View.NavigationBar.Height.Small
+        }
+        return VisualFactory.Metrics.View.NavigationBar.Height.Default
     }
     
     // MARK: - Layout

@@ -14,7 +14,7 @@ class RoundedButton: Button {
 
     // MARK: - Border radius
     
-    var borderRadius: CGFloat = VisualFactory.Metrics.defaultBorderRadius {
+    var borderRadius: CGFloat = VisualFactory.Metrics.BordersRadius.Default {
         didSet {
             setNeedsDisplay()
         }
