@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8qw-uL-hhM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8qw-uL-hhM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Pairing Home View Controller-->
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="ledger_wallet" id="kiE-ye-FE2" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -54,7 +54,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="green"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="pairNewDeviceButtonTouched" destination="fN9-2h-qPz" eventType="touchUpInside" id="bnk-cK-lfl"/>
@@ -67,7 +67,7 @@
                                     <constraint firstAttribute="bottom" secondItem="ljT-9W-Ynp" secondAttribute="bottom" constant="25" id="tya-AM-2D5"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -121,7 +121,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="tableViewCell.transparent"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="_tableViewCell.transparent"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="dongleTitleLabel" destination="K23-Gm-dq2" id="zoK-zx-UsS"/>
@@ -130,7 +130,7 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="tableView.transparent"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="fN9-2h-qPz" id="5Ae-Nk-GpB"/>
@@ -149,7 +149,7 @@
                             <constraint firstAttribute="trailing" secondItem="wt8-T5-TCh" secondAttribute="trailing" id="jFB-Dc-JkR"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="PAIRED_LEDGER_WALLETS" id="w8H-fc-KEz" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -168,6 +168,9 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="titleAllure" value="navigationBar.title"/>
+                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
@@ -194,8 +197,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-ic-rwA" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="51"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                        <rect key="frame" x="148" y="15" width="306" height="21"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                        <rect key="frame" x="147" y="15" width="306" height="21"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2b-Nk-KjZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="51" height="21"/>
@@ -230,7 +233,7 @@
                                             <constraint firstAttribute="trailing" secondItem="kOi-zw-CaW" secondAttribute="trailing" id="zhe-dz-mtl"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.transparent"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
@@ -244,14 +247,14 @@
                                     <constraint firstAttribute="centerX" secondItem="D43-4X-hFN" secondAttribute="centerX" id="uv8-1B-eIS"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="actionBar.grey"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-CG-e38" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="51" width="600" height="485"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
@@ -266,7 +269,7 @@
                             <constraint firstAttribute="trailing" secondItem="qNa-ic-rwA" secondAttribute="trailing" id="yUT-ef-LHw"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="PAIR_A_LEDGER_WALLET" id="tDa-QY-nzN" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -300,6 +303,9 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="titleAllure" value="navigationBar.title"/>
+                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>

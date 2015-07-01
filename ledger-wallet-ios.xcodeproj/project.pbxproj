@@ -149,6 +149,7 @@
 		37ABFBE31A85101F0061E92D /* PairingProtocolContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */; };
 		37ABFBE41A85138A0061E92D /* PairingProtocolContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */; };
 		37ABFBE61A8514390061E92D /* PairingProtocolCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */; };
+		37AEA4B51B43FD0800C84721 /* NavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B71A6D3C47007DBBAF /* NavigationItem.swift */; };
 		37B537641A8299EA0087AB43 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537631A8299EA0087AB43 /* CryptoData.swift */; };
 		37B537661A82A1AB0087AB43 /* CryptoHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B537651A82A1AB0087AB43 /* CryptoHash.swift */; };
 		37B5376D1A82A5D20087AB43 /* CryptoEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */; };
@@ -218,7 +219,6 @@
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
 		37EF91C11A6D3C47007DBBAF /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */; };
-		37EF91C21A6D3C47007DBBAF /* NavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B71A6D3C47007DBBAF /* NavigationItem.swift */; };
 		37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B81A6D3C47007DBBAF /* TableView.swift */; };
 		37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B91A6D3C47007DBBAF /* TableViewCell.swift */; };
 		37EF91C51A6D3C47007DBBAF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91BA1A6D3C47007DBBAF /* View.swift */; };
@@ -1179,6 +1179,7 @@
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37EE4D901A8B721A0085CE49 /* Mockable.swift in Sources */,
 				37B5376D1A82A5D20087AB43 /* CryptoEncode.swift in Sources */,
+				37AEA4B51B43FD0800C84721 /* NavigationItem.swift in Sources */,
 				37EE4D951A8B96F40085CE49 /* BitcoinFormatter.swift in Sources */,
 				376F50FB1A82190D001C6684 /* BTCBitcoinURL.m in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
@@ -1253,7 +1254,6 @@
 				376F510C1A82190E001C6684 /* BTCOpcode.m in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
 				37A88F671A692ED40036CF2A /* PairingAddCodeStepViewController.swift in Sources */,
-				37EF91C21A6D3C47007DBBAF /* NavigationItem.swift in Sources */,
 				37ABFBCE1A836DA50061E92D /* CryptoKey.swift in Sources */,
 				37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */,
 				376F50FD1A82190D001C6684 /* BTCBlock.m in Sources */,
