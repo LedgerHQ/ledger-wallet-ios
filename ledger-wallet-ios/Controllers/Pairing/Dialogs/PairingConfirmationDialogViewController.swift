@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingConfirmationDialogViewController: DialogViewController {
+final class PairingConfirmationDialogViewController: DialogViewController {
     
     enum MessageType {
         case Error

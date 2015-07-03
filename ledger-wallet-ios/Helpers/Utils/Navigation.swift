@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Navigator {
+final class Navigator {
     
     // MARK: - Utilities
     
@@ -42,9 +42,13 @@ class Navigator {
         }
     }
     
-    class Pairing {
-        
-        // MARK: - Pairing navigation
+}
+
+extension Navigator {
+    
+    // MARK: - Pairing navigation
+
+    final class Pairing {
         
         class func presentAddViewController(#fromViewController: BaseViewController, delegate: PairingAddViewControllerDelegate) {
             Navigator.presentEmbeddedViewControllerOfClass(PairingAddViewController.self, fromViewController: fromViewController, configuration: { viewController, navigationController in
@@ -57,4 +61,5 @@ class Navigator {
         }
         
     }
+    
 }

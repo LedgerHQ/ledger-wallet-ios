@@ -8,7 +8,7 @@
 
 extension Crypto {
     
-    class Key {
+    final class Key {
         
         var hasPublicKey: Bool { return publicKey.length > 0 }
         var hasPrivateKey: Bool { return privateKey.length > 0 }

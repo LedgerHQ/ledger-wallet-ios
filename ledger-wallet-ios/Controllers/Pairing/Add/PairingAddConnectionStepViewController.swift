@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddConnectionStepViewController: PairingAddBaseStepViewController {
+final class PairingAddConnectionStepViewController: PairingAddBaseStepViewController {
 
     override var stepIndication: String {
         return localizedString("your_device_is_creating_secure_connection")

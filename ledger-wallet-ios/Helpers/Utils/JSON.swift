@@ -8,7 +8,7 @@
 
 import Foundation
 
-class JSON {
+final class JSON {
     
     class func JSONObjectFromData(data: NSData) -> AnyObject? {
         return NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil)

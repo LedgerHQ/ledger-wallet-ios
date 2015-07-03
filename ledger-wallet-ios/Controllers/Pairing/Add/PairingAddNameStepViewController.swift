@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddNameStepViewController: PairingAddBaseStepViewController {
+final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     
     @IBOutlet private weak var nameTextField: TextField!
     @IBOutlet private weak var walletImageView: UIImageView!

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingKeychainItem: KeychainItem {
+final class PairingKeychainItem: KeychainItem, Equatable {
     
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
     override class var itemClass: String { return kSecClassGenericPassword as String }
@@ -64,10 +64,6 @@ class PairingKeychainItem: KeychainItem {
             }
         }
     }
-}
-
-extension PairingKeychainItem: Equatable {
-
 }
 
 func ==(lhs: PairingKeychainItem, rhs: PairingKeychainItem) -> Bool {

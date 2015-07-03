@@ -10,7 +10,7 @@ import Foundation
 
 extension Crypto {
     
-    class ECDH {
+    final class ECDH {
         
         class func performAgreement(#internalKey: Crypto.Key, peerKey: Crypto.Key) -> Crypto.Key {
             if (!internalKey.isAsymmetric || !internalKey.hasPrivateKey || !peerKey.isAsymmetric || !peerKey.hasPublicKey) {

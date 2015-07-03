@@ -10,7 +10,7 @@ import Foundation
 
 extension Crypto {
     
-    class Data {
+    final class Data {
         
         class func dataFromString(string: String, encoding: NSStringEncoding = NSUTF8StringEncoding) -> NSData? {
             return string.dataUsingEncoding(encoding, allowLossyConversion: false)

@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Crypto {
+final class Crypto {
 
-    class Common {
+    final class Common {
         
         class func valueGreaterOrEqualThan(value: Int, modulo: Int) -> Int {
             if (value % modulo == 0) { return value }

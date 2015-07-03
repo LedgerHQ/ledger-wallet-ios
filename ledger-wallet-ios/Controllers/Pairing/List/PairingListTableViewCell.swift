@@ -14,7 +14,7 @@ protocol PairingListTableViewCellDelegate: class {
     
 }
 
-class PairingListTableViewCell: TableViewCell {
+final class PairingListTableViewCell: TableViewCell {
     
     @IBOutlet private weak var dongleTitleLabel: Label!
     @IBOutlet private weak var pairingDateLabel: Label!

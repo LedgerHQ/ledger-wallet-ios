@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct VisualTheme {
+final class VisualTheme {
     
     static let allureBlocks: [String: ViewStylist.AllureBlock] = [
         

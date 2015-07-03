@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct VisualFactory {
+final class VisualFactory {
     
     typealias TextAttribute = [NSObject: AnyObject]
     

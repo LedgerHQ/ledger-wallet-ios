@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewStylist {
+final class ViewStylist {
     
     typealias AllureBlock = (UIView) -> Void
     

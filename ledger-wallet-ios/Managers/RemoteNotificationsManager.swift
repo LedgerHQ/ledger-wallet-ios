@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RemoteNotificationsManager: BaseManager {
+final class RemoteNotificationsManager: BaseManager {
     
     // MARK: - Common
     

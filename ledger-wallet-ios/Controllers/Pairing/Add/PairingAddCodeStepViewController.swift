@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
+final class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     
     @IBOutlet private weak var pinCodeView: PinCodeView!
     @IBOutlet private weak var indicationLabel: Label!

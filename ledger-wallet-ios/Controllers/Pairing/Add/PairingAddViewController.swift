@@ -14,7 +14,7 @@ protocol PairingAddViewControllerDelegate: class {
     
 }
 
-class PairingAddViewController: BaseViewController {
+final class PairingAddViewController: BaseViewController {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var stepNumberLabel: Label!

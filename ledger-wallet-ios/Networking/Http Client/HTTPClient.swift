@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HTTPClient {
+final class HTTPClient {
     
     var autoStartsRequest = true
     var timeoutInterval: NSTimeInterval = 30

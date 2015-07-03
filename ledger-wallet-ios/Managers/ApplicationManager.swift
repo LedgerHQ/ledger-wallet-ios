@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ApplicationManager: BaseManager {
+final class ApplicationManager: BaseManager {
     
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {

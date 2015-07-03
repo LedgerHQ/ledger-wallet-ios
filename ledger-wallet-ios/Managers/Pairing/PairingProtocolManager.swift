@@ -15,7 +15,7 @@ protocol PairingProtocolManagerDelegate: class {
     
 }
 
-class PairingProtocolManager: BasePairingManager {
+final class PairingProtocolManager: BasePairingManager {
     
     enum PairingOutcome {
         case DongleSucceeded

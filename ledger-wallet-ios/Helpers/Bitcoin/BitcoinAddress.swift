@@ -10,7 +10,7 @@ import Foundation
 
 extension Bitcoin {
     
-    class Address {
+    final class Address {
         
         class func verifyPublicAddress(address: String) -> Bool {
             return BTCAddress(string: address) != nil

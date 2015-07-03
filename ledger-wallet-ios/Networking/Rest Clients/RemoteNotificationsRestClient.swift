@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RemoteNotificationsRestClient: BaseRestClient {
+final class RemoteNotificationsRestClient: BaseRestClient {
     
     // MARK: - Push token management
     
