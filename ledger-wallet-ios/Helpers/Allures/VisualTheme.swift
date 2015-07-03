@@ -130,29 +130,22 @@ struct VisualTheme {
         // MARK: - Button allures
     
         "button.navigationBar.grey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
-            var hightlightedStyle = VisualFactory.TextAttributes.NavigationBarText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.UltraStrong), forKey: NSForegroundColorAttributeName)
+            var highlightedStyle = VisualFactory.TextAttributes.NavigationBarText
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.UltraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.NavigationBarText), forState: UIControlState.Normal)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
         }),
         "button.navigationBar.white": ViewStylist.wrapAllureBlock({ (button: UIButton) in
-            var hightlightedStyle = VisualFactory.TextAttributes.NavigationBarWhiteText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.UltraStrong), forKey: NSForegroundColorAttributeName)
+            var highlightedStyle = VisualFactory.TextAttributes.NavigationBarWhiteText
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.UltraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.NavigationBarWhiteText), forState: UIControlState.Normal)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
-        }),
-        "button.icon": ViewStylist.wrapAllureBlock({ (button: UIButton) in
-            button.adjustsImageWhenHighlighted = false
-        }),
-        "button.icon.grey": ViewStylist.wrapAllureBlock({ (button: Button) in
-            VisualTheme.allureBlocks["button.icon"]?(button)
-            button.setTintedImages(button.imageForState(UIControlState.Normal)!, tintColor: VisualFactory.Colors.LightGrey, darkenFactor: VisualFactory.Factors.Darken.VeryStrong)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
         }),
         "button.small.softGrey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
-            var hightlightedStyle = VisualFactory.TextAttributes.SmallSoftGrey
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.ExtraStrong), forKey: NSForegroundColorAttributeName)
+            var highlightedStyle = VisualFactory.TextAttributes.SmallSoftGrey
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.ExtraStrong), forKey: NSForegroundColorAttributeName)
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.SmallSoftGrey), forState: UIControlState.Normal)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Highlighted), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Highlighted), attributes: highlightedStyle), forState: UIControlState.Highlighted)
         }),
         "roundedButton": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
             roundedButton.adjustsImageWhenHighlighted = false
@@ -178,6 +171,16 @@ struct VisualTheme {
             VisualTheme.allureBlocks["roundedButton"]?(roundedButton)
             roundedButton.setFillColor(VisualFactory.Colors.InvalidRed, forState: UIControlState.Normal)
             roundedButton.setFillColor(VisualFactory.Colors.InvalidRed.darkerColor(), forState: UIControlState.Highlighted)
+        }),
+        "button.icon": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            button.adjustsImageWhenHighlighted = false
+        }),
+        "button.icon.large.grey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            VisualTheme.allureBlocks["button.icon"]?(button)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.LargeIconGrey), forState: UIControlState.Normal)
+            var highlightedStyle = VisualFactory.TextAttributes.LargeIconGrey
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.VeryStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
         }),
 
         // MARK: - TextField allures

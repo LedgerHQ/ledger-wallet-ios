@@ -4,6 +4,11 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="fontawesome-webfont.ttf">
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Pairing Home View Controller-->
         <scene sceneID="mOQ-8b-0Cc">
@@ -89,13 +94,19 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Uk-V9-dNb" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="541" y="11" width="59" height="62"/>
+                                                    <rect key="frame" x="540" y="12" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="cYn-pH-ZvK"/>
+                                                        <constraint firstAttribute="width" constant="60" id="zin-41-QIa"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="18"/>
                                                     <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
-                                                    <state key="normal" image="icon_trash">
+                                                    <state key="normal" title="">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="icon.grey"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="icon.large.grey"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="deleteButtonTouched:" destination="3y0-t4-g0T" eventType="touchUpInside" id="fIw-dn-oei"/>
@@ -320,7 +331,4 @@
             <point key="canvasLocation" x="2154" y="437"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="icon_trash" width="19" height="21"/>
-    </resources>
 </document>

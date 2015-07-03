@@ -7,3 +7,6 @@
 [submodule "ledger-wallet-ios/Vendor/Starscream"]
 	path = ledger-wallet-ios/Vendor/Starscream
 	url = git@github.com:daltoniam/Starscream.git
+[submodule "ledger-wallet-ios/Vendor/FontAwesome"]
+	path = ledger-wallet-ios/Vendor/FontAwesome
+	url = git@github.com:FortAwesome/Font-Awesome.git

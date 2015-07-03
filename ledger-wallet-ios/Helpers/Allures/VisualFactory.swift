@@ -176,6 +176,11 @@ struct VisualFactory {
             NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge)
         ]
         
+        static let LargeIconGrey = [
+            NSForegroundColorAttributeName: Colors.LightGrey,
+            NSFontAttributeName: Fonts.iconFontWithSize(Fonts.Size.MegaLarge)
+        ]
+        
         private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
             var newAttributes = textAttribute
             newAttributes.merge(attributes)
@@ -210,11 +215,12 @@ struct VisualFactory {
     struct Fonts {
         
         private enum Name: String {
-            case Light = "OpenSans-Light"
-            case Regular = "OpenSans"
-            case Semibold = "OpenSans-Semibold"
-            case Bold = "OpenSans-Bold"
-            case Extrabold = "OpenSans-Extrabold"
+            case OpenSansLight = "OpenSans-Light"
+            case OpenSansRegular = "OpenSans"
+            case OpenSansSemibold = "OpenSans-Semibold"
+            case OpenSansBold = "OpenSans-Bold"
+            case OpenSansExtrabold = "OpenSans-Extrabold"
+            case FontAwesome = "FontAwesome"
         }
         
         struct Size {
@@ -246,23 +252,27 @@ struct VisualFactory {
         }
         
         static func lightFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Name.Light.rawValue, size: size)
+            return fontWithName(Name.OpenSansLight.rawValue, size: size)
         }
         
         static func regularFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Name.Regular.rawValue, size: size)
+            return fontWithName(Name.OpenSansRegular.rawValue, size: size)
         }
         
         static func semiboldFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Name.Semibold.rawValue, size: size)
+            return fontWithName(Name.OpenSansSemibold.rawValue, size: size)
         }
         
         static func boldFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Name.Bold.rawValue, size: size)
+            return fontWithName(Name.OpenSansBold.rawValue, size: size)
         }
         
         static func extraboldFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Name.Extrabold.rawValue, size: size)
+            return fontWithName(Name.OpenSansExtrabold.rawValue, size: size)
+        }
+        
+        static func iconFontWithSize(size: CGFloat) -> UIFont {
+            return fontWithName(Name.FontAwesome.rawValue, size: size)
         }
         
     }

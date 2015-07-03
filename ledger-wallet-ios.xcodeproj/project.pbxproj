@@ -213,6 +213,7 @@
 		37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
 		37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 373E22CE1A72490D00BAF63F /* NSObject+Utils.m */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
+		37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37E962341B441B890092946B /* fontawesome-webfont.ttf */; };
 		37EE4D901A8B721A0085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
 		37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
 		37EE4D951A8B96F40085CE49 /* BitcoinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */; };
@@ -438,6 +439,7 @@
 		37C903341ADBC43E001517ED /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = vendor/OpenSSL.framework; sourceTree = "<group>"; };
 		37DF00751A8E119B00712AB1 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationManager.swift; path = managers/ApplicationManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		37EE4D8F1A8B721A0085CE49 /* Mockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
 		37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinFormatter.swift; path = bitcoin/BitcoinFormatter.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -817,6 +819,7 @@
 		37ACFDED1A7917FC002E32FC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				37E962361B441B8C0092946B /* FontAwesome */,
 				373BA3111A9385A900849B6E /* Starscream */,
 				376F50AC1A821842001C6684 /* CoreBitcoin */,
 				376F500D1A821411001C6684 /* OpenSSL */,
@@ -876,6 +879,14 @@
 			);
 			name = Pairing;
 			path = managers/pairing;
+			sourceTree = "<group>";
+		};
+		37E962361B441B8C0092946B /* FontAwesome */ = {
+			isa = PBXGroup;
+			children = (
+				37E962341B441B890092946B /* fontawesome-webfont.ttf */,
+			);
+			name = FontAwesome;
 			sourceTree = "<group>";
 		};
 		37EE4D8E1A8B712F0085CE49 /* Protocols */ = {
@@ -1107,6 +1118,7 @@
 				37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */,
 				37F283621A64064100F432CC /* Main.storyboard in Resources */,
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
+				37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */,
 				37A2DBE51A7A86080045B639 /* PairingAddFinalizeStepViewController.xib in Resources */,
 				37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */,
 				378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */,
@@ -1511,6 +1523,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e55926b6-4d58-436f-b2a0-6d0c428e2e42";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 			};
 			name = Release;
 		};

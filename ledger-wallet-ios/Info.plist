@@ -26,6 +26,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>fontawesome-webfont.ttf</string>
 		<string>Fonts/OpenSans-Bold.ttf</string>
 		<string>Fonts/OpenSans-Regular.ttf</string>
 		<string>Fonts/OpenSans-Light.ttf</string>
