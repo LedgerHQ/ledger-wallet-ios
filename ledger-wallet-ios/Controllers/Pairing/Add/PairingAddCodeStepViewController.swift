@@ -25,7 +25,7 @@ final class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     override func configureView() {
         super.configureView()
 
-        pinCodeView?.restrictedCharacterSet = NSCharacterSet.hexadecimalCharacterSet()
+        pinCodeView?.restrictedCharacterSet = NSCharacterSet.base16CharacterSet()
         pinCodeView?.delegate = self
         pinCodeView?.length = 4
         pinCodeView?.placeholder = data as? String
