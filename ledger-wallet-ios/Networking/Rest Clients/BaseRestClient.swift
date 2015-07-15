@@ -15,7 +15,7 @@ class BaseRestClient: SharableObject {
         return _baseURL
     }
     var httpClient: HTTPClient {
-        if _httpClient == nil { _httpClient = HTTPClient() }
+        if _httpClient == nil { _httpClient = preferredHttpClient() }
         return _httpClient
     }
     var preferences: Preferences {
@@ -34,5 +34,9 @@ class BaseRestClient: SharableObject {
     
     func preferredBaseURL() -> String {
         return ""
+    }
+    
+    func preferredHttpClient() -> HTTPClient {
+        return HTTPClient()
     }
 }
