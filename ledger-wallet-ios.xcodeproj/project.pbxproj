@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370E838B1B564AFC00D67A9D /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* APIRestClient.swift */; };
+		370E838C1B565F8800D67A9D /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* APIRestClient.swift */; };
 		3724A3821A79383700E1B977 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */; };
 		3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */; };
@@ -250,6 +252,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		370E838A1B564AFC00D67A9D /* APIRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRestClient.swift; sourceTree = "<group>"; };
 		3724A3811A79383700E1B977 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddConnectionStepViewController.swift; sourceTree = "<group>"; };
 		3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddConnectionStepViewController.xib; sourceTree = "<group>"; };
@@ -779,6 +782,7 @@
 			isa = PBXGroup;
 			children = (
 				379A12C51B2AE80500D6E8DA /* BaseRestClient.swift */,
+				370E838A1B564AFC00D67A9D /* APIRestClient.swift */,
 				379A12C61B2AE80500D6E8DA /* RemoteNotificationsRestClient.swift */,
 			);
 			name = "Rest Clients";
@@ -1165,6 +1169,7 @@
 				376F50FA1A82190D001C6684 /* BTCBigNumber.m in Sources */,
 				37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */,
 				37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */,
+				370E838B1B564AFC00D67A9D /* APIRestClient.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
 				379CA0F81A7135A300A9D426 /* DialogViewController.swift in Sources */,
 				373073761B2ECF7400DDFE5A /* BTCAssetType.m in Sources */,
@@ -1341,6 +1346,7 @@
 				37BAF2FD1AB1975F0084B832 /* BTCAddress.m in Sources */,
 				37ABFBDB1A83C9540061E92D /* CryptoCipherTests.swift in Sources */,
 				37414B181A8D0B9300CE0795 /* RemoteNotificationsManager.swift in Sources */,
+				370E838C1B565F8800D67A9D /* APIRestClient.swift in Sources */,
 				37656F301A76A3F60042512D /* KeychainItem.swift in Sources */,
 				378E5C541AADEF7C00A0C9A8 /* SharableObject.swift in Sources */,
 				378E5C571AADEFBE00A0C9A8 /* Preferences.swift in Sources */,

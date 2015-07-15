@@ -1,23 +1,22 @@
 //
-//  BaseRestClient.swift
+//  APIRestClient.swift
 //  ledger-wallet-ios
 //
-//  Created by Nicolas Bigot on 12/02/2015.
+//  Created by Nicolas Bigot on 15/07/15.
 //  Copyright (c) 2015 Ledger. All rights reserved.
 //
 
 import Foundation
 
-class BaseRestClient: SharableObject {
+class APIRestClient: BaseRestClient {
     
-    private let baseURL = LedgerAPIBaseURL
-    lazy private var httpClient = HTTPClient()
-
     private enum HeaderFields: String {
         case Platform = "X-Ledger-Platform"
         case Environment = "X-Ledger-Environment"
         case Locale = "X-Ledger-Locale"
     }
+    
+    var authenticated = false
     
     // MARK: - Requests management
     
@@ -41,10 +40,10 @@ class BaseRestClient: SharableObject {
         return httpClient.put(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    // MARK - URL management
+    // MARK: - Configuration
     
-    private func baseURLWithPath(path: String) -> String {
-        return baseURL.stringByAppendingString(path)
+    override func preferredBaseURL() -> String {
+        return LedgerAPIBaseURL
     }
     
     // MARK: - Initialization
@@ -52,7 +51,8 @@ class BaseRestClient: SharableObject {
     required init() {
         super.init()
         
-        httpClient.additionalHeaders = [
+        // add default Ledger HTTP header fields
+        self.httpClient.additionalHeaders = [
             HeaderFields.Platform.rawValue: "ios",
             HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance().isInDebug ? "dev" : "prod",
             HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
