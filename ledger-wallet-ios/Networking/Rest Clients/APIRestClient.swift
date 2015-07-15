@@ -16,7 +16,11 @@ class APIRestClient: BaseRestClient {
         case Locale = "X-Ledger-Locale"
     }
     
-    var authenticated = false
+    var authenticated = false {
+        didSet {
+            // TODO: update http header fields with auth token
+        }
+    }
     
     // MARK: - Requests management
     
