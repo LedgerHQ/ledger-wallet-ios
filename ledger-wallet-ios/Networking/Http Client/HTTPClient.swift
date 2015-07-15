@@ -10,7 +10,7 @@ import Foundation
 
 final class HTTPClient {
     
-    var autoStartsRequest = true
+    var autostartRequests = true
     var timeoutInterval: NSTimeInterval = 30
     var additionalHeaders: [String: String]? = nil
     var session: NSURLSession {
@@ -66,7 +66,7 @@ final class HTTPClient {
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
         
         // launch it if necessary
-        if autoStartsRequest {
+        if autostartRequests {
             task.resume()
         }
         return task
