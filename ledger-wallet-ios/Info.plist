@@ -34,7 +34,7 @@
 		<string>Fonts/OpenSans-ExtraBold.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>Pairing</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

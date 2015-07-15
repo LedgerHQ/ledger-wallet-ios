@@ -20,15 +20,3 @@ class BaseNavigationController: UINavigationController {
     }
     
 }
-
-extension BaseNavigationController {
-    
-    // MARK: - Instantiation
-    
-    class func newInstance() -> BaseNavigationController {
-        let navigationController = BaseNavigationController(navigationBarClass: NavigationBar.self, toolbarClass: nil)
-        (navigationController.navigationBar as! NavigationBar).allure = "nightBlue"
-        return navigationController
-    }
-    
-}

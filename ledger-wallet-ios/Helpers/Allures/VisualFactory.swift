@@ -181,10 +181,11 @@ final class VisualFactory {
             NSFontAttributeName: Fonts.iconFontWithSize(Fonts.Size.MegaLarge)
         ]
         
-        private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
-            var newAttributes = textAttribute
-            newAttributes.merge(attributes)
-            return newAttributes
+        private static func extend(var textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
+            for (key, value) in attributes {
+                textAttribute.updateValue(value, forKey: key)
+            }
+            return textAttribute
         }
         
     }

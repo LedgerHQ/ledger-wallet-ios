@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8qw-uL-hhM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="SLb-pj-maR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -11,14 +11,14 @@
     </customFonts>
     <scenes>
         <!--Pairing Home View Controller-->
-        <scene sceneID="mOQ-8b-0Cc">
+        <scene sceneID="m9d-gW-zuH">
             <objects>
-                <viewController storyboardIdentifier="PairingHomeViewController" id="8qw-uL-hhM" userLabel="Pairing Home View Controller" customClass="PairingHomeViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PairingHomeViewController" id="SLb-pj-maR" userLabel="Pairing Home View Controller" customClass="PairingHomeViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pjc-Cw-w9L"/>
-                        <viewControllerLayoutGuide type="bottom" id="0qz-5Q-7Ad"/>
+                        <viewControllerLayoutGuide type="top" id="FQv-wy-Vkm"/>
+                        <viewControllerLayoutGuide type="bottom" id="lbc-8R-dWb"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="gQ5-ed-wry" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="w3J-lR-FOx" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -26,33 +26,33 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="ledger_wallet" id="kiE-ye-FE2" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <navigationItem key="navigationItem" title="ledger_wallet" id="YbT-dp-wef" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="titleAllure" value="navigationBar.largeTitle"/>
                         </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4yh-7b-DR0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ScG-XY-AGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="703" y="437"/>
         </scene>
         <!--Pairing List View Controller-->
-        <scene sceneID="OgS-3y-xXk">
+        <scene sceneID="meb-u9-pa1">
             <objects>
-                <viewController storyboardIdentifier="PairingListViewController" id="fN9-2h-qPz" userLabel="Pairing List View Controller" customClass="PairingListViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PairingListViewController" id="KQq-5b-X3d" userLabel="Pairing List View Controller" customClass="PairingListViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iCE-dK-vNs"/>
-                        <viewControllerLayoutGuide type="bottom" id="kaN-O7-JUe"/>
+                        <viewControllerLayoutGuide type="top" id="FmA-1G-zC2"/>
+                        <viewControllerLayoutGuide type="bottom" id="Plp-I7-4yv"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Apg-La-YHm" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="6aZ-4Y-DZH" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-T5-TCh" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KME-ZQ-Ide" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="452" width="600" height="84"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-9W-Ynp" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qlf-0Y-Pa8" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="191" y="25" width="218" height="34"/>
                                         <state key="normal" title="PAIR_A_LEDGER_WALLET">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -62,29 +62,29 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="green"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="pairNewDeviceButtonTouched" destination="fN9-2h-qPz" eventType="touchUpInside" id="bnk-cK-lfl"/>
+                                            <action selector="pairNewDeviceButtonTouched" destination="KQq-5b-X3d" eventType="touchUpInside" id="l0z-qy-Llg"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="ljT-9W-Ynp" firstAttribute="top" secondItem="wt8-T5-TCh" secondAttribute="top" constant="25" id="373-hV-wUx"/>
-                                    <constraint firstAttribute="centerX" secondItem="ljT-9W-Ynp" secondAttribute="centerX" id="L8c-yo-Iec"/>
-                                    <constraint firstAttribute="bottom" secondItem="ljT-9W-Ynp" secondAttribute="bottom" constant="25" id="tya-AM-2D5"/>
+                                    <constraint firstItem="Qlf-0Y-Pa8" firstAttribute="top" secondItem="KME-ZQ-Ide" secondAttribute="top" constant="25" id="Lw3-j5-5z9"/>
+                                    <constraint firstAttribute="centerX" secondItem="Qlf-0Y-Pa8" secondAttribute="centerX" id="Lx1-oC-moy"/>
+                                    <constraint firstAttribute="bottom" secondItem="Qlf-0Y-Pa8" secondAttribute="bottom" constant="25" id="f8D-LF-h1F"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kqf-Ck-Kn5" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="IMg-UO-yaQ" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="452"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PairingListTableViewCell" id="3y0-t4-g0T" customClass="PairingListTableViewCell" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PairingListTableViewCell" id="NMK-7R-CAp" customClass="PairingListTableViewCell" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3y0-t4-g0T" id="A5z-Hr-SbJ">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NMK-7R-CAp" id="32r-YR-OB3">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_dongle_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K23-Gm-dq2" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_dongle_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlL-i4-fNA" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="21" width="121" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -93,26 +93,26 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Uk-V9-dNb" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jac-JW-Ean" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="540" y="12" width="60" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="60" id="cYn-pH-ZvK"/>
-                                                        <constraint firstAttribute="width" constant="60" id="zin-41-QIa"/>
+                                                        <constraint firstAttribute="height" constant="60" id="R64-Pi-v3N"/>
+                                                        <constraint firstAttribute="width" constant="60" id="rEA-Ls-VX2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="18"/>
                                                     <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
                                                     <state key="normal" title="">
-                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="icon.large.grey"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="deleteButtonTouched:" destination="3y0-t4-g0T" eventType="touchUpInside" id="fIw-dn-oei"/>
+                                                        <action selector="deleteButtonTouched:" destination="NMK-7R-CAp" eventType="touchUpInside" id="faf-ay-iPk"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Pz-8Z0" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tM-Ch-UDd" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="45" width="112" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -123,20 +123,20 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="7Uk-V9-dNb" secondAttribute="trailing" id="Jxq-FZ-D4a"/>
-                                                <constraint firstAttribute="centerY" secondItem="7Uk-V9-dNb" secondAttribute="centerY" id="VAi-P6-8yG"/>
-                                                <constraint firstItem="K23-Gm-dq2" firstAttribute="leading" secondItem="A5z-Hr-SbJ" secondAttribute="leading" constant="20" id="XqO-LC-LyJ"/>
-                                                <constraint firstAttribute="centerY" secondItem="ADw-Pz-8Z0" secondAttribute="centerY" constant="-14" id="ZVm-CD-6Sh"/>
-                                                <constraint firstItem="ADw-Pz-8Z0" firstAttribute="leading" secondItem="A5z-Hr-SbJ" secondAttribute="leading" constant="20" id="yUL-Sh-Ojw"/>
-                                                <constraint firstAttribute="centerY" secondItem="K23-Gm-dq2" secondAttribute="centerY" constant="10" id="yYL-Ar-gFo"/>
+                                                <constraint firstAttribute="centerY" secondItem="9tM-Ch-UDd" secondAttribute="centerY" constant="-14" id="63O-NA-p1L"/>
+                                                <constraint firstItem="XlL-i4-fNA" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="20" id="7hD-wc-yYz"/>
+                                                <constraint firstAttribute="centerY" secondItem="XlL-i4-fNA" secondAttribute="centerY" constant="10" id="HXh-Gi-qGg"/>
+                                                <constraint firstAttribute="trailing" secondItem="jac-JW-Ean" secondAttribute="trailing" id="WXA-t8-ji8"/>
+                                                <constraint firstAttribute="centerY" secondItem="jac-JW-Ean" secondAttribute="centerY" id="key-F0-RJJ"/>
+                                                <constraint firstItem="9tM-Ch-UDd" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="20" id="rdS-av-PCN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="_tableViewCell.transparent"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <outlet property="dongleTitleLabel" destination="K23-Gm-dq2" id="zoK-zx-UsS"/>
-                                            <outlet property="pairingDateLabel" destination="ADw-Pz-8Z0" id="w9e-Ve-FUG"/>
+                                            <outlet property="dongleTitleLabel" destination="XlL-i4-fNA" id="9a3-NS-lXR"/>
+                                            <outlet property="pairingDateLabel" destination="9tM-Ch-UDd" id="qwA-DV-Hnd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -144,28 +144,28 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="dataSource" destination="fN9-2h-qPz" id="5Ae-Nk-GpB"/>
-                                    <outlet property="delegate" destination="fN9-2h-qPz" id="6V4-j5-bmq"/>
+                                    <outlet property="dataSource" destination="KQq-5b-X3d" id="jT1-Le-Mdj"/>
+                                    <outlet property="delegate" destination="KQq-5b-X3d" id="rS4-Ic-fg3"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="kaN-O7-JUe" firstAttribute="top" secondItem="wt8-T5-TCh" secondAttribute="bottom" id="1gy-JE-h8B"/>
-                            <constraint firstAttribute="trailing" secondItem="kqf-Ck-Kn5" secondAttribute="trailing" id="A9r-oW-ttr"/>
-                            <constraint firstItem="kqf-Ck-Kn5" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="Eql-jE-avZ"/>
-                            <constraint firstItem="kqf-Ck-Kn5" firstAttribute="top" secondItem="Apg-La-YHm" secondAttribute="top" id="Vjt-On-5u6"/>
-                            <constraint firstItem="wt8-T5-TCh" firstAttribute="leading" secondItem="Apg-La-YHm" secondAttribute="leading" id="W9i-lA-88Q"/>
-                            <constraint firstItem="wt8-T5-TCh" firstAttribute="top" secondItem="kqf-Ck-Kn5" secondAttribute="bottom" id="Ytg-T7-dTL"/>
-                            <constraint firstAttribute="trailing" secondItem="wt8-T5-TCh" secondAttribute="trailing" id="jFB-Dc-JkR"/>
+                            <constraint firstAttribute="trailing" secondItem="IMg-UO-yaQ" secondAttribute="trailing" id="20a-Mk-vtb"/>
+                            <constraint firstItem="Plp-I7-4yv" firstAttribute="top" secondItem="KME-ZQ-Ide" secondAttribute="bottom" id="22A-b4-UWX"/>
+                            <constraint firstItem="KME-ZQ-Ide" firstAttribute="top" secondItem="IMg-UO-yaQ" secondAttribute="bottom" id="JSz-my-d4r"/>
+                            <constraint firstItem="IMg-UO-yaQ" firstAttribute="top" secondItem="6aZ-4Y-DZH" secondAttribute="top" id="YSc-fl-m0G"/>
+                            <constraint firstItem="IMg-UO-yaQ" firstAttribute="leading" secondItem="6aZ-4Y-DZH" secondAttribute="leading" id="avK-9L-U9U"/>
+                            <constraint firstItem="KME-ZQ-Ide" firstAttribute="leading" secondItem="6aZ-4Y-DZH" secondAttribute="leading" id="m4h-XX-40H"/>
+                            <constraint firstAttribute="trailing" secondItem="KME-ZQ-Ide" secondAttribute="trailing" id="ppe-D4-V3B"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="PAIRED_LEDGER_WALLETS" id="w8H-fc-KEz" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
-                        <barButtonItem key="rightBarButtonItem" id="tf0-Rn-f9t">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BNV-Zd-FDh" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <navigationItem key="navigationItem" title="PAIRED_LEDGER_WALLETS" id="PsA-sz-XzM" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <barButtonItem key="rightBarButtonItem" id="h9K-sw-Sdh">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wcF-mn-L2t" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="-23" y="-15" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="DONE">
@@ -175,7 +175,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.white"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="complete" destination="fN9-2h-qPz" eventType="touchUpInside" id="t0O-57-0A1"/>
+                                    <action selector="complete" destination="KQq-5b-X3d" eventType="touchUpInside" id="Cuh-d9-A5H"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -185,33 +185,33 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="actionBar" destination="wt8-T5-TCh" id="2X0-uB-bpj"/>
-                        <outlet property="tableView" destination="kqf-Ck-Kn5" id="930-PD-iiC"/>
+                        <outlet property="actionBar" destination="KME-ZQ-Ide" id="T1g-Oi-fVy"/>
+                        <outlet property="tableView" destination="IMg-UO-yaQ" id="MBa-J7-yMI"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S1p-6h-QLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sHy-JX-SZa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1449" y="437"/>
         </scene>
         <!--Pairing Add View Controller-->
-        <scene sceneID="bMR-Jm-tId">
+        <scene sceneID="O5a-rP-Y6h">
             <objects>
-                <viewController storyboardIdentifier="PairingAddViewController" id="4D7-MK-KIs" userLabel="Pairing Add View Controller" customClass="PairingAddViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PairingAddViewController" id="V9Q-P1-nXw" userLabel="Pairing Add View Controller" customClass="PairingAddViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iSE-R5-Iv6"/>
-                        <viewControllerLayoutGuide type="bottom" id="Gt9-6m-NXK"/>
+                        <viewControllerLayoutGuide type="top" id="YS0-U4-uCz"/>
+                        <viewControllerLayoutGuide type="bottom" id="ovz-OW-sFE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="wVi-6a-LwE" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="2rR-I9-yyf" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-ic-rwA" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCH-EO-UU7" customClass="ActionBarView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="51"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D43-4X-hFN" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acL-ZJ-vaz" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="147" y="15" width="306" height="21"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2b-Nk-KjZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyE-5l-4qi" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="51" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -220,10 +220,10 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="hugeNumber.grey"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="kOi-zw-CaW" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="N7b-R8-cEZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="66" y="0.0" width="240" height="21"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="240" id="P4p-XC-lI3"/>
+                                                    <constraint firstAttribute="width" constant="240" id="yZe-zo-vcL"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -235,13 +235,13 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="v2b-Nk-KjZ" firstAttribute="leading" secondItem="D43-4X-hFN" secondAttribute="leading" id="GBb-1N-bdF"/>
-                                            <constraint firstItem="kOi-zw-CaW" firstAttribute="leading" secondItem="v2b-Nk-KjZ" secondAttribute="trailing" constant="15" id="I1V-uh-zDn"/>
-                                            <constraint firstAttribute="bottom" secondItem="kOi-zw-CaW" secondAttribute="bottom" id="bHW-SE-Gm7"/>
-                                            <constraint firstItem="v2b-Nk-KjZ" firstAttribute="top" secondItem="D43-4X-hFN" secondAttribute="top" id="bg3-PB-j8g"/>
-                                            <constraint firstItem="kOi-zw-CaW" firstAttribute="top" secondItem="D43-4X-hFN" secondAttribute="top" id="cHE-EG-csw"/>
-                                            <constraint firstAttribute="bottom" secondItem="v2b-Nk-KjZ" secondAttribute="bottom" id="e3F-Ia-WsJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="kOi-zw-CaW" secondAttribute="trailing" id="zhe-dz-mtl"/>
+                                            <constraint firstItem="HyE-5l-4qi" firstAttribute="top" secondItem="acL-ZJ-vaz" secondAttribute="top" id="Au8-Dg-o4A"/>
+                                            <constraint firstItem="HyE-5l-4qi" firstAttribute="leading" secondItem="acL-ZJ-vaz" secondAttribute="leading" id="EQw-ji-XeW"/>
+                                            <constraint firstItem="N7b-R8-cEZ" firstAttribute="leading" secondItem="HyE-5l-4qi" secondAttribute="trailing" constant="15" id="GOU-u6-SN8"/>
+                                            <constraint firstAttribute="bottom" secondItem="N7b-R8-cEZ" secondAttribute="bottom" id="L0W-cU-WQa"/>
+                                            <constraint firstAttribute="trailing" secondItem="N7b-R8-cEZ" secondAttribute="trailing" id="M0B-lC-MOG"/>
+                                            <constraint firstAttribute="bottom" secondItem="HyE-5l-4qi" secondAttribute="bottom" id="RPR-gu-bzW"/>
+                                            <constraint firstItem="N7b-R8-cEZ" firstAttribute="top" secondItem="acL-ZJ-vaz" secondAttribute="top" id="qSY-Mg-Wjl"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
@@ -250,18 +250,18 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="D43-4X-hFN" secondAttribute="bottom" constant="15" id="74f-tP-ebd"/>
-                                    <constraint firstAttribute="centerY" secondItem="D43-4X-hFN" secondAttribute="centerY" id="7ND-UX-5Uh"/>
-                                    <constraint firstItem="D43-4X-hFN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qNa-ic-rwA" secondAttribute="leading" id="9S5-8q-g5L"/>
-                                    <constraint firstItem="D43-4X-hFN" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="top" constant="15" id="g6M-e2-Z86"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="D43-4X-hFN" secondAttribute="trailing" id="jTh-wz-V9e"/>
-                                    <constraint firstAttribute="centerX" secondItem="D43-4X-hFN" secondAttribute="centerX" id="uv8-1B-eIS"/>
+                                    <constraint firstItem="acL-ZJ-vaz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KCH-EO-UU7" secondAttribute="leading" id="7kT-bV-yYt"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="acL-ZJ-vaz" secondAttribute="trailing" id="ATv-Tj-Rrd"/>
+                                    <constraint firstAttribute="centerY" secondItem="acL-ZJ-vaz" secondAttribute="centerY" id="PPo-B2-7GZ"/>
+                                    <constraint firstAttribute="centerX" secondItem="acL-ZJ-vaz" secondAttribute="centerX" id="gqr-Xt-DNk"/>
+                                    <constraint firstItem="acL-ZJ-vaz" firstAttribute="top" secondItem="KCH-EO-UU7" secondAttribute="top" constant="15" id="jUi-qq-2Lv"/>
+                                    <constraint firstAttribute="bottom" secondItem="acL-ZJ-vaz" secondAttribute="bottom" constant="15" id="lIX-34-dAQ"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="grey"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-CG-e38" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="St0-fs-pXA" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="51" width="600" height="485"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -271,21 +271,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SuA-CG-e38" firstAttribute="leading" secondItem="wVi-6a-LwE" secondAttribute="leading" id="CaE-9u-rT5"/>
-                            <constraint firstItem="qNa-ic-rwA" firstAttribute="leading" secondItem="wVi-6a-LwE" secondAttribute="leading" id="Gy8-dO-9WS"/>
-                            <constraint firstItem="Gt9-6m-NXK" firstAttribute="top" secondItem="SuA-CG-e38" secondAttribute="bottom" id="IQd-K0-7k7"/>
-                            <constraint firstItem="SuA-CG-e38" firstAttribute="top" secondItem="qNa-ic-rwA" secondAttribute="bottom" id="RFU-Oq-hsA"/>
-                            <constraint firstAttribute="trailing" secondItem="SuA-CG-e38" secondAttribute="trailing" id="acr-gi-az0"/>
-                            <constraint firstItem="qNa-ic-rwA" firstAttribute="top" secondItem="iSE-R5-Iv6" secondAttribute="bottom" id="tzA-an-eZE"/>
-                            <constraint firstAttribute="trailing" secondItem="qNa-ic-rwA" secondAttribute="trailing" id="yUT-ef-LHw"/>
+                            <constraint firstItem="St0-fs-pXA" firstAttribute="leading" secondItem="2rR-I9-yyf" secondAttribute="leading" id="Amq-YD-5Dh"/>
+                            <constraint firstAttribute="trailing" secondItem="St0-fs-pXA" secondAttribute="trailing" id="ELs-uX-tEM"/>
+                            <constraint firstItem="KCH-EO-UU7" firstAttribute="leading" secondItem="2rR-I9-yyf" secondAttribute="leading" id="Geu-nW-wBF"/>
+                            <constraint firstItem="KCH-EO-UU7" firstAttribute="top" secondItem="YS0-U4-uCz" secondAttribute="bottom" id="H5I-f9-qUM"/>
+                            <constraint firstItem="St0-fs-pXA" firstAttribute="top" secondItem="KCH-EO-UU7" secondAttribute="bottom" id="iUQ-g2-zdz"/>
+                            <constraint firstItem="ovz-OW-sFE" firstAttribute="top" secondItem="St0-fs-pXA" secondAttribute="bottom" id="mwL-no-rIn"/>
+                            <constraint firstAttribute="trailing" secondItem="KCH-EO-UU7" secondAttribute="trailing" id="utb-sF-85f"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="PAIR_A_LEDGER_WALLET" id="tDa-QY-nzN" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
-                        <barButtonItem key="leftBarButtonItem" id="vcY-KN-6Qz">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Eze-Et-Bgt" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <navigationItem key="navigationItem" title="PAIR_A_LEDGER_WALLET" id="NUP-9q-7Az" customClass="NavigationItem" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <barButtonItem key="leftBarButtonItem" id="3bc-fU-dGp">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ng7-Fx-Yew" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="-23" y="-15" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="CANCEL">
@@ -295,12 +295,12 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.grey"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="cancel" destination="4D7-MK-KIs" eventType="touchUpInside" id="54J-RN-TN4"/>
+                                    <action selector="cancel" destination="V9Q-P1-nXw" eventType="touchUpInside" id="FKp-gs-9hw"/>
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="1eX-aE-t0B">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="edw-SQ-fTH" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <barButtonItem key="rightBarButtonItem" id="9qE-Mw-eHo">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fPU-Xm-63Z" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="-23" y="-15" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="DONE">
@@ -310,7 +310,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="navigationBar.white"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="complete" destination="4D7-MK-KIs" eventType="touchUpInside" id="Qnl-6H-YtD"/>
+                                    <action selector="complete" destination="V9Q-P1-nXw" eventType="touchUpInside" id="BFe-9d-Ff5"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -320,13 +320,13 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="bottomInsetConstraint" destination="IQd-K0-7k7" id="bVi-nd-HHd"/>
-                        <outlet property="containerView" destination="SuA-CG-e38" id="a0n-Zp-gHt"/>
-                        <outlet property="stepIndicationLabel" destination="kOi-zw-CaW" id="Zca-P5-XKQ"/>
-                        <outlet property="stepNumberLabel" destination="v2b-Nk-KjZ" id="O6X-YB-K0f"/>
+                        <outlet property="bottomInsetConstraint" destination="mwL-no-rIn" id="Cvi-YV-IhC"/>
+                        <outlet property="containerView" destination="St0-fs-pXA" id="M0c-6x-uNW"/>
+                        <outlet property="stepIndicationLabel" destination="N7b-R8-cEZ" id="6Zx-TR-uB4"/>
+                        <outlet property="stepNumberLabel" destination="HyE-5l-4qi" id="Cal-BT-7m0"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SGO-in-bCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hql-2z-MgN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2154" y="437"/>
         </scene>

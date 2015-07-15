@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		370E838B1B564AFC00D67A9D /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* APIRestClient.swift */; };
 		370E838C1B565F8800D67A9D /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* APIRestClient.swift */; };
+		370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370E838D1B5695D500D67A9D /* Pairing.storyboard */; };
+		370E83911B5696B900D67A9D /* StoryboardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E83901B5696B900D67A9D /* StoryboardFactory.swift */; };
 		3724A3821A79383700E1B977 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */; };
 		3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */; };
@@ -133,7 +135,7 @@
 		37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */; };
 		37AB9EC51A8A438200A48951 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC41A8A438200A48951 /* JSON.swift */; };
 		37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC41A8A438200A48951 /* JSON.swift */; };
-		37AB9EC91A8A605500A48951 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC81A8A605500A48951 /* Navigation.swift */; };
+		37AB9EC91A8A605500A48951 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9EC81A8A605500A48951 /* Navigator.swift */; };
 		37AB9ECE1A8B566900A48951 /* UIViewController+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */; };
 		37ABFBCC1A836C8B0061E92D /* CryptoECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */; };
 		37ABFBCE1A836DA50061E92D /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBCD1A836DA50061E92D /* CryptoKey.swift */; };
@@ -233,7 +235,6 @@
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
 		37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283951A655D3400F432CC /* BaseNavigationController.swift */; };
 		37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283961A655D3400F432CC /* BaseViewController.swift */; };
-		37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283981A655D3400F432CC /* Dictionary+Utils.swift */; };
 		37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283991A655D3400F432CC /* UIButton+Utils.swift */; };
 		37F283AE1A655D3400F432CC /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839A1A655D3400F432CC /* UIColor+Utils.swift */; };
 		37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F2839B1A655D3400F432CC /* UILabel+Utils.swift */; };
@@ -253,6 +254,8 @@
 
 /* Begin PBXFileReference section */
 		370E838A1B564AFC00D67A9D /* APIRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRestClient.swift; sourceTree = "<group>"; };
+		370E838E1B5695D500D67A9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pairing.storyboard; sourceTree = "<group>"; };
+		370E83901B5696B900D67A9D /* StoryboardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoryboardFactory.swift; path = "ledger-wallet-ios/Helpers/Utils/StoryboardFactory.swift"; sourceTree = SOURCE_ROOT; };
 		3724A3811A79383700E1B977 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddConnectionStepViewController.swift; sourceTree = "<group>"; };
 		3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddConnectionStepViewController.xib; sourceTree = "<group>"; };
@@ -406,7 +409,7 @@
 		37AA956A1A88D356009C3EE4 /* BitcoinCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinCommon.swift; path = bitcoin/BitcoinCommon.swift; sourceTree = "<group>"; };
 		37AABB751A6FE483007B4E16 /* NSCharacterSet+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+Utils.swift"; sourceTree = "<group>"; };
 		37AB9EC41A8A438200A48951 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
-		37AB9EC81A8A605500A48951 /* Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
+		37AB9EC81A8A605500A48951 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		37AB9ECC1A8B566900A48951 /* UIViewController+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Init.h"; sourceTree = "<group>"; };
 		37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Init.m"; sourceTree = "<group>"; };
 		37ABFBCB1A836C8B0061E92D /* CryptoECDH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoECDH.swift; path = crypto/CryptoECDH.swift; sourceTree = "<group>"; };
@@ -460,7 +463,6 @@
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37F283951A655D3400F432CC /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F283961A655D3400F432CC /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		37F283981A655D3400F432CC /* Dictionary+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utils.swift"; sourceTree = "<group>"; };
 		37F283991A655D3400F432CC /* UIButton+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Utils.swift"; sourceTree = "<group>"; };
 		37F2839A1A655D3400F432CC /* UIColor+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIColor+Utils.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F2839B1A655D3400F432CC /* UILabel+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Utils.swift"; sourceTree = "<group>"; };
@@ -678,6 +680,7 @@
 			isa = PBXGroup;
 			children = (
 				37F283601A64064100F432CC /* Main.storyboard */,
+				370E838D1B5695D500D67A9D /* Pairing.storyboard */,
 				37F2836A1A6406A900F432CC /* Localizable.strings */,
 				3784FB111A5D2F5F0063A364 /* Images.xcassets */,
 				378205D31A60195E00F6CA45 /* Fonts */,
@@ -938,7 +941,7 @@
 			children = (
 				37F283941A655D3400F432CC /* Base */,
 				379CA0F61A71357700A9D426 /* Dialogs */,
-				37F283C51A656BB700F432CC /* Dongle Pairing */,
+				37F283C51A656BB700F432CC /* Pairing */,
 			);
 			name = Controllers;
 			path = controllers;
@@ -957,7 +960,6 @@
 		37F283971A655D3400F432CC /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				37F283981A655D3400F432CC /* Dictionary+Utils.swift */,
 				37F283991A655D3400F432CC /* UIButton+Utils.swift */,
 				37F2839A1A655D3400F432CC /* UIColor+Utils.swift */,
 				37F2839B1A655D3400F432CC /* UILabel+Utils.swift */,
@@ -1005,13 +1007,14 @@
 				373E22CB1A71517C00BAF63F /* Blocks.swift */,
 				3724A3811A79383700E1B977 /* Common.swift */,
 				37AB9EC41A8A438200A48951 /* JSON.swift */,
-				37AB9EC81A8A605500A48951 /* Navigation.swift */,
+				37AB9EC81A8A605500A48951 /* Navigator.swift */,
+				370E83901B5696B900D67A9D /* StoryboardFactory.swift */,
 			);
 			name = Utils;
 			path = utils;
 			sourceTree = "<group>";
 		};
-		37F283C51A656BB700F432CC /* Dongle Pairing */ = {
+		37F283C51A656BB700F432CC /* Pairing */ = {
 			isa = PBXGroup;
 			children = (
 				379CA1021A713B7100A9D426 /* Dialogs */,
@@ -1019,7 +1022,7 @@
 				37B9E4AB1A67F98F0055E81A /* Pairing List */,
 				37B9E4A91A67F98F0055E81A /* Pair Dongle */,
 			);
-			name = "Dongle Pairing";
+			name = Pairing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1124,6 +1127,7 @@
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
 				37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */,
 				37A2DBE51A7A86080045B639 /* PairingAddFinalizeStepViewController.xib in Resources */,
+				370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */,
 				37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */,
 				378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */,
 				378205D41A60195E00F6CA45 /* Fonts in Resources */,
@@ -1158,6 +1162,7 @@
 				376F51041A82190E001C6684 /* BTCEncryptedMessage.m in Sources */,
 				37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */,
 				37A2DBE31A7A85FD0045B639 /* PairingAddFinalizeStepViewController.swift in Sources */,
+				370E83911B5696B900D67A9D /* StoryboardFactory.swift in Sources */,
 				37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */,
 				37B537641A8299EA0087AB43 /* CryptoData.swift in Sources */,
 				37ABFBDD1A84C2F00061E92D /* CryptoCipher.m in Sources */,
@@ -1200,7 +1205,7 @@
 				37EE4D951A8B96F40085CE49 /* BitcoinFormatter.swift in Sources */,
 				376F50FB1A82190D001C6684 /* BTCBitcoinURL.m in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
-				37AB9EC91A8A605500A48951 /* Navigation.swift in Sources */,
+				37AB9EC91A8A605500A48951 /* Navigator.swift in Sources */,
 				37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */,
 				376F51161A82190E001C6684 /* BTCTransactionInput.m in Sources */,
 				37AB9EC51A8A438200A48951 /* JSON.swift in Sources */,
@@ -1211,7 +1216,6 @@
 				3730736A1B2ECD6200DDFE5A /* BTCEncryptedBackup.m in Sources */,
 				376F50FC1A82190D001C6684 /* BTCBlindSignature.m in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,
-				37F283AC1A655D3400F432CC /* Dictionary+Utils.swift in Sources */,
 				37AB9ECE1A8B566900A48951 /* UIViewController+Init.m in Sources */,
 				3730736F1B2ECD6200DDFE5A /* BTCProtocolBuffers.m in Sources */,
 				376F510A1A82190E001C6684 /* BTCNetwork.m in Sources */,
@@ -1382,6 +1386,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		370E838D1B5695D500D67A9D /* Pairing.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				370E838E1B5695D500D67A9D /* Base */,
+			);
+			name = Pairing.storyboard;
+			sourceTree = "<group>";
+		};
 		37F283601A64064100F432CC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

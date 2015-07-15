@@ -225,17 +225,3 @@ extension BaseViewController {
     }
 
 }
-
-extension BaseViewController {
-    
-    // MARK: - Storyboard management
-    
-    var rootStoryboard: UIStoryboard? {
-        var viewController: UIViewController? = self
-        while (viewController != nil && viewController!.storyboard == nil) {
-            viewController = viewController!.parentViewController
-        }
-        return (viewController == nil ? nil : viewController!.storyboard)
-    }
-    
-}

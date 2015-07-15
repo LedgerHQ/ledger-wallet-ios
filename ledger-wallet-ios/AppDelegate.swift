@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // handle entry point without being embedded in a navigation controller
         if let viewController = window?.rootViewController as? BaseViewController {
-            window?.rootViewController = Navigator.embedViewControllerInNavigationController(viewController)
+            window?.rootViewController = Navigator.embedViewController(viewController)
         }
         return true
     }
