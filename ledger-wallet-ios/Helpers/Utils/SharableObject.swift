@@ -21,12 +21,13 @@ class SharableObject: NSObject {
 
     private class func sharedInstance<T: SharableObject>(type: T.Type) -> T {       
         let className = self.className()
-        dispatch_sync(instancesQueue) {
-            if self.instances[className] == nil {
-                self.instances[className] = self()
-            }
+        objc_sync_enter(self)
+        if self.instances[className] == nil {
+            self.instances[className] = self()
         }
-        return instances[className] as! T
+        let instance = instances[className] as! T
+        objc_sync_exit(self)
+        return instance
     }
 
     override required init() {
