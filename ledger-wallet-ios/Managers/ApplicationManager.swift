@@ -9,9 +9,7 @@
 import Foundation
 
 final class ApplicationManager: BaseManager {
-    
-    //lazy private var logger = { return Logger.sharedInstance("ApplicationManager") }()
-    
+        
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
