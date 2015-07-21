@@ -11,25 +11,22 @@ import Foundation
 class SharableObject: NSObject {
     
     private static var instances: [String: SharableObject] = [:]
+    private static var instancesQueue = dispatch_queue_create("co.ledger.sharableobject.dispatch-queue", DISPATCH_QUEUE_SERIAL)
 
     // MARK: - Singleton
     
     class func sharedInstance() -> Self {
         return sharedInstance(self)
     }
-    
-    class func deleteInstance() {
-        instances[self.className()] = nil
-    }
-    
-    private class func sharedInstance<T: SharableObject>(type: T.Type) -> T {
+
+    private class func sharedInstance<T: SharableObject>(type: T.Type) -> T {       
         let className = self.className()
-        if let instance = instances[className] {
-            return instance as! T
+        dispatch_sync(instancesQueue) {
+            if self.instances[className] == nil {
+                self.instances[className] = self()
+            }
         }
-        let instance = self()
-        instances[className] = instance
-        return instance as! T
+        return instances[className] as! T
     }
 
     override required init() {
