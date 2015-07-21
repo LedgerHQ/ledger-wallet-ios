@@ -14,6 +14,8 @@
 		3724A3821A79383700E1B977 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */; };
 		3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */; };
+		3725D4C11B58F66200252F2B /* LogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C01B58F66200252F2B /* LogWriter.swift */; };
+		3725D4C31B59023000252F2B /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C21B59023000252F2B /* LogLevel.swift */; };
 		373073541B2ECCE100DDFE5A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073531B2ECCE100DDFE5A /* WebSocket.swift */; };
 		373073551B2ECCE400DDFE5A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073531B2ECCE100DDFE5A /* WebSocket.swift */; };
 		373073571B2ECCFC00DDFE5A /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073561B2ECCFC00DDFE5A /* Security.swift */; };
@@ -37,7 +39,9 @@
 		37414B171A8D0B9300CE0795 /* RemoteNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B161A8D0B9300CE0795 /* RemoteNotificationsManager.swift */; };
 		37414B181A8D0B9300CE0795 /* RemoteNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37414B161A8D0B9300CE0795 /* RemoteNotificationsManager.swift */; };
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
+		374A1E9B1B57D779006C325E /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E9A1B57D779006C325E /* LogEntry.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
+		375FF5761B5D1F92000175CB /* NSDate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FF5751B5D1F92000175CB /* NSDate+Utils.swift */; };
 		37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
 		37656F301A76A3F60042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
 		37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */; };
@@ -221,6 +225,12 @@
 		37EE4D901A8B721A0085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
 		37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D8F1A8B721A0085CE49 /* Mockable.swift */; };
 		37EE4D951A8B96F40085CE49 /* BitcoinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */; };
+		37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
+		37EF30E11B5E516B00E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
+		37EF30E21B5E516B00E0316F /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E9A1B57D779006C325E /* LogEntry.swift */; };
+		37EF30E31B5E516B00E0316F /* LogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C01B58F66200252F2B /* LogWriter.swift */; };
+		37EF30E41B5E516B00E0316F /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C21B59023000252F2B /* LogLevel.swift */; };
+		37EF30E51B5E522000E0316F /* NSDate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FF5751B5D1F92000175CB /* NSDate+Utils.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
 		37EF91C11A6D3C47007DBBAF /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */; };
@@ -259,6 +269,8 @@
 		3724A3811A79383700E1B977 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddConnectionStepViewController.swift; sourceTree = "<group>"; };
 		3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddConnectionStepViewController.xib; sourceTree = "<group>"; };
+		3725D4C01B58F66200252F2B /* LogWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWriter.swift; sourceTree = "<group>"; };
+		3725D4C21B59023000252F2B /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		373073531B2ECCE100DDFE5A /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = Vendor/Starscream/WebSocket.swift; sourceTree = "<group>"; };
 		373073561B2ECCFC00DDFE5A /* Security.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Security.swift; path = Vendor/Starscream/Security.swift; sourceTree = "<group>"; };
 		373073581B2ECD6200DDFE5A /* BTCAssetAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BTCAssetAddress.h; path = Vendor/CoreBitcoin/CoreBitcoin/BTCAssetAddress.h; sourceTree = "<group>"; };
@@ -285,7 +297,10 @@
 		373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemTests.swift; sourceTree = "<group>"; };
 		37414B161A8D0B9300CE0795 /* RemoteNotificationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteNotificationsManager.swift; path = managers/RemoteNotificationsManager.swift; sourceTree = "<group>"; };
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingIndicator.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		374A1E981B57D552006C325E /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		374A1E9A1B57D779006C325E /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		375FF5751B5D1F92000175CB /* NSDate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Utils.swift"; path = "ledger-wallet-ios/Extensions/NSDate+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		37656F2E1A76A3540042512D /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeychainItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionDialogViewController.swift; sourceTree = "<group>"; };
 		37698A5F1A75158A00AA8B30 /* PairingTransactionDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingTransactionDialogViewController.xib; sourceTree = "<group>"; };
@@ -527,6 +542,18 @@
 			name = Networking;
 			path = networking;
 			sourceTree = "<group>";
+		};
+		374A1E971B57D552006C325E /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				374A1E981B57D552006C325E /* Logger.swift */,
+				374A1E9A1B57D779006C325E /* LogEntry.swift */,
+				3725D4C01B58F66200252F2B /* LogWriter.swift */,
+				3725D4C21B59023000252F2B /* LogLevel.swift */,
+			);
+			name = Logs;
+			path = "ledger-wallet-ios/Helpers/Logs";
+			sourceTree = SOURCE_ROOT;
 		};
 		375A38081A77DA9A0082D917 /* Managers */ = {
 			isa = PBXGroup;
@@ -971,6 +998,7 @@
 				373E22CE1A72490D00BAF63F /* NSObject+Utils.m */,
 				37AB9ECC1A8B566900A48951 /* UIViewController+Init.h */,
 				37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */,
+				375FF5751B5D1F92000175CB /* NSDate+Utils.swift */,
 			);
 			name = Extensions;
 			path = extensions;
@@ -993,6 +1021,7 @@
 				376F511C1A822DF6001C6684 /* Crypto */,
 				3798BA161A6E6C7C00F5B603 /* Allures */,
 				37F283BF1A655D7200F432CC /* Utils */,
+				374A1E971B57D552006C325E /* Logs */,
 			);
 			name = Helpers;
 			path = helpers;
@@ -1166,6 +1195,7 @@
 				37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */,
 				37B537641A8299EA0087AB43 /* CryptoData.swift in Sources */,
 				37ABFBDD1A84C2F00061E92D /* CryptoCipher.m in Sources */,
+				3725D4C11B58F66200252F2B /* LogWriter.swift in Sources */,
 				37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */,
 				3730736E1B2ECD6200DDFE5A /* BTCPaymentRequest.m in Sources */,
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,
@@ -1191,6 +1221,7 @@
 				373073571B2ECCFC00DDFE5A /* Security.swift in Sources */,
 				376F50FE1A82190E001C6684 /* BTCBlockchainInfo.m in Sources */,
 				376F51051A82190E001C6684 /* BTCErrors.m in Sources */,
+				37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */,
 				376F50F91A82190D001C6684 /* BTCBase58.m in Sources */,
 				373E22D91A7681F100BAF63F /* PairingKeychainItem.swift in Sources */,
 				377E81161A8A01C400010B37 /* PairingHomeBaseContentViewController.swift in Sources */,
@@ -1239,6 +1270,7 @@
 				376F510E1A82190E001C6684 /* BTCPriceSource.m in Sources */,
 				373073541B2ECCE100DDFE5A /* WebSocket.swift in Sources */,
 				379A12CB1B2AE80500D6E8DA /* RemoteNotificationsRestClient.swift in Sources */,
+				374A1E9B1B57D779006C325E /* LogEntry.swift in Sources */,
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
 				37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */,
 				376F510B1A82190E001C6684 /* BTCNumberFormatter.m in Sources */,
@@ -1264,6 +1296,8 @@
 				376F51191A82190E001C6684 /* NSData+BTCData.m in Sources */,
 				376F51111A82190E001C6684 /* BTCQRCode.m in Sources */,
 				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
+				375FF5761B5D1F92000175CB /* NSDate+Utils.swift in Sources */,
+				3725D4C31B59023000252F2B /* LogLevel.swift in Sources */,
 				379A12C91B2AE80500D6E8DA /* HTTPClientTask.swift in Sources */,
 				37BC847C1A7FB75B00072B71 /* DeviceManager.swift in Sources */,
 				3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */,
@@ -1291,6 +1325,7 @@
 				37BAF30D1AB1975F0084B832 /* BTCKeychain.m in Sources */,
 				379A12CE1B2AE89F00D6E8DA /* HTTPClient.swift in Sources */,
 				37BAF3151AB1975F0084B832 /* BTCProtocolSerialization.m in Sources */,
+				37EF30E51B5E522000E0316F /* NSDate+Utils.swift in Sources */,
 				37BAF2FA1AB196450084B832 /* BitcoinFormatter.swift in Sources */,
 				373073771B2ECFA700DDFE5A /* Security.swift in Sources */,
 				37BAF31D1AB1975F0084B832 /* NS+BTCBase58.m in Sources */,
@@ -1302,6 +1337,7 @@
 				378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37BAF2FF1AB1975F0084B832 /* BTCBigNumber.m in Sources */,
+				37EF30E11B5E516B00E0316F /* Logger.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
 				37E1CB791AADBB0800FD66C2 /* NSObject+Utils.m in Sources */,
 				37EE4D911A8B8AF10085CE49 /* Mockable.swift in Sources */,
@@ -1311,6 +1347,7 @@
 				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */,
+				37EF30E31B5E516B00E0316F /* LogWriter.swift in Sources */,
 				379A12CC1B2AE88D00D6E8DA /* RemoteNotificationsRestClient.swift in Sources */,
 				37BAF31C1AB1975F0084B832 /* BTCTransactionOutput.m in Sources */,
 				37ABFBCF1A836F0E0061E92D /* CryptoKey.swift in Sources */,
@@ -1324,6 +1361,7 @@
 				37BAF3171AB1975F0084B832 /* BTCScript.m in Sources */,
 				379A12CD1B2AE89C00D6E8DA /* BaseRestClient.swift in Sources */,
 				37BAF3001AB1975F0084B832 /* BTCBitcoinURL.m in Sources */,
+				37EF30E21B5E516B00E0316F /* LogEntry.swift in Sources */,
 				37BAF30A1AB1975F0084B832 /* BTCErrors.m in Sources */,
 				37BAF3121AB1975F0084B832 /* BTCOutpoint.m in Sources */,
 				37B537731A82A84C0087AB43 /* CryptoCommon.swift in Sources */,
@@ -1346,6 +1384,7 @@
 				37BAF3021AB1975F0084B832 /* BTCBlock.m in Sources */,
 				37BAF3131AB1975F0084B832 /* BTCPriceSource.m in Sources */,
 				37BAF31A1AB1975F0084B832 /* BTCTransactionBuilder.m in Sources */,
+				37EF30E41B5E516B00E0316F /* LogLevel.swift in Sources */,
 				37BAF2FB1AB1964F0084B832 /* CryptoCipher.m in Sources */,
 				37BAF2FD1AB1975F0084B832 /* BTCAddress.m in Sources */,
 				37ABFBDB1A83C9540061E92D /* CryptoCipherTests.swift in Sources */,
