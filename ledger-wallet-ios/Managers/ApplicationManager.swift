@@ -10,6 +10,8 @@ import Foundation
 
 final class ApplicationManager: BaseManager {
     
+    //lazy private var logger = { return Logger.sharedInstance("ApplicationManager") }()
+    
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
@@ -44,6 +46,12 @@ final class ApplicationManager: BaseManager {
         }
     }
     
+    var libraryDirectoryPath: String {
+        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as! String
+    }
+    
+    // MARK: Utilities
+    
     func handleFirstLaunch() {
         // if app hasn't been launched before
         if !preferences.boolForKey("already_launched") {
@@ -51,6 +59,12 @@ final class ApplicationManager: BaseManager {
             
             // delete all pairing keychain items
             PairingKeychainItem.destroyAll()
+        }
+    }
+    
+    func printLibraryPathIfNeeded() {
+        if self.isInDebug {
+            Logger.sharedInstance(self.className()).info(libraryDirectoryPath)
         }
     }
     
