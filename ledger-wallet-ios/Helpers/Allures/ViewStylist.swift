@@ -19,7 +19,7 @@ final class ViewStylist {
                 allureBlock(view)
                 return
             }
-            println("ViewStylist: Unable to find allure \"\(styleName)\" for view \(view)")
+            console("ViewStylist: Unable to find allure \"\(styleName)\" for view \(view)")
         }
     }
     
@@ -30,7 +30,7 @@ final class ViewStylist {
                 allureBlock(view)
                 return
             }
-            println("ViewStylist: Cannot apply allure \"\(view.allureStyleName)\" to view \(view)")
+            console("ViewStylist: Cannot apply allure \"\(view.allureStyleName)\" to view \(view)")
         }
     }
 

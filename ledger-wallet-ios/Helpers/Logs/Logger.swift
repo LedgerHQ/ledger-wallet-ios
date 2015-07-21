@@ -40,7 +40,7 @@ final class Logger {
         
         // log to console if app is in debug
         if ApplicationManager.sharedInstance().isInDebug {
-            dispatchAsyncOnMainQueue() { println(logEntry) }
+            console(logEntry)
         }
         
         // log to file

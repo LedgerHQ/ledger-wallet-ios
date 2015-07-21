@@ -42,7 +42,7 @@ final class LogWriter: SharableObject {
                 // create file if not existing
                 if !self.fileManager.fileExistsAtPath(logFilepath) {
                     if !self.fileManager.createFileAtPath(logFilepath, contents: nil, attributes: nil) {
-                        NSLog("LogWriter: Unable to create log file at path \(logFilepath)")
+                        console("LogWriter: Unable to create log file at path \(logFilepath)")
                     }
                 }
         
@@ -53,7 +53,7 @@ final class LogWriter: SharableObject {
                     self.writeLogEntryToFile(logEntry, fileHandle: fileHandle)
                 }
                 else {
-                    NSLog("LogWriter: Unable to open log file at path \(logFilepath)")
+                    console("LogWriter: Unable to open log file at path \(logFilepath)")
                 }
             }
         }
@@ -71,7 +71,7 @@ final class LogWriter: SharableObject {
             fileHandle.writeData(data)
         }
         else {
-            NSLog("LogWriter: Unable to save data \"\(finalString)\"")
+            console("LogWriter: Unable to save data \"\(finalString)\"")
         }
     }
     
@@ -89,11 +89,11 @@ final class LogWriter: SharableObject {
         // enqueue prepare directories operation
         operationQueue.addOperationWithBlock() {
             if !self.fileManager.createDirectoryAtPath(self.logsDirectoryPath, withIntermediateDirectories: true, attributes: nil, error: nil) {
-                NSLog("LogWriter: Unable to create logs directory at path \(self.logsDirectoryPath)")
+                console("LogWriter: Unable to create logs directory at path \(self.logsDirectoryPath)")
             }
             let URL = NSURL(fileURLWithPath: self.logsDirectoryPath, isDirectory: true)
             if URL == nil || !URL!.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: nil) {
-                NSLog("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
+                console("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
             }
         }
     }
@@ -109,7 +109,7 @@ final class LogWriter: SharableObject {
                 filesToRemove = prefix(allLogs, max(0, allLogs.count - 2))
             }
             else {
-                NSLog("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
+                console("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
                 return
             }
             
@@ -128,7 +128,7 @@ final class LogWriter: SharableObject {
             for file in filesToRemove {
                 let filepath = self.logsDirectoryPath.stringByAppendingPathComponent(file)
                 if !self.fileManager.removeItemAtPath(filepath, error: nil) {
-                    NSLog("LogWriter: Unable to remove log file at path \(filepath)")
+                    console("LogWriter: Unable to remove log file at path \(filepath)")
                 }
             }
         }

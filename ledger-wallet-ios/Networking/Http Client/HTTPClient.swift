@@ -19,6 +19,7 @@ final class HTTPClient {
         }
         return _session
     }
+    lazy private var logger = Logger.sharedInstance("HTTPClient")
     private var _session: NSURLSession! = nil
     private var logsRequests = ApplicationManager.sharedInstance().isInDebug
     
@@ -75,11 +76,11 @@ final class HTTPClient {
     // MARK: - Log
     
     private func logRequest(request: NSURLRequest) {
-        println("HTTPClient: -> \(request.HTTPMethod!) \(request.URL!)")
+        logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
     }
     
     private func logResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
-        println("HTTPClient: <- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
+        logger.info("<- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
     }
     
     // MARK: - Requests

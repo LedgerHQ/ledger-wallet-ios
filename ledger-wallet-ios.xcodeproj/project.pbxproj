@@ -231,6 +231,8 @@
 		37EF30E31B5E516B00E0316F /* LogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C01B58F66200252F2B /* LogWriter.swift */; };
 		37EF30E41B5E516B00E0316F /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C21B59023000252F2B /* LogLevel.swift */; };
 		37EF30E51B5E522000E0316F /* NSDate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FF5751B5D1F92000175CB /* NSDate+Utils.swift */; };
+		37EF30E71B5E7D8700E0316F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF30E61B5E7D8700E0316F /* Log.swift */; };
+		37EF30E81B5E829500E0316F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF30E61B5E7D8700E0316F /* Log.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
 		37EF91C11A6D3C47007DBBAF /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */; };
@@ -463,6 +465,7 @@
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		37EE4D8F1A8B721A0085CE49 /* Mockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
 		37EE4D941A8B96F40085CE49 /* BitcoinFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitcoinFormatter.swift; path = bitcoin/BitcoinFormatter.swift; sourceTree = "<group>"; };
+		37EF30E61B5E7D8700E0316F /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Log.swift; path = "ledger-wallet-ios/Helpers/Utils/Log.swift"; sourceTree = SOURCE_ROOT; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NavigationBar.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1038,6 +1041,7 @@
 				37AB9EC41A8A438200A48951 /* JSON.swift */,
 				37AB9EC81A8A605500A48951 /* Navigator.swift */,
 				370E83901B5696B900D67A9D /* StoryboardFactory.swift */,
+				37EF30E61B5E7D8700E0316F /* Log.swift */,
 			);
 			name = Utils;
 			path = utils;
@@ -1293,6 +1297,7 @@
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
 				376F51031A82190E001C6684 /* BTCData.m in Sources */,
 				3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */,
+				37EF30E71B5E7D8700E0316F /* Log.swift in Sources */,
 				376F51191A82190E001C6684 /* NSData+BTCData.m in Sources */,
 				376F51111A82190E001C6684 /* BTCQRCode.m in Sources */,
 				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
@@ -1336,6 +1341,7 @@
 				37BAF3101AB1975F0084B832 /* BTCNumberFormatter.m in Sources */,
 				378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
+				37EF30E81B5E829500E0316F /* Log.swift in Sources */,
 				37BAF2FF1AB1975F0084B832 /* BTCBigNumber.m in Sources */,
 				37EF30E11B5E516B00E0316F /* Logger.swift in Sources */,
 				37ABFBD21A8375700061E92D /* CryptoKeyTests.swift in Sources */,
