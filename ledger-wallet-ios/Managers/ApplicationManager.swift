@@ -48,6 +48,10 @@ final class ApplicationManager: BaseManager {
         return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as! String
     }
     
+    var temporaryDirectoryPath: String {
+        return NSTemporaryDirectory()
+    }
+    
     // MARK: Utilities
     
     func handleFirstLaunch() {
