@@ -301,6 +301,7 @@
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingIndicator.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		374A1E981B57D552006C325E /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		374A1E9A1B57D779006C325E /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
+		375183611B8F2310007DFFDB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		375FF5751B5D1F92000175CB /* NSDate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Utils.swift"; path = "ledger-wallet-ios/Extensions/NSDate+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		37656F2E1A76A3540042512D /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeychainItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1132,6 +1133,7 @@
 				Base,
 				fr,
 				es,
+				ja,
 			);
 			mainGroup = 3784FAFC1A5D2F5E0063A364;
 			productRefGroup = 3784FB061A5D2F5E0063A364 /* Products */;
@@ -1453,6 +1455,7 @@
 				37F283691A6406A900F432CC /* en */,
 				37BDAE901ACB0C1100DA2E45 /* fr */,
 				379A12D11B2AE90D00D6E8DA /* es */,
+				375183611B8F2310007DFFDB /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

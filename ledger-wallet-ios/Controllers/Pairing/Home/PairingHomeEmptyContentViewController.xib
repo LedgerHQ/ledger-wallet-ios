@@ -18,13 +18,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D6l-Zy-Y6f" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="148" width="600" height="254"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no_paired_ledger_wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no_paired_ledger_wallet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="207" y="0.0" width="186" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="huge.light"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="huge.light.centered"/>
                             </userDefinedRuntimeAttributes>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhn-5j-dRV" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">

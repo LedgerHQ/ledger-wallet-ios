@@ -18,13 +18,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D6l-Zy-Y6f" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="153" width="600" height="245"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="waiting_for_transactions..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="waiting_for_transactions..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                             <rect key="frame" x="200" y="109" width="201" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="huge.light"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="huge.light.centered"/>
                             </userDefinedRuntimeAttributes>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhn-5j-dRV" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -56,6 +56,7 @@
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="Gh0-fS-lMN" secondAttribute="centerX" id="0rA-GY-YAW"/>
                         <constraint firstItem="Gh0-fS-lMN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D6l-Zy-Y6f" secondAttribute="leading" constant="30" id="1H9-IO-b9p"/>
+                        <constraint firstItem="RYS-7p-qUt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D6l-Zy-Y6f" secondAttribute="leading" constant="20" id="2YI-6j-7ag"/>
                         <constraint firstAttribute="centerX" secondItem="ma6-jW-Nhh" secondAttribute="centerX" id="6T5-sz-U3d"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gh0-fS-lMN" secondAttribute="trailing" constant="30" id="KTA-DI-ifQ"/>
                         <constraint firstItem="ma6-jW-Nhh" firstAttribute="top" secondItem="D6l-Zy-Y6f" secondAttribute="top" id="MGs-KA-SUi"/>
@@ -65,6 +66,7 @@
                         <constraint firstAttribute="centerX" secondItem="yhn-5j-dRV" secondAttribute="centerX" id="kQ1-Jx-A8m"/>
                         <constraint firstItem="yhn-5j-dRV" firstAttribute="top" secondItem="Gh0-fS-lMN" secondAttribute="bottom" constant="35" id="kRh-bo-sCx"/>
                         <constraint firstAttribute="centerX" secondItem="RYS-7p-qUt" secondAttribute="centerX" id="pOG-hG-SYX"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RYS-7p-qUt" secondAttribute="trailing" constant="20" id="vBV-c5-DKC"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>

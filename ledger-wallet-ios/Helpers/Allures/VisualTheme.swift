@@ -126,6 +126,9 @@ final class VisualTheme {
         "label.huge.light": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeLight)
         }),
+        "label.huge.light.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeLightCentered)
+        }),
 
         // MARK: - Button allures
     

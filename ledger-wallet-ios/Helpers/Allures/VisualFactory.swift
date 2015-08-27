@@ -170,6 +170,15 @@ final class VisualFactory {
             ]
         )
         
+        static let HugeLightCentered: TextAttribute = TextAttributes.extend(HugeLight, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = NSMutableParagraphStyle()
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
+            ]
+        )
+        
         static let SectionTitle = [
             NSForegroundColorAttributeName: Colors.Black,
             NSKernAttributeName: -Fonts.Kerning.Small,
