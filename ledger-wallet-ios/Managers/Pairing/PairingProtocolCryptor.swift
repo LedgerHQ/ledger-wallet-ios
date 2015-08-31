@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingProtocolCryptor {
+final class PairingProtocolCryptor {
     
     let sessionKeyBytesLength = 16
     let pairingKeyBytesLength = 16

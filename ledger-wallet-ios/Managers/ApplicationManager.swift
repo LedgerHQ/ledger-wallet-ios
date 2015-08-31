@@ -8,8 +8,8 @@
 
 import Foundation
 
-class ApplicationManager: BaseManager {
-    
+final class ApplicationManager: BaseManager {
+        
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
@@ -44,6 +44,16 @@ class ApplicationManager: BaseManager {
         }
     }
     
+    var libraryDirectoryPath: String {
+        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as! String
+    }
+    
+    var temporaryDirectoryPath: String {
+        return NSTemporaryDirectory()
+    }
+    
+    // MARK: Utilities
+    
     func handleFirstLaunch() {
         // if app hasn't been launched before
         if !preferences.boolForKey("already_launched") {
@@ -51,6 +61,12 @@ class ApplicationManager: BaseManager {
             
             // delete all pairing keychain items
             PairingKeychainItem.destroyAll()
+        }
+    }
+    
+    func printLibraryPathIfNeeded() {
+        if self.isInDebug {
+            Logger.sharedInstance(self.className()).info(libraryDirectoryPath)
         }
     }
     

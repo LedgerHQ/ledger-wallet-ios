@@ -10,7 +10,7 @@ import Foundation
 
 extension HTTPClient {
     
-    class Task {
+    final class Task {
         
         typealias CompletionHandler = (NSData?, NSURLRequest, NSHTTPURLResponse?, NSError?) -> Void
         typealias Parameters = [String: AnyObject]

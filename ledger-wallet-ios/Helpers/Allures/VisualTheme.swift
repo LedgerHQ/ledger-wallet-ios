@@ -8,211 +8,195 @@
 
 import UIKit
 
-struct VisualTheme {
+final class VisualTheme {
     
-    typealias ViewAllure = (UIView) -> ()
-    typealias LabelAllure = (Label) -> ()
-    typealias ButtonAllure = (Button) -> ()
-    typealias TextFieldAllure = (TextField) -> ()
-
-
-    // MARK: - View allures
-    
-    static let viewAllures: [String: ViewAllure] = [
-        "view.background": { view in
-            view.backgroundColor = VisualFactory.Colors.backgroundColor
-        },
-        "view.nightBlue": { view in
-            view.backgroundColor = VisualFactory.Colors.nightBlue
-        },
-        "view.transparent": { view in
-            view.backgroundColor = VisualFactory.Colors.transparent
+    static let allureBlocks: [String: ViewStylist.AllureBlock] = [
+        
+        // MARK: - View allures
+        
+        "view.background": ViewStylist.wrapAllureBlock({ (view: UIView) in
+            view.backgroundColor = VisualFactory.Colors.BackgroundColor
+        }),
+        "view.nightBlue": ViewStylist.wrapAllureBlock({ (view: UIView) in
+            view.backgroundColor = VisualFactory.Colors.NightBlue
+        }),
+        "view.transparent": ViewStylist.wrapAllureBlock({ (view: UIView) in
+            view.backgroundColor = VisualFactory.Colors.Transparent
             view.opaque = false
-        },
-        "actionBar.grey": { view in
-            let actionBar = view as! ActionBarView
-            actionBar.backgroundColor = VisualFactory.Colors.extraLightGrey
-            actionBar.borderColor = VisualFactory.Colors.veryLightGrey
-        },
-        "tableView.transparent": { view in
-            let tableView = view as! TableView
-            tableView.backgroundColor = VisualFactory.Colors.transparent
-            tableView.separatorColor = VisualFactory.Colors.lightGrey
-            tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Paddings.small, 0, VisualFactory.Metrics.Paddings.small)
-        },
-        "tableViewCell.transparent": { view in
-            let tableViewCell = view as! TableViewCell
-            tableViewCell.contentView.backgroundColor = VisualFactory.Colors.transparent
-            tableViewCell.backgroundColor = VisualFactory.Colors.transparent
-        },
-        "navigationBar.nightBlue": { view in
-            let navigationBar = view as! NavigationBar
+        }),
+        "actionBarView.grey": ViewStylist.wrapAllureBlock({ (actionBarView: ActionBarView) in
+            actionBarView.backgroundColor = VisualFactory.Colors.ExtraLightGrey
+            actionBarView.borderColor = VisualFactory.Colors.VeryLightGrey
+        }),
+        "tableView.transparent": ViewStylist.wrapAllureBlock({ (tableView: TableView) in
+            tableView.backgroundColor = VisualFactory.Colors.Transparent
+            tableView.separatorColor = VisualFactory.Colors.LightGrey
+            tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Padding.Small, 0, VisualFactory.Metrics.Padding.Small)
+        }),
+        "tableViewCell.transparent": ViewStylist.wrapAllureBlock({ (tableViewCell: TableViewCell) in
+            tableViewCell.contentView.backgroundColor = VisualFactory.Colors.Transparent
+            tableViewCell.backgroundColor = VisualFactory.Colors.Transparent
+        }),
+        "navigationBar.nightBlue": ViewStylist.wrapAllureBlock({ (navigationBar: NavigationBar) in
             navigationBar.translucent = false
             navigationBar.shadowImage = UIImage()
-            navigationBar.barTintColor = VisualFactory.Colors.nightBlue
+            navigationBar.barTintColor = VisualFactory.Colors.NightBlue
             navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        },
-        "pinCodeView.grey": { view in
-            let pinCodeView = view as! PinCodeView
+        }),
+        "pinCodeView.grey": ViewStylist.wrapAllureBlock({ (pinCodeView: PinCodeView) in
             pinCodeView.boxSize = CGSizeMake(55.0, 75.0)
-            pinCodeView.highlightedColor = VisualFactory.Colors.invalidRed
-            pinCodeView.filledColor = VisualFactory.Colors.darkGrey
-            pinCodeView.boxSpacing = VisualFactory.Metrics.Paddings.verySmall
-            pinCodeView.boxColor = VisualFactory.Colors.white
+            pinCodeView.highlightedColor = VisualFactory.Colors.InvalidRed
+            pinCodeView.filledColor = VisualFactory.Colors.DarkGrey
+            pinCodeView.boxSpacing = VisualFactory.Metrics.Padding.VerySmall
+            pinCodeView.boxColor = VisualFactory.Colors.White
             pinCodeView.borderWidth = 1.0
             pinCodeView.dotRadius = 15.0
-        },
-        "loadingIndicator.grey": { view in
-            let loadingIndicator = view as! LoadingIndicator
-            loadingIndicator.dotsHighlightedColor = VisualFactory.Colors.darkGreyBlue
-            loadingIndicator.dotsNormalColor = VisualFactory.Colors.lightGrey
-            loadingIndicator.animationDuration = VisualFactory.Metrics.Durations.Animations.veryShort
+        }),
+        "loadingIndicator.grey": ViewStylist.wrapAllureBlock({ (loadingIndicator: LoadingIndicator) in
+            loadingIndicator.dotsHighlightedColor = VisualFactory.Colors.DarkGreyBlue
+            loadingIndicator.dotsNormalColor = VisualFactory.Colors.LightGrey
+            loadingIndicator.animationDuration = VisualFactory.Durations.Animation.VeryShort
             loadingIndicator.dotsSize = 3.5
             loadingIndicator.preferredWidth = 44.0
             loadingIndicator.dotsCount = 9
-        }
-    ]
-    
-    // MARK: - Label allures
-    
-    static let labelAllures: [String: LabelAllure] = [
-        "navigationBar.title": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.pageTitle)
-        },
-        "navigationBar.largeTitle": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largePageTitle)
-        },
-        "navigationBar.text": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.navigationBarText)
-        },
-        "medium": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.medium)
-        },
-        "medium.centered": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumCentered)
-        },
-        "medium.grey": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumGrey)
-        },
-        "medium.softGrey": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.mediumSoftGrey)
-        },
-        "small": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.small)
-        },
-        "small.centered": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallCentered)
-        },
-        "small.grey": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallGrey)
-        },
-        "small.grey.centered": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallGreyCentered)
-        },
-        "small.softGrey": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGrey)
-        },
-        "small.softGrey.centered": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.smallSoftGreyCentered)
-        },
-        "largeIndication": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeIndication)
-        },
-        "largeIndication.grey": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeIndicationGrey)
-        },
-        "largeIndication.grey.centered": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeIndicationGreyCentered)
-        },
-        "largeTitle": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.largeTitle)
-        },
-        "hugeNumber.grey": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.hugeNumberGrey)
-        },
-        "sectionTitle": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.sectionTitle)
-        },
-        "huge": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.huge)
-        },
-        "huge.light": { label in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.hugeLight)
-        }
+        }),
+        
+        // MARK: - Label allures
+        
+        "label.navigationBar.title": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.PageTitle)
+        }),
+        "label.navigationBar.largeTitle": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.LargePageTitle)
+        }),
+        "label.navigationBar.text": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.NavigationBarText)
+        }),
+        "label.medium": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Medium)
+        }),
+        "label.medium.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumCentered)
+        }),
+        "label.medium.grey": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumGrey)
+        }),
+        "label.medium.softGrey": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumSoftGrey)
+        }),
+        "label.small": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Small)
+        }),
+        "label.small.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SmallCentered)
+        }),
+        "label.small.grey": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SmallGrey)
+        }),
+        "label.small.grey.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SmallGreyCentered)
+        }),
+        "label.small.softGrey": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SmallSoftGrey)
+        }),
+        "label.small.softGrey.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SmallSoftGreyCentered)
+        }),
+        "label.largeIndication": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.LargeIndication)
+        }),
+        "label.largeIndication.grey": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.LargeIndicationGrey)
+        }),
+        "label.largeIndication.grey.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.LargeIndicationGreyCentered)
+        }),
+        "label.largeTitle": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.LargeTitle)
+        }),
+        "label.hugeNumber.grey": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeNumberGrey)
+        }),
+        "label.sectionTitle": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SectionTitle)
+        }),
+        "label.huge": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Huge)
+        }),
+        "label.huge.light": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeLight)
+        }),
+        "label.huge.light.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeLightCentered)
+        }),
 
-    ]
+        // MARK: - Button allures
     
-    // MARK: - Button allures
-    
-    static let buttonAllures: [String: ButtonAllure] = [
-        "navigationBar.grey": { button in
-            var hightlightedStyle = VisualFactory.TextAttributes.navigationBarText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarText), forState: UIControlState.Normal)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
-        },
-        "navigationBar.white": { button in
-            var hightlightedStyle = VisualFactory.TextAttributes.navigationBarWhiteText
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.ultraStrong), forKey: NSForegroundColorAttributeName)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.navigationBarWhiteText), forState: UIControlState.Normal)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
-        },
-        "icon": { button in
-            button.adjustsImageWhenHighlighted = false
-        },
-        "icon.grey": { button in
-            VisualTheme.buttonAllures["icon"]?(button)
-            button.setTintedImages(button.imageForState(UIControlState.Normal)!, tintColor: VisualFactory.Colors.lightGrey, darkenFactor: VisualFactory.Metrics.Factors.Darken.veryStrong)
-        },
-        "small.softGrey": { button in
-            var hightlightedStyle = VisualFactory.TextAttributes.smallSoftGrey
-            hightlightedStyle.updateValue((hightlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Metrics.Factors.Darken.extraStrong), forKey: NSForegroundColorAttributeName)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.smallSoftGrey), forState: UIControlState.Normal)
-            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Highlighted), attributes: hightlightedStyle), forState: UIControlState.Highlighted)
-        },
-        "rounded": { button in
-            let roundedButton = button as! RoundedButton
+        "button.navigationBar.grey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            var highlightedStyle = VisualFactory.TextAttributes.NavigationBarText
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.UltraStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.NavigationBarText), forState: UIControlState.Normal)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
+        }),
+        "button.navigationBar.white": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            var highlightedStyle = VisualFactory.TextAttributes.NavigationBarWhiteText
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.UltraStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.NavigationBarWhiteText), forState: UIControlState.Normal)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
+        }),
+        "button.small.softGrey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            var highlightedStyle = VisualFactory.TextAttributes.SmallSoftGrey
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.ExtraStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.SmallSoftGrey), forState: UIControlState.Normal)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Highlighted), attributes: highlightedStyle), forState: UIControlState.Highlighted)
+        }),
+        "roundedButton": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
             roundedButton.adjustsImageWhenHighlighted = false
-            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadii.medium
-            roundedButton.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.roundedButtonText), forState: UIControlState.Normal)
-            roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.Paddings.verySmall, left: VisualFactory.Metrics.Paddings.small, bottom: VisualFactory.Metrics.Paddings.verySmall, right: VisualFactory.Metrics.Paddings.small)
+            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadius.Medium
+            roundedButton.setAttributedTitle(NSAttributedString(string: roundedButton.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.RoundedButtonText), forState: UIControlState.Normal)
+            roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.Padding.VerySmall, left: VisualFactory.Metrics.Padding.Small, bottom: VisualFactory.Metrics.Padding.VerySmall, right: VisualFactory.Metrics.Padding.Small)
             if (roundedButton.imageForState(UIControlState.Normal) != nil) {
-                roundedButton.setImage(roundedButton.imageForState(UIControlState.Normal)!.imageWithColor(VisualFactory.Colors.white), forState: UIControlState.Normal)
-                roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.Paddings.verySmall)
+                roundedButton.setImage(roundedButton.imageForState(UIControlState.Normal)!.imageWithColor(VisualFactory.Colors.White), forState: UIControlState.Normal)
+                roundedButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: VisualFactory.Metrics.Padding.VerySmall)
             }
-        },
-        "rounded.green": { button in
-            VisualTheme.buttonAllures["rounded"]?(button)
-            let roundedButton = button as! RoundedButton
-            roundedButton.setFillColor(VisualFactory.Colors.actionGreen, forState: UIControlState.Normal)
-            roundedButton.setFillColor(VisualFactory.Colors.actionGreen.darkerColor(), forState: UIControlState.Highlighted)
-        },
-        "rounded.grey": { button in
-            VisualTheme.buttonAllures["rounded"]?(button)
-            let roundedButton = button as! RoundedButton
-            roundedButton.setFillColor(VisualFactory.Colors.lightGrey, forState: UIControlState.Normal)
-            roundedButton.setFillColor(VisualFactory.Colors.lightGrey.darkerColor(), forState: UIControlState.Highlighted)
-        },
-        "rounded.red": { button in
-            VisualTheme.buttonAllures["rounded"]?(button)
-            let roundedButton = button as! RoundedButton
-            roundedButton.setFillColor(VisualFactory.Colors.invalidRed, forState: UIControlState.Normal)
-            roundedButton.setFillColor(VisualFactory.Colors.invalidRed.darkerColor(), forState: UIControlState.Highlighted)
-        }
-    ]
+        }),
+        "roundedButton.green": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
+            VisualTheme.allureBlocks["roundedButton"]?(roundedButton)
+            roundedButton.setFillColor(VisualFactory.Colors.ActionGreen, forState: UIControlState.Normal)
+            roundedButton.setFillColor(VisualFactory.Colors.ActionGreen.darkerColor(), forState: UIControlState.Highlighted)
+        }),
+        "roundedButton.grey": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
+            VisualTheme.allureBlocks["roundedButton"]?(roundedButton)
+            roundedButton.setFillColor(VisualFactory.Colors.LightGrey, forState: UIControlState.Normal)
+            roundedButton.setFillColor(VisualFactory.Colors.LightGrey.darkerColor(), forState: UIControlState.Highlighted)
+        }),
+        "roundedButton.red": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
+            VisualTheme.allureBlocks["roundedButton"]?(roundedButton)
+            roundedButton.setFillColor(VisualFactory.Colors.InvalidRed, forState: UIControlState.Normal)
+            roundedButton.setFillColor(VisualFactory.Colors.InvalidRed.darkerColor(), forState: UIControlState.Highlighted)
+        }),
+        "button.icon": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            button.adjustsImageWhenHighlighted = false
+        }),
+        "button.icon.large.grey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
+            VisualTheme.allureBlocks["button.icon"]?(button)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.LargeIconGrey), forState: UIControlState.Normal)
+            var highlightedStyle = VisualFactory.TextAttributes.LargeIconGrey
+            highlightedStyle.updateValue((highlightedStyle[NSForegroundColorAttributeName] as! UIColor).darkerColor(factor: VisualFactory.Factors.Darken.VeryStrong), forKey: NSForegroundColorAttributeName)
+            button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
+        }),
+
+        // MARK: - TextField allures
     
-    // MARK: - TextField allures
-    
-    static let textFieldAllures: [String: TextFieldAllure] = [
-        "huge.light": { textField in
-            var placeholderAttributes = VisualFactory.TextAttributes.hugeLight
-            placeholderAttributes.updateValue(VisualFactory.Colors.lightGrey, forKey: NSForegroundColorAttributeName)
-            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.hugeLight)
+        "textField.huge.light": ViewStylist.wrapAllureBlock({ (textField: UITextField) in
+            var placeholderAttributes = VisualFactory.TextAttributes.HugeLight
+            placeholderAttributes.updateValue(VisualFactory.Colors.LightGrey, forKey: NSForegroundColorAttributeName)
+            textField.attributedText = NSAttributedString(string: textField.readableText(), attributes: VisualFactory.TextAttributes.HugeLight)
             textField.attributedPlaceholder = NSAttributedString(string: textField.readablePlaceholder(), attributes: placeholderAttributes)
-            textField.tintColor = VisualFactory.Colors.black
+            textField.tintColor = VisualFactory.Colors.Black
             textField.borderStyle = UITextBorderStyle.None
             textField.adjustsFontSizeToFitWidth = false
-        }
+        })
     ]
     
 }

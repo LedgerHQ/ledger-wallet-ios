@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingProtocolContext {
+final class PairingProtocolContext {
     
     var pairingId: String! = nil
     var pairingKey: Crypto.Key! = nil

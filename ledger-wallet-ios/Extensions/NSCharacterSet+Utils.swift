@@ -14,7 +14,7 @@ extension NSCharacterSet {
         return NSCharacterSet(charactersInString: "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
     }
     
-    class func hexadecimalCharacterSet() -> NSCharacterSet {
+    class func base16CharacterSet() -> NSCharacterSet {
         return NSCharacterSet(charactersInString: "0123456789ABCDEFabcdef")
     }
 

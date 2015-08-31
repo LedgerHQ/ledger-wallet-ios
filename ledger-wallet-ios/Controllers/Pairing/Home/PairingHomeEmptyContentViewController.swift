@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingHomeEmptyContentViewController: PairingHomeBaseContentViewController {
+final class PairingHomeEmptyContentViewController: PairingHomeBaseContentViewController {
     
     // MARK: - Actions
     

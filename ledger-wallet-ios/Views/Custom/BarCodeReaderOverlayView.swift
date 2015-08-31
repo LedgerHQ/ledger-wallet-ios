@@ -18,7 +18,7 @@ class BarCodeReaderOverlayView: View {
         let context = UIGraphicsGetCurrentContext()
         let squareWidth = bounds.size.width * 0.6
         let squareRect = CGRectMake((bounds.size.width - squareWidth) / 2.0, (bounds.size.height - squareWidth) / 2.0, squareWidth, squareWidth)
-        let roundedPath = UIBezierPath(roundedRect: squareRect, cornerRadius: VisualFactory.Metrics.BordersRadii.medium)
+        let roundedPath = UIBezierPath(roundedRect: squareRect, cornerRadius: VisualFactory.Metrics.BordersRadius.Medium)
         let handlesWidth:CGFloat = 7
         let handlesSize:CGFloat = 40
         
@@ -33,7 +33,7 @@ class BarCodeReaderOverlayView: View {
         CGContextSaveGState(context)
         UIColor.whiteColor().colorWithAlphaComponent(0.75).setFill()
         roundedPath.fill()
-        UIBezierPath(roundedRect: CGRectInset(squareRect, handlesWidth, handlesWidth), cornerRadius: VisualFactory.Metrics.BordersRadii.medium).fillWithBlendMode(kCGBlendModeClear, alpha: 1.0)
+        UIBezierPath(roundedRect: CGRectInset(squareRect, handlesWidth, handlesWidth), cornerRadius: VisualFactory.Metrics.BordersRadius.Medium).fillWithBlendMode(kCGBlendModeClear, alpha: 1.0)
         UIBezierPath(roundedRect: CGRectInset(squareRect, handlesSize, 0), cornerRadius: 0).fillWithBlendMode(kCGBlendModeClear, alpha: 1.0)
         UIBezierPath(roundedRect: CGRectInset(squareRect, 0, handlesSize), cornerRadius: 0).fillWithBlendMode(kCGBlendModeClear, alpha: 1.0)
         CGContextRestoreGState(context)

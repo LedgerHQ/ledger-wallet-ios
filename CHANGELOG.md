@@ -1,5 +1,9 @@
 # Changelog
 
+1.0.2
+=====
+- Add Japanese localization
+
 1.0.1
 =====
 - Add Spanish localization

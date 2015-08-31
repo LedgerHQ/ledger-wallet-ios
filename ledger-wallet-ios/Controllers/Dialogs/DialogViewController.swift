@@ -12,10 +12,10 @@ class DialogViewController: BaseViewController {
     
     private lazy var dialogAnimationController = DialogAnimationController()
     var dialogContentPadding: UIEdgeInsets {
-        return UIEdgeInsetsMake(VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium, VisualFactory.Metrics.Paddings.medium)
+        return UIEdgeInsetsMake(VisualFactory.Metrics.Padding.Medium, VisualFactory.Metrics.Padding.Medium, VisualFactory.Metrics.Padding.Medium, VisualFactory.Metrics.Padding.Medium)
     }
     var dialogContainerMargin: UIEdgeInsets {
-        return UIEdgeInsetsMake(VisualFactory.Metrics.Paddings.small, VisualFactory.Metrics.Paddings.small, VisualFactory.Metrics.Paddings.small, VisualFactory.Metrics.Paddings.small)
+        return UIEdgeInsetsMake(VisualFactory.Metrics.Padding.Small, VisualFactory.Metrics.Padding.Small, VisualFactory.Metrics.Padding.Small, VisualFactory.Metrics.Padding.Small)
     }
     var dialogContentDistance: UIEdgeInsets {
         return UIEdgeInsetsMake(dialogContentPadding.top + dialogContainerMargin.top, dialogContentPadding.left + dialogContainerMargin.left, dialogContentPadding.bottom + dialogContainerMargin.bottom, dialogContentPadding.right + dialogContainerMargin.right)

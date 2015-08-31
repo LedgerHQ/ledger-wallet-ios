@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingAddFinalizeStepViewController: PairingAddBaseStepViewController {
+final class PairingAddFinalizeStepViewController: PairingAddBaseStepViewController {
     
     override var stepIndication: String {
         return localizedString("ledger_wallet_is_finalizing_pairing")

@@ -11,7 +11,7 @@ import Foundation
 final class Preferences {
     
     let storeName: String
-    let userDefaults: NSUserDefaults
+    private let userDefaults: NSUserDefaults
 
     // MARK: - Setters
     

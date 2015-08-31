@@ -15,7 +15,7 @@ protocol PairingTransactionDialogViewControllerDelegate: class {
     
 }
 
-class PairingTransactionDialogViewController: DialogViewController {
+final class PairingTransactionDialogViewController: DialogViewController {
     
     @IBOutlet private weak var variableWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var dongleNameLabel: Label!

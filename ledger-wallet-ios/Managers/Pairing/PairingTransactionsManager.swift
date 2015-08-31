@@ -15,7 +15,7 @@ protocol PairingTransactionsManagerDelegate: class {
     
 }
 
-class PairingTransactionsManager: BasePairingManager {
+final class PairingTransactionsManager: BasePairingManager {
     
     weak var delegate: PairingTransactionsManagerDelegate? = nil
     private var webSockets: [WebSocket: PairingKeychainItem] = [:]
@@ -38,7 +38,7 @@ extension PairingTransactionsManager {
     
     // MARK: - Transactions management
     
-    func startListening() -> Bool {
+    func tryListening() -> Bool {
         // create all webSockets
         initilizeWebSockets()
         return webSockets.count > 0
@@ -52,7 +52,7 @@ extension PairingTransactionsManager {
     
     func restartListening() {
         stopListening()
-        startListening()
+        tryListening()
     }
     
     func confirmTransaction(transactionInfo: PairingTransactionInfo) {

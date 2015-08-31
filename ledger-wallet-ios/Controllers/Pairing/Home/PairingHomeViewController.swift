@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingHomeViewController: BaseViewController {
+final class PairingHomeViewController: BaseViewController {
     
     lazy private var pairingTransactionsManager = PairingTransactionsManager()
     private var currentContentViewController: PairingHomeBaseContentViewController! = nil
@@ -51,7 +51,7 @@ class PairingHomeViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if pairingTransactionsManager.startListening() {
+        if pairingTransactionsManager.tryListening() {
             switchToContentViewControllerWithClass(PairingHomeWaitingContentViewController)
         }
         else {

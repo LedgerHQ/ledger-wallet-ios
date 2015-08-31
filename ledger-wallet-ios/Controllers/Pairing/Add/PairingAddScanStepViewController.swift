@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddScanStepViewController: PairingAddBaseStepViewController {
+final class PairingAddScanStepViewController: PairingAddBaseStepViewController {
     
     @IBOutlet private weak var barCodeReader: BarCodeReaderView!
     

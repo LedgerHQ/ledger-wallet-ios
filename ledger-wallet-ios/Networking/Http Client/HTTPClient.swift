@@ -8,9 +8,9 @@
 
 import Foundation
 
-class HTTPClient {
+final class HTTPClient {
     
-    var autoStartsRequest = true
+    var autostartRequests = true
     var timeoutInterval: NSTimeInterval = 30
     var additionalHeaders: [String: String]? = nil
     var session: NSURLSession {
@@ -19,6 +19,7 @@ class HTTPClient {
         }
         return _session
     }
+    lazy private var logger = Logger.sharedInstance("HTTPClient")
     private var _session: NSURLSession! = nil
     private var logsRequests = ApplicationManager.sharedInstance().isInDebug
     
@@ -66,7 +67,7 @@ class HTTPClient {
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
         
         // launch it if necessary
-        if autoStartsRequest {
+        if autostartRequests {
             task.resume()
         }
         return task
@@ -75,11 +76,11 @@ class HTTPClient {
     // MARK: - Log
     
     private func logRequest(request: NSURLRequest) {
-        println("HTTPClient: -> \(request.HTTPMethod!) \(request.URL!)")
+        logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
     }
     
     private func logResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
-        println("HTTPClient: <- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
+        logger.info("<- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
     }
     
     // MARK: - Requests

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
+final class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     
     @IBOutlet private weak var pinCodeView: PinCodeView!
     @IBOutlet private weak var indicationLabel: Label!
@@ -25,7 +25,7 @@ class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     override func configureView() {
         super.configureView()
 
-        pinCodeView?.restrictedCharacterSet = NSCharacterSet.hexadecimalCharacterSet()
+        pinCodeView?.restrictedCharacterSet = NSCharacterSet.base16CharacterSet()
         pinCodeView?.delegate = self
         pinCodeView?.length = 4
         pinCodeView?.placeholder = data as? String

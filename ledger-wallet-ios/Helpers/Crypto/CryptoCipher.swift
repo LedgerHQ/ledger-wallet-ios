@@ -10,7 +10,7 @@ import Foundation
 
 extension Crypto {
 
-    class Cipher {
+    final class Cipher {
         
         class func tripleDESCBCFromData(data: NSData, key1: Crypto.Key, key2: Crypto.Key, key3: Crypto.Key) -> NSData {
             return objCTripleDESCBCFromData(data, key1.symmetricKey, key2.symmetricKey, key3.symmetricKey)

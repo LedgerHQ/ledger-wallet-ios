@@ -8,234 +8,250 @@
 
 import UIKit
 
-struct VisualFactory {
+final class VisualFactory {
     
     typealias TextAttribute = [NSObject: AnyObject]
     
     struct TextAttributes {
     
-        static let pageTitle = [
-            NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -Fonts.Kernings.small,
-            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Sizes.almostLarge.rawValue)
+        static let PageTitle = [
+            NSForegroundColorAttributeName: Colors.White,
+            NSKernAttributeName: -Fonts.Kerning.Small,
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge)
         ]
         
-        static let largePageTitle = [
-            NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -Fonts.Kernings.large,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostUltraLarge.rawValue)
+        static let LargePageTitle = [
+            NSForegroundColorAttributeName: Colors.White,
+            NSKernAttributeName: -Fonts.Kerning.Large,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.AlmostUltraLarge)
         ]
         
-        static let navigationBarText = [
-            NSForegroundColorAttributeName: Colors.lightGrey,
-            NSKernAttributeName: -Fonts.Kernings.verySmall,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue)
+        static let NavigationBarText = [
+            NSForegroundColorAttributeName: Colors.LightGrey,
+            NSKernAttributeName: -Fonts.Kerning.VerySmall,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.Small)
         ]
         
-        static let navigationBarWhiteText = [
-            NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -Fonts.Kernings.verySmall,
-            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Sizes.small.rawValue)
+        static let NavigationBarWhiteText = [
+            NSForegroundColorAttributeName: Colors.White,
+            NSKernAttributeName: -Fonts.Kerning.VerySmall,
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.Small)
         ]
         
-        static let medium = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.verySmall,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.medium.rawValue),
+        static let Medium = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.VerySmall,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.Medium),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = Metrics.LineSpacings.small
+                paragraph.lineSpacing = Metrics.LineSpacing.Small
                 return paragraph
             }()
         ]
         
-        static let mediumCentered: TextAttribute = TextAttributes.extend(medium, withAttributes: [
+        static let MediumCentered: TextAttribute = TextAttributes.extend(Medium, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (medium[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
+                let paragraph = (Medium[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
             ]
         )
         
-        static let mediumGrey: TextAttribute = TextAttributes.extend(medium, withAttributes: [
-                NSForegroundColorAttributeName: Colors.darkGrey
+        static let MediumGrey: TextAttribute = TextAttributes.extend(Medium, withAttributes: [
+                NSForegroundColorAttributeName: Colors.DarkGrey
             ]
         )
         
-        static let mediumSoftGrey: TextAttribute = TextAttributes.extend(medium, withAttributes: [
-                NSForegroundColorAttributeName: Colors.softGrey
+        static let MediumSoftGrey: TextAttribute = TextAttributes.extend(Medium, withAttributes: [
+                NSForegroundColorAttributeName: Colors.SoftGrey
             ]
         )
         
-        static let small = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.verySmall,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.small.rawValue),
+        static let Small = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.VerySmall,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.Small),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = Metrics.LineSpacings.large
+                paragraph.lineSpacing = Metrics.LineSpacing.Large
                 return paragraph
                 }()
         ]
         
-        static let smallCentered: TextAttribute = TextAttributes.extend(small, withAttributes: [
+        static let SmallCentered: TextAttribute = TextAttributes.extend(Small, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (small[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
+                let paragraph = (Small[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
             ]
         )
         
-        static let smallGrey: TextAttribute = TextAttributes.extend(small, withAttributes: [
-                NSForegroundColorAttributeName: Colors.darkGrey
+        static let SmallGrey: TextAttribute = TextAttributes.extend(Small, withAttributes: [
+                NSForegroundColorAttributeName: Colors.DarkGrey
             ]
         )
         
-        static let smallGreyCentered: TextAttribute = TextAttributes.extend(smallGrey, withAttributes: [
+        static let SmallGreyCentered: TextAttribute = TextAttributes.extend(SmallGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (smallGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
+                let paragraph = (SmallGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
             ]
         )
         
-        static let smallSoftGrey: TextAttribute = TextAttributes.extend(smallGrey, withAttributes: [
-                NSForegroundColorAttributeName: Colors.softGrey
+        static let SmallSoftGrey: TextAttribute = TextAttributes.extend(SmallGrey, withAttributes: [
+                NSForegroundColorAttributeName: Colors.SoftGrey
             ]
         )
         
-        static let smallSoftGreyCentered: TextAttribute = TextAttributes.extend(smallSoftGrey, withAttributes: [
+        static let SmallSoftGreyCentered: TextAttribute = TextAttributes.extend(SmallSoftGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (smallSoftGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
+                let paragraph = (SmallSoftGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
             ]
         )
         
-        static let largeIndication = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.small,
-            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Sizes.almostLarge.rawValue),
+        static let LargeIndication = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.Small,
+            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Size.AlmostLarge),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = Metrics.LineSpacings.medium
+                paragraph.lineSpacing = Metrics.LineSpacing.Medium
                 return paragraph
                 }()
         ]
         
-        static let largeIndicationGrey: TextAttribute = TextAttributes.extend(largeIndication, withAttributes: [
-                NSForegroundColorAttributeName: Colors.darkGrey
+        static let LargeIndicationGrey: TextAttribute = TextAttributes.extend(LargeIndication, withAttributes: [
+                NSForegroundColorAttributeName: Colors.DarkGrey
             ]
         )
         
-        static let largeIndicationGreyCentered: TextAttribute = TextAttributes.extend(largeIndicationGrey, withAttributes: [
+        static let LargeIndicationGreyCentered: TextAttribute = TextAttributes.extend(LargeIndicationGrey, withAttributes: [
             NSParagraphStyleAttributeName: {
-                let paragraph = (largeIndicationGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
+                let paragraph = (LargeIndicationGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
                 paragraph.alignment = NSTextAlignment.Center
                 return paragraph
                 }()
             ]
         )
         
-        static let hugeNumberGrey = [
-            NSForegroundColorAttributeName: Colors.darkGrey,
-            NSKernAttributeName: -Fonts.Kernings.small,
+        static let HugeNumberGrey = [
+            NSForegroundColorAttributeName: Colors.DarkGrey,
+            NSKernAttributeName: -Fonts.Kerning.Small,
             NSFontAttributeName: Fonts.lightFontWithSize(40)
         ]
         
-        static let largeTitle = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.small,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.large.rawValue)
+        static let LargeTitle = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.Small,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.Large)
         ]
         
-        static let roundedButtonText = [
-            NSForegroundColorAttributeName: Colors.white,
-            NSKernAttributeName: -Fonts.Kernings.small,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.almostLarge.rawValue)
+        static let RoundedButtonText = [
+            NSForegroundColorAttributeName: Colors.White,
+            NSKernAttributeName: -Fonts.Kerning.Small,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.AlmostLarge)
         ]
         
-        static let huge = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.large,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Sizes.megaLarge.rawValue)
+        static let Huge = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.Large,
+            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.MegaLarge)
         ]
         
-        static let hugeLight: TextAttribute = TextAttributes.extend(huge, withAttributes: [
-                NSFontAttributeName: Fonts.lightFontWithSize((huge[NSFontAttributeName] as! UIFont).pointSize)
+        static let HugeLight: TextAttribute = TextAttributes.extend(Huge, withAttributes: [
+                NSFontAttributeName: Fonts.lightFontWithSize((Huge[NSFontAttributeName] as! UIFont).pointSize)
             ]
         )
         
-        static let sectionTitle = [
-            NSForegroundColorAttributeName: Colors.black,
-            NSKernAttributeName: -Fonts.Kernings.small,
-            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Sizes.almostLarge.rawValue)
+        static let HugeLightCentered: TextAttribute = TextAttributes.extend(HugeLight, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = NSMutableParagraphStyle()
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
+            ]
+        )
+        
+        static let SectionTitle = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.Small,
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge)
         ]
         
-        private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
-            var newAttributes = textAttribute
-            newAttributes.merge(attributes)
-            return newAttributes
+        static let LargeIconGrey = [
+            NSForegroundColorAttributeName: Colors.LightGrey,
+            NSFontAttributeName: Fonts.iconFontWithSize(Fonts.Size.MegaLarge)
+        ]
+        
+        private static func extend(var textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
+            for (key, value) in attributes {
+                textAttribute.updateValue(value, forKey: key)
+            }
+            return textAttribute
         }
         
     }
     
     struct Colors {
         
-        static let transparent = UIColor.clearColor()
-        static let black = UIColor(hex: 0x000000)
-        static let white = UIColor(hex: 0xffffff)
-        static let backgroundColor = UIColor(hex: 0xf9f9f9)
-        static let nightBlue = UIColor(hex: 0x1d2028)
-        static let lightGreyBlue = UIColor(hex: 0xcccff0)
-        static let darkGreyBlue = UIColor(hex: 0x333745)
-        static let greyBlue = UIColor(hex: 0x71737d)
-        static let invalidRed = UIColor(hex: 0xea2e49)
-        static let validGreen = UIColor(hex: 0x3fb34f)
-        static let actionGreen = UIColor(hex: 0x41ccb4)
-        static let actionPurple = UIColor(hex: 0x596799)
-        static let extraDarkGrey = UIColor(hex: 0x333333)
-        static let darkGrey = UIColor(hex: 0x666666)
-        static let softGrey = UIColor(hex: 0x999999)
-        static let lightGrey = UIColor(hex: 0xcccccc)
-        static let veryLightGrey = UIColor(hex: 0xeeeeee)
-        static let extraLightGrey = UIColor(hex: 0xf4f4f4)
+        static let Transparent = UIColor.clearColor()
+        static let Black = UIColor(hex: 0x000000)
+        static let White = UIColor(hex: 0xffffff)
+        static let BackgroundColor = UIColor(hex: 0xf9f9f9)
+        static let NightBlue = UIColor(hex: 0x1d2028)
+        static let LightGreyBlue = UIColor(hex: 0xcccff0)
+        static let DarkGreyBlue = UIColor(hex: 0x333745)
+        static let GreyBlue = UIColor(hex: 0x71737d)
+        static let InvalidRed = UIColor(hex: 0xea2e49)
+        static let ValidGreen = UIColor(hex: 0x3fb34f)
+        static let ActionGreen = UIColor(hex: 0x41ccb4)
+        static let ActionPurple = UIColor(hex: 0x596799)
+        static let ExtraDarkGrey = UIColor(hex: 0x333333)
+        static let DarkGrey = UIColor(hex: 0x666666)
+        static let SoftGrey = UIColor(hex: 0x999999)
+        static let LightGrey = UIColor(hex: 0xcccccc)
+        static let VeryLightGrey = UIColor(hex: 0xeeeeee)
+        static let ExtraLightGrey = UIColor(hex: 0xf4f4f4)
         
     }
     
-    enum Fonts {
+    struct Fonts {
         
-        private enum Names: String {
-            case Light = "OpenSans-Light"
-            case Regular = "OpenSans"
-            case Semibold = "OpenSans-Semibold"
-            case Bold = "OpenSans-Bold"
-            case Extrabold = "OpenSans-Extrabold"
+        private enum Name: String {
+            case OpenSansLight = "OpenSans-Light"
+            case OpenSansRegular = "OpenSans"
+            case OpenSansSemibold = "OpenSans-Semibold"
+            case OpenSansBold = "OpenSans-Bold"
+            case OpenSansExtrabold = "OpenSans-Extrabold"
+            case FontAwesome = "FontAwesome"
         }
         
-        enum Sizes: CGFloat {
-            case small = 12
-            case medium = 14
-            case almostLarge = 15
-            case large = 16
-            case extraLarge = 18
-            case almostUltraLarge = 19
-            case ultraLarge = 20
-            case megaLarge = 24
-            case extraHuge = 27
-            case ultraHuge = 42
+        struct Size {
+            static let Small:CGFloat = 12
+            static let Medium:CGFloat = 14
+            static let AlmostLarge:CGFloat = 15
+            static let Large:CGFloat = 16
+            static let ExtraLarge:CGFloat = 18
+            static let AlmostUltraLarge:CGFloat = 19
+            static let UltraLarge:CGFloat = 20
+            static let MegaLarge:CGFloat = 24
+            static let ExtraHuge:CGFloat = 27
+            static let UltraHuge:CGFloat = 42
         }
         
-        struct Kernings {
-            static let verySmall: CGFloat = 0.2
-            static let small: CGFloat = 0.5
-            static let medium: CGFloat = 0.9
-            static let large: CGFloat = 1.2
-            static let veryLarge: CGFloat = 1.5
+        struct Kerning {
+            static let VerySmall: CGFloat = 0.2
+            static let Small: CGFloat = 0.5
+            static let Medium: CGFloat = 0.9
+            static let Large: CGFloat = 1.2
+            static let VeryLarge: CGFloat = 1.5
         }
         
         private static func fontWithName(name: String, size: CGFloat) -> UIFont {
@@ -246,80 +262,92 @@ struct VisualFactory {
         }
         
         static func lightFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Names.Light.rawValue, size: size)
+            return fontWithName(Name.OpenSansLight.rawValue, size: size)
         }
         
         static func regularFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Names.Regular.rawValue, size: size)
+            return fontWithName(Name.OpenSansRegular.rawValue, size: size)
         }
         
         static func semiboldFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Names.Semibold.rawValue, size: size)
+            return fontWithName(Name.OpenSansSemibold.rawValue, size: size)
         }
         
         static func boldFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Names.Bold.rawValue, size: size)
+            return fontWithName(Name.OpenSansBold.rawValue, size: size)
         }
         
         static func extraboldFontWithSize(size: CGFloat) -> UIFont {
-            return fontWithName(Names.Extrabold.rawValue, size: size)
+            return fontWithName(Name.OpenSansExtrabold.rawValue, size: size)
         }
+        
+        static func iconFontWithSize(size: CGFloat) -> UIFont {
+            return fontWithName(Name.FontAwesome.rawValue, size: size)
+        }
+        
     }
     
     struct Metrics {
         
-        static let defaultDarkenFactor:CGFloat = Factors.Darken.strong
-        static let defaultNavigationBarHeight:CGFloat = Views.NavigationBar.mediumNavigationBarHeight
-        static let defaultBorderRadius:CGFloat = BordersRadii.medium
-        static let defaultAnimationDuration = Durations.Animations.medium
-        
-        struct Views {
+        struct View {
+            
             struct NavigationBar {
-                static let mediumNavigationBarHeight: CGFloat = 60
-                static let smallNavigationBarHeight: CGFloat = 44
+                struct Height {
+                    static let Default = Medium
+                    static let Medium: CGFloat = 60
+                    static let Small: CGFloat = 44
+                }
             }
+            
         }
         
-        struct Factors {
-            struct Darken {
-                static let light:CGFloat = 0.03
-                static let medium:CGFloat = 0.05
-                static let strong:CGFloat = 0.08
-                static let veryStrong:CGFloat = 0.1
-                static let extraStrong:CGFloat = 0.15
-                static let ultraStrong:CGFloat = 0.20
-            }
+        struct BordersRadius {
+            static let Default = Medium
+            static let Small:CGFloat = 3
+            static let Medium:CGFloat = 5
+            static let Large:CGFloat = 10
         }
         
-        struct BordersRadii {
-            static let small:CGFloat = 3
-            static let medium:CGFloat = 5
-            static let large:CGFloat = 10
+        struct Padding {
+            static let VerySmall:CGFloat = 10
+            static let AlmostSmall:CGFloat = 15
+            static let Small:CGFloat = 20
+            static let AlmostMedium:CGFloat = 25
+            static let Medium:CGFloat = 30
         }
         
-        struct Paddings {
-            static let verySmall:CGFloat = 10
-            static let almostSmall:CGFloat = 15
-            static let small:CGFloat = 20
-            static let almostMedium:CGFloat = 25
-            static let medium:CGFloat = 30
+        struct LineSpacing {
+            static let Small:CGFloat = 4
+            static let Medium:CGFloat = 6
+            static let Large:CGFloat = 8
         }
         
-        struct LineSpacings {
-            static let small:CGFloat = 4
-            static let medium:CGFloat = 6
-            static let large:CGFloat = 8
-        }
-        
-        struct Durations {
-            struct Animations {
-                static let veryShort = 0.17
-                static let short = 0.25
-                static let medium = 0.32
-                static let long = 0.40
-            }
-        }
+    }
     
+    struct Durations {
+        
+        struct Animation {
+            static let Default = Medium
+            static let VeryShort = 0.17
+            static let Short = 0.25
+            static let Medium = 0.32
+            static let Long = 0.40
+        }
+        
     }
 
+    struct Factors {
+        
+        struct Darken {
+            static let Default = Strong
+            static let Light:CGFloat = 0.03
+            static let Medium:CGFloat = 0.05
+            static let Strong:CGFloat = 0.08
+            static let VeryStrong:CGFloat = 0.1
+            static let ExtraStrong:CGFloat = 0.15
+            static let UltraStrong:CGFloat = 0.20
+        }
+        
+    }
+    
 }

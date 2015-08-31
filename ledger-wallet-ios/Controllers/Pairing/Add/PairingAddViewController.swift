@@ -14,7 +14,7 @@ protocol PairingAddViewControllerDelegate: class {
     
 }
 
-class PairingAddViewController: BaseViewController {
+final class PairingAddViewController: BaseViewController {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var stepNumberLabel: Label!
@@ -125,7 +125,7 @@ extension PairingAddViewController {
             transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
             transition.type = kCATransitionPush
             transition.subtype = kCATransitionFromRight
-            transition.duration = VisualFactory.Metrics.defaultAnimationDuration
+            transition.duration = VisualFactory.Durations.Animation.Default
             transition.delegate = self
             transition.setValue(currentViewController, forKey: "previousStepViewController")
             if completion != nil {

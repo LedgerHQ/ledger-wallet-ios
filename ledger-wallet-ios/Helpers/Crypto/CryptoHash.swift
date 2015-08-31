@@ -10,7 +10,7 @@ import Foundation
 
 extension Crypto {
  
-    class Hash {
+    final class Hash {
         
         class func SHA256FromData(data: NSData) -> NSData {
             let length = Int(CC_SHA256_DIGEST_LENGTH)

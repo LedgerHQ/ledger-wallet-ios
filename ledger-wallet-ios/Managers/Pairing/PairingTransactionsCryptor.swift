@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PairingTransactionsCryptor {
+final class PairingTransactionsCryptor {
     
     func transactionInfoFromEncryptedBlob(data: NSData, pairingKey: Crypto.Key) -> PairingTransactionInfo? {
         if (data.length == 0) {

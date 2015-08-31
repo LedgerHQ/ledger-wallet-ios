@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingTransactionDialogViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -68,7 +68,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.green"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="green"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="complete" destination="-1" eventType="touchUpInside" id="HYl-XF-CHc"/>
@@ -80,7 +80,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="rounded.grey"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="grey"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="cancel" destination="-1" eventType="touchUpInside" id="8RV-79-hCX"/>
@@ -98,7 +98,7 @@
                         <constraint firstAttribute="bottom" secondItem="uT2-Gt-hMZ" secondAttribute="bottom" id="xFz-Lm-anU"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.transparent"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_amount_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0o-99-GU5" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -138,7 +138,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="view.background"/>
+                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
             </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="656" y="265.5"/>
         </view>

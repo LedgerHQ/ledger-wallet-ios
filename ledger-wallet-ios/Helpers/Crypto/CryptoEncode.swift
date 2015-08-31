@@ -10,7 +10,7 @@ import Foundation
 
 extension Crypto {
     
-    class Encode {
+    final class Encode {
         
         // MARK: - Base 16
         

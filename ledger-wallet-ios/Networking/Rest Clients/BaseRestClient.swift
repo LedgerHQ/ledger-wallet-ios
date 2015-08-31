@@ -10,53 +10,33 @@ import Foundation
 
 class BaseRestClient: SharableObject {
     
-    private let baseURL = LedgerAPIBaseURL
-    lazy private var httpClient = HTTPClient()
-
-    private enum HeaderFields: String {
-        case Platform = "X-Ledger-Platform"
-        case Environment = "X-Ledger-Environment"
-        case Locale = "X-Ledger-Locale"
+    var baseURL: String {
+        if _baseURL == nil { _baseURL = preferredBaseURL() }
+        return _baseURL
     }
-    
-    // MARK: - Requests management
-    
-    func get(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.get(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
+    var httpClient: HTTPClient {
+        if _httpClient == nil { _httpClient = preferredHttpClient() }
+        return _httpClient
     }
-    
-    func post(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .JSON, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.post(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
+    var preferences: Preferences {
+        if (_preferences == nil) { _preferences = Preferences(storeName: self.className()) }
+        return _preferences
     }
+    private var _baseURL: String! = nil
+    private var _httpClient: HTTPClient! = nil
+    private var _preferences: Preferences! = nil
     
-    func head(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.head(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
-    }
+    // MARK: - URL management
     
-    func delete(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.delete(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
-    }
-    
-    func put(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .JSON, completionHandler: HTTPClient.Task.CompletionHandler?) -> HTTPClient.DataTask {
-        return httpClient.put(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
-    }
-    
-    // MARK - URL management
-    
-    private func baseURLWithPath(path: String) -> String {
+    func baseURLWithPath(path: String) -> String {
         return baseURL.stringByAppendingString(path)
     }
     
-    // MARK: - Initialization
-    
-    required init() {
-        super.init()
-        
-        httpClient.additionalHeaders = [
-            HeaderFields.Platform.rawValue: "ios",
-            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance().isInDebug ? "dev" : "prod",
-            HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
-        ]
+    func preferredBaseURL() -> String {
+        return ""
     }
     
+    func preferredHttpClient() -> HTTPClient {
+        return HTTPClient()
+    }
 }

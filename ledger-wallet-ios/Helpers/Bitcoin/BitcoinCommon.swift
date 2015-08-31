@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Bitcoin {
+final class Bitcoin {
     
     typealias Amount = BTCAmount
     

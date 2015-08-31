@@ -24,9 +24,20 @@ extension UIView {
         }
     }
     
-    convenience init(allure: String) {
-        self.init(frame: CGRectZero)
-        self.allure = allure
+    var allureStyleName: String? {
+        if let allure = allure {
+            if allure.hasPrefix("_") {
+                return allure.stringByReplacingCharactersInRange(allure.startIndex...allure.startIndex, withString: "")
+            }
+            return allureClassName + "." + allure
+        }
+        return nil
+    }
+    
+    private var allureClassName: String {
+        var className = self.className().stringByReplacingOccurrencesOfString("UI", withString: "")
+        className.replaceRange(className.startIndex...className.startIndex, with: String(className[className.startIndex]).lowercaseString)
+        return className
     }
     
 }

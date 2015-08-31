@@ -10,7 +10,7 @@ import Foundation
 
 extension Bitcoin {
     
-    class Formatter {
+    final class Formatter {
         
         enum SymbolStyle {
             case None

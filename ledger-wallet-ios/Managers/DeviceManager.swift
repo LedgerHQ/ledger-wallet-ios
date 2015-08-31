@@ -9,7 +9,7 @@
 import Foundation
 import AudioToolbox
 
-class DeviceManager: BaseManager {
+final class DeviceManager: BaseManager {
     
     enum HeightClass {
         case Small
