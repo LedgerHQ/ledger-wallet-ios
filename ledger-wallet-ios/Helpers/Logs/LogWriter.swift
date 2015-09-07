@@ -63,6 +63,99 @@ final class LogWriter: SharableObject {
         enqueueCleanLogsFilesOperation()
     }
     
+    func exportLogsToData(#sequentially: Bool, sequence: ((NSData) -> Void)? = nil, completion: ((NSData?) -> Void)) {
+        // enqueue export logs operation
+        operationQueue.addOperationWithBlock() {
+            // extract list of to-export files - (most 2 recent files) roughly 48 hours of logs
+            let filesToExport: ArraySlice<String>
+            if let files = self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath, error: nil) as? [String] {
+                var allLogs = files.filter({$0.hasSuffix(".log")})
+                allLogs.sort(<)
+                filesToExport = suffix(allLogs, 2)
+            }
+            else {
+                console("LogWriter: Unable to obtain list of files to export from logs directory at path \(self.logsDirectoryPath)")
+                return
+            }
+            
+            // abort if no file needs to be exported
+            if filesToExport.isEmpty {
+                dispatchAsyncOnMainQueue() {
+                    completion(NSData())
+                }
+                return
+            }
+            
+            // build final NSData
+            let finalData = NSMutableData()
+            for file in filesToExport {
+                let filepath = self.logsDirectoryPath.stringByAppendingPathComponent(file)
+                if let fileData = self.fileManager.contentsAtPath(filepath) {
+                    if sequentially == true {
+                        dispatchAsyncOnMainQueue() {
+                            sequence?(fileData)
+                        }
+                    }
+                    else {
+                        finalData.appendData(fileData)
+                    }
+                }
+            }
+            dispatchAsyncOnMainQueue() {
+                completion(sequentially == true ? nil : finalData)
+            }
+        }
+    }
+    
+    func exportLogsToFile(#autoremove: Bool, completion: (ephemeralFilepath: String?) -> Void) {
+        let uuid = NSUUID().UUIDString
+        let temporypath = ApplicationManager.sharedInstance().temporaryDirectoryPath
+        let filepath = temporypath.stringByAppendingPathComponent(uuid).stringByAppendingPathExtension("txt")!
+        
+        // remove file if it already exists (shouldnt happen)
+        if self.fileManager.fileExistsAtPath(filepath) {
+            if !self.fileManager.removeItemAtPath(filepath, error: nil) {
+                console("LogWriter: Unable to remove already existing exported empeheral log file at path \(filepath)")
+                completion(ephemeralFilepath: nil)
+                return
+            }
+        }
+        if !self.fileManager.createFileAtPath(filepath, contents: nil, attributes: nil) {
+            console("LogWriter: Unable to create empeheral log file at path \(filepath)")
+            completion(ephemeralFilepath: nil)
+            return
+        }
+        
+        // create file handle
+        if let fileHandle = NSFileHandle(forWritingAtPath: filepath) {
+            // export logs
+            exportLogsToData(sequentially: true, sequence: { data in
+                fileHandle.writeData(data)
+            }, completion: { data in
+                let writtenBytes = fileHandle.offsetInFile
+                fileHandle.closeFile()
+                
+                // if exported data was not empty (nothing to export)
+                if data == nil && writtenBytes > 0 {
+                    completion(ephemeralFilepath: filepath)
+                    if autoremove == true {
+                        self.fileManager.removeItemAtPath(filepath, error: nil) // try to remove file
+                    }
+                }
+                else {
+                    console("LogWriter: Unable to write to empeheral log file at path \(filepath)")
+                    self.fileManager.removeItemAtPath(filepath, error: nil) // try to remove file
+                    completion(ephemeralFilepath: nil)
+                }
+            })
+        }
+        else {
+            console("LogWriter: Unable to open empeheral log file for writing at path \(filepath)")
+            self.fileManager.removeItemAtPath(filepath, error: nil) // try to remove file
+            completion(ephemeralFilepath: nil)
+        }
+    }
+    
     // MARK: Write management
     
     private func writeLogEntryToFile(logEntry: LogEntry, fileHandle: NSFileHandle) {
