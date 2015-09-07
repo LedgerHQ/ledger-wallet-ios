@@ -22,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // handle first app launch
         ApplicationManager.sharedInstance().handleFirstLaunch()
         
+        // clear stale log files
+        LogWriter.sharedInstance().cleanStaleLogFiles()
+        
+        // remove all tmp files
+        ApplicationManager.sharedInstance().clearTemporaryDirectory()
+        
         // handle entry point without being embedded in a navigation controller
         if let viewController = window?.rootViewController as? BaseViewController {
             window?.rootViewController = Navigator.embedViewController(viewController)
@@ -32,12 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // register remote notifications
         RemoteNotificationsManager.sharedInstance().registerForRemoteNotifications()
-        
-        // clear stale log files
-        LogWriter.sharedInstance().cleanStaleLogFiles()
-    
-        // remove all tmp files
-        ApplicationManager.sharedInstance().clearTemporaryDirectory()
     }
 
     // MARK: - Remote notifications
