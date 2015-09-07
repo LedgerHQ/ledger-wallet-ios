@@ -70,4 +70,21 @@ final class ApplicationManager: BaseManager {
         }
     }
     
+    func clearTemporaryDirectory() {
+        let directoryPath = self.temporaryDirectoryPath
+        let fileManager = NSFileManager.defaultManager()
+        
+        if !fileManager.fileExistsAtPath(directoryPath) {
+            return
+        }
+        
+        if var content = fileManager.contentsOfDirectoryAtPath(directoryPath, error: nil) as? [String] {
+            content = content.filter({ !$0.hasPrefix(".") })
+            for file in content {
+                let filepath = directoryPath.stringByAppendingPathComponent(file)
+                fileManager.removeItemAtPath(filepath, error: nil)
+            }
+        }
+    }
+    
 }

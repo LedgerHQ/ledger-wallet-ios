@@ -35,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // clear stale log files
         LogWriter.sharedInstance().cleanStaleLogFiles()
+    
+        // remove all tmp files
+        ApplicationManager.sharedInstance().clearTemporaryDirectory()
     }
 
     // MARK: - Remote notifications
