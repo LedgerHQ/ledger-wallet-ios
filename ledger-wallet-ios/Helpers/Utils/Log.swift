@@ -13,7 +13,12 @@ func console<T: Printable>(value: T) {
 }
 
 func console(value: String) {
-    dispatchAsyncOnMainQueue() {
+    if NSThread.currentThread() == NSThread.mainThread() {
         println(value)
+    }
+    else {
+        dispatchAsyncOnMainQueue() {
+            println(value)
+        }
     }
 }
