@@ -31,7 +31,7 @@ final class VisualTheme {
         "tableView.transparent": ViewStylist.wrapAllureBlock({ (tableView: TableView) in
             tableView.backgroundColor = VisualFactory.Colors.Transparent
             tableView.separatorColor = VisualFactory.Colors.LightGrey
-            tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Padding.Small, 0, VisualFactory.Metrics.Padding.Small)
+            tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Padding.Medium, 0, VisualFactory.Metrics.Padding.Medium)
         }),
         "tableViewCell.transparent": ViewStylist.wrapAllureBlock({ (tableViewCell: TableViewCell) in
             tableViewCell.contentView.backgroundColor = VisualFactory.Colors.Transparent

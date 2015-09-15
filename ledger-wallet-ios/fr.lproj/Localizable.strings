@@ -52,3 +52,5 @@
 "you_need_to_provide_a_dongle_name" = "Vous devez renseigner un nom unique pour ce Ledger Wallet.";
 "a_dongle_with_this_name_already_exists" = "Ce nom est déjà utilisé par un autre Ledger Wallet associé.";
 "deleting_this_dongle_pairing" = "En supprimant ce Ledger Wallet associé, vous ne pourrez plus valider les transactions depuis ce smartphone.\nSouhaitez-vous continuer ?";
+"PAIRING" = "ASSOCIATION";
+"PAIRED_DEVICES" = "ASSOCIATIONS";

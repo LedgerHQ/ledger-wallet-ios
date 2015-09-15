@@ -52,3 +52,5 @@
 "you_need_to_provide_a_dongle_name" = "Ledger Walletにユニークな名前を付ける必要があります。";
 "a_dongle_with_this_name_already_exists" = "この名前は他のペアリングされたLedger Walletで既に使用されています。";
 "deleting_this_dongle_pairing" = "このペアリングされたLedger Walletを削除することで、このスマートフォンから手動でトランザクションを検証することができなくなります。\n続行しますか？";
+"PAIRING" = "ペアリング";
+"PAIRED_DEVICES" = "デバイスの組み合わせ";

@@ -85,7 +85,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_dongle_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlL-i4-fNA" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="21" width="121" height="21"/>
+                                                    <rect key="frame" x="30" y="21" width="121" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -94,10 +94,10 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jac-JW-Ean" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="540" y="12" width="60" height="60"/>
+                                                    <rect key="frame" x="530" y="12" width="70" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="R64-Pi-v3N"/>
-                                                        <constraint firstAttribute="width" constant="60" id="rEA-Ls-VX2"/>
+                                                        <constraint firstAttribute="width" constant="70" id="rEA-Ls-VX2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="18"/>
                                                     <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
@@ -113,7 +113,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tM-Ch-UDd" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="45" width="112" height="21"/>
+                                                    <rect key="frame" x="30" y="45" width="112" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -124,11 +124,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="9tM-Ch-UDd" secondAttribute="centerY" constant="-14" id="63O-NA-p1L"/>
-                                                <constraint firstItem="XlL-i4-fNA" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="20" id="7hD-wc-yYz"/>
+                                                <constraint firstItem="XlL-i4-fNA" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="30" id="7hD-wc-yYz"/>
                                                 <constraint firstAttribute="centerY" secondItem="XlL-i4-fNA" secondAttribute="centerY" constant="10" id="HXh-Gi-qGg"/>
                                                 <constraint firstAttribute="trailing" secondItem="jac-JW-Ean" secondAttribute="trailing" id="WXA-t8-ji8"/>
                                                 <constraint firstAttribute="centerY" secondItem="jac-JW-Ean" secondAttribute="centerY" id="key-F0-RJJ"/>
-                                                <constraint firstItem="9tM-Ch-UDd" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="20" id="rdS-av-PCN"/>
+                                                <constraint firstItem="9tM-Ch-UDd" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="30" id="rdS-av-PCN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <userDefinedRuntimeAttributes>
