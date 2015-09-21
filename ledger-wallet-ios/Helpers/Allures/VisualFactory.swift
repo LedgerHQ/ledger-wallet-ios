@@ -17,7 +17,7 @@ final class VisualFactory {
         static let PageTitle = [
             NSForegroundColorAttributeName: Colors.White,
             NSKernAttributeName: -Fonts.Kerning.Small,
-            NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.AlmostLarge)
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge)
         ]
         
         static let LargePageTitle = [

@@ -83,7 +83,7 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
             unowned let weakSelf = self
             let alertController = AlertController(title: localizedString("deleting_this_dongle_pairing"), message: nil)
             alertController.addAction(AlertAction(title: localizedString("cancel"), style: .Cancel, handler: nil))
-            alertController.addAction(AlertAction(title: localizedString("delete"), style: .Default, handler: { action in
+            alertController.addAction(AlertAction(title: localizedString("delete"), style: .Destructive, handler: { action in
                 // delete model
                 let pairingItem = weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row)
                 
