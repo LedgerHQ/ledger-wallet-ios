@@ -14,16 +14,15 @@ final class RemoteNotificationsManager: BaseManager {
     
     func registerForRemoteNotifications() {
         let application = UIApplication.sharedApplication()
-        if (application.respondsToSelector("isRegisteredForRemoteNotifications"))
-        {
+        
+        if #available(iOS 8.0, *) {
             // iOS 8 Notifications
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Badge | .Sound | .Alert), categories: nil));
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: ([.Badge, .Sound, .Alert]), categories: nil));
             application.registerForRemoteNotifications()
         }
-        else
-        {
+        else {
             // iOS < 8 Notifications
-            application.registerForRemoteNotificationTypes(.Badge | .Sound | .Alert)
+            application.registerForRemoteNotificationTypes([.Badge, .Sound, .Alert])
         }
     }
     

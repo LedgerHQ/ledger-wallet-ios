@@ -153,16 +153,15 @@ extension PairingAddViewController {
         if (stepViewController is PairingAddScanStepViewController) {
             // go to connection
             navigateToStep(PairingAddConnectionStepViewController.self, dataToPass: nil) { finished in
-                // join room
-                self.pairingProtocolManager?.joinRoom(object as! String)
-                self.pairingProtocolManager?.sendPublicKey()
+                // connect to websocket
+                self.pairingProtocolManager?.connectToRoomWithId(object as! String)
             }
         }
         else if (stepViewController is PairingAddCodeStepViewController) {
             // go to finalize
             navigateToStep(PairingAddFinalizeStepViewController.self, dataToPass: nil) { finished in
                 // send challenge response
-                (self.pairingProtocolManager?.sendChallengeResponse(object as! String))!
+                self.pairingProtocolManager?.sendChallengeResponse(object as! String)
             }
         }
         else if (stepViewController is PairingAddNameStepViewController) {
@@ -214,7 +213,7 @@ extension PairingAddViewController {
         super.keyboardWillHide(userInfo)
         
         let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+        let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
         adjustContentInset(0, duration: duration, options: options, animated: true)
     }
     
@@ -222,7 +221,7 @@ extension PairingAddViewController {
         super.keyboardWillShow(userInfo)
         
         let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let options = UIViewAnimationOptions(UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+        let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
         adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
     }
     
@@ -246,7 +245,7 @@ extension PairingAddViewController {
     
     // MARK: - CATransition delegate
     
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         // remove previous view controller view
         let previousStepViewController = anim.valueForKey("previousStepViewController") as? PairingAddBaseStepViewController
         previousStepViewController?.view.removeFromSuperview()

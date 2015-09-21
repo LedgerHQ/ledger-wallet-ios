@@ -58,7 +58,7 @@ class KeychainItem {
                 // loop through all returned items
                 for item in items {
                     // try to build keychain item with given attributes
-                    let keychainItem = self(attributes: item)
+                    let keychainItem = self.init(attributes: item)
                     if keychainItem.isValid {
                         keychainItems.append(keychainItem)
                     }
@@ -73,7 +73,7 @@ class KeychainItem {
     
     class func destroyAll() -> Bool {
         // build query
-        var query = defaultQuery()
+        let query = defaultQuery()
         
         // perform keychain query
         let status = SecItemDelete(query)
@@ -93,9 +93,9 @@ class KeychainItem {
         
         // perform keychain query
         var result: AnyObject? = nil
-        let status = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
+        _ = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
         let item = result as! [String: AnyObject]
-        let keychainItem = self(attributes: item)
+        let keychainItem = self.init(attributes: item)
         return keychainItem
     }
     
@@ -122,7 +122,7 @@ class KeychainItem {
 
     func destroy() -> Bool {
         // build query
-        var query: [String: AnyObject] = [(kSecValuePersistentRef as String): persistentReference]
+        let query: [String: AnyObject] = [(kSecValuePersistentRef as String): persistentReference]
         
         // perform keychain query
         let status = SecItemDelete(query)
@@ -135,7 +135,7 @@ class KeychainItem {
     
     func save() -> Bool {
         // build query
-        var query: [String: AnyObject] = [(kSecValuePersistentRef as String): persistentReference]
+        let query: [String: AnyObject] = [(kSecValuePersistentRef as String): persistentReference]
         
         // perform request
         let data = JSON.dataFromJSONObject(keysAndValues)!
@@ -187,7 +187,7 @@ class KeychainItem {
     
 }
 
-extension KeychainItem: Printable {
+extension KeychainItem: CustomStringConvertible {
     
     var description: String {
         return "KeychainItem: \(keysAndValues)"

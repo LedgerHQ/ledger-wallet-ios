@@ -76,22 +76,22 @@ class LoadingIndicator: View {
     dynamic private func timerFired() {
         let oldIndex = highlightedLayerIndex
         highlightedLayerIndex++
-        if (highlightedLayerIndex >= layer.sublayers.count) {
+        if (highlightedLayerIndex >= layer.sublayers!.count) {
             highlightedLayerIndex = 0
-            if (highlightedLayerIndex >= layer.sublayers.count) {
+            if (highlightedLayerIndex >= layer.sublayers!.count) {
                 return
             }
         }
         
         if (oldIndex >= 0) {
-            if let layer = layer.sublayers[oldIndex] as? CALayer {
+            if let layer = layer.sublayers?[oldIndex] {
                 CATransaction.begin()
                 CATransaction.setAnimationDuration(0.25)
                 layer.backgroundColor = dotsNormalColor.CGColor
                 CATransaction.commit()
             }
         }
-        if let layer = layer.sublayers[highlightedLayerIndex] as? CALayer {
+        if let layer = layer.sublayers?[highlightedLayerIndex] {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             layer.backgroundColor = dotsHighlightedColor.CGColor
@@ -128,14 +128,14 @@ class LoadingIndicator: View {
         if (layer.sublayers == nil) {
             return
         }
-        for layer in self.layer.sublayers as! [CALayer] {
+        for layer in self.layer.sublayers! {
             closure(layer)
         }
     }
     
     // MARK: - Layout
     
-    override func layoutSublayersOfLayer(layer: CALayer!) {
+    override func layoutSublayersOfLayer(layer: CALayer) {
         super.layoutSublayersOfLayer(layer)
         
         CATransaction.begin()
@@ -181,7 +181,7 @@ class LoadingIndicator: View {
         initialize()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         initialize()

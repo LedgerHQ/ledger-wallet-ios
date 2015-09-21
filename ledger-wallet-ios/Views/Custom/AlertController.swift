@@ -13,48 +13,23 @@ class AlertController: NSObject {
     enum Style {
         case Alert
         case ActionSheet
-    }
-    
-    class Action {
         
-        enum Style {
-            case Default
-            case Destructive
-            case Cancel
-        }
-        
-        typealias Handler = (Action) -> Void
-        let title: String
-        let style: Style
-        private let handler: Handler?
-        
-        init(title: String, style: Style, handler: Handler?) {
-            self.title = title
-            self.style = style
-            self.handler = handler
-        }
-        
-        private class func UIAlertActionForStyle(style: Style) -> UIAlertActionStyle {
-            switch style {
-            case .Cancel: return .Cancel
-            case .Destructive: return .Destructive
-            default: return .Default
+        @available(iOS 8.0, *)
+        var systemAlertControllerStyle: UIAlertControllerStyle {
+            switch self {
+            case .ActionSheet: return .ActionSheet
+            default: return .Alert
             }
         }
-
     }
     
     let style: Style
     let title: String?
     let message: String?
-    private var actions: [Action] = []
-    private var alertController: UIAlertController! = nil
+    private var actions: [AlertAction] = []
+    private var alertController: UIViewController! = nil
     private var alertView: UIAlertView! = nil
     private static var sharedControllers: [UIAlertView: AlertController] = [:]
-    
-    class func usesSystemAlertController() -> Bool {
-        return NSClassFromString("UIAlertController") != nil
-    }
     
     init(title: String?, message: String?) {
         self.title = title
@@ -62,24 +37,23 @@ class AlertController: NSObject {
         self.style = .Alert
     }
     
-    func addAction(action: Action) {
+    func addAction(action: AlertAction) {
         actions.append(action)
     }
     
     func presentFromViewController(viewController: BaseViewController, animated: Bool) {
-        if AlertController.usesSystemAlertController() {
-            // ios >= 8
-            alertController = UIAlertController(title: title, message: message, preferredStyle: AlertController.UIAlertControllerStyleForStyle(style))
+        if #available(iOS 8.0, *) {
+            alertController = UIAlertController(title: title, message: message, preferredStyle: style.systemAlertControllerStyle)
+            let localAlertController = alertController as! UIAlertController
             for action in actions {
-                let alertAction = UIAlertAction(title: action.title, style: Action.UIAlertActionForStyle(action.style), handler: action.handler == nil ? nil : { _ in
-                    (action.handler?(action))!
-                })
-                alertController.addAction(alertAction)
+                let alertAction = UIAlertAction(title: action.title, style: action.style.systemAlertActionStyle) { handler in
+                    action.handler?(action)
+                }
+                localAlertController.addAction(alertAction)
             }
-            viewController.presentViewController(alertController, animated: animated, completion: nil)
+            viewController.presentViewController(localAlertController, animated: animated, completion: nil)
         }
         else {
-            // ios < 8
             alertView = UIAlertView()
             alertView.delegate = self
             alertView.title = title ?? ""
@@ -92,13 +66,6 @@ class AlertController: NSObject {
             
             // add to shared pool
             AlertController.sharedControllers[alertView] = self
-        }
-    }
-    
-    private class func UIAlertControllerStyleForStyle(style: Style) -> UIAlertControllerStyle {
-        switch style {
-        case .ActionSheet: return .ActionSheet
-        default: return .Alert
         }
     }
     
@@ -116,6 +83,36 @@ extension AlertController: UIAlertViewDelegate {
         
         // remove from shared pool
         AlertController.sharedControllers[alertView] = nil
+    }
+    
+}
+
+class AlertAction {
+    
+    enum Style {
+        case Default
+        case Destructive
+        case Cancel
+        
+        @available(iOS 8.0, *)
+        var systemAlertActionStyle: UIAlertActionStyle {
+            switch self {
+            case .Cancel: return .Cancel
+            case .Destructive: return .Destructive
+            default: return .Default
+            }
+        }
+    }
+    
+    typealias Handler = (AlertAction) -> Void
+    let title: String
+    let style: Style
+    private let handler: Handler?
+    
+    init(title: String, style: Style, handler: Handler?) {
+        self.title = title
+        self.style = style
+        self.handler = handler
     }
     
 }

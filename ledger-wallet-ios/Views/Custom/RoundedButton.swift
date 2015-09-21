@@ -79,8 +79,8 @@ class RoundedButton: Button {
     // MARK: - Content size
     
     override func intrinsicContentSize() -> CGSize {
-        var width: CGFloat = contentEdgeInsets.left + contentEdgeInsets.right
-        var height: CGFloat = contentEdgeInsets.top + contentEdgeInsets.bottom
+        let width: CGFloat = contentEdgeInsets.left + contentEdgeInsets.right
+        let height: CGFloat = contentEdgeInsets.top + contentEdgeInsets.bottom
         var contentHeight: CGFloat = 0
         var contentWidth: CGFloat = 0
         

@@ -53,7 +53,7 @@ final class Logger {
     
     // MARK: - Initialization
     
-    class func sharedInstance(name: String) -> Logger {
+    class func sharedInstance(name name: String) -> Logger {
         dispatch_sync(instancesQueue) {
             if self.instances[name] == nil {
                 self.instances[name] = Logger(name: name)

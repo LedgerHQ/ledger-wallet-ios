@@ -136,7 +136,7 @@ extension BaseViewController {
     
     private dynamic func handleKeyboardWillShowNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            if let frame = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() {
+            if let frame = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue {
                 _keyboardFrame = frame
             }
             keyboardWillShow(userInfo)

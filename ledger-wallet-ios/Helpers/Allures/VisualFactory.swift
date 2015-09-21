@@ -10,7 +10,7 @@ import UIKit
 
 final class VisualFactory {
     
-    typealias TextAttribute = [NSObject: AnyObject]
+    typealias TextAttribute = [String: AnyObject]
     
     struct TextAttributes {
     

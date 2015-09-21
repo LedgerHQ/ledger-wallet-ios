@@ -32,12 +32,10 @@ class BarCodeReaderView: View {
     // MARK: - Video Capture
     
     func startCapture() {
-        if (isCapturing) {
-            return
-        }
+        guard isCapturing == false else { return }
         
         captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-        if (captureDevice == nil || captureDevice!.lockForConfiguration(nil) == false) {
+        if (captureDevice == nil || (try? captureDevice!.lockForConfiguration()) == nil) {
             return
         }
         if (captureDevice!.focusPointOfInterestSupported) {
@@ -45,7 +43,7 @@ class BarCodeReaderView: View {
         }
         captureDevice!.unlockForConfiguration()
         
-        captureDeviceInput = AVCaptureDeviceInput.deviceInputWithDevice(captureDevice, error: nil) as? AVCaptureDeviceInput
+        captureDeviceInput = (try? AVCaptureDeviceInput(device: captureDevice!))
         if (captureDeviceInput == nil) {
             cleanUp()
             return
@@ -104,7 +102,7 @@ class BarCodeReaderView: View {
         initialize()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         initialize()

@@ -10,16 +10,16 @@ import Foundation
 
 final class LogWriter: SharableObject {
     
-    lazy private var fileHandles: [NSDate: NSFileHandle] = [:]
-    lazy private var logsDirectoryPath = ApplicationManager.sharedInstance().libraryDirectoryPath.stringByAppendingPathComponent("Logs")
-    lazy private var fileManager = NSFileManager.defaultManager()
-    lazy private var operationQueue: NSOperationQueue = {
+    private lazy var fileHandles: [NSDate: NSFileHandle] = [:]
+    private lazy var logsDirectoryPath = ApplicationManager.sharedInstance().logsDirectoryPath
+    private lazy var fileManager = NSFileManager.defaultManager()
+    private lazy var operationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.maxConcurrentOperationCount = 1
         queue.name = "LogFileWriter operation queue"
         return queue
     }()
-    lazy private var dateFormatter: NSDateFormatter = {
+    private lazy var dateFormatter: NSDateFormatter = {
        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
@@ -63,15 +63,15 @@ final class LogWriter: SharableObject {
         enqueueCleanLogsFilesOperation()
     }
     
-    func exportLogsToData(#sequentially: Bool, sequence: ((NSData) -> Void)? = nil, completion: ((NSData?) -> Void)) {
+    func exportLogsToData(sequentially sequentially: Bool, sequence: ((NSData) -> Void)? = nil, completion: ((NSData?) -> Void)) {
         // enqueue export logs operation
         operationQueue.addOperationWithBlock() {
             // extract list of to-export files - (most 2 recent files) roughly 48 hours of logs
             let filesToExport: ArraySlice<String>
-            if let files = self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath, error: nil) as? [String] {
+            if let files = (try? self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath)) {
                 var allLogs = files.filter({$0.hasSuffix(".log")})
-                allLogs.sort(<)
-                filesToExport = suffix(allLogs, 2)
+                allLogs.sortInPlace(<)
+                filesToExport = allLogs.suffix(2)
             }
             else {
                 console("LogWriter: Unable to obtain list of files to export from logs directory at path \(self.logsDirectoryPath)")
@@ -89,7 +89,7 @@ final class LogWriter: SharableObject {
             // build final NSData
             let finalData = NSMutableData()
             for file in filesToExport {
-                let filepath = self.logsDirectoryPath.stringByAppendingPathComponent(file)
+                let filepath = (self.logsDirectoryPath as NSString).stringByAppendingPathComponent(file)
                 if let fileData = self.fileManager.contentsAtPath(filepath) {
                     if sequentially == true {
                         dispatchAsyncOnMainQueue() {
@@ -107,14 +107,16 @@ final class LogWriter: SharableObject {
         }
     }
     
-    func exportLogsToFile(#autoremove: Bool, completion: (ephemeralFilepath: String?) -> Void) {
+    func exportLogsToFile(autoremove autoremove: Bool, completion: (ephemeralFilepath: String?) -> Void) {
         let uuid = NSUUID().UUIDString
         let temporypath = ApplicationManager.sharedInstance().temporaryDirectoryPath
-        let filepath = temporypath.stringByAppendingPathComponent(uuid).stringByAppendingPathExtension("txt")!
+        let filepath = ((temporypath as NSString).stringByAppendingPathComponent(uuid) as NSString).stringByAppendingPathExtension("txt")!
         
         // remove file if it already exists (shouldnt happen)
         if self.fileManager.fileExistsAtPath(filepath) {
-            if !self.fileManager.removeItemAtPath(filepath, error: nil) {
+            do {
+                try self.fileManager.removeItemAtPath(filepath)
+            } catch _ {
                 console("LogWriter: Unable to remove already existing exported empeheral log file at path \(filepath)")
                 completion(ephemeralFilepath: nil)
                 return
@@ -139,19 +141,28 @@ final class LogWriter: SharableObject {
                 if data == nil && writtenBytes > 0 {
                     completion(ephemeralFilepath: filepath)
                     if autoremove == true {
-                        self.fileManager.removeItemAtPath(filepath, error: nil) // try to remove file
+                        do {
+                            try self.fileManager.removeItemAtPath(filepath)
+                        } catch _ {
+                        } // try to remove file
                     }
                 }
                 else {
                     console("LogWriter: Unable to write to empeheral log file at path \(filepath)")
-                    self.fileManager.removeItemAtPath(filepath, error: nil) // try to remove file
+                    do {
+                        try self.fileManager.removeItemAtPath(filepath)
+                    } catch _ {
+                    } // try to remove file
                     completion(ephemeralFilepath: nil)
                 }
             })
         }
         else {
             console("LogWriter: Unable to open empeheral log file for writing at path \(filepath)")
-            self.fileManager.removeItemAtPath(filepath, error: nil) // try to remove file
+            do {
+                try self.fileManager.removeItemAtPath(filepath)
+            } catch _ {
+            } // try to remove file
             completion(ephemeralFilepath: nil)
         }
     }
@@ -171,21 +182,25 @@ final class LogWriter: SharableObject {
     // MARK: Utilities
     
     private func logFilepathForFirstMomentDate(date: NSDate) -> String {
-        let fileName = logsDirectoryPath.stringByAppendingPathComponent(self.dateFormatter.stringFromDate(date))
-        if let fullFileName = fileName.stringByAppendingPathExtension("log") {
-            return fullFileName
-        }
-        return fileName
+        let fileName = (logsDirectoryPath as NSString).stringByAppendingPathComponent(self.dateFormatter.stringFromDate(date))
+        let fullFileName = (fileName as NSString).stringByAppendingPathExtension("log")
+        return fullFileName!
     }
     
     private func enqueuePrepareDirectoriesOperation() {
         // enqueue prepare directories operation
         operationQueue.addOperationWithBlock() {
-            if !self.fileManager.createDirectoryAtPath(self.logsDirectoryPath, withIntermediateDirectories: true, attributes: nil, error: nil) {
+            do {
+                try self.fileManager.createDirectoryAtPath(self.logsDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch _ {
                 console("LogWriter: Unable to create logs directory at path \(self.logsDirectoryPath)")
             }
             let URL = NSURL(fileURLWithPath: self.logsDirectoryPath, isDirectory: true)
-            if URL == nil || !URL!.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: nil) {
+            do {
+                try URL.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)
+            }
+            catch _ {
                 console("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
             }
         }
@@ -196,10 +211,10 @@ final class LogWriter: SharableObject {
         operationQueue.addOperationWithBlock() {
             // extract list of to-keep files - (most 2 recent files) roughly 48 hours of logs
             let filesToRemove: ArraySlice<String>
-            if let files = self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath, error: nil) as? [String] {
+            if let files = (try? self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath)) {
                 var allLogs = files.filter({$0.hasSuffix(".log")})
-                allLogs.sort(<)
-                filesToRemove = prefix(allLogs, max(0, allLogs.count - 2))
+                allLogs.sortInPlace(<)
+                filesToRemove = allLogs.prefix(max(0, allLogs.count - 2))
             }
             else {
                 console("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
@@ -212,15 +227,17 @@ final class LogWriter: SharableObject {
             }
             
             // close all opened files
-            for (date, fileHandle) in self.fileHandles {
+            for (_, fileHandle) in self.fileHandles {
                 fileHandle.closeFile()
             }
             self.fileHandles = [:]
             
             // remove all stale files
             for file in filesToRemove {
-                let filepath = self.logsDirectoryPath.stringByAppendingPathComponent(file)
-                if !self.fileManager.removeItemAtPath(filepath, error: nil) {
+                let filepath = (self.logsDirectoryPath as NSString).stringByAppendingPathComponent(file)
+                do {
+                    try self.fileManager.removeItemAtPath(filepath)
+                } catch _ {
                     console("LogWriter: Unable to remove log file at path \(filepath)")
                 }
             }

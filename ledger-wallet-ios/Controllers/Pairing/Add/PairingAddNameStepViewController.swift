@@ -34,13 +34,15 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         
         // verify entered name
         if checkThatNameIsUnique(nameTextField.text) {
-            notifyResult(nameTextField.text)
+            notifyResult(nameTextField.text!)
         }
     }
     
     // MARK: - Interface
     
-    private func checkThatNameIsUnique(name: String) -> Bool {
+    private func checkThatNameIsUnique(name: String?) -> Bool {
+        guard let name = name else { return false }
+        
         var message:String? = nil
         
         // create message
@@ -57,7 +59,7 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         // show message if necessary
         if message != nil {
             let alertController = AlertController(title: message, message: nil)
-            alertController.addAction(AlertController.Action(title: localizedString("OK"), style: .Default, handler: nil))
+            alertController.addAction(AlertAction(title: localizedString("OK"), style: .Default, handler: nil))
             alertController.presentFromViewController(self, animated: true)
             return false
         }

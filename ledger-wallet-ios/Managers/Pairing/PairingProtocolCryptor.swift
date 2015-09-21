@@ -17,7 +17,7 @@ final class PairingProtocolCryptor {
     
     // MARK: - Session key
     
-    func sessionKeyForKeys(#internalKey: Crypto.Key, attestationKey: Crypto.Key) -> Crypto.Key {
+    func sessionKeyForKeys(internalKey internalKey: Crypto.Key, attestationKey: Crypto.Key) -> Crypto.Key {
         // compute shared secret
         let secretKey = Crypto.ECDH.performAgreement(internalKey: internalKey, peerKey: attestationKey)
         
@@ -87,9 +87,9 @@ final class PairingProtocolCryptor {
     }
     
     func challengeStringFromChallengeData(data: NSData) -> String {
-        var dataCopy = data.mutableCopy() as! NSMutableData
+        let dataCopy = data.mutableCopy() as! NSMutableData
         var pointer = UnsafeMutablePointer<UInt8>(dataCopy.mutableBytes)
-        for i in 0..<data.length {
+        for _ in 0..<data.length {
             pointer.memory = pointer.memory + 0x30 // add '0'
             pointer = pointer.successor()
         }

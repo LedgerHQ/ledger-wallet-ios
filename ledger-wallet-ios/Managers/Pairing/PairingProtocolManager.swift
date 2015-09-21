@@ -52,7 +52,7 @@ extension PairingProtocolManager {
     
     // MARK: - Pairing management
     
-    func joinRoom(pairingId: String) {
+    func connectToRoomWithId(pairingId: String) {
         if (webSocket != nil) {
             return
         }
@@ -72,13 +72,22 @@ extension PairingProtocolManager {
         // compute session key
         context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, attestationKey: context.attestationKey)
         
-        // send join message
+        // retain pairing Id
         context.pairingId = pairingId
-        let message = messageWithType(MessageType.Join, data: ["room": pairingId])
+
+    }
+    
+    private func joinRoom() {
+        if (webSocket == nil) {
+            return
+        }
+        
+        // send join message
+        let message = messageWithType(MessageType.Join, data: ["room": context.pairingId])
         sendMessage(message, webSocket: webSocket)
     }
     
-    func sendPublicKey() {
+    private func sendPublicKey() {
         if (webSocket == nil) {
             return
         }
@@ -201,6 +210,11 @@ extension PairingProtocolManager {
     override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         self.disconnectWebSocket()
         self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
+    }
+    
+    override func handleWebSocketDidConnect(webSocket: WebSocket) {
+        joinRoom()
+        sendPublicKey()
     }
     
 }

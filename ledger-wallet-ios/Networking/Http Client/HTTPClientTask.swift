@@ -38,12 +38,12 @@ extension HTTPClient {
                 case .URL:
                     func query(parameters: [String: AnyObject]) -> String {
                         var components: [(String, String)] = []
-                        for key in sorted(Array(parameters.keys), <) {
+                        for key in Array(parameters.keys).sort(<) {
                             let value: AnyObject! = parameters[key]
                             components += queryComponents(key, value)
                         }
                         
-                        return join("&", components.map{"\($0)=\($1)"} as [String])
+                        return (components.map{"\($0)=\($1)"} as [String]).joinWithSeparator("&")
                     }
                     
                     func encodesParametersInURL(method: Method) -> Bool {
@@ -68,9 +68,12 @@ extension HTTPClient {
                         URLRequest.HTTPBody = query(parameters!).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
                     }
                 case .JSON:
-                    if let data = NSJSONSerialization.dataWithJSONObject(parameters!, options: nil, error: &error) {
+                    do {
+                        let data = try NSJSONSerialization.dataWithJSONObject(parameters!, options: [])
                         URLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                         URLRequest.HTTPBody = data
+                    } catch let error1 as NSError {
+                        error = error1
                     }
                 }
                 return error
@@ -87,7 +90,7 @@ extension HTTPClient {
                         components += queryComponents("\(key)[]", value)
                     }
                 } else {
-                    components.extend([(escape(key), escape("\(value)"))])
+                    components.appendContentsOf([(escape(key), escape("\(value)"))])
                 }
                 
                 return components

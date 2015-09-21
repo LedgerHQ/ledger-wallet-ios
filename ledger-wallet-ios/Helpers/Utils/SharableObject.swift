@@ -23,7 +23,7 @@ class SharableObject: NSObject {
         let className = self.className()
         objc_sync_enter(self)
         if self.instances[className] == nil {
-            self.instances[className] = self()
+            self.instances[className] = self.init()
         }
         let instance = instances[className] as! T
         objc_sync_exit(self)

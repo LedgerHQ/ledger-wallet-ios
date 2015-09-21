@@ -12,7 +12,7 @@ class TextField: UITextField {
 
     // MARK: - Style management
     
-    override var text: String! {
+    override var text: String? {
         didSet {
             ViewStylist.stylizeView(self)
         }

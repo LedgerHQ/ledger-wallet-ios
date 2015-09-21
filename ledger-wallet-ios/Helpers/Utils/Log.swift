@@ -8,17 +8,17 @@
 
 import Foundation
 
-func console<T: Printable>(value: T) {
+func console<T: CustomStringConvertible>(value: T) {
     console(value.description)
 }
 
 func console(value: String) {
     if NSThread.currentThread() == NSThread.mainThread() {
-        println(value)
+        print(value)
     }
     else {
         dispatchAsyncOnMainQueue() {
-            println(value)
+            print(value)
         }
     }
 }

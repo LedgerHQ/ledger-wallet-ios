@@ -45,11 +45,15 @@ final class ApplicationManager: BaseManager {
     }
     
     var libraryDirectoryPath: String {
-        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as! String
+        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0]
     }
     
     var temporaryDirectoryPath: String {
         return NSTemporaryDirectory()
+    }
+    
+    var logsDirectoryPath: String {
+        return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs")
     }
     
     // MARK: Utilities
@@ -66,7 +70,7 @@ final class ApplicationManager: BaseManager {
     
     func printLibraryPathIfNeeded() {
         if self.isInDebug {
-            Logger.sharedInstance(self.className()).info(libraryDirectoryPath)
+            Logger.sharedInstance(name: self.className()).info(libraryDirectoryPath)
         }
     }
     
@@ -78,11 +82,14 @@ final class ApplicationManager: BaseManager {
             return
         }
         
-        if var content = fileManager.contentsOfDirectoryAtPath(directoryPath, error: nil) as? [String] {
+        if var content = (try? fileManager.contentsOfDirectoryAtPath(directoryPath)) {
             content = content.filter({ !$0.hasPrefix(".") })
             for file in content {
-                let filepath = directoryPath.stringByAppendingPathComponent(file)
-                fileManager.removeItemAtPath(filepath, error: nil)
+                let filepath = (directoryPath as NSString).stringByAppendingPathComponent(file)
+                do {
+                    try fileManager.removeItemAtPath(filepath)
+                } catch _ {
+                }
             }
         }
     }
