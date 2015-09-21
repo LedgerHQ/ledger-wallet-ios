@@ -8,8 +8,12 @@
 
 import Foundation
 
-final class ApplicationManager: BaseManager {
-        
+final class ApplicationManager: SharableObject {
+    
+    private lazy var preferences: Preferences = {
+        return Preferences(storeName: self.className())
+    }()
+    
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid

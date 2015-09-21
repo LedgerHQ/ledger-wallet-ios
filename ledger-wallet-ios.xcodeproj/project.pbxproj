@@ -98,8 +98,6 @@
 		378E5C541AADEF7C00A0C9A8 /* SharableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C521AADEF7C00A0C9A8 /* SharableObject.swift */; };
 		378E5C561AADEFBE00A0C9A8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C551AADEFBE00A0C9A8 /* Preferences.swift */; };
 		378E5C571AADEFBE00A0C9A8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C551AADEFBE00A0C9A8 /* Preferences.swift */; };
-		378E5C691AADFAB900A0C9A8 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C681AADFAB900A0C9A8 /* BaseManager.swift */; };
-		378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C681AADFAB900A0C9A8 /* BaseManager.swift */; };
 		378E5C6B1AAE032900A0C9A8 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC847B1A7FB75B00072B71 /* DeviceManager.swift */; };
 		378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */; };
 		3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */; };
@@ -394,7 +392,6 @@
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		378E5C521AADEF7C00A0C9A8 /* SharableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharableObject.swift; sourceTree = "<group>"; };
 		378E5C551AADEFBE00A0C9A8 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		378E5C681AADFAB900A0C9A8 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; };
 		378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingHomeWaitingContentViewController.xib; sourceTree = "<group>"; };
 		3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStylist.swift; sourceTree = "<group>"; };
 		3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
@@ -560,7 +557,6 @@
 		375A38081A77DA9A0082D917 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				378E5C681AADFAB900A0C9A8 /* BaseManager.swift */,
 				37DF00751A8E119B00712AB1 /* ApplicationManager.swift */,
 				37BC847B1A7FB75B00072B71 /* DeviceManager.swift */,
 				37414B161A8D0B9300CE0795 /* RemoteNotificationsManager.swift */,
@@ -1310,7 +1306,6 @@
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,
 				3730736C1B2ECD6200DDFE5A /* BTCMerkleTree.m in Sources */,
 				379A12CA1B2AE80500D6E8DA /* BaseRestClient.swift in Sources */,
-				378E5C691AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37ABFBD81A83C8F50061E92D /* CryptoCipher.swift in Sources */,
 				376F510C1A82190E001C6684 /* BTCOpcode.m in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
@@ -1338,7 +1333,6 @@
 				37ABFBE11A850F2C0061E92D /* PairingProtocolCryptor.swift in Sources */,
 				37BAF3011AB1975F0084B832 /* BTCBlindSignature.m in Sources */,
 				37BAF3101AB1975F0084B832 /* BTCNumberFormatter.m in Sources */,
-				378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37EF30E81B5E829500E0316F /* Log.swift in Sources */,
 				37BAF2FF1AB1975F0084B832 /* BTCBigNumber.m in Sources */,

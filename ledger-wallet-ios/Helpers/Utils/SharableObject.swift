@@ -11,7 +11,6 @@ import Foundation
 class SharableObject: NSObject {
     
     private static var instances: [String: SharableObject] = [:]
-    private static var instancesQueue = dispatch_queue_create("co.ledger.sharableobject.dispatch-queue", DISPATCH_QUEUE_SERIAL)
 
     // MARK: - Singleton
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class RemoteNotificationsManager: BaseManager {
+final class RemoteNotificationsManager: SharableObject {
     
     // MARK: - Common
     
