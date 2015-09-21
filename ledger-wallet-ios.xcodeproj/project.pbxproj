@@ -207,7 +207,6 @@
 		37BAF31D1AB1975F0084B832 /* NS+BTCBase58.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50F41A82190D001C6684 /* NS+BTCBase58.m */; };
 		37BAF31E1AB1975F0084B832 /* NSData+BTCData.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50F61A82190D001C6684 /* NSData+BTCData.m */; };
 		37BC847C1A7FB75B00072B71 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC847B1A7FB75B00072B71 /* DeviceManager.swift */; };
-		37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84801A7FB81C00072B71 /* BaseModel.swift */; };
 		37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */; };
 		37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */; };
 		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
@@ -449,7 +448,6 @@
 		37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListTableViewCell.swift; sourceTree = "<group>"; };
 		37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC847B1A7FB75B00072B71 /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceManager.swift; path = managers/DeviceManager.swift; sourceTree = "<group>"; };
-		37BC84801A7FB81C00072B71 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BasePairingManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingTransactionsManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -515,7 +513,6 @@
 		373E22D61A7681F100BAF63F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				37BC847F1A7FB81C00072B71 /* Base */,
 				373E22D71A7681F100BAF63F /* Keychain */,
 			);
 			name = Model;
@@ -886,15 +883,6 @@
 			);
 			name = "Pairing List";
 			path = pairing/list;
-			sourceTree = "<group>";
-		};
-		37BC847F1A7FB81C00072B71 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				37BC84801A7FB81C00072B71 /* BaseModel.swift */,
-			);
-			name = Base;
-			path = base;
 			sourceTree = "<group>";
 		};
 		37BC84841A7FE3DC00072B71 /* Pairing */ = {
@@ -1288,7 +1276,6 @@
 				37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */,
 				376F51071A82190E001C6684 /* BTCKey.m in Sources */,
 				376F51181A82190E001C6684 /* NS+BTCBase58.m in Sources */,
-				37BC84811A7FB81C00072B71 /* BaseModel.swift in Sources */,
 				37414B171A8D0B9300CE0795 /* RemoteNotificationsManager.swift in Sources */,
 				376F51171A82190E001C6684 /* BTCTransactionOutput.m in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
