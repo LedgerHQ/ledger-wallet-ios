@@ -21,7 +21,6 @@ final class HTTPClient {
     }
     private lazy var logger: Logger = Logger.sharedInstance(name: "HTTPClient")
     private var _session: NSURLSession! = nil
-    private var logsRequests = ApplicationManager.sharedInstance().isInDebug
     
     // MARK: - Tasks management
     
