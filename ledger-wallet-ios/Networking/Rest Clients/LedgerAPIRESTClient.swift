@@ -1,5 +1,5 @@
 //
-//  APIRestClient.swift
+//  LedgerAPIRESTClient.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 15/07/15.
@@ -8,18 +8,23 @@
 
 import Foundation
 
-class APIRestClient: BaseRestClient {
+class LedgerAPIRESTClient: SharableObject, BaseRESTClient {
+    
+    lazy var baseURL = LedgerAPIBaseURL
+    lazy var httpClient: HTTPClient = {
+        let httpClient = HTTPClient()
+        httpClient.additionalHeaders = [
+            HeaderFields.Platform.rawValue: "ios",
+            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance().isInDebug ? "dev" : "prod",
+            HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
+        ]
+        return httpClient
+    }()
     
     private enum HeaderFields: String {
         case Platform = "X-Ledger-Platform"
         case Environment = "X-Ledger-Environment"
         case Locale = "X-Ledger-Locale"
-    }
-    
-    var authenticated = false {
-        didSet {
-            // TODO: update http header fields with auth token
-        }
     }
     
     // MARK: - Requests management
@@ -43,24 +48,5 @@ class APIRestClient: BaseRestClient {
     func put(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .JSON, completionHandler: HTTPClient.Task.CompletionHandler) -> HTTPClient.DataTask {
         return httpClient.put(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
-    
-    // MARK: - Configuration
-    
-    override func preferredBaseURL() -> String {
-        return LedgerAPIBaseURL
-    }
-    
-    // MARK: - Initialization
-    
-    required init() {
-        super.init()
-        
-        // add default Ledger HTTP header fields
-        self.httpClient.additionalHeaders = [
-            HeaderFields.Platform.rawValue: "ios",
-            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance().isInDebug ? "dev" : "prod",
-            HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
-        ]
-    }
-    
+
 }

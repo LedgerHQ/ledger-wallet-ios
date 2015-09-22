@@ -1,5 +1,5 @@
 //
-//  RemoteNotificationsRestClient.swift
+//  RemoteNotificationsRESTClient.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 12/02/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class RemoteNotificationsRestClient: APIRestClient {
+final class RemoteNotificationsRESTClient: LedgerAPIRESTClient {
     
     // MARK: - Push token management
     
