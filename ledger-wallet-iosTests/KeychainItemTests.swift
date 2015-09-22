@@ -18,85 +18,89 @@ class KeychainItemTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        KeychainItem.testEnvironment = true
-        XCTAssertTrue(KeychainItem.destroyAll(), "Unable to remove all keychain items")
+        GenericKeychainItem.testEnvironment = true
+        XCTAssertTrue(GenericKeychainItem.destroyAll(), "Unable to remove all keychain items")
+    }
+    
+    func testServiceIdentifier() {
+        XCTAssertEqual(GenericKeychainItem.serviceIdentifier, "", "Keychain item should have no service identifier")
     }
     
     func testAddCount() {
-        KeychainItem.create()
-        XCTAssertEqual(KeychainItem.fetchAll().count, 1, "Keychain items count is not 1")
+        let _ = GenericKeychainItem()
+        XCTAssertEqual(GenericKeychainItem.fetchAll().count, 1, "Keychain items count is not 1")
     }
     
     func testAddValid() {
-        let item = KeychainItem.create()
-        XCTAssertTrue(item.isValid, "Keychain item is invalid")
+        let item = GenericKeychainItem()
+        XCTAssertTrue(item.valid, "Keychain item is invalid")
     }
     
     func testRemoveCount() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.destroy()
-        XCTAssertEqual(KeychainItem.fetchAll().count, 0, "Keychain items count is not 0")
+        XCTAssertEqual(GenericKeychainItem.fetchAll().count, 0, "Keychain items count is not 0")
     }
     
     func testRemoveInvalid() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.destroy()
-        XCTAssertTrue(!item.isValid, "Keychain item is valid")
+        XCTAssertTrue(!item.valid, "Keychain item is valid")
     }
     
     func testFetchAllCount() {
        let count = 5
         for _ in [1...count] {
-            KeychainItem.create()
+            let _ = GenericKeychainItem()
         }
-        XCTAssertNotEqual(KeychainItem.fetchAll().count, count, "Wrong fetched keychain items count")
+        XCTAssertNotEqual(GenericKeychainItem.fetchAll().count, count, "Wrong fetched keychain items count")
     }
     
     func testRemoveAllCount() {
         let count = 5
         for _ in [1...count] {
-            KeychainItem.create()
+            let _ = GenericKeychainItem()
         }
-        KeychainItem.destroyAll()
-        XCTAssertEqual(KeychainItem.fetchAll().count, 0, "Wrong fetched keychain items count")
+        GenericKeychainItem.destroyAll()
+        XCTAssertEqual(GenericKeychainItem.fetchAll().count, 0, "Wrong fetched keychain items count")
     }
     
     func testNilData() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         XCTAssertNil(item.valueForKey("test"), "Data is not nil")
     }
 
     func testRealData() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.setValue("Hello", forKey: "test")
         XCTAssertNotNil(item.valueForKey("test"), "Data is nil")
         XCTAssertEqual(item.valueForKey("test")!, "Hello", "Data is not equal")
     }
     
     func testSaveThenFetch() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.setValue("Hello", forKey: "test")
-        let fetchItem = KeychainItem.fetchAll()[0]
+        let fetchItem = GenericKeychainItem.fetchAll()[0] as! GenericKeychainItem
         XCTAssertNotNil(fetchItem.valueForKey("test"), "Data is nil")
         XCTAssertEqual(fetchItem.valueForKey("test")!, "Hello", "Data is not equal")
     }
     
     func testRemoveNil() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.setValue("Hello", forKey: "test")
         item.setValue(nil, forKey: "test")
         XCTAssertNil(item.valueForKey("test"), "Data is not nil")
     }
     
     func testRemoveData() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.setValue("Hello", forKey: "test")
         item.removeValueForKey("test")
         XCTAssertNil(item.valueForKey("test"), "Data is not nil")
     }
     
     func testDataCount() {
-        let item = KeychainItem.create()
+        let item = GenericKeychainItem()
         item.setValue("Hello", forKey: "test")
         item.setValue("Hello", forKey: "test")
         item.setValue("Hi!", forKey: "test2")

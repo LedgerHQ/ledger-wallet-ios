@@ -9,11 +9,34 @@
 import Foundation
 import Security
 
-class KeychainItem {
+protocol KeychainItem {
     
-    var isValid: Bool { return persistentReference != nil && creationDate != nil }
+    var valid: Bool { get }
+    var count: Int { get }
+    var autosaves: Bool { get set }
+    
+    static func fetchAll() -> [AnyObject]
+    static func destroyAll() -> Bool
+    
+    static var serviceIdentifier: String { get }
+    static var itemClass: String { get }
+    static var accessibleAttribute: String { get }
+    
+    init()
+    init(attributes: [String: AnyObject])
+    
+    func setValue(value: String?, forKey key: String)
+    func valueForKey(key: String) -> String?
+    func removeValueForKey(key: String)
+    func destroy() -> Bool
+    func save() -> Bool
+}
+
+class GenericKeychainItem: KeychainItem {
+    
+    var valid: Bool { return persistentReference != nil && creationDate != nil }
     var count: Int { return keysAndValues.count }
-    var autoSaves = true
+    var autosaves = true
     
     class var serviceIdentifier: String { return "" }
     class var itemClass: String { return kSecClassGenericPassword as String }
@@ -39,7 +62,7 @@ class KeychainItem {
     
     // MARK: - Static methods
     
-    class func fetchAll() -> [KeychainItem] {
+    static func fetchAll() -> [AnyObject] {
         // build query
         var query = defaultQuery()
         query.updateValue(kSecMatchLimitAll, forKey: kSecMatchLimit as String)
@@ -48,7 +71,7 @@ class KeychainItem {
         query.updateValue(true, forKey: kSecReturnPersistentRef as String)
         
         // build keychain items array
-        var keychainItems: [KeychainItem] = []
+        var keychainItems: [AnyObject] = []
         
         // perform keychain query
         var result: AnyObject? = nil
@@ -59,7 +82,7 @@ class KeychainItem {
                 for item in items {
                     // try to build keychain item with given attributes
                     let keychainItem = self.init(attributes: item)
-                    if keychainItem.isValid {
+                    if keychainItem.valid {
                         keychainItems.append(keychainItem)
                     }
                     else {
@@ -70,7 +93,7 @@ class KeychainItem {
         }
         return keychainItems
     }
-    
+
     class func destroyAll() -> Bool {
         // build query
         let query = defaultQuery()
@@ -78,25 +101,6 @@ class KeychainItem {
         // perform keychain query
         let status = SecItemDelete(query)
         return status == errSecSuccess || status == errSecItemNotFound
-    }
-    
-    class func create() -> Self {
-        // build query
-        var query = defaultQuery()
-        query.updateValue(accessibleAttribute, forKey: kSecAttrAccessible as String)
-        query.updateValue(NSUUID().UUIDString, forKey: kSecAttrAccount as String)
-        query.updateValue(true, forKey: kSecReturnAttributes as String)
-        query.updateValue(true, forKey: kSecReturnPersistentRef as String)
-//        let sec = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenUnlocked, SecAccessControlCreateFlags.UserPresence, nil)
-//        query.updateValue(sec.takeUnretainedValue(), forKey: kSecAttrAccessControl as String)
-//        query.updateValue(true, forKey: kSecUseNoAuthenticationUI as String)
-        
-        // perform keychain query
-        var result: AnyObject? = nil
-        _ = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
-        let item = result as! [String: AnyObject]
-        let keychainItem = self.init(attributes: item)
-        return keychainItem
     }
     
     // MARK: - Public interface
@@ -155,7 +159,7 @@ class KeychainItem {
     }
     
     private func saveIfNeeded() {
-        if autoSaves == true {
+        if autosaves == true {
             save()
         }
     }
@@ -179,18 +183,32 @@ class KeychainItem {
     
     // MARK: - Initialization
     
-    required init(attributes: [String: AnyObject]) {
-        persistentReference = attributes[kSecValuePersistentRef as String] as! NSData
-        creationDate = attributes[kSecAttrCreationDate as String] as! NSDate
-        load(attributes[kSecValueData as String] as? NSData)
+    required convenience init() {
+        // build query
+        var query = self.dynamicType.defaultQuery()
+        query.updateValue(self.dynamicType.accessibleAttribute, forKey: kSecAttrAccessible as String)
+        query.updateValue(NSUUID().UUIDString, forKey: kSecAttrAccount as String)
+        query.updateValue(true, forKey: kSecReturnAttributes as String)
+        query.updateValue(true, forKey: kSecReturnPersistentRef as String)
+        
+        // perform keychain query insertion
+        var result: AnyObject? = nil
+        _ = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
+        let item = result as! [String: AnyObject]
+        
+        // continue initialization
+        self.init(attributes: item)
     }
     
-}
-
-extension KeychainItem: CustomStringConvertible {
-    
-    var description: String {
-        return "KeychainItem: \(keysAndValues)"
+    required init(attributes: [String: AnyObject]) {
+        assert(self.dynamicType.serviceIdentifier != "", "Keychain item should have a service identifier")
+        
+        // load mandatory internal properties
+        persistentReference = attributes[kSecValuePersistentRef as String] as! NSData
+        creationDate = attributes[kSecAttrCreationDate as String] as! NSDate
+        
+        // load keychain item data
+        load(attributes[kSecValueData as String] as? NSData)
     }
     
 }

@@ -37,7 +37,7 @@ final class PairingProtocolContext {
             return nil
         }
         
-        let pairingKeychainItem = PairingKeychainItem.create()
+        let pairingKeychainItem = PairingKeychainItem()
         pairingKeychainItem.pairingKey = pairingKey
         pairingKeychainItem.pairingId = pairingId
         pairingKeychainItem.dongleName = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
