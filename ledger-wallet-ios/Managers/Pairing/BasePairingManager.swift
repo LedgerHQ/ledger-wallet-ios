@@ -104,18 +104,6 @@ extension BasePairingManager {
     
     // MARK: - Messages management
     
-    func receiveMessage(message: Message, webSocket: WebSocket) {
-        if let typeString = message["type"] as? String {
-            if let messageType = MessageType(rawValue: typeString) {
-                // lookup form message table
-                if let handler = messagesHandlers[messageType] {
-                    stopTimeoutTimer()
-                    handler(message, webSocket)
-                }
-            }
-        }
-    }
-    
     func sendMessage(message: Message, webSocket: WebSocket) {
         if let JSONData = JSON.dataFromJSONObject(message) {
             if let messageString = Crypto.Data.stringFromData(JSONData) {
@@ -134,6 +122,45 @@ extension BasePairingManager {
             }
         }
         return message
+    }
+    
+    private func receiveMessage(message: Message, webSocket: WebSocket) {
+        if let typeString = message["type"] as? String {
+            if let messageType = MessageType(rawValue: typeString) {
+                // lookup form message table
+                if let handler = messagesHandlers[messageType] {
+                    stopTimeoutTimer()
+                    handler(message, webSocket)
+                }
+            }
+        }
+    }
+    
+}
+
+extension BasePairingManager {
+    
+    // MARK: - Websocket events management
+    
+    func handleWebSocket(webSocket: WebSocket, didReceiveMessage message: String) {
+        if (ignoresWebSocketDelegate) {
+            return
+        }
+        // retreive data from string
+        if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            // create Message representation from data
+            if let message = JSON.JSONObjectFromData(data) as? Message {
+                self.receiveMessage(message, webSocket: webSocket)
+            }
+        }
+    }
+    
+    func handleWebSocketDidConnect(webSocket: WebSocket) {
+        
+    }
+    
+    func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
+        
     }
     
 }
@@ -173,27 +200,6 @@ extension BasePairingManager: WebSocketDelegate {
         if (ignoresWebSocketDelegate) {
             return
         }
-    }
-    
-    func handleWebSocket(webSocket: WebSocket, didReceiveMessage message: String) {
-        if (ignoresWebSocketDelegate) {
-            return
-        }
-        // retreive data from string
-        if let data = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            // create Message representation from data
-            if let message = JSON.JSONObjectFromData(data) as? Message {
-                self.receiveMessage(message, webSocket: webSocket)
-            }
-        }
-    }
-    
-    func handleWebSocketDidConnect(webSocket: WebSocket) {
-        
-    }
-    
-    func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
-        
     }
 
 }

@@ -29,9 +29,8 @@ final class PairingProtocolManager: BasePairingManager {
     }
 
     weak var delegate: PairingProtocolManagerDelegate? = nil
-    var webSocketBaseURL: String! = nil
-    var context: PairingProtocolContext! = nil
-    private var cryptor: PairingProtocolCryptor! = nil
+    private var context: PairingProtocolContext! = nil
+    private lazy var cryptor = PairingProtocolCryptor()
     private var webSocket: WebSocket! = nil
     
     // MARK: - Initialization
@@ -58,16 +57,12 @@ extension PairingProtocolManager {
         }
         
         // create websocket
-        if (webSocketBaseURL == nil) { webSocketBaseURL = LedgerWebSocketBaseURL }
-        webSocket = WebSocket(url: NSURL(string: webSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
+        webSocket = WebSocket(url: NSURL(string: LedgerWebSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
         webSocket.delegate = self
         webSocket.connect()
         
         // create context
-        if (context == nil) { context = PairingProtocolContext() }
-        
-        // create cryptor
-        if (cryptor == nil) { cryptor = PairingProtocolCryptor() }
+        context = PairingProtocolContext(internalKey: Crypto.Key(), attestationKey: Crypto.Key(publicKey: LedgerDongleAttestationKeyData))
         
         // compute session key
         context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, attestationKey: context.attestationKey)
@@ -205,7 +200,7 @@ extension PairingProtocolManager {
 
 extension PairingProtocolManager {
     
-    // MARK: - WebSocket delegate
+    // MARK: - WebSocket messages management
     
     override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         self.disconnectWebSocket()

@@ -51,8 +51,4 @@ final class PairingProtocolContext {
         self.attestationKey = attestationKey
     }
     
-    convenience init() {
-        self.init(internalKey: Crypto.Key(), attestationKey: Crypto.Key(publicKey: LedgerDongleAttestationKeyData))
-    }
-    
 }

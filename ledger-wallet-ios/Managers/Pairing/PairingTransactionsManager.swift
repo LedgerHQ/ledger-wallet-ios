@@ -19,8 +19,7 @@ final class PairingTransactionsManager: BasePairingManager {
     
     weak var delegate: PairingTransactionsManagerDelegate? = nil
     private var webSockets: [WebSocket: PairingKeychainItem] = [:]
-    private var webSocketsBaseURL: String! = nil
-    private var cryptor: PairingTransactionsCryptor! = nil
+    private lazy var cryptor = PairingTransactionsCryptor()
     private var isConfirmingTransaction: Bool { return currentTransactionInfo != nil && currentTransactionWebSocket != nil && currentTransactionPairingKeychainItem != nil }
     private var currentTransactionInfo: PairingTransactionInfo? = nil
     private var currentTransactionWebSocket: WebSocket? = nil
@@ -64,7 +63,7 @@ extension PairingTransactionsManager {
     }
     
     private func handleTransaction(transactionInfo: PairingTransactionInfo, confirm: Bool) {
-        if (!isConfirmingTransaction || transactionInfo !== currentTransactionInfo) {
+        guard isConfirmingTransaction && currentTransactionInfo != nil && transactionInfo == currentTransactionInfo! else {
             return
         }
         
@@ -88,20 +87,11 @@ extension PairingTransactionsManager {
     }
     
     private func initilizeWebSockets(excepted exceptions: [PairingKeychainItem]? = nil) {
-        // initialize websocket URL
-        if (webSocketsBaseURL == nil) { webSocketsBaseURL = LedgerWebSocketBaseURL }
-        
-        // create cryptor
-        if (cryptor == nil) { cryptor = PairingTransactionsCryptor() }
-        
         // rebuild websockets
         let exemptedPairingItem = exceptions ?? []
         let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
-        for pairingItem in pairingItems {
-            if (exemptedPairingItem.contains(pairingItem)) {
-                continue
-            }
-            let webSocket = WebSocket(url: NSURL(string: webSocketsBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
+        for pairingItem in pairingItems where !exemptedPairingItem.contains(pairingItem) {
+            let webSocket = WebSocket(url: NSURL(string: LedgerWebSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
             webSocket.delegate = self
             webSocket.connect()
             webSockets[webSocket] = pairingItem
@@ -111,10 +101,7 @@ extension PairingTransactionsManager {
     private func destroyWebSockets(excepted exceptions: [WebSocket]? = nil) {
         // destroy webSockets
         let exemptedWebSockets = exceptions ?? []
-        for (webSocket, _) in webSockets {
-            if (exemptedWebSockets.contains(webSocket)) {
-                continue
-            }
+        for (webSocket, _) in webSockets where !exemptedWebSockets.contains(webSocket) {
             webSocket.delegate = nil
             if webSocket.isConnected {
                 webSocket.disconnect()
@@ -125,10 +112,8 @@ extension PairingTransactionsManager {
     
     private func destroyCurrentTransactionWebSocket() {
         currentTransactionWebSocket?.delegate = nil
-        if let isConnected = currentTransactionWebSocket?.isConnected {
-            if isConnected == true {
-                currentTransactionWebSocket?.disconnect()
-            }
+        if let isConnected = currentTransactionWebSocket?.isConnected where isConnected == true {
+            currentTransactionWebSocket?.disconnect()
         }
         currentTransactionWebSocket = nil
         currentTransactionPairingKeychainItem = nil
@@ -141,8 +126,8 @@ extension PairingTransactionsManager {
         currentTransactionWebSocket = webSocket
         currentTransactionPairingKeychainItem = webSockets[webSocket]!
         
-        // assign transaction info
-        transactionInfo.dongleName = currentTransactionPairingKeychainItem!.dongleName!
+        // assign name to transaction info
+        currentTransactionInfo?.dongleName = currentTransactionPairingKeychainItem?.dongleName ?? ""
         
         // destroy all webSockets excepted this one
         destroyWebSockets(excepted: [webSocket])
@@ -195,7 +180,7 @@ extension PairingTransactionsManager {
 
 extension PairingTransactionsManager {
     
-    // MARK: - WebSocket delegate
+    // MARK: - WebSocket events management
     
     override func handleWebSocketDidConnect(webSocket: WebSocket) {
         if (!isConfirmingTransaction) {

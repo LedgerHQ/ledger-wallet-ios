@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PairingTransactionInfo: Mockable {
+struct PairingTransactionInfo: Equatable {
     
     let pinCode: String
     let recipientAddress: String
@@ -16,7 +16,7 @@ final class PairingTransactionInfo: Mockable {
     let feesAmount: Bitcoin.Amount
     let outputsAmount: Bitcoin.Amount
     let transactionDate: NSDate
-    var dongleName: String = ""
+    var dongleName: String?
 
     private let pinBytesLength = 4
     private let feesBytesLength = 8
@@ -26,13 +26,7 @@ final class PairingTransactionInfo: Mockable {
     
     init?(decryptedBlob: NSData) {
         // check that we have minimum bytes
-        if decryptedBlob.length <= (pinBytesLength + feesBytesLength + outputsBytesLength + changeBytesLength + recipientByteLength) {
-            self.recipientAddress = ""
-            self.pinCode = ""
-            self.changeAmount = 0
-            self.feesAmount = 0
-            self.outputsAmount = 0
-            self.transactionDate = NSDate()
+        guard decryptedBlob.length > (pinBytesLength + feesBytesLength + outputsBytesLength + changeBytesLength + recipientByteLength) else {
             return nil
         }
         
@@ -46,13 +40,7 @@ final class PairingTransactionInfo: Mockable {
         let recipientBytesLength = Int(UnsafePointer<UInt8>(recipientDataLengthData.bytes).memory)
         
         // check that we have enough left bytes
-        if (offset + recipientBytesLength > decryptedBlob.length) {
-            self.recipientAddress = ""
-            self.pinCode = ""
-            self.changeAmount = 0
-            self.feesAmount = 0
-            self.outputsAmount = 0
-            self.transactionDate = NSDate()
+        guard (offset + recipientBytesLength) <= decryptedBlob.length else {
             return nil
         }
         
@@ -61,39 +49,23 @@ final class PairingTransactionInfo: Mockable {
         // validate data
         let recipientAddress = Crypto.Data.stringFromData(recipientData)
         let pinCode = Crypto.Data.stringFromData(pinCodeData)
-        if pinCode != nil && recipientAddress != nil && Bitcoin.Address.verifyPublicAddress(recipientAddress!) == true {
-            self.recipientAddress = recipientAddress!
-            self.pinCode = pinCode!
-            self.changeAmount = BTCBigNumber(unsignedBigEndian: changeData).int64value
-            self.feesAmount = BTCBigNumber(unsignedBigEndian: feesData).int64value
-            self.outputsAmount = BTCBigNumber(unsignedBigEndian: outputsData).int64value
-            self.transactionDate = NSDate()
-        }
-        else {
-            self.recipientAddress = ""
-            self.pinCode = ""
-            self.changeAmount = 0
-            self.feesAmount = 0
-            self.outputsAmount = 0
-            self.transactionDate = NSDate()
+        guard pinCode != nil && recipientAddress != nil && Bitcoin.Address.verifyPublicAddress(recipientAddress!) == true else {
             return nil
         }
-    }
     
-    // MARK: - Mock
-    
-    class func testObject() -> Self {
-        return self.init()
-    }
-    
-    private init() {
-        recipientAddress = "1Ax9jk7pPt1ZcVcyAcgbYgE3k91443TLjU"
-        pinCode = "abcd"
-        changeAmount = 0
-        feesAmount = 0
-        outputsAmount = 123000000
-        dongleName = "Sophie's Wallet"
-        transactionDate = NSDate()
+        self.recipientAddress = recipientAddress!
+        self.pinCode = pinCode!
+        self.changeAmount = BTCBigNumber(unsignedBigEndian: changeData).int64value
+        self.feesAmount = BTCBigNumber(unsignedBigEndian: feesData).int64value
+        self.outputsAmount = BTCBigNumber(unsignedBigEndian: outputsData).int64value
+        self.transactionDate = NSDate()
     }
     
 }
+
+func ==(lhs: PairingTransactionInfo, rhs: PairingTransactionInfo) -> Bool {
+    return lhs.pinCode == rhs.pinCode && lhs.recipientAddress == rhs.recipientAddress && lhs.changeAmount == rhs.changeAmount &&
+    lhs.feesAmount == rhs.feesAmount && lhs.outputsAmount == rhs.outputsAmount && lhs.transactionDate.isEqualToDate(rhs.transactionDate) &&
+    lhs.dongleName == rhs.dongleName
+}
+    
