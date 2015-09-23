@@ -52,20 +52,10 @@ final class PairingConfirmationDialogViewController: DialogViewController {
     
     // MARK: - Interface 
     
-    override func updateView() {
-        super.updateView()
-        
+    func updateView() {
         iconImageView?.image = messageType == MessageType.Success ? UIImage(named: "icon_valid_green") : UIImage(named: "icon_error_red")
         titleLabel?.text = localizedTitle
         messageLabel?.text = localizedMessage
-    }
-    
-    // MARK: - Actions
-    
-    override func complete() {
-        super.complete()
-        
-        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Content size
@@ -75,4 +65,20 @@ final class PairingConfirmationDialogViewController: DialogViewController {
         return super.dialogLayoutSize(constraintedSize: size)
     }
     
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        updateView()
+    }
+    
+}
+
+extension PairingConfirmationDialogViewController: CompletionResultable {
+    
+    @IBAction func complete() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
 }

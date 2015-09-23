@@ -25,35 +25,9 @@ final class PairingAddViewController: BaseViewController {
     private var pairingProtocolManager: PairingProtocolManager? = nil
     private var currentStepViewController: PairingAddBaseStepViewController? = nil
     
-    // MARK: - Actions
-    
-    override func complete() {
-        // complete current step view controller
-        currentStepViewController?.complete()
-    }
-    
-    override func cancel() {
-        // cancel current step view controller
-        currentStepViewController?.cancel()
-        
-        // complete
-        completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceTerminated, pairingItem: nil)
-    }
-    
-    private func completeWithOutcome(outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
-        // terminate pairing manager
-        pairingProtocolManager?.delegate = nil
-        pairingProtocolManager?.terminate()
-        
-        // notify delegate
-        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome, pairingItem: pairingItem)
-    }
-    
     // MARK: - Interface
     
-    override func updateView() {
-        super.updateView()
-
+    func updateView() {
         navigationItem.leftBarButtonItem?.customView?.hidden = !currentStepViewController!.cancellable
         navigationItem.rightBarButtonItem?.customView?.hidden = !currentStepViewController!.finalizable
         stepNumberLabel?.text = "\(currentStepViewController!.stepNumber)."
@@ -62,10 +36,6 @@ final class PairingAddViewController: BaseViewController {
     
     override func configureView() {
         super.configureView()
-        
-        // configure pairing manager
-        pairingProtocolManager = PairingProtocolManager()
-        pairingProtocolManager?.delegate = self
         
         // go to first step
         navigateToStep(PairingAddScanStepViewController.self, dataToPass: nil, completion: nil)
@@ -76,13 +46,25 @@ final class PairingAddViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        observeKeyboardNotifications(true)
         ApplicationManager.sharedInstance().disablesIdleTimer = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        observeKeyboardNotifications(false)
         ApplicationManager.sharedInstance().disablesIdleTimer = false
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        updateView()
+        
+        // configure pairing manager
+        pairingProtocolManager = PairingProtocolManager()
+        pairingProtocolManager?.delegate = self
     }
     
     // MARK: - Layout
@@ -205,23 +187,20 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
     
 }
 
-extension PairingAddViewController {
+extension PairingAddViewController: KeyboardObservable {
     
     // MARK: - Keyboard management
     
-    override func keyboardWillHide(userInfo: [NSObject : AnyObject]) {
-        super.keyboardWillHide(userInfo)
-        
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+    func keyboardWillHide(notification: NSNotification) {
+        let duration = (valueFromKeyboardNotification(notification, forKey: UIKeyboardAnimationDurationUserInfoKey) as! NSNumber).doubleValue
+        let options = UIViewAnimationOptions(rawValue: UInt((valueFromKeyboardNotification(notification, forKey: UIKeyboardAnimationCurveUserInfoKey) as! NSNumber).integerValue << 16))
         adjustContentInset(0, duration: duration, options: options, animated: true)
     }
     
-    override func keyboardWillShow(userInfo: [NSObject : AnyObject]) {
-        super.keyboardWillShow(userInfo)
-        
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+    func keyboardWillShow(notification: NSNotification) {
+        let duration = (valueFromKeyboardNotification(notification, forKey: UIKeyboardAnimationDurationUserInfoKey) as! NSNumber).doubleValue
+        let options = UIViewAnimationOptions(rawValue: UInt((valueFromKeyboardNotification(notification, forKey: UIKeyboardAnimationCurveUserInfoKey) as! NSNumber).integerValue << 16))
+        let keyboardFrame = valueFromKeyboardNotification(notification, forKey: UIKeyboardFrameEndUserInfoKey).CGRectValue
         adjustContentInset(keyboardFrame.size.height, duration: duration, options: options, animated: true)
     }
     
@@ -237,6 +216,32 @@ extension PairingAddViewController {
         else {
             view.layoutIfNeeded()
         }
+    }
+    
+}
+
+extension PairingAddViewController: CompletionResultable {
+    
+    @IBAction func complete() {
+        // complete current step view controller
+        (currentStepViewController as? CompletionResultable)?.complete()
+    }
+    
+    @IBAction func cancel() {
+        // cancel current step view controller
+        (currentStepViewController as? CompletionResultable)?.cancel()
+        
+        // complete
+        completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceTerminated, pairingItem: nil)
+    }
+    
+    private func completeWithOutcome(outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
+        // terminate pairing manager
+        pairingProtocolManager?.delegate = nil
+        pairingProtocolManager?.terminate()
+        
+        // notify delegate
+        delegate?.pairingAddViewController(self, didCompleteWithOutcome: outcome, pairingItem: pairingItem)
     }
     
 }

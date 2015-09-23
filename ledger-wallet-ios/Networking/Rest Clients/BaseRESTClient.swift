@@ -10,11 +10,9 @@ import Foundation
 
 protocol BaseRESTClient {
     
-    var baseURL: String { get set }
-    var httpClient: HTTPClient { get set }
-    
-    func baseURLWithPath(path: String) -> String
-    
+    var baseURL: String { get }
+    var httpClient: HTTPClient { get }
+        
 }
 
 extension BaseRESTClient {

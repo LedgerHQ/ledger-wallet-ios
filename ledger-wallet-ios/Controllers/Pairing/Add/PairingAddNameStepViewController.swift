@@ -27,17 +27,6 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         return false
     }
     
-    // MARK: - Actions
-    
-    override func complete() {
-        super.complete()
-        
-        // verify entered name
-        if checkThatNameIsUnique(nameTextField.text) {
-            notifyResult(nameTextField.text!)
-        }
-    }
-    
     // MARK: - Interface
     
     private func checkThatNameIsUnique(name: String?) -> Bool {
@@ -81,6 +70,17 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         }
         
         nameTextField?.becomeFirstResponder()
+    }
+    
+}
+
+extension PairingAddNameStepViewController: CompletionResultable {
+    
+    func complete() {
+        // verify entered name
+        if checkThatNameIsUnique(nameTextField.text) {
+            notifyResult(nameTextField.text!)
+        }
     }
     
 }

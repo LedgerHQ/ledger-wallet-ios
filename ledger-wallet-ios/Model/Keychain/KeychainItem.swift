@@ -193,7 +193,7 @@ class GenericKeychainItem: KeychainItem {
         
         // perform keychain query insertion
         var result: AnyObject? = nil
-        _ = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
+        let status = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
         let item = result as! [String: AnyObject]
         
         // continue initialization

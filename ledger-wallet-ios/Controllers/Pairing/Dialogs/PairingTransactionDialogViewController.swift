@@ -30,16 +30,6 @@ final class PairingTransactionDialogViewController: DialogViewController {
         }
     }
     
-    // MARK: - Actions
-    
-    override func complete() {
-        self.delegate?.pairingTransactionDialogViewController(self, didConfirmTransactionInfo: transactionInfo)
-    }
-    
-    override func cancel() {
-        self.delegate?.pairingTransactionDialogViewController(self, didRejectTransactionInfo: transactionInfo)
-    }
-    
     // MARK: - Content size
     
     override func dialogLayoutSize(constraintedSize size: CGSize) -> CGSize {
@@ -49,13 +39,31 @@ final class PairingTransactionDialogViewController: DialogViewController {
     
     // MARK: - Interface
     
-    override func updateView() {
-        super.updateView()
-        
+    func updateView() {
         receipientAddressLabel?.text = transactionInfo.recipientAddress
         dongleNameLabel?.text = transactionInfo.dongleName
         amountLabel?.text = Bitcoin.Formatter.stringFromAmount(transactionInfo.outputsAmount)
         transactionDateLabel?.text = NSString(format: localizedString("requested_on_%@"), NSDateFormatter.localizedStringFromDate(transactionInfo.transactionDate, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)) as String
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        updateView()
+    }
+    
+}
+
+extension PairingTransactionDialogViewController: CompletionResultable {
+    
+    @IBAction func complete() {
+        self.delegate?.pairingTransactionDialogViewController(self, didConfirmTransactionInfo: transactionInfo)
+    }
+    
+    @IBAction func cancel() {
+        self.delegate?.pairingTransactionDialogViewController(self, didRejectTransactionInfo: transactionInfo)
     }
     
 }

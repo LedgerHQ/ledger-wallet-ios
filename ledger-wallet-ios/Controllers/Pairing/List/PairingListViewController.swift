@@ -21,10 +21,6 @@ final class PairingListViewController: BaseViewController {
         Navigator.Pairing.presentAddViewController(fromViewController: self, delegate: self)
     }
     
-    override func complete() {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     // MARK: - Interface
     
     override func configureView() {
@@ -32,16 +28,10 @@ final class PairingListViewController: BaseViewController {
         
         actionBar.borderPosition = ActionBarView.BorderPosition.Top
     }
-
-    override func updateView() {
-        super.updateView()
-        
-        tableView?.reloadData()
-    }
     
     // MARK: - Model
     
-    override func updateModel() {
+    func updateModel() {
         pairingKeychainItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
     }
     
@@ -51,7 +41,15 @@ final class PairingListViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         updateModel()
-        updateView()
+        tableView.reloadData()
+    }
+    
+}
+
+extension PairingListViewController: CompletionResultable {
+    
+    @IBAction func complete() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
