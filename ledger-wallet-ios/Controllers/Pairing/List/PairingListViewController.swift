@@ -108,8 +108,7 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
                 }
                 else {
                     // warn user
-                    let alertController = AlertController(title: localizedString("error_pairing_unknown"), message: nil)
-                    alertController.addAction(AlertAction(title: localizedString("OK"), style: .Default, handler: nil))
+                    let alertController = AlertController(alert: localizedString("error_pairing_unknown"))
                     alertController.presentFromViewController(self, animated: true)
                 }
                 

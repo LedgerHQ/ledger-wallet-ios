@@ -47,8 +47,7 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         
         // show message if necessary
         if message != nil {
-            let alertController = AlertController(title: message, message: nil)
-            alertController.addAction(AlertAction(title: localizedString("OK"), style: .Default, handler: nil))
+            let alertController = AlertController(alert: message!)
             alertController.presentFromViewController(self, animated: true)
             return false
         }

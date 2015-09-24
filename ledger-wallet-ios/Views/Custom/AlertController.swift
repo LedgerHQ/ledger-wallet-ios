@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertController: NSObject {
+final class AlertController: NSObject {
     
     enum Style {
         case Alert
@@ -30,12 +30,6 @@ class AlertController: NSObject {
     private var alertController: UIViewController! = nil
     private var alertView: UIAlertView! = nil
     private static var sharedControllers: [UIAlertView: AlertController] = [:]
-    
-    init(title: String?, message: String?) {
-        self.title = title
-        self.message = message
-        self.style = .Alert
-    }
     
     func addAction(action: AlertAction) {
         actions.append(action)
@@ -67,6 +61,19 @@ class AlertController: NSObject {
             // add to shared pool
             AlertController.sharedControllers[alertView] = self
         }
+    }
+    
+    // MARK - Initialization
+    
+    init(title: String?, message: String?) {
+        self.title = title
+        self.message = message
+        self.style = .Alert
+    }
+   
+    convenience init(alert: String) {
+        self.init(title: nil, message: alert)
+        addAction(AlertAction(title: localizedString("OK"), style: .Default, handler: nil))
     }
     
 }
