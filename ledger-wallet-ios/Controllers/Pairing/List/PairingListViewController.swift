@@ -78,29 +78,41 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
     func pairingListTableViewCellDidTapDeleteButton(pairingListTableViewCell: PairingListTableViewCell) {
         if let indexPath = tableView.indexPathForCell(pairingListTableViewCell) {
             // ask confirmation
-            unowned let weakSelf = self
             let alertController = AlertController(title: localizedString("deleting_this_dongle_pairing"), message: nil)
             alertController.addAction(AlertAction(title: localizedString("cancel"), style: .Cancel, handler: nil))
             alertController.addAction(AlertAction(title: localizedString("delete"), style: .Destructive, handler: { action in
-                // delete model
-                let pairingItem = weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row)
-                
-                // unregister pairing item push token
-                RemoteNotificationsManager.sharedInstance().unregisterDeviceTokenFromPairedDongle(pairingItem)
+                // get model
+                let pairingItem = self.pairingKeychainItems[indexPath.row]
+                let pairingId = pairingItem.pairingId
                 
                 // destroy pairing item
-                pairingItem.destroy()
-                
-                // delete row
-                weakSelf.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
-                
-                // dismiss if empty
-                if (weakSelf.pairingKeychainItems.count == 0) {
-                    delayOnMainQueue(0.25) {
-                        // dismiss
-                        weakSelf.complete()
+                if pairingItem.destroy() {
+                    // unregister pairing item push token
+                    if pairingId != nil {
+                        RemoteNotificationsManager.sharedInstance().unregisterDeviceTokenFromPairedDongleWithId(pairingId!)
+                    }
+                    
+                    // delete model
+                    self.pairingKeychainItems.removeAtIndex(indexPath.row)
+                    
+                    // delete row
+                    self.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+                    
+                    // dismiss if empty
+                    if self.pairingKeychainItems.isEmpty {
+                        delayOnMainQueue(0.25) {
+                            // dismiss
+                            self.complete()
+                        }
                     }
                 }
+                else {
+                    // warn user
+                    let alertController = AlertController(title: localizedString("error_pairing_unknown"), message: nil)
+                    alertController.addAction(AlertAction(title: localizedString("OK"), style: .Default, handler: nil))
+                    alertController.presentFromViewController(self, animated: true)
+                }
+                
             }))
             alertController.presentFromViewController(self, animated: true)
         }

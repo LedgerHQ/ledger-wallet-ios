@@ -26,18 +26,27 @@ class KeychainItemTests: XCTestCase {
     }
     
     func testAddValid() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.valid, "Keychain item should be valid")
     }
     
     func testRemoveCount() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.destroy(), "Destroy should succeed")
         XCTAssertEqual(GenericKeychainItem.fetchAll().count, 0, "Keychain items count is not 0")
     }
     
     func testRemoveInvalid() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.destroy(), "Destroy should succeed")
         XCTAssertTrue(!item.valid, "Keychain item should be invalid")
     }
@@ -60,19 +69,28 @@ class KeychainItemTests: XCTestCase {
     }
     
     func testNilData() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertNil(item.valueForKey("test"), "Data is not nil")
     }
 
     func testRealData() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertNotNil(item.valueForKey("test"), "Data should not be nil")
         XCTAssertEqual(item.valueForKey("test")!, "Hello", "Data is not equal")
     }
     
     func testSaveThenFetch() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         let fetchItem = GenericKeychainItem.fetchAll()[0] as! GenericKeychainItem
         XCTAssertNotNil(fetchItem.valueForKey("test"), "Data should not be nil")
@@ -80,21 +98,30 @@ class KeychainItemTests: XCTestCase {
     }
     
     func testRemoveNil() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertTrue(item.setValue(nil, forKey: "test"), "Setting value should succeed")
         XCTAssertNil(item.valueForKey("test"), "Data should be nil")
     }
     
     func testRemoveData() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertTrue(item.removeValueForKey("test"), "Removing value should succeed")
         XCTAssertNil(item.valueForKey("test"), "Data should be nil")
     }
     
     func testDataCount() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertTrue(item.setValue("Hi!", forKey: "test2"), "Setting value should succeed")
@@ -105,13 +132,19 @@ class KeychainItemTests: XCTestCase {
     }
     
     func testSave() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertTrue(item.save(), "Saving value should succeed")
     }
     
     func testChangeData() {
-        let item = GenericKeychainItem()
+        guard let item = GenericKeychainItem() else {
+            XCTFail("Unable to create keychain item")
+            return
+        }
         XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         XCTAssertTrue(item.setValue("Salut", forKey: "test"), "Setting value should succeed")
         XCTAssertEqual(item.valueForKey("test"), "Salut")

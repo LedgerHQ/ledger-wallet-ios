@@ -45,7 +45,9 @@ class GenericKeychainItem {
                 for item in items {
                     // try to build keychain item with given attributes
                     let keychainItem = self.init(attributes: item)
-                    keychainItems.append(keychainItem)
+                    if keychainItem.valid {
+                        keychainItems.append(keychainItem)
+                    }
                 }
             }
         }
@@ -88,11 +90,13 @@ class GenericKeychainItem {
         
         // perform keychain query
         let status = SecItemDelete(query)
+        if status == errSecSuccess {
+            // clear itself
+            clear()
+            return true
+        }
         
-        // clear itself
-        clear()
-        
-        return status == errSecSuccess
+        return false
     }
     
     func save() -> Bool {
@@ -148,7 +152,7 @@ class GenericKeychainItem {
         creationDate = attributes[kSecAttrCreationDate as String] as! NSDate
     }
     
-    required init() {
+    required init?() {
         // build query
         var query = self.dynamicType.defaultQuery()
         query.updateValue(self.dynamicType.accessibleAttribute, forKey: kSecAttrAccessible as String)
@@ -158,8 +162,12 @@ class GenericKeychainItem {
         
         // perform keychain query insertion
         var result: AnyObject? = nil
-        _ = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
-        let attributes = result as! [String: AnyObject]
+        let status = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
+        
+        // test if it's okay
+        guard status == errSecSuccess, let attributes = result as? [String: AnyObject] else {
+            return nil
+        }
         
         // load attributes
         loadAttributes(attributes)
