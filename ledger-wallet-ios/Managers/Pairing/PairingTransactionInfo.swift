@@ -12,9 +12,9 @@ struct PairingTransactionInfo: Equatable {
     
     let pinCode: String
     let recipientAddress: String
-    let changeAmount: Bitcoin.Amount
-    let feesAmount: Bitcoin.Amount
-    let outputsAmount: Bitcoin.Amount
+    let changeAmount: BTCAmount
+    let feesAmount: BTCAmount
+    let outputsAmount: BTCAmount
     let transactionDate: NSDate
     var dongleName: String?
 
@@ -49,7 +49,7 @@ struct PairingTransactionInfo: Equatable {
         // validate data
         let recipientAddress = Crypto.Data.stringFromData(recipientData)
         let pinCode = Crypto.Data.stringFromData(pinCodeData)
-        guard pinCode != nil && recipientAddress != nil && Bitcoin.Address.verifyPublicAddress(recipientAddress!) == true else {
+        guard pinCode != nil && recipientAddress != nil && BTCAddress(string: recipientAddress) != nil else {
             return nil
         }
     

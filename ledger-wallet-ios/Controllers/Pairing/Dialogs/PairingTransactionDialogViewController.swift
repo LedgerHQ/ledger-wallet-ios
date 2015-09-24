@@ -40,9 +40,13 @@ final class PairingTransactionDialogViewController: DialogViewController {
     // MARK: - Interface
     
     func updateView() {
+        let formatter = BTCNumberFormatter(bitcoinUnit: BTCNumberFormatterUnit.BTC, symbolStyle: BTCNumberFormatterSymbolStyle.Code)
+        formatter.minimumFractionDigits = 3
+        formatter.decimalSeparator = "."
+        
         receipientAddressLabel?.text = transactionInfo.recipientAddress
         dongleNameLabel?.text = transactionInfo.dongleName
-        amountLabel?.text = Bitcoin.Formatter.stringFromAmount(transactionInfo.outputsAmount)
+        amountLabel?.text = formatter.stringFromAmount(transactionInfo.outputsAmount)
         transactionDateLabel?.text = NSString(format: localizedString("requested_on_%@"), NSDateFormatter.localizedStringFromDate(transactionInfo.transactionDate, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)) as String
     }
     
