@@ -11,9 +11,7 @@ import Foundation
 final class PairingKeychainItem: GenericKeychainItem, Equatable {
     
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
-    override var valid: Bool {
-        return super.valid && pairingId != nil && pairingKey != nil && dongleName != nil
-    }
+    override var valid: Bool { return super.valid && pairingId != nil && pairingKey != nil && dongleName != nil }
     
     var pairingKey: Crypto.Key? {
         get {
@@ -65,10 +63,7 @@ final class PairingKeychainItem: GenericKeychainItem, Equatable {
             }
         }
     }
-    
-    required init(attributes: [String : AnyObject]) {
-        super.init(attributes: attributes)
-    }
+
 }
 
 func ==(lhs: PairingKeychainItem, rhs: PairingKeychainItem) -> Bool {

@@ -213,6 +213,7 @@
 		37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */; };
 		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
 		37BCC5281BB2D5FE00ED8039 /* CompletionResultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCC5271BB2D5FE00ED8039 /* CompletionResultable.swift */; settings = {ASSET_TAGS = (); }; };
+		37BCC52A1BB3E39900ED8039 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37BCC5291BB3E39900ED8039 /* OpenSSL.framework */; };
 		37C723B11A851E49002CF49D /* PairingTransactionsCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */; };
 		37C903351ADBC43E001517ED /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C903341ADBC43E001517ED /* OpenSSL.framework */; };
 		37DD54031A823C3E00449CCA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
@@ -455,6 +456,7 @@
 		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingTransactionsManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BCC5271BB2D5FE00ED8039 /* CompletionResultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompletionResultable.swift; path = "ledger-wallet-ios/Controllers/Base/CompletionResultable.swift"; sourceTree = SOURCE_ROOT; };
+		37BCC5291BB3E39900ED8039 /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = "../ledger-wallet-ios/Vendor/OpenSSL.framework"; sourceTree = "<group>"; };
 		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptor.swift; sourceTree = "<group>"; };
 		37C903341ADBC43E001517ED /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = vendor/OpenSSL.framework; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37BCC52A1BB3E39900ED8039 /* OpenSSL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +773,7 @@
 				37ABFBD31A83A2270061E92D /* CryptoECDHTests.swift */,
 				37B746A41A5D5020001373C5 /* WebSocketTests.swift */,
 				373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */,
+				37BCC5291BB3E39900ED8039 /* OpenSSL.framework */,
 				3784FB1E1A5D2F5F0063A364 /* Supporting Files */,
 			);
 			path = "ledger-wallet-iosTests";
@@ -1108,7 +1112,6 @@
 					};
 					3784FB191A5D2F5F0063A364 = {
 						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 3784FB041A5D2F5E0063A364;
 					};
 				};
 			};
@@ -1586,9 +1589,11 @@
 		3784FB281A5D2F5F0063A364 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/Vendor",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1598,22 +1603,22 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "co.ledger.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
 			};
 			name = Debug;
 		};
 		3784FB291A5D2F5F0063A364 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/Vendor",
+				);
 				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.ledger.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
 			};
 			name = Release;
 		};

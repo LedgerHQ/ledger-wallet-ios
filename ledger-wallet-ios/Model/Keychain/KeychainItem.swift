@@ -9,30 +9,7 @@
 import Foundation
 import Security
 
-protocol KeychainItem {
-    
-    var valid: Bool { get }
-    var count: Int { get }
-    var autosaves: Bool { get set }
-    
-    static func fetchAll() -> [AnyObject]
-    static func destroyAll() -> Bool
-    
-    static var serviceIdentifier: String { get }
-    static var itemClass: String { get }
-    static var accessibleAttribute: String { get }
-    
-    init()
-    init(attributes: [String: AnyObject])
-    
-    func setValue(value: String?, forKey key: String)
-    func valueForKey(key: String) -> String?
-    func removeValueForKey(key: String)
-    func destroy() -> Bool
-    func save() -> Bool
-}
-
-class GenericKeychainItem: KeychainItem {
+class GenericKeychainItem {
     
     var valid: Bool { return persistentReference != nil && creationDate != nil }
     var count: Int { return keysAndValues.count }
@@ -45,20 +22,6 @@ class GenericKeychainItem: KeychainItem {
     private(set) var creationDate: NSDate! = nil
     private var persistentReference: NSData! = nil
     private var keysAndValues: [String: String] = [:]
-    
-    // MARK: - Test environment
-    
-    class var testEnvironment: Bool {
-        get {
-        return Static.testEnvironment
-        }
-        set {
-            Static.testEnvironment = newValue
-        }
-    }
-    private struct Static {
-        private static var testEnvironment = false
-    }
     
     // MARK: - Static methods
     
@@ -82,12 +45,7 @@ class GenericKeychainItem: KeychainItem {
                 for item in items {
                     // try to build keychain item with given attributes
                     let keychainItem = self.init(attributes: item)
-                    if keychainItem.valid {
-                        keychainItems.append(keychainItem)
-                    }
-                    else {
-                        keychainItem.destroy()
-                    }
+                    keychainItems.append(keychainItem)
                 }
             }
         }
@@ -105,13 +63,13 @@ class GenericKeychainItem: KeychainItem {
     
     // MARK: - Public interface
     
-    func setValue(value: String?, forKey key: String) {
+    func setValue(value: String?, forKey key: String) -> Bool {
         if (value != nil) {
             keysAndValues[key] = value!
-            saveIfNeeded()
+            return saveIfNeeded()
         }
         else {
-            removeValueForKey(key)
+            return removeValueForKey(key)
         }
     }
     
@@ -119,9 +77,9 @@ class GenericKeychainItem: KeychainItem {
         return keysAndValues[key]
     }
     
-    func removeValueForKey(key: String) {
+    func removeValueForKey(key: String) -> Bool {
         keysAndValues.removeValueForKey(key)
-        saveIfNeeded()
+        return saveIfNeeded()
     }
 
     func destroy() -> Bool {
@@ -154,17 +112,18 @@ class GenericKeychainItem: KeychainItem {
     private class func defaultQuery() -> [String: AnyObject] {
         return [
             (kSecClass as String): itemClass,
-            (kSecAttrService as String): serviceIdentifier + (testEnvironment ? ".test" : "")
+            (kSecAttrService as String): serviceIdentifier
         ]
     }
     
-    private func saveIfNeeded() {
+    private func saveIfNeeded() -> Bool {
         if autosaves == true {
-            save()
+            return save()
         }
+        return true
     }
     
-    private func load(data: NSData?) {
+    private func loadData(data: NSData?) {
         if (data == nil) {
             return
         }
@@ -183,7 +142,13 @@ class GenericKeychainItem: KeychainItem {
     
     // MARK: - Initialization
     
-    required convenience init() {
+    private func loadAttributes(attributes: [String: AnyObject]) {
+        // load mandatory internal properties
+        persistentReference = attributes[kSecValuePersistentRef as String] as! NSData
+        creationDate = attributes[kSecAttrCreationDate as String] as! NSDate
+    }
+    
+    required init() {
         // build query
         var query = self.dynamicType.defaultQuery()
         query.updateValue(self.dynamicType.accessibleAttribute, forKey: kSecAttrAccessible as String)
@@ -193,22 +158,19 @@ class GenericKeychainItem: KeychainItem {
         
         // perform keychain query insertion
         var result: AnyObject? = nil
-        let status = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
-        let item = result as! [String: AnyObject]
+        _ = withUnsafeMutablePointer(&result) { SecItemAdd(query, UnsafeMutablePointer($0)) }
+        let attributes = result as! [String: AnyObject]
         
-        // continue initialization
-        self.init(attributes: item)
+        // load attributes
+        loadAttributes(attributes)
     }
     
     required init(attributes: [String: AnyObject]) {
-        assert(self.dynamicType.serviceIdentifier != "", "Keychain item should have a service identifier")
-        
-        // load mandatory internal properties
-        persistentReference = attributes[kSecValuePersistentRef as String] as! NSData
-        creationDate = attributes[kSecAttrCreationDate as String] as! NSDate
+        // load attributes
+        loadAttributes(attributes)
         
         // load keychain item data
-        load(attributes[kSecValueData as String] as? NSData)
+        loadData(attributes[kSecValueData as String] as? NSData)
     }
     
 }

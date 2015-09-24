@@ -9,16 +9,10 @@
 import XCTest
 
 class KeychainItemTests: XCTestCase {
-    
-    let testString = "this is a test"
-    var testData: NSData {
-        return testString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
-    }
-    
+ 
     override func setUp() {
         super.setUp()
 
-        GenericKeychainItem.testEnvironment = true
         XCTAssertTrue(GenericKeychainItem.destroyAll(), "Unable to remove all keychain items")
     }
     
@@ -33,19 +27,19 @@ class KeychainItemTests: XCTestCase {
     
     func testAddValid() {
         let item = GenericKeychainItem()
-        XCTAssertTrue(item.valid, "Keychain item is invalid")
+        XCTAssertTrue(item.valid, "Keychain item should be valid")
     }
     
     func testRemoveCount() {
         let item = GenericKeychainItem()
-        item.destroy()
+        XCTAssertTrue(item.destroy(), "Destroy should succeed")
         XCTAssertEqual(GenericKeychainItem.fetchAll().count, 0, "Keychain items count is not 0")
     }
     
     func testRemoveInvalid() {
         let item = GenericKeychainItem()
-        item.destroy()
-        XCTAssertTrue(!item.valid, "Keychain item is valid")
+        XCTAssertTrue(item.destroy(), "Destroy should succeed")
+        XCTAssertTrue(!item.valid, "Keychain item should be invalid")
     }
     
     func testFetchAllCount() {
@@ -61,7 +55,7 @@ class KeychainItemTests: XCTestCase {
         for _ in [1...count] {
             let _ = GenericKeychainItem()
         }
-        GenericKeychainItem.destroyAll()
+        XCTAssertTrue(GenericKeychainItem.destroyAll(), "Destroy should succeed")
         XCTAssertEqual(GenericKeychainItem.fetchAll().count, 0, "Wrong fetched keychain items count")
     }
     
@@ -72,40 +66,55 @@ class KeychainItemTests: XCTestCase {
 
     func testRealData() {
         let item = GenericKeychainItem()
-        item.setValue("Hello", forKey: "test")
-        XCTAssertNotNil(item.valueForKey("test"), "Data is nil")
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertNotNil(item.valueForKey("test"), "Data should not be nil")
         XCTAssertEqual(item.valueForKey("test")!, "Hello", "Data is not equal")
     }
     
     func testSaveThenFetch() {
         let item = GenericKeychainItem()
-        item.setValue("Hello", forKey: "test")
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
         let fetchItem = GenericKeychainItem.fetchAll()[0] as! GenericKeychainItem
-        XCTAssertNotNil(fetchItem.valueForKey("test"), "Data is nil")
+        XCTAssertNotNil(fetchItem.valueForKey("test"), "Data should not be nil")
         XCTAssertEqual(fetchItem.valueForKey("test")!, "Hello", "Data is not equal")
     }
     
     func testRemoveNil() {
         let item = GenericKeychainItem()
-        item.setValue("Hello", forKey: "test")
-        item.setValue(nil, forKey: "test")
-        XCTAssertNil(item.valueForKey("test"), "Data is not nil")
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertTrue(item.setValue(nil, forKey: "test"), "Setting value should succeed")
+        XCTAssertNil(item.valueForKey("test"), "Data should be nil")
     }
     
     func testRemoveData() {
         let item = GenericKeychainItem()
-        item.setValue("Hello", forKey: "test")
-        item.removeValueForKey("test")
-        XCTAssertNil(item.valueForKey("test"), "Data is not nil")
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertTrue(item.removeValueForKey("test"), "Removing value should succeed")
+        XCTAssertNil(item.valueForKey("test"), "Data should be nil")
     }
     
     func testDataCount() {
         let item = GenericKeychainItem()
-        item.setValue("Hello", forKey: "test")
-        item.setValue("Hello", forKey: "test")
-        item.setValue("Hi!", forKey: "test2")
-        item.removeValueForKey("test")
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertTrue(item.setValue("Hi!", forKey: "test2"), "Setting value should succeed")
+        XCTAssertTrue(item.removeValueForKey("test"), "Removing value should succeed")
         XCTAssertEqual(item.count, 1, "Count is not 1")
+        XCTAssertTrue(item.removeValueForKey("test2"), "Removing value should succeed")
+        XCTAssertEqual(item.count, 0, "Count is not 0")
+    }
+    
+    func testSave() {
+        let item = GenericKeychainItem()
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertTrue(item.save(), "Saving value should succeed")
+    }
+    
+    func testChangeData() {
+        let item = GenericKeychainItem()
+        XCTAssertTrue(item.setValue("Hello", forKey: "test"), "Setting value should succeed")
+        XCTAssertTrue(item.setValue("Salut", forKey: "test"), "Setting value should succeed")
+        XCTAssertEqual(item.valueForKey("test"), "Salut")
     }
     
 }
