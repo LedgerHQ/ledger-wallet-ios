@@ -49,11 +49,11 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String) {
         // check that code is correct
-        if let data = Crypto.Encode.dataFromBase16String(code) {
+        if let data = BTCDataFromHex(code) {
             if data.length == 17 {
                 let subData = data.subdataWithRange(NSMakeRange(0, 16))
                 let checksum = data.subdataWithRange(NSMakeRange(16, 1))
-                let computedChecksum = Crypto.Hash.SHA256FromData(subData)
+                let computedChecksum = BTCSHA256(subData)
                 if (computedChecksum.length == 32 && computedChecksum.subdataWithRange(NSMakeRange(0, 1)) == checksum) {
                     DeviceManager.sharedInstance().vibrate()
                     barCodeReader?.stopCapture()

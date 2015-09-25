@@ -47,14 +47,14 @@ struct PairingTransactionInfo: Equatable {
         let recipientData = decryptedBlob.subdataWithRange(NSMakeRange(offset, recipientBytesLength)); offset += recipientBytesLength
         
         // validate data
-        let recipientAddress = Crypto.Data.stringFromData(recipientData)
-        let pinCode = Crypto.Data.stringFromData(pinCodeData)
-        guard pinCode != nil && recipientAddress != nil && BTCAddress(string: recipientAddress) != nil else {
+        let recipientAddress = NSString(data: recipientData, encoding: NSUTF8StringEncoding)
+        let pinCode = NSString(data: pinCodeData, encoding: NSUTF8StringEncoding)
+        guard pinCode != nil && recipientAddress != nil && BTCAddress(string: recipientAddress! as String) != nil else {
             return nil
         }
     
-        self.recipientAddress = recipientAddress!
-        self.pinCode = pinCode!
+        self.recipientAddress = recipientAddress! as String
+        self.pinCode = pinCode! as String
         self.changeAmount = BTCBigNumber(unsignedBigEndian: changeData).int64value
         self.feesAmount = BTCBigNumber(unsignedBigEndian: feesData).int64value
         self.outputsAmount = BTCBigNumber(unsignedBigEndian: outputsData).int64value

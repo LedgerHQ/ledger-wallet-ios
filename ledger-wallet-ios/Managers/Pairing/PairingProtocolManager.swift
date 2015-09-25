@@ -62,7 +62,7 @@ extension PairingProtocolManager {
         webSocket.connect()
         
         // create context
-        context = PairingProtocolContext(internalKey: Crypto.Key(), attestationKey: Crypto.Key(publicKey: LedgerDongleAttestationKeyData))
+        context = PairingProtocolContext(internalKey: BTCKey(), attestationKey: BTCKey(publicKey: LedgerDongleAttestationKeyData))
         
         // compute session key
         context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, attestationKey: context.attestationKey)
@@ -89,7 +89,7 @@ extension PairingProtocolManager {
         
         // send public key
         let data = [
-            "public_key": Crypto.Encode.base16StringFromData(context.internalKey.publicKey)!,
+            "public_key": BTCHexFromData(context.internalKey.publicKey)!,
             "platform": "ios",
             "uuid": ApplicationManager.sharedInstance().UUID,
             "name": DeviceManager.sharedInstance().deviceName
@@ -107,7 +107,7 @@ extension PairingProtocolManager {
         let encryptedData = cryptor.encryptedChallengeResponseDataFromChallengeString(response, nonce: context.nonce, sessionKey: context.sessionKey)
         
         // send challenge response
-        if let encryptedDataBase16String = Crypto.Encode.base16StringFromData(encryptedData) {
+        if let encryptedDataBase16String = BTCHexFromData(encryptedData) {
             sendMessage(messageWithType(MessageType.Challenge, data: ["data": encryptedDataBase16String]), webSocket: webSocket)
         }
     }
@@ -157,7 +157,7 @@ extension PairingProtocolManager {
     override func handleChallengeMessage(message: Message, webSocket: WebSocket) {
         if let dataString = message["data"] as? String {
             // get data
-            if let blob = Crypto.Encode.dataFromBase16String(dataString) {
+            if let blob = BTCDataFromHex(dataString) {
                 // extract nonce and encrypted data
                 context.nonce = cryptor.nonceFromBlob(blob)
                 let encryptedData = cryptor.encryptedDataFromBlob(blob)

@@ -153,7 +153,7 @@ extension PairingTransactionsManager {
         // get base 16 string
         if let dataString = message["second_factor_data"] as? String {
             // get encrypted blob
-            if let blob = Crypto.Encode.dataFromBase16String(dataString) {
+            if let blob = BTCDataFromHex(dataString) {
                 // get pairing item
                 if let pairingKeychainItem = webSockets[webSocket] {
                     // get transaction info from blob

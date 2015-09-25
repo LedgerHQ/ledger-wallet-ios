@@ -106,9 +106,9 @@ extension BasePairingManager {
     
     func sendMessage(message: Message, webSocket: WebSocket) {
         if let JSONData = JSON.dataFromJSONObject(message) {
-            if let messageString = Crypto.Data.stringFromData(JSONData) {
+            if let messageString = NSString(data: JSONData, encoding: NSUTF8StringEncoding) {
                 startTimeoutTimer()
-                webSocket.writeString(messageString)
+                webSocket.writeString(messageString as String)
                 lastSentMessage = message
             }
         }

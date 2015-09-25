@@ -11,12 +11,12 @@ import Foundation
 final class PairingProtocolContext {
     
     var pairingId: String! = nil
-    var pairingKey: Crypto.Key! = nil
-    var sessionKey: Crypto.Key! = nil
+    var pairingKey: NSData! = nil
+    var sessionKey: NSData! = nil
     var nonce: NSData! = nil
     
-    let internalKey: Crypto.Key
-    let attestationKey: Crypto.Key
+    let internalKey: BTCKey
+    let attestationKey: BTCKey
     
     // MARK: - Keychain item management
     
@@ -48,7 +48,7 @@ final class PairingProtocolContext {
     
     // MARK: - Initialization
     
-    init(internalKey: Crypto.Key, attestationKey: Crypto.Key) {
+    init(internalKey: BTCKey, attestationKey: BTCKey) {
         self.internalKey = internalKey
         self.attestationKey = attestationKey
     }

@@ -10,6 +10,7 @@ import Foundation
 
 final class PairingProtocolCryptor {
     
+    let diffieHellmanBytesLength = 32
     let sessionKeyBytesLength = 16
     let pairingKeyBytesLength = 16
     let nonceBytesLength = 8
@@ -17,35 +18,28 @@ final class PairingProtocolCryptor {
     
     // MARK: - Session key
     
-    func sessionKeyForKeys(internalKey internalKey: Crypto.Key, attestationKey: Crypto.Key) -> Crypto.Key {
+    func sessionKeyForKeys(internalKey internalKey: BTCKey, attestationKey: BTCKey) -> NSData {
         // compute shared secret
-        let secretKey = Crypto.ECDH.performAgreement(internalKey: internalKey, peerKey: attestationKey)
+        let secretKey = attestationKey.diffieHellmanWithPrivateKey(internalKey).compressedPublicKey
+        let cuttedSecretKey = secretKey.subdataWithRange(NSMakeRange(1, secretKey.length - 1))
         
         // compute secret key
-        let sessionFirstPart = secretKey.symmetricKey.subdataWithRange(NSMakeRange(0, sessionKeyBytesLength))
-        let sessionSecondPart = secretKey.symmetricKey.subdataWithRange(NSMakeRange(sessionKeyBytesLength, sessionKeyBytesLength))
-        let sessionKey = Crypto.Hash.XORFromDataPair(sessionFirstPart, sessionSecondPart)
-        return Crypto.Key(symmetricKey: sessionKey)
+        let sessionFirstPart = cuttedSecretKey.subdataWithRange(NSMakeRange(0, sessionKeyBytesLength))
+        let sessionSecondPart = cuttedSecretKey.subdataWithRange(NSMakeRange(sessionKeyBytesLength, sessionKeyBytesLength))
+        let sessionKey = sessionFirstPart.XORWithData(sessionSecondPart)!
+        return sessionKey
     }
     
-    func decryptData(data: NSData, sessionKey: Crypto.Key) -> NSData {
+    func decryptData(data: NSData, sessionKey: NSData) -> NSData {
         // decrypt data
-        let (key1, key2) = splitSessionKey(sessionKey)
-        return Crypto.Cipher.dataFromTripleDESCBC(data, key1: key1, key2: key2, key3: key1)
+        let (key1, key2) = sessionKey.splittedData!
+        return data.tripeDESCBCWithKeys(key1: key1, key2: key2, key3: key1, encrypt: false)!
     }
     
-    func encryptData(data: NSData, sessionKey: Crypto.Key) -> NSData {
+    func encryptData(data: NSData, sessionKey: NSData) -> NSData {
         // encrypt data
-        let (key1, key2) = splitSessionKey(sessionKey)
-        return Crypto.Cipher.tripleDESCBCFromData(data, key1: key1, key2: key2, key3: key1)
-    }
-    
-    func splitSessionKey(sessionKey: Crypto.Key) -> (Crypto.Key, Crypto.Key) {
-        // split session key
-        let (data1, data2) = Crypto.Data.splitDataInTwo(sessionKey.symmetricKey)
-        let key1 = Crypto.Key(symmetricKey: data1)
-        let key2 = Crypto.Key(symmetricKey: data2)
-        return (key1, key2)
+        let (key1, key2) = sessionKey.splittedData!
+        return data.tripeDESCBCWithKeys(key1: key1, key2: key2, key3: key1, encrypt: true)!
     }
     
     // MARK: - Challenge data
@@ -62,11 +56,11 @@ final class PairingProtocolCryptor {
         return data.subdataWithRange(NSMakeRange(0, challengeBytesLength))
     }
     
-    func pairingKeyFromDecryptedData(data: NSData) -> Crypto.Key {
-        return Crypto.Key(symmetricKey: data.subdataWithRange(NSMakeRange(challengeBytesLength, pairingKeyBytesLength)))
+    func pairingKeyFromDecryptedData(data: NSData) -> NSData {
+        return data.subdataWithRange(NSMakeRange(challengeBytesLength, pairingKeyBytesLength))
     }
     
-    func encryptedChallengeResponseDataFromChallengeString(challenge: String, nonce: NSData, sessionKey: Crypto.Key) -> NSData {
+    func encryptedChallengeResponseDataFromChallengeString(challenge: String, nonce: NSData, sessionKey: NSData) -> NSData {
         // create challenge data from response
         let decryptedData = NSMutableData()
         let challengeData = challengeDataFromChallengeString(challenge)
@@ -78,7 +72,7 @@ final class PairingProtocolCryptor {
         decryptedData.appendData(challengeData)
         
         // add 0x00 * 4
-        decryptedData.appendData(Crypto.Encode.dataFromBase16String("00000000")!)
+        decryptedData.appendData(BTCDataFromHex("00000000"))
         
         // encrypt data
         let encryptedData = encryptData(decryptedData, sessionKey: sessionKey)
@@ -102,7 +96,7 @@ final class PairingProtocolCryptor {
         for i in 0..<string.length {
             computedString = computedString + "0" + string.substringWithRange(NSMakeRange(i, 1))
         }
-        return Crypto.Encode.dataFromBase16String(computedString)!
+        return BTCDataFromHex(computedString)
     }
 
 }

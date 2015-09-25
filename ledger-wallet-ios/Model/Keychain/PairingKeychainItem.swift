@@ -13,18 +13,16 @@ final class PairingKeychainItem: GenericKeychainItem, Equatable {
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
     override var valid: Bool { return super.valid && pairingId != nil && pairingKey != nil && dongleName != nil }
     
-    var pairingKey: Crypto.Key? {
+    var pairingKey: NSData? {
         get {
             if let value = valueForKey("pairing_key") {
-                if let keyData = Crypto.Encode.dataFromBase16String(value) {
-                    return Crypto.Key(symmetricKey: keyData)
-                }
+                return BTCDataFromHex(value)
             }
             return nil
         }
         set {
-            if let pairingKey = newValue?.symmetricKey {
-                setValue(Crypto.Encode.base16StringFromData(pairingKey), forKey: "pairing_key")
+            if let pairingKey = newValue {
+                setValue(BTCHexFromData(pairingKey), forKey: "pairing_key")
             }
             else {
                 setValue(nil, forKey: "pairing_key")
@@ -50,13 +48,13 @@ final class PairingKeychainItem: GenericKeychainItem, Equatable {
     var deviceToken: NSData? {
         get {
             if let value = valueForKey("device_token") {
-                return Crypto.Encode.dataFromBase16String(value)
+                return BTCDataFromHex(value)
             }
             return nil
         }
         set {
             if let deviceToken = newValue {
-                setValue(Crypto.Encode.base16StringFromData(deviceToken), forKey: "device_token")
+                setValue(BTCHexFromData(deviceToken), forKey: "device_token")
             }
             else {
                 setValue(nil, forKey: "device_token")
