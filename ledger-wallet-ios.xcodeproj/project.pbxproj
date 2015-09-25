@@ -711,7 +711,6 @@
 				37F283931A655D3400F432CC /* Controllers */,
 				37F283A41A655D3400F432CC /* Views */,
 				37F283BA1A655D7200F432CC /* Helpers */,
-				37EE4D8E1A8B712F0085CE49 /* Protocols */,
 				37F283971A655D3400F432CC /* Extensions */,
 				37ACFDED1A7917FC002E32FC /* Vendor */,
 				3784FB081A5D2F5F0063A364 /* Supporting Files */,
@@ -866,14 +865,6 @@
 				37E962341B441B890092946B /* fontawesome-webfont.ttf */,
 			);
 			name = FontAwesome;
-			sourceTree = "<group>";
-		};
-		37EE4D8E1A8B712F0085CE49 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Protocols;
-			path = protocols;
 			sourceTree = "<group>";
 		};
 		37EF91B31A6D3C47007DBBAF /* Base */ = {
