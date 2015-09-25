@@ -8,11 +8,7 @@
 
 import Foundation
 
-func console<T: CustomStringConvertible>(value: T) {
-    console(value.description)
-}
-
-func console(value: String) {
+func console(value: Any) {
     if NSThread.currentThread() == NSThread.mainThread() {
         print(value)
     }
