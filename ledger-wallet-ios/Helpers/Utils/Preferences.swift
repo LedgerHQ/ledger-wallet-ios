@@ -12,37 +12,38 @@ final class Preferences {
     
     let storeName: String
     private let userDefaults: NSUserDefaults
+    private var inBatchUpdate = false
 
     // MARK: - Setters
     
     func setObject(value: AnyObject?, forKey defaultName: String) {
         userDefaults.setObject(value, forKey: persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     func setInteger(value: Int, forKey defaultName: String) {
         userDefaults.setInteger(value, forKey: persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     func setFloat(value: Float, forKey defaultName: String) {
         userDefaults.setFloat(value, forKey: persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     func setDouble(value: Double, forKey defaultName: String) {
         userDefaults.setDouble(value, forKey: persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     func setBool(value: Bool, forKey defaultName: String) {
         userDefaults.setBool(value, forKey: persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     func setURL(url: NSURL, forKey defaultName: String) {
         userDefaults.setURL(url, forKey: persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     // MARK: - Getters
@@ -93,13 +94,47 @@ final class Preferences {
     
     // MARK: - Utils
 
+    func startBatchUpdate() {
+        guard inBatchUpdate == false else { return }
+        inBatchUpdate = true
+    }
+    
+    func endBatchUpdate() {
+        guard inBatchUpdate == true else { return }
+        inBatchUpdate = false
+        synchronize()
+    }
+    
     func removeObjectForKey(defaultName: String) {
         userDefaults.removeObjectForKey(persistentKeyForName(defaultName))
-        synchronize()
+        synchronizeIfNeeded()
     }
     
     func synchronize() -> Bool {
         return userDefaults.synchronize()
+    }
+    
+    private func synchronizeIfNeeded() {
+        if inBatchUpdate {
+            return
+        }
+        synchronize()
+    }
+    
+    func dictionaryRepresentation() -> [String : AnyObject] {
+        let defaults = userDefaults.dictionaryRepresentation()
+        var result: [String : AnyObject] = [:]
+        for (key, value) in defaults where key.hasPrefix(storeName) {
+            result[key] = value
+        }
+        return result
+    }
+    
+    func clear() {
+        for (key, _) in dictionaryRepresentation() {
+            userDefaults.removeObjectForKey(key)
+        }
+        synchronize()
     }
     
     private func persistentKeyForName(name: String) -> String {
@@ -111,6 +146,10 @@ final class Preferences {
     init(storeName: String) {
         self.storeName = storeName
         self.userDefaults = NSUserDefaults.standardUserDefaults()
+    }
+    
+    deinit {
+        synchronize()
     }
     
 }

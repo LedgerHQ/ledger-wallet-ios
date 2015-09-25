@@ -104,6 +104,7 @@
 		379197101BB441140051CD22 /* BTCPaymentProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3791970C1BB441140051CD22 /* BTCPaymentProtocol.m */; settings = {ASSET_TAGS = (); }; };
 		379197121BB547A30051CD22 /* NSData+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379197111BB547A30051CD22 /* NSData+Utils.swift */; settings = {ASSET_TAGS = (); }; };
 		379197131BB54C0F0051CD22 /* NSData+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379197111BB547A30051CD22 /* NSData+Utils.swift */; settings = {ASSET_TAGS = (); }; };
+		379197181BB58EE60051CD22 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379197171BB58EE60051CD22 /* PreferencesTests.swift */; settings = {ASSET_TAGS = (); }; };
 		3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */; };
 		3798BA1B1A6E6C7C00F5B603 /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */; };
 		3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */; };
@@ -383,6 +384,7 @@
 		3791970B1BB441140051CD22 /* BTCPaymentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BTCPaymentProtocol.h; path = Vendor/CoreBitcoin/CoreBitcoin/BTCPaymentProtocol.h; sourceTree = "<group>"; };
 		3791970C1BB441140051CD22 /* BTCPaymentProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BTCPaymentProtocol.m; path = Vendor/CoreBitcoin/CoreBitcoin/BTCPaymentProtocol.m; sourceTree = "<group>"; };
 		379197111BB547A30051CD22 /* NSData+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+Utils.swift"; path = "ledger-wallet-ios/Extensions/NSData+Utils.swift"; sourceTree = SOURCE_ROOT; };
+		379197171BB58EE60051CD22 /* PreferencesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
 		3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStylist.swift; sourceTree = "<group>"; };
 		3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VisualTheme.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -730,6 +732,7 @@
 		3784FB1D1A5D2F5F0063A364 /* ledger-wallet-iosTests */ = {
 			isa = PBXGroup;
 			children = (
+				379197171BB58EE60051CD22 /* PreferencesTests.swift */,
 				37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */,
 				37B746A41A5D5020001373C5 /* WebSocketTests.swift */,
 				373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */,
@@ -1302,6 +1305,7 @@
 				37BAF2FE1AB1975F0084B832 /* BTCBase58.m in Sources */,
 				37BAF3161AB1975F0084B832 /* BTCQRCode.m in Sources */,
 				3758D4A71BAFF8A100BCB7B3 /* SSLSecurity.swift in Sources */,
+				379197181BB58EE60051CD22 /* PreferencesTests.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
 				37BAF31B1AB1975F0084B832 /* BTCTransactionInput.m in Sources */,
 				378E5C6B1AAE032900A0C9A8 /* DeviceManager.swift in Sources */,
