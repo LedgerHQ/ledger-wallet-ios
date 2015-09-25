@@ -24,7 +24,7 @@ func dispatchSyncOnMainQueue(block: () -> Void) {
     dispatch_sync(dispatchMainQueue(), block)
 }
 
-func delayOnMainQueueAfter(delay: Double, block: () -> Void) {
+func dispatchOnMainQueueAfter(delay: Double, block: () -> Void) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatchMainQueue(), block)
 }
 

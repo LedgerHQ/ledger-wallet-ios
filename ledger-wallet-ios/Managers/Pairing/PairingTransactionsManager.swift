@@ -205,7 +205,7 @@ extension PairingTransactionsManager {
         }
         else {
             // perform reconnect
-            delayOnMainQueue(3.0) {
+            dispatchOnMainQueueAfter(3.0) {
                 webSocket.connect()
             }
         }
