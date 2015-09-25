@@ -11,8 +11,8 @@ import Foundation
 class StoryboardFactory {
     
     enum StoryboardIdentifier: String {
-        case Main = "Main"
-        case Pairing = "Pairing"
+        case Main
+        case Pairing
     }
     
     private static var storyboards: [StoryboardIdentifier: UIStoryboard] = [:]
