@@ -19,7 +19,7 @@ class WebSocketTests: XCTestCase, WebSocketDelegate {
     
     override func setUp() {
         super.setUp()
-        if let url = NSURL(string: "ws://echo.websocket.org") {
+        if let url = NSURL(string: "wss://echo.websocket.org") {
             websocket = WebSocket(url: url)
             websocket.delegate = self
             connectExpectation = expectationWithDescription("websocket connect")
