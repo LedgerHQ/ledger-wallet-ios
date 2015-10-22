@@ -18,9 +18,9 @@ protocol PairingTransactionsManagerDelegate: class {
 final class PairingTransactionsManager: BasePairingManager {
     
     weak var delegate: PairingTransactionsManagerDelegate? = nil
-    private var webSockets: [WebSocket: PairingKeychainItem] = [:]
+    private var webSocketsPairingKeychainItems: [WebSocket: PairingKeychainItem] = [:]
     private lazy var cryptor = PairingTransactionsCryptor()
-    private var isConfirmingTransaction: Bool { return currentTransactionInfo != nil && currentTransactionWebSocket != nil && currentTransactionPairingKeychainItem != nil }
+    private var confirmingTransaction: Bool { return currentTransactionInfo != nil && currentTransactionWebSocket != nil && currentTransactionPairingKeychainItem != nil }
     private var currentTransactionInfo: PairingTransactionInfo? = nil
     private var currentTransactionWebSocket: WebSocket? = nil
     private var currentTransactionPairingKeychainItem: PairingKeychainItem? = nil
@@ -40,7 +40,7 @@ extension PairingTransactionsManager {
     func tryListening() -> Bool {
         // create all webSockets
         initilizeWebSockets()
-        return webSockets.count > 0
+        return webSocketsPairingKeychainItems.count > 0
     }
     
     func stopListening() {
@@ -63,7 +63,7 @@ extension PairingTransactionsManager {
     }
     
     private func handleTransaction(transactionInfo: PairingTransactionInfo, confirm: Bool) {
-        guard isConfirmingTransaction && currentTransactionInfo != nil && transactionInfo == currentTransactionInfo! else {
+        guard confirmingTransaction && currentTransactionInfo != nil && transactionInfo == currentTransactionInfo! else {
             return
         }
         
@@ -78,7 +78,7 @@ extension PairingTransactionsManager {
         initilizeWebSockets(excepted: [currentTransactionPairingKeychainItem!])
         
         // merge current transaction webSocket in newly listening webSockets
-        webSockets[currentTransactionWebSocket!] = currentTransactionPairingKeychainItem
+        webSocketsPairingKeychainItems[currentTransactionWebSocket!] = currentTransactionPairingKeychainItem
         
         // forget current transaction info
         currentTransactionInfo = nil
@@ -94,25 +94,25 @@ extension PairingTransactionsManager {
             let webSocket = WebSocket(url: NSURL(string: LedgerWebSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
             webSocket.delegate = self
             webSocket.connect()
-            webSockets[webSocket] = pairingItem
+            webSocketsPairingKeychainItems[webSocket] = pairingItem
         }
     }
     
     private func destroyWebSockets(excepted exceptions: [WebSocket]? = nil) {
         // destroy webSockets
         let exemptedWebSockets = exceptions ?? []
-        for (webSocket, _) in webSockets where !exemptedWebSockets.contains(webSocket) {
+        for (webSocket, _) in webSocketsPairingKeychainItems where !exemptedWebSockets.contains(webSocket) {
             webSocket.delegate = nil
             if webSocket.isConnected {
                 webSocket.disconnect()
             }
         }
-        webSockets.removeAll()
+        webSocketsPairingKeychainItems.removeAll()
     }
     
     private func destroyCurrentTransactionWebSocket() {
         currentTransactionWebSocket?.delegate = nil
-        if let isConnected = currentTransactionWebSocket?.isConnected where isConnected == true {
+        if currentTransactionWebSocket?.isConnected == true {
             currentTransactionWebSocket?.disconnect()
         }
         currentTransactionWebSocket = nil
@@ -124,7 +124,7 @@ extension PairingTransactionsManager {
         // retain transaction info
         currentTransactionInfo = transactionInfo
         currentTransactionWebSocket = webSocket
-        currentTransactionPairingKeychainItem = webSockets[webSocket]!
+        currentTransactionPairingKeychainItem = webSocketsPairingKeychainItems[webSocket]!
         
         // assign name to transaction info
         currentTransactionInfo?.dongleName = currentTransactionPairingKeychainItem?.dongleName ?? ""
@@ -146,28 +146,25 @@ extension PairingTransactionsManager {
     // MARK: Messages management
     
     override func handleRequestMessage(message: Message, webSocket: WebSocket) {
-        if (isConfirmingTransaction) {
+        // make sure we're not already confirming a transaction
+        guard !confirmingTransaction else {
             return
         }
         
-        // get base 16 string
-        if let dataString = message["second_factor_data"] as? String {
-            // get encrypted blob
-            if let blob = BTCDataFromHex(dataString) {
-                // get pairing item
-                if let pairingKeychainItem = webSockets[webSocket] {
-                    // get transaction info from blob
-                    if let transactionInfo = cryptor.transactionInfoFromEncryptedBlob(blob, pairingKey: pairingKeychainItem.pairingKey!) {
-                        // accept transaction info
-                        acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
-                    }
-                }
-            }
+        // get pairing key from websocket
+        guard let pairingKey = webSocketsPairingKeychainItems[webSocket]?.pairingKey else {
+            return
+        }
+        
+        // get transaction info from data
+        if let transactionInfo = cryptor.transactionInfoFromRequestMessage(message, pairingKey: pairingKey) {
+            // accept transaction info
+            acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
         }
     }
     
     override func handleDisconnectMessage(message: Message, webSocket: WebSocket) {
-        if (isConfirmingTransaction) {
+        if confirmingTransaction {
             // notify delegate
             self.delegate?.pairingTransactionsManager(self, dongleDidCancelCurrentTransactionInfo: currentTransactionInfo!)
             
@@ -183,20 +180,22 @@ extension PairingTransactionsManager {
     // MARK: - WebSocket events management
     
     override func handleWebSocketDidConnect(webSocket: WebSocket) {
-        if (!isConfirmingTransaction) {
-            // get pairing item
-            if let pairingKeychainItem = webSockets[webSocket] {
-                // join room
-                sendMessage(messageWithType(MessageType.Join, data: ["room": pairingKeychainItem.pairingId!]), webSocket: webSocket)
-                
-                // send repeat message
-                sendMessage(messageWithType(MessageType.Repeat, data: nil), webSocket: webSocket)
-            }
+        guard !confirmingTransaction else {
+            return
+        }
+        
+        // get pairing item
+        if let pairingKeychainItem = webSocketsPairingKeychainItems[webSocket] {
+            // join room
+            sendMessage(messageWithType(MessageType.Join, data: ["room": pairingKeychainItem.pairingId!]), webSocket: webSocket)
+            
+            // send repeat message
+            sendMessage(messageWithType(MessageType.Repeat, data: nil), webSocket: webSocket)
         }
     }
-    
+
     override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
-        if (isConfirmingTransaction) {
+        if confirmingTransaction {
             // notify delegate
             self.delegate?.pairingTransactionsManager(self, dongleDidCancelCurrentTransactionInfo: currentTransactionInfo!)
             
