@@ -8,13 +8,10 @@
 
 import Foundation
 
-final class ApplicationManager: NSObject {
-    
-    private lazy var preferences: Preferences = {
-        return Preferences(storeName: self.className())
-    }()
+final class ApplicationManager {
     
     static let sharedInstance = ApplicationManager()
+    
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
@@ -40,18 +37,10 @@ final class ApplicationManager: NSObject {
             UIApplication.sharedApplication().idleTimerDisabled = newValue
         }
     }
-    
-    var libraryDirectoryPath: String {
-        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0]
-    }
-    
-    var temporaryDirectoryPath: String {
-        return NSTemporaryDirectory()
-    }
-    
-    var logsDirectoryPath: String {
-        return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs")
-    }
+    var libraryDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] }
+    var temporaryDirectoryPath: String { return NSTemporaryDirectory() }
+    var logsDirectoryPath: String { return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs") }
+    private lazy var preferences = Preferences(storeName: "ApplicationManager")
     
     // MARK: Utilities
     
@@ -67,7 +56,7 @@ final class ApplicationManager: NSObject {
     
     func printLibraryPathIfNeeded() {
         if self.isInDebug {
-            Logger.sharedInstance(name: self.className()).info(libraryDirectoryPath)
+            Logger.sharedInstance(name: "ApplicationManager").info(libraryDirectoryPath)
         }
     }
     
@@ -93,7 +82,7 @@ final class ApplicationManager: NSObject {
     
     // MARK: Initialization
     
-    private override init() {
+    private init() {
         
     }
     

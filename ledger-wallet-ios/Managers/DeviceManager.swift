@@ -29,6 +29,8 @@ final class DeviceManager {
         }
     }
 
+    // MARK: Utilities
+    
     func vibrate() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
