@@ -77,6 +77,9 @@ final class PairingTransactionsCryptor {
         guard String(data: versionData, encoding: NSUTF8StringEncoding) == "2FA1" else {
             return nil
         }
+        guard let pinCode = NSString(data: pinCodeData, encoding: NSUTF8StringEncoding) else {
+            return nil
+        }
         
         // TODO:
         

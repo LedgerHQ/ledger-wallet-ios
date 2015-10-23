@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingConfirmationDialogViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -21,9 +21,11 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="64" placeholderIntrinsicHeight="64" translatesAutoresizingMaskIntoConstraints="NO" id="PJ0-oU-4lE">
                     <rect key="frame" x="208" y="0.0" width="64" height="64"/>
+                    <animations/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kam-SQ-VBy" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="210" y="171" width="60" height="71"/>
+                    <rect key="frame" x="212" y="171" width="57" height="71"/>
+                    <animations/>
                     <state key="normal" title="CLOSE">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -35,7 +37,8 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_title_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEJ-gf-umL" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="218" y="89" width="45" height="21"/>
+                    <rect key="frame" x="219" y="89" width="43" height="21"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -45,6 +48,7 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_message_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="uka-Ln-ge7" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="90" y="125" width="300" height="21"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="GU1-mN-zJE"/>
                     </constraints>
@@ -56,6 +60,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
+            <animations/>
             <constraints>
                 <constraint firstItem="oEJ-gf-umL" firstAttribute="top" secondItem="PJ0-oU-4lE" secondAttribute="bottom" constant="25" id="0GM-Gz-XRb"/>
                 <constraint firstAttribute="centerX" secondItem="PJ0-oU-4lE" secondAttribute="centerX" id="0iI-ea-ngt"/>
