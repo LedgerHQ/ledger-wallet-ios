@@ -13,7 +13,6 @@ class GenericKeychainItem {
     
     var valid: Bool { return persistentReference != nil && creationDate != nil }
     var count: Int { return keysAndValues.count }
-    var autosaves = true
     
     class var serviceIdentifier: String { return "" }
     class var itemClass: String { return kSecClassGenericPassword as String }
@@ -22,6 +21,7 @@ class GenericKeychainItem {
     private(set) var creationDate: NSDate! = nil
     private var persistentReference: NSData! = nil
     private var keysAndValues: [String: String] = [:]
+    private var inBatchUpdate = false
     
     // MARK: - Static methods
     
@@ -64,6 +64,17 @@ class GenericKeychainItem {
     }
     
     // MARK: - Public interface
+    
+    func beginBatchUpdate() {
+        guard !inBatchUpdate else { return }
+        inBatchUpdate = true
+    }
+    
+    func endBatchUpdate() {
+        guard inBatchUpdate else { return }
+        inBatchUpdate = false
+        save()
+    }
     
     func setValue(value: String?, forKey key: String) -> Bool {
         if (value != nil) {
@@ -121,10 +132,8 @@ class GenericKeychainItem {
     }
     
     private func saveIfNeeded() -> Bool {
-        if autosaves == true {
-            return save()
-        }
-        return true
+        if inBatchUpdate { return false }
+        return save()
     }
     
     private func loadData(data: NSData?) {
@@ -179,6 +188,10 @@ class GenericKeychainItem {
         
         // load keychain item data
         loadData(attributes[kSecValueData as String] as? NSData)
+    }
+    
+    deinit {
+        save()
     }
     
 }

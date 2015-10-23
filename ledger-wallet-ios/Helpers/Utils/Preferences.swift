@@ -110,11 +110,9 @@ final class Preferences {
         return userDefaults.synchronize()
     }
     
-    private func synchronizeIfNeeded() {
-        if inBatchUpdate {
-            return
-        }
-        synchronize()
+    private func synchronizeIfNeeded() -> Bool {
+        if inBatchUpdate { return false }
+        return synchronize()
     }
     
     func dictionaryRepresentation() -> [String : AnyObject] {
