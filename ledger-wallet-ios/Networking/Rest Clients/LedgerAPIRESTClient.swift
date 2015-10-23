@@ -8,14 +8,14 @@
 
 import Foundation
 
-class LedgerAPIRESTClient: SharableObject, BaseRESTClient {
+class LedgerAPIRESTClient: BaseRESTClient {
     
     lazy var baseURL = LedgerAPIBaseURL
     lazy var httpClient: HTTPClient = {
         let httpClient = HTTPClient()
         httpClient.additionalHeaders = [
             HeaderFields.Platform.rawValue: "ios",
-            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance().isInDebug ? "dev" : "prod",
+            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance.isInDebug ? "dev" : "prod",
             HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
         ]
         return httpClient

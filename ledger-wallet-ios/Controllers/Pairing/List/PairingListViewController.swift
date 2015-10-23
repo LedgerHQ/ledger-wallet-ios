@@ -89,7 +89,7 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
                 if pairingItem.destroy() {
                     // unregister pairing item push token
                     if pairingId != nil {
-                        RemoteNotificationsManager.sharedInstance().unregisterDeviceTokenFromPairedDongleWithId(pairingId!)
+                        RemoteNotificationsManager.sharedInstance.unregisterDeviceTokenFromPairedDongleWithId(pairingId!)
                     }
                     
                     // delete model

@@ -47,14 +47,14 @@ final class PairingAddViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         observeKeyboardNotifications(true)
-        ApplicationManager.sharedInstance().disablesIdleTimer = true
+        ApplicationManager.sharedInstance.disablesIdleTimer = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         observeKeyboardNotifications(false)
-        ApplicationManager.sharedInstance().disablesIdleTimer = false
+        ApplicationManager.sharedInstance.disablesIdleTimer = false
     }
     
     override func viewDidLoad() {
@@ -151,7 +151,7 @@ extension PairingAddViewController {
             let name = object as! String
             if let item = pairingProtocolManager?.createNewPairingItemNamed(name) {
                 // register remote notifications
-                RemoteNotificationsManager.sharedInstance().registerForRemoteNotifications()
+                RemoteNotificationsManager.sharedInstance.registerForRemoteNotifications()
                 
                 // complete
                 completeWithOutcome(PairingProtocolManager.PairingOutcome.DeviceSucceeded, pairingItem: item)

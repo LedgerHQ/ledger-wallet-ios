@@ -13,10 +13,13 @@ final class RemoteNotificationsRESTClient: LedgerAPIRESTClient {
     // MARK: - Push token management
     
     func registerDeviceToken(token: NSData, toPairingId pairingId: String, completion: ((Bool) -> Void)?) {
-        if let tokenBase16String = BTCHexFromData(token) {
-            post("/2fa/pairings/\(pairingId)/push_token", parameters: ["push_token": tokenBase16String], encoding: .JSON) { data, request, response, error in
-                completion?(error == nil && response != nil)
-            }
+        guard let tokenBase16String = BTCHexFromData(token) else {
+            completion?(false)
+            return
+        }
+        
+        post("/2fa/pairings/\(pairingId)/push_token", parameters: ["push_token": tokenBase16String], encoding: .JSON) { data, request, response, error in
+            completion?(error == nil && response != nil)
         }
     }
     

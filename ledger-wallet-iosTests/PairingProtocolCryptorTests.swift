@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import ledger_wallet_ios
 
 class PairingProtocolCryptorTests: XCTestCase {
     
@@ -42,13 +43,23 @@ class PairingProtocolCryptorTests: XCTestCase {
         XCTAssertEqual(decryptedData, expectedDecryptedData, "decrypted data should be equal")
     }
     
-    func testChallenge() {
+    func testChallengeData() {
         let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
         let encryptedData = cryptor.encryptedDataFromBlob(challenge)
         let decryptedData = cryptor.decryptData(encryptedData, sessionKey: sessionKey)
         let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
         let expectedchallengeData = BTCDataFromHex("3b313f08")!
         XCTAssertEqual(challengeData, expectedchallengeData, "challenge data should be equal")
+    }
+    
+    func testChallengeString() {
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let encryptedData = cryptor.encryptedDataFromBlob(challenge)
+        let decryptedData = cryptor.decryptData(encryptedData, sessionKey: sessionKey)
+        let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
+        let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
+        XCTAssertEqual(challengeString, "kao8", "challenge strings should be equal")
+
     }
     
     func testPairingKey() {

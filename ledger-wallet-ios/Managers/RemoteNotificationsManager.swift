@@ -8,7 +8,10 @@
 
 import Foundation
 
-final class RemoteNotificationsManager: SharableObject {
+final class RemoteNotificationsManager {
+    
+    static let sharedInstance = RemoteNotificationsManager()
+    lazy private var restClient = RemoteNotificationsRESTClient()
     
     // MARK: - Common
     
@@ -38,7 +41,7 @@ final class RemoteNotificationsManager: SharableObject {
         for item in allItems {
             // if pairing item has no (or outdated) device token
             if item.deviceToken == nil || item.deviceToken! != token {
-                RemoteNotificationsRESTClient.sharedInstance().registerDeviceToken(token, toPairingId: item.pairingId!) { success in
+                restClient.registerDeviceToken(token, toPairingId: item.pairingId!) { success in
                     if (success) {
                         item.deviceToken = token
                     }
@@ -49,9 +52,15 @@ final class RemoteNotificationsManager: SharableObject {
     
     func unregisterDeviceTokenFromPairedDongleWithId(pairingId: String) {
         // if pairing item already registered a device token
-        RemoteNotificationsRESTClient.sharedInstance().unregisterDeviceTokenFromPairingId(pairingId) { success in
+        restClient.unregisterDeviceTokenFromPairingId(pairingId) { success in
             
         }
+        
+    }
+    
+    // MARK: Initialization
+    
+    private init() {
         
     }
     

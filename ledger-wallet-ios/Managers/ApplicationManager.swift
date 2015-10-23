@@ -8,12 +8,13 @@
 
 import Foundation
 
-final class ApplicationManager: SharableObject {
+final class ApplicationManager: NSObject {
     
     private lazy var preferences: Preferences = {
         return Preferences(storeName: self.className())
     }()
     
+    static let sharedInstance = ApplicationManager()
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
@@ -22,7 +23,6 @@ final class ApplicationManager: SharableObject {
         preferences.setObject(uuid, forKey: "uuid")
         return uuid
     }
-    
     var isInDebug: Bool {
         #if DEBUG
             return true
@@ -30,15 +30,8 @@ final class ApplicationManager: SharableObject {
             return false
         #endif
     }
-    
-    var isInProduction: Bool {
-        return !isInDebug
-    }
-    
-    var bundleIdentifier: String {
-        return NSBundle.mainBundle().bundleIdentifier ?? ""
-    }
-
+    var isInProduction: Bool { return !isInDebug }
+    var bundleIdentifier: String { return NSBundle.mainBundle().bundleIdentifier ?? "" }
     var disablesIdleTimer: Bool {
         get {
             return UIApplication.sharedApplication().idleTimerDisabled
@@ -96,6 +89,12 @@ final class ApplicationManager: SharableObject {
                 }
             }
         }
+    }
+    
+    // MARK: Initialization
+    
+    private override init() {
+        
     }
     
 }

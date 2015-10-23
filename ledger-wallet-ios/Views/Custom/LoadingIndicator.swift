@@ -108,7 +108,7 @@ class LoadingIndicator: View {
         CATransaction.setDisableActions(true)
         for _ in 0..<dotsCount {
             let layer = CALayer()
-            layer.contentsScale = DeviceManager.sharedInstance().screenScale
+            layer.contentsScale = DeviceManager.sharedInstance.screenScale
             layer.bounds = CGRectZero
             layer.allowsEdgeAntialiasing = true
             layer.backgroundColor = dotsNormalColor.CGColor

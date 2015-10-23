@@ -55,7 +55,7 @@ extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
                 let checksum = data.subdataWithRange(NSMakeRange(16, 1))
                 let computedChecksum = BTCSHA256(subData)
                 if (computedChecksum.length == 32 && computedChecksum.subdataWithRange(NSMakeRange(0, 1)) == checksum) {
-                    DeviceManager.sharedInstance().vibrate()
+                    DeviceManager.sharedInstance.vibrate()
                     barCodeReader?.stopCapture()
                     notifyResult(code)
                 }

@@ -52,14 +52,14 @@ final class HTTPClient {
         encoding.encode(request, parameters: parameters)
         
         // create data task
-        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { data, response, error in
+        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { [weak self] data, response, error in
             let httpResponse = response as! NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
             var finalError = error
             if finalError == nil && statusCode < 200 && statusCode > 299 {
                 finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
             }
-            self.logResponse(httpResponse, request: request, data: data, error: error)
+            self?.logResponse(httpResponse, request: request, data: data, error: error)
             completionHandler(data, request, httpResponse, finalError)
         }
         logRequest(request)

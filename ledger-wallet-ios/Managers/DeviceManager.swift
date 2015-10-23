@@ -9,7 +9,7 @@
 import Foundation
 import AudioToolbox
 
-final class DeviceManager: SharableObject {
+final class DeviceManager {
     
     enum HeightClass {
         case Small
@@ -17,14 +17,10 @@ final class DeviceManager: SharableObject {
         case Large
     }
     
-    var screenSize: CGSize {
-        return UIScreen.mainScreen().bounds.size
-    }
-    
-    var screenScale: CGFloat {
-        return UIScreen.mainScreen().scale
-    }
-    
+    static let sharedInstance = DeviceManager()
+    var deviceName: String { return UIDevice.currentDevice().name }
+    var screenSize: CGSize { return UIScreen.mainScreen().bounds.size }
+    var screenScale: CGFloat { return UIScreen.mainScreen().scale }
     var screenHeightClass: HeightClass {
         switch screenSize.height {
         case 480.0: return HeightClass.Small
@@ -32,13 +28,15 @@ final class DeviceManager: SharableObject {
         default: return HeightClass.Large
         }
     }
-    
-    var deviceName: String {
-        return UIDevice.currentDevice().name
-    }
-    
+
     func vibrate() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    // MARK: Initialization
+    
+    private init() {
+        
     }
     
 }

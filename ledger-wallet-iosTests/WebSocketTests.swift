@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import ledger_wallet_ios
 
 class WebSocketTests: XCTestCase, WebSocketDelegate {
     

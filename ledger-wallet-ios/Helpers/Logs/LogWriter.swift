@@ -8,10 +8,11 @@
 
 import Foundation
 
-final class LogWriter: SharableObject {
+final class LogWriter {
     
+    static let sharedInstance = LogWriter()
     private lazy var fileHandles: [NSDate: NSFileHandle] = [:]
-    private lazy var logsDirectoryPath = ApplicationManager.sharedInstance().logsDirectoryPath
+    private lazy var logsDirectoryPath = ApplicationManager.sharedInstance.logsDirectoryPath
     private lazy var fileManager = NSFileManager.defaultManager()
     private lazy var operationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
@@ -109,7 +110,7 @@ final class LogWriter: SharableObject {
     
     func exportLogsToFile(autoremove autoremove: Bool, completion: (ephemeralFilepath: String?) -> Void) {
         let uuid = NSUUID().UUIDString
-        let temporypath = ApplicationManager.sharedInstance().temporaryDirectoryPath
+        let temporypath = ApplicationManager.sharedInstance.temporaryDirectoryPath
         let filepath = ((temporypath as NSString).stringByAppendingPathComponent(uuid) as NSString).stringByAppendingPathExtension("txt")!
         
         // remove file if it already exists (shouldnt happen)
@@ -246,9 +247,8 @@ final class LogWriter: SharableObject {
     
     // MARK: Initialization
     
-    required init() {
-        super.init()
-        
+    private init() {
         enqueuePrepareDirectoriesOperation()
     }
+
 }

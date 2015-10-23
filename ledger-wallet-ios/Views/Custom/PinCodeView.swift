@@ -124,7 +124,7 @@ class PinCodeView: View {
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
 
-        let borderDecal = (borderWidth / DeviceManager.sharedInstance().screenScale)
+        let borderDecal = (borderWidth / DeviceManager.sharedInstance.screenScale)
         let drawLetter: (_ : NSString, point: CGPoint, font: UIFont, color: UIColor) -> Void = { letter, point, font, color in
             let attributes = [NSForegroundColorAttributeName: color, NSFontAttributeName: font, NSParagraphStyleAttributeName: NSParagraphStyle.defaultParagraphStyle()]
             let size = letter.sizeWithAttributes(attributes)

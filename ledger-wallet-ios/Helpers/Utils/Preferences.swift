@@ -68,10 +68,6 @@ final class Preferences {
         return userDefaults.dataForKey(persistentKeyForName(defaultName))
     }
     
-    func stringArrayForKey(defaultName: String) -> [AnyObject]? {
-        return userDefaults.stringArrayForKey(persistentKeyForName(defaultName))
-    }
-    
     func integerForKey(defaultName: String) -> Int {
         return userDefaults.integerForKey(persistentKeyForName(defaultName))
     }
@@ -94,7 +90,7 @@ final class Preferences {
     
     // MARK: - Utils
 
-    func startBatchUpdate() {
+    func beginBatchUpdate() {
         guard inBatchUpdate == false else { return }
         inBatchUpdate = true
     }

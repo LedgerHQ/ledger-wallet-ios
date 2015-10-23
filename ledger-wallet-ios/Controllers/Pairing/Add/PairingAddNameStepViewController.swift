@@ -60,10 +60,10 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         nameTextField?.delegate = self
         
         // remove invisible views
-        if (DeviceManager.sharedInstance().screenHeightClass == DeviceManager.HeightClass.Medium) {
+        if (DeviceManager.sharedInstance.screenHeightClass == DeviceManager.HeightClass.Medium) {
             indicationLabel?.removeFromSuperview()
         }
-        if (DeviceManager.sharedInstance().screenHeightClass == DeviceManager.HeightClass.Small) {
+        if (DeviceManager.sharedInstance.screenHeightClass == DeviceManager.HeightClass.Small) {
             indicationLabel?.removeFromSuperview()
             walletImageView?.removeFromSuperview()
         }
