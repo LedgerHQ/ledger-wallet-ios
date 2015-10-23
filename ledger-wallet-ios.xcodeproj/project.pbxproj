@@ -99,7 +99,6 @@
 		379A06991BB17C5900D72DB4 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A06981BB17C5900D72DB4 /* KeyboardObservable.swift */; };
 		379A069B1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A069A1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift */; };
 		379A12C71B2AE80500D6E8DA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C11B2AE80500D6E8DA /* HTTPClient.swift */; };
-		379A12C81B2AE80500D6E8DA /* HTTPClientDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C21B2AE80500D6E8DA /* HTTPClientDataTask.swift */; };
 		379A12C91B2AE80500D6E8DA /* HTTPClientTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C31B2AE80500D6E8DA /* HTTPClientTask.swift */; };
 		379A12CA1B2AE80500D6E8DA /* BaseRESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C51B2AE80500D6E8DA /* BaseRESTClient.swift */; };
 		379A12CB1B2AE80500D6E8DA /* RemoteNotificationsRESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C61B2AE80500D6E8DA /* RemoteNotificationsRESTClient.swift */; };
@@ -322,7 +321,6 @@
 		379A06981BB17C5900D72DB4 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyboardObservable.swift; path = "ledger-wallet-ios/Controllers/Base/KeyboardObservable.swift"; sourceTree = SOURCE_ROOT; };
 		379A069A1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentStatusCustomizable.swift; path = "ledger-wallet-ios/Controllers/Base/ContentStatusCustomizable.swift"; sourceTree = SOURCE_ROOT; };
 		379A12C11B2AE80500D6E8DA /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
-		379A12C21B2AE80500D6E8DA /* HTTPClientDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientDataTask.swift; sourceTree = "<group>"; };
 		379A12C31B2AE80500D6E8DA /* HTTPClientTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
 		379A12C51B2AE80500D6E8DA /* BaseRESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRESTClient.swift; sourceTree = "<group>"; };
 		379A12C61B2AE80500D6E8DA /* RemoteNotificationsRESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsRESTClient.swift; sourceTree = "<group>"; };
@@ -694,7 +692,6 @@
 			isa = PBXGroup;
 			children = (
 				379A12C11B2AE80500D6E8DA /* HTTPClient.swift */,
-				379A12C21B2AE80500D6E8DA /* HTTPClientDataTask.swift */,
 				379A12C31B2AE80500D6E8DA /* HTTPClientTask.swift */,
 			);
 			name = "HTTP Client";
@@ -1083,7 +1080,6 @@
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
 				376F510F1A82190E001C6684 /* BTCProcessor.m in Sources */,
-				379A12C81B2AE80500D6E8DA /* HTTPClientDataTask.swift in Sources */,
 				377E81181A8A048200010B37 /* PairingHomeWaitingContentViewController.swift in Sources */,
 				376F50FE1A82190E001C6684 /* BTCBlockchainInfo.m in Sources */,
 				376F51051A82190E001C6684 /* BTCErrors.m in Sources */,
