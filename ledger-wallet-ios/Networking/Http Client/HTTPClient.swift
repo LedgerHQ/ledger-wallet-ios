@@ -12,7 +12,6 @@ typealias HTTPClientDataTask = NSURLSessionDataTask
 
 final class HTTPClient {
     
-    var autostartRequests = true
     var timeoutInterval: NSTimeInterval = 30
     var additionalHeaders: [String: String]? = nil
     var session: NSURLSession {
@@ -53,7 +52,7 @@ final class HTTPClient {
         // encode parameters
         encoding.encode(request, parameters: parameters)
         
-        // create data task
+        // handler block
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { [weak self] data, response, error in
             let httpResponse = response as! NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
@@ -61,27 +60,28 @@ final class HTTPClient {
             if finalError == nil && statusCode < 200 && statusCode > 299 {
                 finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
             }
-            self?.logResponse(httpResponse, request: request, data: data, error: error)
+            self?.postprocessResponse(httpResponse, request: request, data: data, error: error)
             completionHandler(data, request, httpResponse, finalError)
         }
-        logRequest(request)
-        let task = session.dataTaskWithRequest(request, completionHandler: handler)
         
-        // launch it if necessary
-        if autostartRequests {
-            task.resume()
-        }
+        // launch request
+        let task = session.dataTaskWithRequest(request, completionHandler: handler)
+        preprocessRequest(request)
+        task.resume()
+        
         return task
     }
     
-    // MARK: - Log
+    // MARK: - Utilities
     
-    private func logRequest(request: NSURLRequest) {
+    private func preprocessRequest(request: NSURLRequest) {
         logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
+        ApplicationManager.sharedInstance.startNetworkActivity()
     }
     
-    private func logResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
+    private func postprocessResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
         logger.info("<- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
+        ApplicationManager.sharedInstance.stopNetworkActivity()
     }
     
     // MARK: - Requests

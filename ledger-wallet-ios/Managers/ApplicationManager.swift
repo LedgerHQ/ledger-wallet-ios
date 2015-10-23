@@ -11,7 +11,6 @@ import Foundation
 final class ApplicationManager {
     
     static let sharedInstance = ApplicationManager()
-    
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
@@ -41,11 +40,12 @@ final class ApplicationManager {
     var temporaryDirectoryPath: String { return NSTemporaryDirectory() }
     var logsDirectoryPath: String { return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs") }
     private lazy var preferences = Preferences(storeName: "ApplicationManager")
+    private lazy var networkActivitiesCount = 0
     
     // MARK: Utilities
     
     func handleFirstLaunch() {
-        // if app hasn't been launched before
+        // if app hasn't been launched befores
         if !preferences.boolForKey("already_launched") {
             preferences.setBool(true, forKey: "already_launched")
             
@@ -78,6 +78,28 @@ final class ApplicationManager {
                 }
             }
         }
+    }
+    
+    // MARK: Network activity indicator
+    
+    func startNetworkActivity() {
+        dispatchAsyncOnMainQueue() {
+            self.networkActivitiesCount++
+            self.updateNetworkActivityIndicator()
+        }
+    }
+    
+    func stopNetworkActivity() {
+        dispatchAsyncOnMainQueue() {
+            if self.networkActivitiesCount > 0 {
+                self.networkActivitiesCount--
+                self.updateNetworkActivityIndicator()
+            }
+        }
+    }
+    
+    private func updateNetworkActivityIndicator() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = networkActivitiesCount > 0
     }
     
     // MARK: Initialization
