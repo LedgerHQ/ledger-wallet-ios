@@ -16,7 +16,7 @@ final class PairingProtocolContext {
     var nonce: NSData! = nil
     
     let internalKey: BTCKey
-    let attestationKey: BTCKey
+    let externalKey: BTCKey
     
     // MARK: - Keychain item management
     
@@ -50,9 +50,9 @@ final class PairingProtocolContext {
     
     // MARK: - Initialization
     
-    init(internalKey: BTCKey, attestationKey: BTCKey) {
+    init(internalKey: BTCKey, externalKey: BTCKey) {
         self.internalKey = internalKey
-        self.attestationKey = attestationKey
+        self.externalKey = externalKey
     }
     
 }

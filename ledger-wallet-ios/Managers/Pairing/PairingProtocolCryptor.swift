@@ -18,9 +18,9 @@ final class PairingProtocolCryptor {
     
     // MARK: - Session key
     
-    func sessionKeyForKeys(internalKey internalKey: BTCKey, attestationKey: BTCKey) -> NSData {
+    func sessionKeyForKeys(internalKey internalKey: BTCKey, externalKey: BTCKey) -> NSData {
         // compute shared secret
-        let secretKey = attestationKey.diffieHellmanWithPrivateKey(internalKey).compressedPublicKey
+        let secretKey = externalKey.diffieHellmanWithPrivateKey(internalKey).compressedPublicKey
         let cuttedSecretKey = secretKey.subdataWithRange(NSMakeRange(1, secretKey.length - 1))
         
         // compute secret key

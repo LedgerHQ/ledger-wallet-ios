@@ -62,10 +62,10 @@ extension PairingProtocolManager {
         webSocket.connect()
         
         // create context
-        context = PairingProtocolContext(internalKey: BTCKey(), attestationKey: BTCKey(publicKey: LedgerDongleAttestationKeyData))
+        context = PairingProtocolContext(internalKey: BTCKey(), externalKey: BTCKey(publicKey: LedgerDongleAttestationKeyData))
         
         // compute session key
-        context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, attestationKey: context.attestationKey)
+        context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, externalKey: context.externalKey)
         
         // retain pairing Id
         context.pairingId = pairingId

@@ -18,7 +18,7 @@ class PairingProtocolCryptorTests: XCTestCase {
     let challenge = BTCDataFromHex("f07cc439461ec133ab6996f17e5d2afa3de0a4639fdec1609978a1fd1648b6cc")!
 
     func testSessionKey() {
-        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), externalKey: BTCKey(publicKey: attestationKey))
         let expectedSessionKey = BTCDataFromHex("75b8ada16eb5f8ea253a1b793a04e03c")!
         XCTAssertEqual(sessionKey, expectedSessionKey, "session keys should be equal")
     }
@@ -36,7 +36,7 @@ class PairingProtocolCryptorTests: XCTestCase {
     }
     
     func testDecryptedBlob() {
-        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), externalKey: BTCKey(publicKey: attestationKey))
         let encryptedData = cryptor.encryptedDataFromBlob(challenge)
         let decryptedData = cryptor.decryptData(encryptedData, sessionKey: sessionKey)
         let expectedDecryptedData = BTCDataFromHex("3b313f0873a521e635b622506a67ea3dd8ec8c3d4ccddb8f")!
@@ -44,7 +44,7 @@ class PairingProtocolCryptorTests: XCTestCase {
     }
     
     func testChallengeData() {
-        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), externalKey: BTCKey(publicKey: attestationKey))
         let encryptedData = cryptor.encryptedDataFromBlob(challenge)
         let decryptedData = cryptor.decryptData(encryptedData, sessionKey: sessionKey)
         let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
@@ -53,7 +53,7 @@ class PairingProtocolCryptorTests: XCTestCase {
     }
     
     func testChallengeString() {
-        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), externalKey: BTCKey(publicKey: attestationKey))
         let encryptedData = cryptor.encryptedDataFromBlob(challenge)
         let decryptedData = cryptor.decryptData(encryptedData, sessionKey: sessionKey)
         let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
@@ -63,7 +63,7 @@ class PairingProtocolCryptorTests: XCTestCase {
     }
     
     func testPairingKey() {
-        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), externalKey: BTCKey(publicKey: attestationKey))
         let encryptedData = cryptor.encryptedDataFromBlob(challenge)
         let decryptedData = cryptor.decryptData(encryptedData, sessionKey: sessionKey)
         let pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
@@ -73,7 +73,7 @@ class PairingProtocolCryptorTests: XCTestCase {
     
     func testChallengeResponse() {
         let nonce = cryptor.nonceFromBlob(challenge)
-        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), attestationKey: BTCKey(publicKey: attestationKey))
+        let sessionKey = cryptor.sessionKeyForKeys(internalKey: BTCKey(privateKey: privateKey), externalKey: BTCKey(publicKey: attestationKey))
         let challengeResponseData = cryptor.encryptedChallengeResponseDataFromChallengeString("e9dc", nonce: nonce, sessionKey: sessionKey)
         let expectedChallengeResponseData = BTCDataFromHex("339d0c2221379963741fd9d33e5b7ba3")!
         XCTAssertEqual(challengeResponseData, expectedChallengeResponseData, "challenge responses data should be equal")
