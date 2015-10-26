@@ -19,6 +19,8 @@ class KeychainItemTests: XCTestCase {
     
     func testServiceIdentifier() {
         XCTAssertEqual(GenericKeychainItem.serviceIdentifier, "", "Keychain item should have no service identifier")
+        XCTAssertEqual(GenericKeychainItem.persistentServiceIdentifier, ".test", "Persistent service identifiers should be equal")
+
     }
     
     func testAddCount() {

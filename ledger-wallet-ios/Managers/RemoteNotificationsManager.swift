@@ -12,7 +12,7 @@ final class RemoteNotificationsManager {
     
     static let sharedInstance = RemoteNotificationsManager()
     lazy private var restClient = RemoteNotificationsRESTClient()
-    
+
     // MARK: - Common
     
     func registerForRemoteNotifications() {

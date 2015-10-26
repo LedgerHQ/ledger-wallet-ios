@@ -15,9 +15,13 @@ class LedgerAPIRESTClient: BaseRESTClient {
         let httpClient = HTTPClient()
         httpClient.additionalHeaders = [
             HeaderFields.Platform.rawValue: "ios",
-            HeaderFields.Environment.rawValue: ApplicationManager.sharedInstance.isInDebug ? "dev" : "prod",
             HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
         ]
+        #if DEBUG
+            httpClient.additionalHeaders![HeaderFields.Environment.rawValue] = "dev"
+        #else
+            httpClient.additionalHeaders![HeaderFields.Environment.rawValue] = "prod"
+        #endif
         return httpClient
     }()
     

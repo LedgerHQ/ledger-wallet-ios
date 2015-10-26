@@ -11,12 +11,19 @@ import Security
 
 class GenericKeychainItem {
     
-    var valid: Bool { return persistentReference != nil && creationDate != nil }
-    var count: Int { return keysAndValues.count }
-    
     class var serviceIdentifier: String { return "" }
     class var itemClass: String { return kSecClassGenericPassword as String }
     class var accessibleAttribute: String { return kSecAttrAccessibleWhenUnlocked as String }
+    
+    static var persistentServiceIdentifier: String {
+        #if TEST
+            return serviceIdentifier + ".test"
+        #else
+            return serviceIdentifier
+        #endif
+    }
+    var valid: Bool { return persistentReference != nil && creationDate != nil }
+    var count: Int { return keysAndValues.count }
     
     private(set) var creationDate: NSDate! = nil
     private var persistentReference: NSData! = nil
@@ -127,7 +134,7 @@ class GenericKeychainItem {
     private class func defaultQuery() -> [String: AnyObject] {
         return [
             (kSecClass as String): itemClass,
-            (kSecAttrService as String): serviceIdentifier
+            (kSecAttrService as String): persistentServiceIdentifier
         ]
     }
     
@@ -188,10 +195,6 @@ class GenericKeychainItem {
         
         // load keychain item data
         loadData(attributes[kSecValueData as String] as? NSData)
-    }
-    
-    deinit {
-        save()
     }
     
 }

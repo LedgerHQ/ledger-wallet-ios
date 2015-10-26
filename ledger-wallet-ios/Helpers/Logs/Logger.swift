@@ -39,9 +39,9 @@ final class Logger {
         let logEntry = buildLogEntry(string, logLevel: level)
         
         // log to console if app is in debug
-        if ApplicationManager.sharedInstance.isInDebug {
+        #if DEBUG
             console(logEntry)
-        }
+        #endif
         
         // log to file
         LogWriter.sharedInstance.storeLogEntry(logEntry)

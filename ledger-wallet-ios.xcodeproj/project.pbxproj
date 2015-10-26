@@ -10,6 +10,10 @@
 		370E838B1B564AFC00D67A9D /* LedgerAPIRESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* LedgerAPIRESTClient.swift */; };
 		370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370E838D1B5695D500D67A9D /* Pairing.storyboard */; };
 		370E83911B5696B900D67A9D /* StoryboardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E83901B5696B900D67A9D /* StoryboardFactory.swift */; };
+		371537E01BDE2A9D00582193 /* CompletionResultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537DD1BDE2A9D00582193 /* CompletionResultable.swift */; };
+		371537E11BDE2A9D00582193 /* ContentStatusCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537DE1BDE2A9D00582193 /* ContentStatusCustomizable.swift */; };
+		371537E21BDE2A9D00582193 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537DF1BDE2A9D00582193 /* KeyboardObservable.swift */; };
+		371537E61BDE396100582193 /* PairingProtocolContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537E51BDE396100582193 /* PairingProtocolContextTests.swift */; };
 		371732F01BDA265E000835DE /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D2BDDF1BD92C4B0008AA1E /* JSONTests.swift */; };
 		371732F11BDA265E000835DE /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379197171BB58EE60051CD22 /* PreferencesTests.swift */; };
 		371732F21BDA265E000835DE /* PairingProtocolCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */; };
@@ -105,8 +109,6 @@
 		3798BA1B1A6E6C7C00F5B603 /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */; };
 		3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */; };
 		3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA1D1A6E6D8800F5B603 /* UITextField+Utils.swift */; };
-		379A06991BB17C5900D72DB4 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A06981BB17C5900D72DB4 /* KeyboardObservable.swift */; };
-		379A069B1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A069A1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift */; };
 		379A12C71B2AE80500D6E8DA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C11B2AE80500D6E8DA /* HTTPClient.swift */; };
 		379A12C91B2AE80500D6E8DA /* HTTPClientTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C31B2AE80500D6E8DA /* HTTPClientTask.swift */; };
 		379A12CA1B2AE80500D6E8DA /* BaseRESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A12C51B2AE80500D6E8DA /* BaseRESTClient.swift */; };
@@ -134,7 +136,6 @@
 		37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */; };
 		37B9E4AF1A67F98F0055E81A /* PairingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */; };
 		37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */; };
-		37BCC5281BB2D5FE00ED8039 /* CompletionResultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCC5271BB2D5FE00ED8039 /* CompletionResultable.swift */; };
 		37C903351ADBC43E001517ED /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C903341ADBC43E001517ED /* OpenSSL.framework */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37E962341B441B890092946B /* fontawesome-webfont.ttf */; };
@@ -175,6 +176,10 @@
 		370E838A1B564AFC00D67A9D /* LedgerAPIRESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedgerAPIRESTClient.swift; sourceTree = "<group>"; };
 		370E838E1B5695D500D67A9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pairing.storyboard; sourceTree = "<group>"; };
 		370E83901B5696B900D67A9D /* StoryboardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoryboardFactory.swift; path = "ledger-wallet-ios/Helpers/Utils/StoryboardFactory.swift"; sourceTree = SOURCE_ROOT; };
+		371537DD1BDE2A9D00582193 /* CompletionResultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletionResultable.swift; sourceTree = "<group>"; };
+		371537DE1BDE2A9D00582193 /* ContentStatusCustomizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentStatusCustomizable.swift; sourceTree = "<group>"; };
+		371537DF1BDE2A9D00582193 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
+		371537E51BDE396100582193 /* PairingProtocolContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolContextTests.swift; sourceTree = "<group>"; };
 		371733231BDA2BE7000835DE /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		371733261BDA423E000835DE /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		371733271BDA423E000835DE /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
@@ -327,8 +332,6 @@
 		3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VisualTheme.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3798BA1D1A6E6D8800F5B603 /* UITextField+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Utils.swift"; sourceTree = "<group>"; };
-		379A06981BB17C5900D72DB4 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyboardObservable.swift; path = "ledger-wallet-ios/Controllers/Base/KeyboardObservable.swift"; sourceTree = SOURCE_ROOT; };
-		379A069A1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentStatusCustomizable.swift; path = "ledger-wallet-ios/Controllers/Base/ContentStatusCustomizable.swift"; sourceTree = SOURCE_ROOT; };
 		379A12C11B2AE80500D6E8DA /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		379A12C31B2AE80500D6E8DA /* HTTPClientTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
 		379A12C51B2AE80500D6E8DA /* BaseRESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRESTClient.swift; sourceTree = "<group>"; };
@@ -360,7 +363,6 @@
 		37B9E4AA1A67F98F0055E81A /* PairingAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingAddViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37B9E4AC1A67F98F0055E81A /* PairingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingListTableViewCell.swift; sourceTree = "<group>"; };
 		37B9E4AD1A67F98F0055E81A /* PairingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		37BCC5271BB2D5FE00ED8039 /* CompletionResultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompletionResultable.swift; path = "ledger-wallet-ios/Controllers/Base/CompletionResultable.swift"; sourceTree = SOURCE_ROOT; };
 		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37C903341ADBC43E001517ED /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = vendor/OpenSSL.framework; sourceTree = "<group>"; };
 		37D2BDDF1BD92C4B0008AA1E /* JSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
@@ -408,6 +410,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371537DC1BDE2A7000582193 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				371537DD1BDE2A9D00582193 /* CompletionResultable.swift */,
+				371537DE1BDE2A9D00582193 /* ContentStatusCustomizable.swift */,
+				371537DF1BDE2A9D00582193 /* KeyboardObservable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		371733251BDA423E000835DE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +659,7 @@
 				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				378205D51A60196C00F6CA45 /* Resources */,
 				373E22D61A7681F100BAF63F /* Model */,
+				371537DC1BDE2A7000582193 /* Protocols */,
 				371733251BDA423E000835DE /* Managers */,
 				37414B001A8CAAA900CE0795 /* Networking */,
 				37F283931A655D3400F432CC /* Controllers */,
@@ -676,6 +689,7 @@
 				37D2BDDF1BD92C4B0008AA1E /* JSONTests.swift */,
 				379197171BB58EE60051CD22 /* PreferencesTests.swift */,
 				37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */,
+				371537E51BDE396100582193 /* PairingProtocolContextTests.swift */,
 				37B746A41A5D5020001373C5 /* WebSocketTests.swift */,
 				373E22DA1A76895C00BAF63F /* KeychainItemTests.swift */,
 				3784FB1E1A5D2F5F0063A364 /* Supporting Files */,
@@ -838,9 +852,6 @@
 		37F283941A655D3400F432CC /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				379A06981BB17C5900D72DB4 /* KeyboardObservable.swift */,
-				379A069A1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift */,
-				37BCC5271BB2D5FE00ED8039 /* CompletionResultable.swift */,
 				37F283961A655D3400F432CC /* BaseViewController.swift */,
 				37F283951A655D3400F432CC /* BaseNavigationController.swift */,
 			);
@@ -1077,6 +1088,7 @@
 				37A88F6B1A6948610036CF2A /* PairingAddNameStepViewController.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
+				371537E01BDE2A9D00582193 /* CompletionResultable.swift in Sources */,
 				376F510F1A82190E001C6684 /* BTCProcessor.m in Sources */,
 				371733391BDA423E000835DE /* PairingTransactionsManager.swift in Sources */,
 				371733351BDA423E000835DE /* PairingProtocolCryptor.swift in Sources */,
@@ -1094,8 +1106,8 @@
 				37B9E4B01A67F98F0055E81A /* PairingListViewController.swift in Sources */,
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				37AEA4B51B43FD0800C84721 /* NavigationItem.swift in Sources */,
-				379A069B1BB17F4B00D72DB4 /* ContentStatusCustomizable.swift in Sources */,
 				376F50FB1A82190D001C6684 /* BTCBitcoinURL.m in Sources */,
+				371537E21BDE2A9D00582193 /* KeyboardObservable.swift in Sources */,
 				37B9E4AE1A67F98F0055E81A /* PairingAddViewController.swift in Sources */,
 				37AB9EC91A8A605500A48951 /* Navigator.swift in Sources */,
 				37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */,
@@ -1110,17 +1122,16 @@
 				3730736F1B2ECD6200DDFE5A /* BTCProtocolBuffers.m in Sources */,
 				376F510A1A82190E001C6684 /* BTCNetwork.m in Sources */,
 				37EF91CA1A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift in Sources */,
-				37BCC5281BB2D5FE00ED8039 /* CompletionResultable.swift in Sources */,
 				379A12C71B2AE80500D6E8DA /* HTTPClient.swift in Sources */,
 				376F51131A82190E001C6684 /* BTCScriptMachine.m in Sources */,
 				379197121BB547A30051CD22 /* NSData+Utils.swift in Sources */,
 				376F51001A82190E001C6684 /* BTCChainCom.m in Sources */,
+				371537E11BDE2A9D00582193 /* ContentStatusCustomizable.swift in Sources */,
 				3798BA1B1A6E6C7C00F5B603 /* VisualFactory.swift in Sources */,
 				376F51091A82190E001C6684 /* BTCMnemonic.m in Sources */,
 				376F51101A82190E001C6684 /* BTCProtocolSerialization.m in Sources */,
 				376F50FF1A82190E001C6684 /* BTCBlockHeader.m in Sources */,
 				376F51011A82190E001C6684 /* BTCCurrencyConverter.m in Sources */,
-				379A06991BB17C5900D72DB4 /* KeyboardObservable.swift in Sources */,
 				37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */,
 				37A88F601A6911460036CF2A /* PairingAddBaseStepViewController.swift in Sources */,
 				37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */,
@@ -1185,6 +1196,7 @@
 				371733241BDA2BE7000835DE /* LocalizationTests.swift in Sources */,
 				371732F01BDA265E000835DE /* JSONTests.swift in Sources */,
 				371732F21BDA265E000835DE /* PairingProtocolCryptorTests.swift in Sources */,
+				371537E61BDE396100582193 /* PairingProtocolContextTests.swift in Sources */,
 				371732F41BDA265E000835DE /* KeychainItemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1230,6 +1242,100 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		371537E71BDE3DC800582193 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/ledger-wallet-ios/vendor";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/ledger-wallet-ios/vendor/corebitcoin",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DTEST -DDEBUG";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Test;
+		};
+		371537E81BDE3DC800582193 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Bigot (886TTS479K)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
+				);
+				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.ledger.ledgerwallet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "922c5f12-cace-4a16-8562-2fc280897443";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
+			};
+			name = Test;
+		};
+		371537E91BDE3DC800582193 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ledger-wallet-ios/Vendor",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.ledger.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
+			};
+			name = Test;
+		};
 		3784FB221A5D2F5F0063A364 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1316,7 +1422,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1414,6 +1519,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3784FB221A5D2F5F0063A364 /* Debug */,
+				371537E71BDE3DC800582193 /* Test */,
 				3784FB231A5D2F5F0063A364 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1423,6 +1529,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3784FB251A5D2F5F0063A364 /* Debug */,
+				371537E81BDE3DC800582193 /* Test */,
 				3784FB261A5D2F5F0063A364 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1432,6 +1539,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3784FB281A5D2F5F0063A364 /* Debug */,
+				371537E91BDE3DC800582193 /* Test */,
 				3784FB291A5D2F5F0063A364 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

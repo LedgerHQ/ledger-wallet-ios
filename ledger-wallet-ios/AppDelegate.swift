@@ -16,11 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // print library path
-        ApplicationManager.sharedInstance.printLibraryPathIfNeeded()
-        
-        // handle first app launch
-        ApplicationManager.sharedInstance.handleFirstLaunch()
+        // handle app launch
+        ApplicationManager.sharedInstance.handleLaunchWithOptions(launchOptions)
         
         // clear stale log files
         LogWriter.sharedInstance.cleanStaleLogFiles()
