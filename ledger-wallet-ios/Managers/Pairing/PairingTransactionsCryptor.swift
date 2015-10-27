@@ -58,7 +58,7 @@ final class PairingTransactionsCryptor {
     
     private func extractTransactionInfoFromData(secondFactorData: NSData, outputData: NSData) -> PairingTransactionInfo? {
         // check that we have minimum bytes
-        guard secondFactorData.length == BytesLength.requiredBytesLength else {
+        guard secondFactorData.length >= BytesLength.requiredBytesLength else {
             return nil
         }
         
@@ -67,8 +67,8 @@ final class PairingTransactionsCryptor {
         let versionData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.version)); offset += BytesLength.version
         let encryptionKeyData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.encryptionKey)); offset += BytesLength.encryptionKey
         let checksumData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.checksum)); offset += BytesLength.checksum
-        let flagsData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.flags)); offset += BytesLength.flags
-        let operationModeData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.operationMode)); offset += BytesLength.operationMode
+        let _ = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.flags)); offset += BytesLength.flags
+        let _ = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.operationMode)); offset += BytesLength.operationMode
         let regularCoinVersionData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.coinVersion)); offset += BytesLength.coinVersion
         let P2SHCoinVersionData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.coinVersion)); offset += BytesLength.coinVersion
         let pinCodeData = secondFactorData.subdataWithRange(NSMakeRange(offset, BytesLength.pin));
@@ -80,8 +80,12 @@ final class PairingTransactionsCryptor {
         guard let pinCode = NSString(data: pinCodeData, encoding: NSUTF8StringEncoding) else {
             return nil
         }
+        guard let decryptedOutputData = decryptData(outputData, withKey: encryptionKeyData) else {
+            return nil
+        }
         
-        // TODO:
+        // parse output data
+        
         
         return nil
     }
@@ -119,6 +123,9 @@ final class PairingTransactionsCryptor {
             changeAmount: BTCBigNumber(unsignedBigEndian: changeData).int64value, feesAmount: BTCBigNumber(unsignedBigEndian: feesData).int64value,
             outputsAmount: BTCBigNumber(unsignedBigEndian: outputsData).int64value, transactionDate: NSDate(), dongleName: nil)
     }
+    
+    // MARK: - Output data extraction
+    
     
     // MARK: - Utilities
     
