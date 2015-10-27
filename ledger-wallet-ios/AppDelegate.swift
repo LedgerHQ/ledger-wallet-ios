@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let viewController = window?.rootViewController as? BaseViewController {
             window?.rootViewController = Navigator.embedViewController(viewController)
         }
+        
+        
         return true
     }
 

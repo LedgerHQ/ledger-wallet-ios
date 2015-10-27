@@ -5,15 +5,17 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : 0,
-    "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : 0,
     "A5967575A82190AAAA29664569CD239121414FCA" : 0,
+    "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : 0,
+    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : 0,
     "0E0A98171E336D1655B102FE87F6C416C1D752A9" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "79430CA3-7EDC-469C-AC2D-CDD1753DCF3A",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : "ledger-wallet-ios",
-    "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/Starscream",
     "A5967575A82190AAAA29664569CD239121414FCA" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/FontAwesome",
+    "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/Starscream",
+    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/CryptoSwift\/",
     "0E0A98171E336D1655B102FE87F6C416C1D752A9" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/CoreBitcoin"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "ledger-wallet-ios",
@@ -34,6 +36,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:FortAwesome\/Font-Awesome.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A5967575A82190AAAA29664569CD239121414FCA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:krzyzanowskim\/CryptoSwift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:daltoniam\/Starscream.git",
