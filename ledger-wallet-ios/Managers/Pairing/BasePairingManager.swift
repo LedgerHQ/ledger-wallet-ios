@@ -28,9 +28,17 @@ class BasePairingManager: NSObject {
     
     var ignoresTimeout = true
     var ignoresWebSocketDelegate = false
+    var logger: Logger {
+        if _logger == nil {
+            _logger = Logger.sharedInstance(name: self.className())
+        }
+        return _logger
+    }
+    
     private var messagesHandlers: [MessageType: MessageHandler] = [:]
     private(set) var lastSentMessage: Message? = nil
     private var timeoutTimer: NSTimer? = nil
+    private var _logger: Logger! = nil
     
     // MARK: - Messages management
 
@@ -110,6 +118,8 @@ extension BasePairingManager {
                 startTimeoutTimer()
                 webSocket.writeString(messageString as String)
                 lastSentMessage = message
+                
+                logger.info("-> Sending message \(message)")
             }
         }
     }
@@ -127,6 +137,8 @@ extension BasePairingManager {
     private func receiveMessage(message: Message, webSocket: WebSocket) {
         if let typeString = message["type"] as? String {
             if let messageType = MessageType(rawValue: typeString) {
+                logger.info("<- Received message \(message)")
+                
                 // lookup form message table
                 if let handler = messagesHandlers[messageType] {
                     stopTimeoutTimer()

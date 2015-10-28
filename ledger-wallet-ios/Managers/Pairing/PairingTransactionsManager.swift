@@ -40,11 +40,13 @@ extension PairingTransactionsManager {
     func tryListening() -> Bool {
         // create all webSockets
         initilizeWebSockets()
+        logger.info("Listening \(webSocketsPairingKeychainItems.count) websockets")
         return webSocketsPairingKeychainItems.count > 0
     }
     
     func stopListening() {
         // destroy all webSockets
+        logger.info("Stop listening all websockets")
         destroyWebSockets()
         destroyCurrentTransactionWebSocket()
     }
@@ -67,6 +69,8 @@ extension PairingTransactionsManager {
             return
         }
         
+        logger.info("\(confirm ? "Confirming" : "Rejecting") transaction \(transactionInfo)")
+        
         // send response
         var data:[String: AnyObject] = ["is_accepted": confirm]
         if confirm {
@@ -75,6 +79,7 @@ extension PairingTransactionsManager {
         sendMessage(messageWithType(MessageType.Response, data: data), webSocket: currentTransactionWebSocket!)
         
         // start listening
+        logger.info("Listening all other websockets")
         initilizeWebSockets(excepted: [currentTransactionPairingKeychainItem!])
         
         // merge current transaction webSocket in newly listening webSockets
@@ -130,6 +135,7 @@ extension PairingTransactionsManager {
         currentTransactionInfo?.dongleName = currentTransactionPairingKeychainItem?.dongleName ?? ""
         
         // destroy all webSockets excepted this one
+        logger.info("Destroying all other websockets")
         destroyWebSockets(excepted: [webSocket])
         
         // send accept
@@ -159,7 +165,11 @@ extension PairingTransactionsManager {
         // get transaction info from data
         if let transactionInfo = cryptor.transactionInfoFromRequestMessage(message, pairingKey: pairingKey) {
             // accept transaction info
+            logger.info("Accepting transaction \(transactionInfo)")
             acceptTransactionInfo(transactionInfo, fromWebSocket: webSocket)
+        }
+        else {
+            logger.warn("Rejecting transaction")
         }
     }
     
@@ -169,7 +179,11 @@ extension PairingTransactionsManager {
             self.delegate?.pairingTransactionsManager(self, dongleDidCancelCurrentTransactionInfo: currentTransactionInfo!)
             
             // stop/start listening again
+            logger.info("Received disconnect message, inside transaction, aborting")
             restartListening()
+        }
+        else {
+            logger.info("Received disconnect message, outside transaction, ignoring")
         }
     }
     
@@ -187,6 +201,7 @@ extension PairingTransactionsManager {
         // get pairing item
         if let pairingKeychainItem = webSocketsPairingKeychainItems[webSocket] {
             // join room
+            logger.info("Websocket connected, joining room \(pairingKeychainItem.pairingId!)")
             sendMessage(messageWithType(MessageType.Join, data: ["room": pairingKeychainItem.pairingId!]), webSocket: webSocket)
             
             // send repeat message
@@ -200,10 +215,12 @@ extension PairingTransactionsManager {
             self.delegate?.pairingTransactionsManager(self, dongleDidCancelCurrentTransactionInfo: currentTransactionInfo!)
             
             // stop/start listening again
+            logger.warn("Websocket disconnected, inside transaction, aborting")
             restartListening()
         }
         else {
             // perform reconnect
+            logger.warn("Websocket disconnected, outside transaction, reconnecting")
             dispatchOnMainQueueAfter(3.0) {
                 webSocket.connect()
             }
