@@ -8,7 +8,7 @@
 
 import Foundation
 
-class VarIntParser {
+final class VarIntParser {
     
     let data: NSData
     

@@ -12,17 +12,22 @@ struct PairingTransactionInfo: Equatable {
     
     let pinCode: String
     let recipientAddress: String
-    let changeAmount: BTCAmount
-    let feesAmount: BTCAmount
-    let outputsAmount: BTCAmount
+    let amount: BTCAmount
     let transactionDate: NSDate
     var dongleName: String? = nil
+    
+    init(pinCode: String, recipientAddress: String, amount: BTCAmount) {
+        self.pinCode = pinCode
+        self.recipientAddress = recipientAddress
+        self.amount = amount
+        self.transactionDate = NSDate()
+    }
     
 }
 
 func ==(lhs: PairingTransactionInfo, rhs: PairingTransactionInfo) -> Bool {
-    return lhs.pinCode == rhs.pinCode && lhs.recipientAddress == rhs.recipientAddress && lhs.changeAmount == rhs.changeAmount &&
-    lhs.feesAmount == rhs.feesAmount && lhs.outputsAmount == rhs.outputsAmount && lhs.transactionDate.isEqualToDate(rhs.transactionDate) &&
-    lhs.dongleName == rhs.dongleName
+    return lhs.pinCode == rhs.pinCode && lhs.recipientAddress == rhs.recipientAddress &&
+        lhs.amount == rhs.amount && lhs.transactionDate.isEqualToDate(rhs.transactionDate) &&
+        lhs.dongleName == rhs.dongleName
 }
     
