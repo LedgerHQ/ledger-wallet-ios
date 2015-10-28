@@ -57,6 +57,7 @@ extension PairingProtocolManager {
         }
         
         // create websocket
+        logger.info("Connecting websocket with room id \(pairingId)")
         webSocket = WebSocket(url: NSURL(string: LedgerWebSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
         webSocket.delegate = self
         webSocket.connect()
@@ -108,6 +109,7 @@ extension PairingProtocolManager {
         
         // send challenge response
         if let encryptedDataBase16String = BTCHexFromData(encryptedData) {
+            logger.info("Sending challenge response \"****\"")
             sendMessage(messageWithType(MessageType.Challenge, data: ["data": encryptedDataBase16String]), webSocket: webSocket)
         }
     }
@@ -144,6 +146,7 @@ extension PairingProtocolManager {
     // MARK: - Timeout management
     
     override func handleWebsocketTimeout() {
+        logger.error("Timeout, aborting")
         disconnectWebSocket()
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerTimeout)
     }
@@ -173,6 +176,7 @@ extension PairingProtocolManager {
                 let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
                 
                 // notify delegate
+                logger.info("Received challenge \"\(challengeString)\"")
                 delegate?.pairingProtocolManager(self, didReceiveChallenge: challengeString)
             }
         }
@@ -181,12 +185,14 @@ extension PairingProtocolManager {
     override func handlePairingMessage(message: Message, webSocket: WebSocket) {
         if let isSuccessful = message["is_successful"] as? Bool {
             disconnectWebSocket()
+            logger.info("Pairing completed successfully? \(isSuccessful)")
             delegate?.pairingProtocolManager(self, didTerminateWithOutcome: isSuccessful ? PairingOutcome.DongleSucceeded : PairingOutcome.DongleFailed)
         }
     }
     
     override func handleDisconnectMessage(message: Message, webSocket: WebSocket) {
         disconnectWebSocket()
+        logger.info("Other peer disconnected, aborting")
         delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.DongleTerminated)
     }
     
@@ -203,11 +209,13 @@ extension PairingProtocolManager {
     // MARK: - WebSocket messages management
     
     override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
+        logger.info("Websocket disconnected, aborting")
         self.disconnectWebSocket()
         self.delegate?.pairingProtocolManager(self, didTerminateWithOutcome: PairingOutcome.ServerDisconnected)
     }
     
     override func handleWebSocketDidConnect(webSocket: WebSocket) {
+        logger.info("Websocket connected, sending identity")
         joinRoom()
         sendPublicKey()
     }
