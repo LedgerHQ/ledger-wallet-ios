@@ -43,7 +43,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             // create background view
             backgroundView = UIView()
             backgroundView.backgroundColor = contentView.backgroundColor
-            backgroundView.layer.cornerRadius = VisualFactory.Metrics.BordersRadius.Default
+            backgroundView.layer.cornerRadius = VisualFactory.Metrics.BordersRadius.Large
             backgroundView.layer.shadowColor = UIColor.blackColor().CGColor
             backgroundView.layer.shadowOffset = CGSizeZero
             backgroundView.layer.shadowRadius = VisualFactory.Metrics.Padding.AlmostSmall

@@ -75,6 +75,9 @@ final class VisualTheme {
         "label.medium": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Medium)
         }),
+        "label.medium.light": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumLight)
+        }),
         "label.medium.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumCentered)
         }),

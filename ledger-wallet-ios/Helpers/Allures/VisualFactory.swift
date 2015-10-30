@@ -68,9 +68,18 @@ final class VisualFactory {
             ]
         )
         
+        static let MediumLight = [
+            NSForegroundColorAttributeName: Colors.Black,
+            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Size.Medium),
+            NSParagraphStyleAttributeName: {
+                let paragraph = NSMutableParagraphStyle()
+                paragraph.lineSpacing = Metrics.LineSpacing.Small
+                return paragraph
+                }()
+        ]
+        
         static let Small = [
             NSForegroundColorAttributeName: Colors.Black,
-            NSKernAttributeName: -Fonts.Kerning.VerySmall,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.Small),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
@@ -118,7 +127,7 @@ final class VisualFactory {
         
         static let LargeIndication = [
             NSForegroundColorAttributeName: Colors.Black,
-            NSKernAttributeName: -Fonts.Kerning.Small,
+            NSKernAttributeName: -Fonts.Kerning.VerySmall,
             NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Size.AlmostLarge),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()

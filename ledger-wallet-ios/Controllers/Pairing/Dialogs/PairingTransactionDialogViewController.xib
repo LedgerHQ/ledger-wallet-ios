@@ -31,27 +31,17 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ledger_wallet_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nF-aI-wQH" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="137" y="188" width="163" height="21"/>
+                    <rect key="frame" x="137" y="178" width="163" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium"/>
-                    </userDefinedRuntimeAttributes>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_transaction_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ece-Hq-lEG" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="147" y="302" width="142" height="21"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.grey"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="medium.light"/>
                     </userDefinedRuntimeAttributes>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_receipient_address_" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxF-wJ-VCI" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="68" y="279" width="300" height="21"/>
+                    <rect key="frame" x="68" y="271" width="300" height="21"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="9yc-AN-sqK"/>
@@ -109,7 +99,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_amount_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0o-99-GU5" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="165" y="209" width="106" height="30"/>
+                    <rect key="frame" x="165" y="201" width="106" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -119,9 +109,19 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_arrow_bottom_grey" translatesAutoresizingMaskIntoConstraints="NO" id="bc8-bn-gta">
-                    <rect key="frame" x="214" y="249" width="9" height="20"/>
+                    <rect key="frame" x="214" y="241" width="9" height="20"/>
                     <animations/>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_transaction_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ece-Hq-lEG" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="147" y="302" width="142" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.grey"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -135,15 +135,15 @@
                 <constraint firstItem="WlM-2p-dm7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" id="KKy-MO-bbX"/>
                 <constraint firstAttribute="bottom" secondItem="8z5-Za-l3m" secondAttribute="bottom" id="MMq-ic-xxZ"/>
                 <constraint firstAttribute="centerX" secondItem="8z5-Za-l3m" secondAttribute="centerX" id="Nhl-GP-1tB"/>
-                <constraint firstItem="3nF-aI-wQH" firstAttribute="top" secondItem="WlM-2p-dm7" secondAttribute="bottom" constant="30" id="QPh-hX-u1S"/>
+                <constraint firstItem="3nF-aI-wQH" firstAttribute="top" secondItem="WlM-2p-dm7" secondAttribute="bottom" constant="20" id="QPh-hX-u1S"/>
                 <constraint firstItem="8z5-Za-l3m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" id="TJt-dj-Wkq"/>
                 <constraint firstItem="bc8-bn-gta" firstAttribute="top" secondItem="X0o-99-GU5" secondAttribute="bottom" constant="10" id="UmP-ZX-hH8"/>
                 <constraint firstAttribute="centerX" secondItem="bxF-wJ-VCI" secondAttribute="centerX" id="Yrx-SR-CdV"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bxF-wJ-VCI" secondAttribute="trailing" id="ewX-gG-sZA"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8z5-Za-l3m" secondAttribute="trailing" id="hMp-hf-CeM"/>
-                <constraint firstItem="X0o-99-GU5" firstAttribute="top" secondItem="3nF-aI-wQH" secondAttribute="bottom" id="oHe-Jv-HmO"/>
+                <constraint firstItem="X0o-99-GU5" firstAttribute="top" secondItem="3nF-aI-wQH" secondAttribute="bottom" constant="2" id="oHe-Jv-HmO"/>
                 <constraint firstAttribute="centerX" secondItem="WlM-2p-dm7" secondAttribute="centerX" id="stp-Na-1MD"/>
-                <constraint firstItem="ece-Hq-lEG" firstAttribute="top" secondItem="bxF-wJ-VCI" secondAttribute="bottom" constant="2" id="szJ-3q-hDr"/>
+                <constraint firstItem="ece-Hq-lEG" firstAttribute="top" secondItem="bxF-wJ-VCI" secondAttribute="bottom" constant="10" id="szJ-3q-hDr"/>
                 <constraint firstAttribute="centerX" secondItem="bc8-bn-gta" secondAttribute="centerX" id="tSr-a1-MWf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

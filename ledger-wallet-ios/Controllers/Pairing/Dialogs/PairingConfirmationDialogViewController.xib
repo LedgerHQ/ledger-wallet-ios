@@ -19,12 +19,12 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="242"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="64" placeholderIntrinsicHeight="64" translatesAutoresizingMaskIntoConstraints="NO" id="PJ0-oU-4lE">
-                    <rect key="frame" x="208" y="0.0" width="64" height="64"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="PJ0-oU-4lE">
+                    <rect key="frame" x="215" y="0.0" width="50" height="50"/>
                     <animations/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kam-SQ-VBy" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="212" y="171" width="57" height="71"/>
+                    <rect key="frame" x="212" y="157" width="57" height="85"/>
                     <animations/>
                     <state key="normal" title="CLOSE">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,7 +37,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_title_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEJ-gf-umL" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="219" y="89" width="43" height="21"/>
+                    <rect key="frame" x="219" y="75" width="43" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -47,7 +47,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_message_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="uka-Ln-ge7" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="90" y="125" width="300" height="21"/>
+                    <rect key="frame" x="90" y="111" width="300" height="21"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="GU1-mN-zJE"/>
