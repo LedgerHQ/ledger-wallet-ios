@@ -30,7 +30,7 @@ final class LogWriter {
     
     func storeLogEntry(logEntry: LogEntry) {
         operationQueue.addOperationWithBlock() {
-            let firstMomentDate = logEntry.date.firstMomentDate()
+            let firstMomentDate = NSCalendar.currentCalendar().startOfDayForDate(logEntry.date)
             
             // if a file handle to store that log already exists
             if let fileHandle = self.fileHandles[firstMomentDate] {

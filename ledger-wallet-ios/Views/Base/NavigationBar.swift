@@ -21,13 +21,7 @@ class NavigationBar: UINavigationBar {
     }
     
     private var barHeight: CGFloat {
-        let bounds: CGRect
-        if #available(iOS 8.0, *) {
-           bounds = UIScreen.mainScreen().nativeBounds
-        }
-        else {
-            bounds = UIScreen.mainScreen().bounds
-        }
+        let bounds = UIScreen.mainScreen().bounds
         if bounds.height <= 480 {
             return VisualFactory.Metrics.View.NavigationBar.Height.Small
         }

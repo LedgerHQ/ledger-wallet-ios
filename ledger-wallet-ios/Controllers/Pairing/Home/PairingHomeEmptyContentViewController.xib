@@ -18,8 +18,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D6l-Zy-Y6f" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="148" width="600" height="254"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="no_paired_ledger_wallet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <rect key="frame" x="207" y="0.0" width="186" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no_paired_ledger_wallet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-7p-qUt" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <rect key="frame" x="210" y="0.0" width="181" height="21"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,8 +28,8 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="allure" value="huge.light.centered"/>
                             </userDefinedRuntimeAttributes>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhn-5j-dRV" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <rect key="frame" x="191" y="220" width="218" height="34"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhn-5j-dRV" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <rect key="frame" x="197" y="220" width="207" height="34"/>
                             <animations/>
                             <state key="normal" title="PAIR_A_LEDGER_WALLET">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -41,8 +41,8 @@
                                 <action selector="pairNewDeviceButtonTouched" destination="-1" eventType="touchUpInside" id="AEV-hm-f6q"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="to_enable_second_factor_pair_device" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Gh0-fS-lMN" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                            <rect key="frame" x="155" y="164" width="290" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to_enable_second_factor_pair_device" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gh0-fS-lMN" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                            <rect key="frame" x="159" y="164" width="282" height="21"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -77,8 +77,8 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddc-OR-vO8" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="186" y="536" width="228" height="34"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddc-OR-vO8" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="189" y="536" width="223" height="34"/>
                     <animations/>
                     <state key="normal" title="need_help_visit_help_center">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

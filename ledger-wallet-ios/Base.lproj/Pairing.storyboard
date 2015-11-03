@@ -234,7 +234,7 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="hugeNumber.grey"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="N7b-R8-cEZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7b-R8-cEZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="63" y="0.0" width="240" height="21"/>
                                                 <animations/>
                                                 <constraints>

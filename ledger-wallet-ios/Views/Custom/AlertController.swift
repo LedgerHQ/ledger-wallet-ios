@@ -14,11 +14,10 @@ final class AlertController: NSObject {
         case Alert
         case ActionSheet
         
-        @available(iOS 8.0, *)
-        var systemAlertControllerStyle: UIAlertControllerStyle {
+        private var systemAlertControllerStyle: UIAlertControllerStyle {
             switch self {
             case .ActionSheet: return .ActionSheet
-            default: return .Alert
+            case .Alert: return .Alert
             }
         }
     }
@@ -27,8 +26,7 @@ final class AlertController: NSObject {
     let title: String?
     let message: String?
     private var actions: [AlertAction] = []
-    private var alertController: UIViewController! = nil
-    private var alertView: UIAlertView! = nil
+    private var alertController: UIAlertController! = nil
     private static var sharedControllers: [UIAlertView: AlertController] = [:]
     
     func addAction(action: AlertAction) {
@@ -36,31 +34,14 @@ final class AlertController: NSObject {
     }
     
     func presentFromViewController(viewController: BaseViewController, animated: Bool) {
-        if #available(iOS 8.0, *) {
-            alertController = UIAlertController(title: title, message: message, preferredStyle: style.systemAlertControllerStyle)
-            let localAlertController = alertController as! UIAlertController
-            for action in actions {
-                let alertAction = UIAlertAction(title: action.title, style: action.style.systemAlertActionStyle) { handler in
-                    action.handler?(action)
-                }
-                localAlertController.addAction(alertAction)
+        alertController = UIAlertController(title: title, message: message, preferredStyle: style.systemAlertControllerStyle)
+        for action in actions {
+            let alertAction = UIAlertAction(title: action.title, style: action.style.systemAlertActionStyle) { handler in
+                action.handler?(action)
             }
-            viewController.presentViewController(localAlertController, animated: animated, completion: nil)
+            alertController.addAction(alertAction)
         }
-        else {
-            alertView = UIAlertView()
-            alertView.delegate = self
-            alertView.title = title ?? ""
-            alertView.message = message
-            alertView.alertViewStyle = .Default
-            for action in actions {
-                alertView.addButtonWithTitle(action.title)
-            }
-            alertView.show()
-            
-            // add to shared pool
-            AlertController.sharedControllers[alertView] = self
-        }
+        viewController.presentViewController(alertController, animated: animated, completion: nil)
     }
     
     // MARK - Initialization
@@ -78,22 +59,6 @@ final class AlertController: NSObject {
     
 }
 
-extension AlertController: UIAlertViewDelegate {
-    
-    // MARK: - UIAlertView delegate
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        // call handler
-        let alertController = AlertController.sharedControllers[alertView]
-        let action = alertController?.actions[buttonIndex]
-        action?.handler?(action!)
-        
-        // remove from shared pool
-        AlertController.sharedControllers[alertView] = nil
-    }
-    
-}
-
 class AlertAction {
     
     enum Style {
@@ -101,12 +66,11 @@ class AlertAction {
         case Destructive
         case Cancel
         
-        @available(iOS 8.0, *)
-        var systemAlertActionStyle: UIAlertActionStyle {
+        private var systemAlertActionStyle: UIAlertActionStyle {
             switch self {
             case .Cancel: return .Cancel
             case .Destructive: return .Destructive
-            default: return .Default
+            case .Default: return .Default
             }
         }
     }

@@ -17,16 +17,8 @@ final class RemoteNotificationsManager {
     
     func registerForRemoteNotifications() {
         let application = UIApplication.sharedApplication()
-        
-        if #available(iOS 8.0, *) {
-            // iOS 8 Notifications
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: ([.Badge, .Sound, .Alert]), categories: nil));
-            application.registerForRemoteNotifications()
-        }
-        else {
-            // iOS < 8 Notifications
-            application.registerForRemoteNotificationTypes([.Badge, .Sound, .Alert])
-        }
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: ([.Badge, .Sound, .Alert]), categories: nil));
+        application.registerForRemoteNotifications()
     }
     
     func handleNewDeviceToken(token: NSData) {
@@ -55,7 +47,6 @@ final class RemoteNotificationsManager {
         restClient.unregisterDeviceTokenFromPairingId(pairingId) { success in
             
         }
-        
     }
     
     // MARK: Initialization

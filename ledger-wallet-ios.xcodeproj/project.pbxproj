@@ -53,7 +53,6 @@
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		374A1E9B1B57D779006C325E /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E9A1B57D779006C325E /* LogEntry.swift */; };
 		3758D4A61BAFF7C400BCB7B3 /* SSLSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3758D4A51BAFF7C400BCB7B3 /* SSLSecurity.swift */; };
-		375FF5761B5D1F92000175CB /* NSDate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FF5751B5D1F92000175CB /* NSDate+Utils.swift */; };
 		37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
 		37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */; };
 		37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37698A5F1A75158A00AA8B30 /* PairingTransactionDialogViewController.xib */; };
@@ -231,7 +230,6 @@
 		374A1E9A1B57D779006C325E /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
 		375183611B8F2310007DFFDB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3758D4A51BAFF7C400BCB7B3 /* SSLSecurity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SSLSecurity.swift; path = Vendor/Starscream/SSLSecurity.swift; sourceTree = "<group>"; };
-		375FF5751B5D1F92000175CB /* NSDate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Utils.swift"; path = "ledger-wallet-ios/Extensions/NSDate+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		37656F2E1A76A3540042512D /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeychainItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37698A5D1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionDialogViewController.swift; sourceTree = "<group>"; };
 		37698A5F1A75158A00AA8B30 /* PairingTransactionDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingTransactionDialogViewController.xib; sourceTree = "<group>"; };
@@ -874,7 +872,6 @@
 				373E22CE1A72490D00BAF63F /* NSObject+Utils.m */,
 				37AB9ECC1A8B566900A48951 /* UIViewController+Init.h */,
 				37AB9ECD1A8B566900A48951 /* UIViewController+Init.m */,
-				375FF5751B5D1F92000175CB /* NSDate+Utils.swift */,
 				379197111BB547A30051CD22 /* NSData+Utils.swift */,
 			);
 			name = Extensions;
@@ -1173,7 +1170,6 @@
 				376F51111A82190E001C6684 /* BTCQRCode.m in Sources */,
 				371733331BDA423E000835DE /* BasePairingManager.swift in Sources */,
 				37A88F621A6911DD0036CF2A /* PairingAddScanStepViewController.swift in Sources */,
-				375FF5761B5D1F92000175CB /* NSDate+Utils.swift in Sources */,
 				3725D4C31B59023000252F2B /* LogLevel.swift in Sources */,
 				379A12C91B2AE80500D6E8DA /* HTTPClientTask.swift in Sources */,
 				3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */,
@@ -1288,7 +1284,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor/corebitcoin",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DTEST -DDEBUG";
@@ -1383,7 +1379,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor/corebitcoin",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
@@ -1426,7 +1422,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor/corebitcoin",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
