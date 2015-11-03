@@ -191,8 +191,22 @@ final class VisualFactory {
         static let SectionTitle = [
             NSForegroundColorAttributeName: Colors.Black,
             NSKernAttributeName: -Fonts.Kerning.Small,
-            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge)
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge),
+            NSParagraphStyleAttributeName: {
+                let paragraph = NSMutableParagraphStyle()
+                paragraph.lineSpacing = Metrics.LineSpacing.Medium
+                return paragraph
+                }()
         ]
+        
+        static let SectionTitleCentered: TextAttribute = TextAttributes.extend(SectionTitle, withAttributes: [
+            NSParagraphStyleAttributeName: {
+                let paragraph = (LargeIndicationGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
+                paragraph.alignment = NSTextAlignment.Center
+                return paragraph
+                }()
+            ]
+        )
         
         static let LargeIconGrey = [
             NSForegroundColorAttributeName: Colors.LightGrey,

@@ -17,7 +17,6 @@ protocol PairingTransactionDialogViewControllerDelegate: class {
 
 final class PairingTransactionDialogViewController: DialogViewController {
     
-    @IBOutlet private weak var variableWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var dongleNameLabel: Label!
     @IBOutlet private weak var receipientAddressLabel: Label!
     @IBOutlet private weak var transactionDateLabel: Label!
@@ -30,16 +29,11 @@ final class PairingTransactionDialogViewController: DialogViewController {
         }
     }
     
-    // MARK: - Content size
-    
-    override func dialogLayoutSize(constraintedSize size: CGSize) -> CGSize {
-        variableWidthConstraint?.constant = size.width - dialogContentDistance.left - dialogContentDistance.right
-        return super.dialogLayoutSize(constraintedSize: size)
-    }
-    
     // MARK: - Interface
     
-    func updateView() {
+    override func configureView() {
+        super.configureView()
+        
         let formatter = BTCNumberFormatter(bitcoinUnit: BTCNumberFormatterUnit.BTC, symbolStyle: BTCNumberFormatterSymbolStyle.Code)
         formatter.minimumFractionDigits = 3
         formatter.decimalSeparator = "."
@@ -49,15 +43,7 @@ final class PairingTransactionDialogViewController: DialogViewController {
         amountLabel?.text = formatter.stringFromAmount(transactionInfo.amount)
         transactionDateLabel?.text = NSString(format: localizedString("requested_on_%@"), NSDateFormatter.localizedStringFromDate(transactionInfo.transactionDate, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)) as String
     }
-    
-    // MARK: - View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        updateView()
-    }
-    
+
 }
 
 extension PairingTransactionDialogViewController: CompletionResultable {

@@ -11,7 +11,6 @@
                 <outlet property="dongleNameLabel" destination="3nF-aI-wQH" id="J2k-Xq-fRG"/>
                 <outlet property="receipientAddressLabel" destination="bxF-wJ-VCI" id="ZBK-Wc-3a7"/>
                 <outlet property="transactionDateLabel" destination="ece-Hq-lEG" id="AiI-6h-Ofw"/>
-                <outlet property="variableWidthConstraint" destination="9yc-AN-sqK" id="eti-7d-5cJ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Gim-d4-6tf"/>
             </connections>
         </placeholder>
@@ -41,11 +40,8 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_receipient_address_" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxF-wJ-VCI" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
-                    <rect key="frame" x="68" y="271" width="300" height="21"/>
+                    <rect key="frame" x="139" y="271" width="158" height="21"/>
                     <animations/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="300" id="9yc-AN-sqK"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

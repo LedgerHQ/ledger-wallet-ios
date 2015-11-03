@@ -11,6 +11,8 @@
 
 @interface UIViewController (Init)
 
++ (NSString *)interfaceBuilderIdentifier;
++ (instancetype)instantiateFromMainStoryboard;
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard;
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard identifier:(NSString *)identifier;
 + (instancetype)instantiateFromNib;

@@ -123,6 +123,9 @@ final class VisualTheme {
         "label.sectionTitle": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SectionTitle)
         }),
+        "label.sectionTitle.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
+            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SectionTitleCentered)
+        }),
         "label.huge": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Huge)
         }),

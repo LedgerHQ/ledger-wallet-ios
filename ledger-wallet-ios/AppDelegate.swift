@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = Navigator.embedViewController(viewController)
         }
         
-        
         return true
     }
 

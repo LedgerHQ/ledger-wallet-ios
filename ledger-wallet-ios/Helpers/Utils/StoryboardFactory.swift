@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StoryboardFactory {
+final class StoryboardFactory {
     
     enum StoryboardIdentifier: String {
         case Main
@@ -26,9 +26,5 @@ class StoryboardFactory {
         let storyboard = UIStoryboard(name: identifier.rawValue, bundle: nil)
         storyboards[identifier] = storyboard
         return storyboard
-    }
-    
-    class func destroyStoryboards() {
-        storyboards = [:]
     }
 }

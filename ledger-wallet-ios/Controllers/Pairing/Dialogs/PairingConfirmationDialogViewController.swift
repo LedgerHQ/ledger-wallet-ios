@@ -8,33 +8,19 @@
 
 import Foundation
 
-final class PairingConfirmationDialogViewController: DialogViewController {
-    
-    enum MessageType {
-        case Error
-        case Success
-    }
-    
-    var messageType: MessageType = MessageType.Success
-    var localizedTitle = ""
-    var localizedMessage = ""
-    
-    @IBOutlet private weak var variableWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLabel: Label!
-    @IBOutlet private weak var messageLabel: Label!
-    
+final class PairingConfirmationDialogViewController: MessageDialogViewController {
+        
     // MARK: - Configuration
     
     func configureWithPairingOutcome(outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // default to error
-        messageType = MessageType.Error
+        type = .Error
         localizedTitle = localizedString("PAIRING_FAILED")
         
         // configure message
         switch outcome {
         case .DeviceSucceeded:
-            messageType = MessageType.Success
+            type = .Success
             localizedTitle = localizedString("PAIRING_SUCCEEDED")
             localizedMessage = String(format: localizedString("success_pairing_named_%@"), pairingItem?.dongleName ?? "")
         case .ServerDisconnected:
@@ -48,37 +34,17 @@ final class PairingConfirmationDialogViewController: DialogViewController {
         default:
             localizedMessage = localizedString("error_pairing_unknown")
         }
-    }
-    
-    // MARK: - Interface 
-    
-    func updateView() {
-        iconImageView?.image = messageType == MessageType.Success ? UIImage(named: "icon_valid_green") : UIImage(named: "icon_error_red")
-        titleLabel?.text = localizedTitle
-        messageLabel?.text = localizedMessage
-    }
-    
-    // MARK: - Content size
-    
-    override func dialogLayoutSize(constraintedSize size: CGSize) -> CGSize {
-        variableWidthConstraint?.constant = size.width - dialogContentDistance.left - dialogContentDistance.right
-        return super.dialogLayoutSize(constraintedSize: size)
-    }
-    
-    // MARK: - View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        updateView()
+        // add action
+        addAction(MessageDialogAction(type: .Neutral, title: localizedString("CLOSE"), handler: { [weak self] action in
+            self?.dismissViewControllerAnimated(true, completion: nil)
+        }))
     }
     
-}
-
-extension PairingConfirmationDialogViewController: CompletionResultable {
+    // MARK: - Initialization
     
-    @IBAction func complete() {
-        dismissViewControllerAnimated(true, completion: nil)
+    override class func interfaceBuilderIdentifier() -> String! {
+        return MessageDialogViewController.className()
     }
-
+    
 }

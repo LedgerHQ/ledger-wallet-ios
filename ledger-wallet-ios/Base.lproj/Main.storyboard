@@ -22,5 +22,81 @@
             </objects>
             <point key="canvasLocation" x="639" y="-358"/>
         </scene>
+        <!--Message Dialog View Controller-->
+        <scene sceneID="die-eu-Uvo">
+            <objects>
+                <viewController storyboardIdentifier="MessageDialogViewController" id="Fbc-DE-Lk0" customClass="MessageDialogViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v88-JZ-4P0"/>
+                        <viewControllerLayoutGuide type="bottom" id="sdP-HB-Wgz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tjs-uy-SuA" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="4nA-7d-I54">
+                                <rect key="frame" x="275" y="0.0" width="50" height="50"/>
+                                <animations/>
+                            </imageView>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="Xx4-bD-mTr" customClass="View" customModule="ledger_wallet_ios">
+                                <rect key="frame" x="280" y="147" width="40" height="453"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="transparent"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_message_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="T0C-eJ-ica" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="258" y="101" width="84" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.centered"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_title_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="2y1-RX-hBA" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                                <rect key="frame" x="279" y="70" width="43" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="allure" value="sectionTitle.centered"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <constraints>
+                            <constraint firstItem="T0C-eJ-ica" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tjs-uy-SuA" secondAttribute="leading" id="Aqo-ng-pnm"/>
+                            <constraint firstItem="2y1-RX-hBA" firstAttribute="top" secondItem="4nA-7d-I54" secondAttribute="bottom" constant="20" id="B6T-Pp-cES"/>
+                            <constraint firstItem="2y1-RX-hBA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tjs-uy-SuA" secondAttribute="leading" id="BPy-yR-Mco"/>
+                            <constraint firstAttribute="centerX" secondItem="T0C-eJ-ica" secondAttribute="centerX" id="CdF-cU-34g"/>
+                            <constraint firstItem="Xx4-bD-mTr" firstAttribute="centerX" secondItem="tjs-uy-SuA" secondAttribute="centerX" id="Ega-BH-fER"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2y1-RX-hBA" secondAttribute="trailing" id="FsQ-fP-IgH"/>
+                            <constraint firstAttribute="bottom" secondItem="Xx4-bD-mTr" secondAttribute="bottom" id="PeL-WV-giu"/>
+                            <constraint firstItem="T0C-eJ-ica" firstAttribute="top" secondItem="2y1-RX-hBA" secondAttribute="bottom" constant="10" id="QfV-2e-kYj"/>
+                            <constraint firstItem="Xx4-bD-mTr" firstAttribute="top" secondItem="T0C-eJ-ica" secondAttribute="bottom" constant="25" id="RaO-uR-lDa"/>
+                            <constraint firstItem="4nA-7d-I54" firstAttribute="top" secondItem="tjs-uy-SuA" secondAttribute="top" id="S3X-Ob-mqv"/>
+                            <constraint firstAttribute="centerX" secondItem="4nA-7d-I54" secondAttribute="centerX" id="eUO-q8-ZdR"/>
+                            <constraint firstAttribute="centerX" secondItem="2y1-RX-hBA" secondAttribute="centerX" id="fZt-F3-TBu"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="T0C-eJ-ica" secondAttribute="trailing" id="qa3-yB-b6I"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <connections>
+                        <outlet property="buttonsContainerView" destination="Xx4-bD-mTr" id="dSC-Fq-6Ep"/>
+                        <outlet property="iconImageView" destination="4nA-7d-I54" id="Exs-ZV-Dve"/>
+                        <outlet property="messageLabel" destination="T0C-eJ-ica" id="sIn-f4-x04"/>
+                        <outlet property="titleLabel" destination="2y1-RX-hBA" id="Ge7-mE-G8S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g7b-qN-BpS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1321" y="-358"/>
+        </scene>
     </scenes>
 </document>
