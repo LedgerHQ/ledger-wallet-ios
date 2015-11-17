@@ -27,11 +27,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>fontawesome-webfont.ttf</string>
-		<string>Fonts/OpenSans-Bold.ttf</string>
-		<string>Fonts/OpenSans-Regular.ttf</string>
-		<string>Fonts/OpenSans-Light.ttf</string>
-		<string>Fonts/OpenSans-Semibold.ttf</string>
-		<string>Fonts/OpenSans-ExtraBold.ttf</string>
+		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-Regular.ttf</string>
+		<string>OpenSans-Light.ttf</string>
+		<string>OpenSans-Semibold.ttf</string>
+		<string>OpenSans-ExtraBold.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Pairing</string>

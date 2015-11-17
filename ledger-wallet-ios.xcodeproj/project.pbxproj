@@ -82,9 +82,7 @@
 		376F51171A82190E001C6684 /* BTCTransactionOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50EF1A82190D001C6684 /* BTCTransactionOutput.m */; };
 		376F51181A82190E001C6684 /* NS+BTCBase58.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50F41A82190D001C6684 /* NS+BTCBase58.m */; };
 		376F51191A82190E001C6684 /* NSData+BTCData.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F50F61A82190D001C6684 /* NSData+BTCData.m */; };
-		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
-		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
 		378E5C561AADEFBE00A0C9A8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C551AADEFBE00A0C9A8 /* Preferences.swift */; };
 		3791970D1BB441140051CD22 /* BTCPaymentMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 379197061BB441140051CD22 /* BTCPaymentMethod.m */; };
 		3791970E1BB441140051CD22 /* BTCPaymentMethodDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 379197081BB441140051CD22 /* BTCPaymentMethodDetails.m */; };
@@ -124,6 +122,12 @@
 		3796CAB81BF9E12700364537 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3796CAB71BF9E12700364537 /* Constants.swift */; };
 		3796CABA1BF9E22000364537 /* AttestationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3796CAB91BF9E22000364537 /* AttestationKey.swift */; };
 		3796CABC1BFA419800364537 /* AttestationKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3796CABB1BFA419800364537 /* AttestationKeyTests.swift */; };
+		3796CABF1BFB2D6700364537 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3796CABE1BFB2D6700364537 /* Images.xcassets */; };
+		3796CAC61BFB2E2800364537 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3796CAC11BFB2E2800364537 /* OpenSans-Bold.ttf */; };
+		3796CAC71BFB2E2800364537 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3796CAC21BFB2E2800364537 /* OpenSans-ExtraBold.ttf */; };
+		3796CAC81BFB2E2800364537 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3796CAC31BFB2E2800364537 /* OpenSans-Light.ttf */; };
+		3796CAC91BFB2E2800364537 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3796CAC41BFB2E2800364537 /* OpenSans-Regular.ttf */; };
+		3796CACA1BFB2E2800364537 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3796CAC51BFB2E2800364537 /* OpenSans-Semibold.ttf */; };
 		3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */; };
 		3798BA1B1A6E6C7C00F5B603 /* VisualFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */; };
 		3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */; };
@@ -300,11 +304,9 @@
 		376F50F41A82190D001C6684 /* NS+BTCBase58.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NS+BTCBase58.m"; path = "vendor/corebitcoin/CoreBitcoin/NS+BTCBase58.m"; sourceTree = "<group>"; };
 		376F50F51A82190D001C6684 /* NSData+BTCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+BTCData.h"; path = "vendor/corebitcoin/CoreBitcoin/NSData+BTCData.h"; sourceTree = "<group>"; };
 		376F50F61A82190D001C6684 /* NSData+BTCData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+BTCData.m"; path = "vendor/corebitcoin/CoreBitcoin/NSData+BTCData.m"; sourceTree = "<group>"; };
-		378205D31A60195E00F6CA45 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		3784FB051A5D2F5E0063A364 /* ledger-wallet-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ledger-wallet-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB091A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3784FB111A5D2F5F0063A364 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3784FB1A1A5D2F5F0063A364 /* ledger-wallet-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ledger-wallet-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		378E5C551AADEFBE00A0C9A8 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -351,6 +353,12 @@
 		3796CAB71BF9E12700364537 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3796CAB91BF9E22000364537 /* AttestationKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttestationKey.swift; sourceTree = "<group>"; };
 		3796CABB1BFA419800364537 /* AttestationKeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttestationKeyTests.swift; sourceTree = "<group>"; };
+		3796CABE1BFB2D6700364537 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3796CAC11BFB2E2800364537 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		3796CAC21BFB2E2800364537 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		3796CAC31BFB2E2800364537 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		3796CAC41BFB2E2800364537 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		3796CAC51BFB2E2800364537 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStylist.swift; sourceTree = "<group>"; };
 		3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
 		3798BA191A6E6C7C00F5B603 /* VisualTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VisualTheme.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -606,18 +614,6 @@
 			name = CoreBitcoin;
 			sourceTree = "<group>";
 		};
-		378205D51A60196C00F6CA45 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				37F283601A64064100F432CC /* Main.storyboard */,
-				370E838D1B5695D500D67A9D /* Pairing.storyboard */,
-				37F2836A1A6406A900F432CC /* Localizable.strings */,
-				3784FB111A5D2F5F0063A364 /* Images.xcassets */,
-				378205D31A60195E00F6CA45 /* Fonts */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		3784FAFC1A5D2F5E0063A364 = {
 			isa = PBXGroup;
 			children = (
@@ -640,8 +636,8 @@
 			isa = PBXGroup;
 			children = (
 				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
+				3796CABD1BFB2D3E00364537 /* Resources */,
 				3796CAB61BF9E0FA00364537 /* Common */,
-				378205D51A60196C00F6CA45 /* Resources */,
 				373E22D61A7681F100BAF63F /* Model */,
 				371537DC1BDE2A7000582193 /* Protocols */,
 				371733251BDA423E000835DE /* Managers */,
@@ -776,6 +772,30 @@
 				3796CAB91BF9E22000364537 /* AttestationKey.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		3796CABD1BFB2D3E00364537 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37F2836A1A6406A900F432CC /* Localizable.strings */,
+				37F283601A64064100F432CC /* Main.storyboard */,
+				370E838D1B5695D500D67A9D /* Pairing.storyboard */,
+				3796CABE1BFB2D6700364537 /* Images.xcassets */,
+				3796CAC01BFB2E2800364537 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3796CAC01BFB2E2800364537 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3796CAC11BFB2E2800364537 /* OpenSans-Bold.ttf */,
+				3796CAC21BFB2E2800364537 /* OpenSans-ExtraBold.ttf */,
+				3796CAC31BFB2E2800364537 /* OpenSans-Light.ttf */,
+				3796CAC41BFB2E2800364537 /* OpenSans-Regular.ttf */,
+				3796CAC51BFB2E2800364537 /* OpenSans-Semibold.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		3798BA161A6E6C7C00F5B603 /* Allures */ = {
@@ -1038,14 +1058,18 @@
 				3796CAA11BF9CF8F00364537 /* PairingAddCodeStepViewController.xib in Resources */,
 				3796CAB01BF9CF8F00364537 /* PairingHomeEmptyContentViewController.xib in Resources */,
 				3796CAA71BF9CF8F00364537 /* PairingAddNameStepViewController.xib in Resources */,
-				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
 				3796CAAD1BF9CF8F00364537 /* PairingTransactionDialogViewController.xib in Resources */,
 				37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */,
+				3796CAC61BFB2E2800364537 /* OpenSans-Bold.ttf in Resources */,
 				3796CAA51BF9CF8F00364537 /* PairingAddFinalizeStepViewController.xib in Resources */,
+				3796CAC81BFB2E2800364537 /* OpenSans-Light.ttf in Resources */,
+				3796CABF1BFB2D6700364537 /* Images.xcassets in Resources */,
+				3796CACA1BFB2E2800364537 /* OpenSans-Semibold.ttf in Resources */,
 				3796CAA91BF9CF8F00364537 /* PairingAddScanStepViewController.xib in Resources */,
 				370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */,
+				3796CAC91BFB2E2800364537 /* OpenSans-Regular.ttf in Resources */,
 				3796CAB31BF9CF8F00364537 /* PairingHomeWaitingContentViewController.xib in Resources */,
-				378205D41A60195E00F6CA45 /* Fonts in Resources */,
+				3796CAC71BFB2E2800364537 /* OpenSans-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,6 +1256,7 @@
 				370E838E1B5695D500D67A9D /* Base */,
 			);
 			name = Pairing.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		37F283601A64064100F432CC /* Main.storyboard */ = {
@@ -1240,6 +1265,7 @@
 				37F283611A64064100F432CC /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		37F2836A1A6406A900F432CC /* Localizable.strings */ = {
@@ -1251,6 +1277,7 @@
 				375183611B8F2310007DFFDB /* ja */,
 			);
 			name = Localizable.strings;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
