@@ -149,8 +149,8 @@ class PreferencesTests: XCTestCase {
     
     func testStoreRetreiveData() {
         let preferences = Preferences(storeName: preferencesName)
-        preferences.setObject(LedgerDongleAttestationKeyData, forKey: "key")
-        XCTAssertEqual(preferences.dataForKey("key"), LedgerDongleAttestationKeyData, "Data should be equal")
+        preferences.setObject(BTCDataFromHex("00010203")!, forKey: "key")
+        XCTAssertEqual(preferences.dataForKey("key"), BTCDataFromHex("00010203")!, "Data should be equal")
         XCTAssertEqual(preferences.dataForKey("key1"), nil, "Data should not equal")
     }
     

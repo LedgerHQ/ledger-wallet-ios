@@ -78,5 +78,28 @@ class PairingProtocolCryptorTests: XCTestCase {
         let expectedChallengeResponseData = BTCDataFromHex("339d0c2221379963741fd9d33e5b7ba3")!
         XCTAssertEqual(challengeResponseData, expectedChallengeResponseData, "challenge responses data should be equal")
     }
+    
+    func testChallengeDataIsValid() {
+        let data = BTCDataFromHex("4a002a33")!
+        XCTAssertTrue(cryptor.challengeDataIsValid(data), "Challenge data should be valid")
+    }
+    
+    func testChallengeDataIsNotValid() {
+        let data = BTCDataFromHex("4a004b33")!
+        XCTAssertFalse(cryptor.challengeDataIsValid(data), "Challenge data should be invalid")
+    }
+    
+    func testInvalidAttestationKeyIDs() {
+        let data = BTCDataFromHex("0000")!
+        XCTAssertNil(cryptor.attestationKeyIDsWithData(data), "Challenge IDs should not be returned")
+    }
 
+    func testValidAttestationKeyIDs() {
+        let data = BTCDataFromHex("0000000100000002")!
+        let values = cryptor.attestationKeyIDsWithData(data)
+        XCTAssertNotNil(values)
+        XCTAssertEqual(values!.0, 1, "batchID should be equal")
+        XCTAssertEqual(values!.1, 2, "derivationId should be equal")
+    }
+    
 }

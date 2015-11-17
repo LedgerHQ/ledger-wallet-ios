@@ -6,7 +6,7 @@
   Copyright (c) 2015 Ledger. All rights reserved.
 */
 
-/* Common */
+// Common
 
 "ledger_wallet" = "Ledger Wallet";
 
@@ -30,7 +30,23 @@
 
 "delete" = "Delete";
 
-/* Pairing */
+"need_help_visit_help_center" = "Need help? Visit our help center.";
+
+// Errors
+
+"error_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_internal_error" = "An internal error occured.\nPlease try again later or contact Ledger support if the problem persists.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "The security card validation code is incorrect.";
+
+"error_pairing_timeout" = "The pairing process took too much time (timeout).";
+
+// M2FA
 
 "PAIR_A_LEDGER_WALLET" = "PAIR A LEDGER WALLET";
 
@@ -72,16 +88,6 @@
 
 "ledger_wallet_is_finalizing_pairing" = "Your Ledger Wallet is finalizing the pairing process with this smartphone.";
 
-"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
-
-"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
-
-"error_pairing_dongle_cancelled" = "The Ledger Wallet Chrome application cancelled the pairing process.";
-
-"error_pairing_wrong_validation_code" = "The security card validation code is incorrect.";
-
-"error_pairing_timeout" = "The pairing process took too much time (timeout).";
-
 "success_pairing_named_%@" = "Your Ledger Wallet “%@” is now paired with your smartphone.";
 
 "no_paired_ledger_wallet" = "No paired Ledger Wallet";
@@ -89,8 +95,6 @@
 "to_enable_second_factor_pair_device" = "To enable second factor validation, pair your Ledger Wallet with this smartphone.";
 
 "transactions_will_automatically_appear" = "Transactions will automatically appear when manual validation is required.";
-
-"need_help_visit_help_center" = "Need help? Visit our help center.";
 
 "requested_on_%@" = "Requested on %@";
 

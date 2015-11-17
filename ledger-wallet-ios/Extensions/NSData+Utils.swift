@@ -61,7 +61,7 @@ extension NSData {
         ]
     }
     
-    var splittedData:(NSData, NSData)? {
+    var splitData:(NSData, NSData)? {
         guard self.length > 0 && self.length % 2 == 0 else {
             return nil
         }

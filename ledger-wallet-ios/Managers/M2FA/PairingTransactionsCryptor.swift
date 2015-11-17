@@ -41,7 +41,7 @@ final class PairingTransactionsCryptor {
     
     // MARK: - Transaction info extraction
     
-    func transactionInfoFromRequestMessage(message: BasePairingManager.Message, pairingKey: NSData) -> PairingTransactionInfo? {
+    func transactionInfoFromRequestMessage(message: BaseM2FAManager.Message, pairingKey: NSData) -> PairingTransactionInfo? {
         // make sure second factor data is present
         guard let secondFactorDataString = message["second_factor_data"] as? String, secondFactorData = BTCDataFromHex(secondFactorDataString) else {
             return nil
@@ -189,7 +189,7 @@ final class PairingTransactionsCryptor {
     
     private func decryptData(data: NSData, withKey key: NSData) -> NSData? {
         // get splitted key
-        guard let (key1, key2) = key.splittedData else {
+        guard let (key1, key2) = key.splitData else {
             return nil
         }
         

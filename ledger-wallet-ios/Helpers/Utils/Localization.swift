@@ -12,5 +12,13 @@ func localizedString(key: String) -> String {
     if key.hasPrefix("_") {
         return key
     }
-    return NSLocalizedString(key, comment: "")
+
+    // get localization
+    var string = NSLocalizedString(key, comment: "")
+    
+    // if localization is not found
+    if string == key && ApplicationManager.sharedInstance.currentLocale != ApplicationManager.sharedInstance.developmentLocale {
+        string = ApplicationManager.sharedInstance.developmentLocalizationBundle.localizedStringForKey(key, value: nil, table: nil)
+    }
+    return string
 }

@@ -24,15 +24,17 @@ final class PairingConfirmationDialogViewController: MessageDialogViewController
             localizedTitle = localizedString("PAIRING_SUCCEEDED")
             localizedMessage = String(format: localizedString("success_pairing_named_%@"), pairingItem?.dongleName ?? "")
         case .ServerDisconnected:
-            localizedMessage = localizedString("error_pairing_network")
+            localizedMessage = localizedString("error_network")
         case .DongleFailed:
             localizedMessage = localizedString("error_pairing_wrong_validation_code")
         case .DongleTerminated:
             localizedMessage = localizedString("error_pairing_dongle_cancelled")
         case .ServerTimeout:
             localizedMessage = localizedString("error_pairing_timeout")
+        case .WrongData:
+            localizedMessage = localizedString("error_internal_error")
         default:
-            localizedMessage = localizedString("error_pairing_unknown")
+            localizedMessage = localizedString("error_unknown")
         }
         
         // add action

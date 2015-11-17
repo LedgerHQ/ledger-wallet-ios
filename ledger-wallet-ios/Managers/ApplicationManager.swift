@@ -29,6 +29,21 @@ final class ApplicationManager {
             UIApplication.sharedApplication().idleTimerDisabled = newValue
         }
     }
+    var developmentLocale: String { return NSBundle.mainBundle().developmentLocalization ?? "en" }
+    var currentLocale: String {
+        let locales = NSLocale.preferredLanguages()
+        if locales.count > 0 {
+            return locales[0]
+        }
+        return ""
+    }
+    var developmentLocalizationBundle: NSBundle {
+        if _developmentLocalizationBundle == nil {
+            let path = NSBundle.mainBundle().pathForResource(developmentLocale, ofType: "lproj")!
+            _developmentLocalizationBundle = NSBundle(path: path)
+        }
+        return _developmentLocalizationBundle
+    }
     
     var libraryDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] }
     var temporaryDirectoryPath: String { return NSTemporaryDirectory() }
@@ -37,6 +52,7 @@ final class ApplicationManager {
     private lazy var preferences = Preferences(storeName: "ApplicationManager")
     private lazy var networkActivitiesCount = 0
     private lazy var logger = Logger.sharedInstance(name: "ApplicationManager")
+    private var _developmentLocalizationBundle: NSBundle! = nil
     
     // MARK: Utilities
     

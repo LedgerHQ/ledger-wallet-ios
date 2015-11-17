@@ -1,5 +1,5 @@
 //
-//  BasePairingManager.swift
+//  BaseM2FAManager.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 02/02/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BasePairingManager: NSObject {
+class BaseM2FAManager: NSObject {
     
     typealias Message = [String: AnyObject]
     typealias MessageHandler = (Message, WebSocket) -> Void
@@ -82,7 +82,7 @@ class BasePairingManager: NSObject {
     
 }
 
-extension BasePairingManager {
+extension BaseM2FAManager {
     
     // MARK: - Timeout management
     
@@ -108,7 +108,7 @@ extension BasePairingManager {
     }
 }
 
-extension BasePairingManager {
+extension BaseM2FAManager {
     
     // MARK: - Messages management
     
@@ -150,7 +150,7 @@ extension BasePairingManager {
     
 }
 
-extension BasePairingManager {
+extension BaseM2FAManager {
     
     // MARK: - Websocket events management
     
@@ -177,7 +177,7 @@ extension BasePairingManager {
     
 }
 
-extension BasePairingManager: WebSocketDelegate {
+extension BaseM2FAManager: WebSocketDelegate {
 
      // MARK: - WebSocket delegate
 

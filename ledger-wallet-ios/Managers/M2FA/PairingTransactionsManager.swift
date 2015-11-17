@@ -15,7 +15,7 @@ protocol PairingTransactionsManagerDelegate: class {
     
 }
 
-final class PairingTransactionsManager: BasePairingManager {
+final class PairingTransactionsManager: BaseM2FAManager {
     
     weak var delegate: PairingTransactionsManagerDelegate? = nil
     private var webSocketsPairingKeychainItems: [WebSocket: PairingKeychainItem] = [:]

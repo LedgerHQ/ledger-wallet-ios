@@ -10,11 +10,12 @@ import Foundation
 
 final class PairingProtocolCryptor {
     
-    let diffieHellmanBytesLength = 32
-    let sessionKeyBytesLength = 16
-    let pairingKeyBytesLength = 16
-    let nonceBytesLength = 8
-    let challengeBytesLength = 4
+    private let diffieHellmanBytesLength = 32
+    private let sessionKeyBytesLength = 16
+    private let pairingKeyBytesLength = 16
+    private let nonceBytesLength = 8
+    private let challengeBytesLength = 4
+    private let attestationKeyIDsLength = 8
     
     // MARK: - Session key
     
@@ -32,13 +33,13 @@ final class PairingProtocolCryptor {
     
     func decryptData(data: NSData, sessionKey: NSData) -> NSData {
         // decrypt data
-        let (key1, key2) = sessionKey.splittedData!
+        let (key1, key2) = sessionKey.splitData!
         return data.tripeDESCBCWithKeys(key1: key1, key2: key2, key3: key1, encrypt: false)!
     }
     
     func encryptData(data: NSData, sessionKey: NSData) -> NSData {
         // encrypt data
-        let (key1, key2) = sessionKey.splittedData!
+        let (key1, key2) = sessionKey.splitData!
         return data.tripeDESCBCWithKeys(key1: key1, key2: key2, key3: key1, encrypt: true)!
     }
     
@@ -90,6 +91,17 @@ final class PairingProtocolCryptor {
         return NSString(data: dataCopy, encoding: NSASCIIStringEncoding)! as String
     }
     
+    func challengeDataIsValid(data: NSData) -> Bool {
+        var pointer = UnsafePointer<UInt8>(data.bytes)
+        for _ in 0..<data.length {
+            if pointer.memory > 0x4A { // upper limit (without +0x30)
+                return false
+            }
+            pointer = pointer.successor()
+        }
+        return true
+    }
+    
     func challengeDataFromChallengeString(challenge: String) -> NSData {
         let string = challenge as NSString
         var computedString = ""
@@ -97,6 +109,19 @@ final class PairingProtocolCryptor {
             computedString = computedString + "0" + string.substringWithRange(NSMakeRange(i, 1))
         }
         return BTCDataFromHex(computedString)
+    }
+    
+    func attestationKeyIDsWithData(data: NSData) -> (batchID: UInt32, derivationID: UInt32)? {
+        guard data.length == attestationKeyIDsLength else {
+            return nil
+        }
+        let (batchIDData, derivationIDData) = data.splitData!
+        var values: (UInt32, UInt32) = (0, 0)
+        batchIDData.getBytes(&values.0, length: sizeof(UInt32))
+        derivationIDData.getBytes(&values.1, length: sizeof(UInt32))
+        values.0 = CFSwapInt32BigToHost(values.0)
+        values.1 = CFSwapInt32BigToHost(values.1)
+        return values
     }
 
 }

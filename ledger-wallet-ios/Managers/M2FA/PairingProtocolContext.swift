@@ -14,9 +14,8 @@ final class PairingProtocolContext {
     var pairingKey: NSData! = nil
     var sessionKey: NSData! = nil
     var nonce: NSData! = nil
-    
+    var externalKey: BTCKey! = nil
     let internalKey: BTCKey
-    let externalKey: BTCKey
     
     // MARK: - Keychain item management
     
@@ -33,13 +32,13 @@ final class PairingProtocolContext {
     
     func createPairingKeychainItemNamed(name: String) -> PairingKeychainItem? {
         // check data integrity
-        if (pairingId == nil || pairingKey == nil) {
+        guard pairingId != nil && pairingKey != nil else {
             return nil
         }
-        
         guard let pairingKeychainItem = PairingKeychainItem() else {
             return nil
         }
+        
         pairingKeychainItem.beginBatchUpdate()
         pairingKeychainItem.pairingKey = pairingKey
         pairingKeychainItem.pairingId = pairingId
@@ -50,9 +49,8 @@ final class PairingProtocolContext {
     
     // MARK: - Initialization
     
-    init(internalKey: BTCKey, externalKey: BTCKey) {
+    init(internalKey: BTCKey) {
         self.internalKey = internalKey
-        self.externalKey = externalKey
     }
     
 }

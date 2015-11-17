@@ -15,7 +15,7 @@ protocol PairingProtocolManagerDelegate: class {
     
 }
 
-final class PairingProtocolManager: BasePairingManager {
+final class PairingProtocolManager: BaseM2FAManager {
     
     enum PairingOutcome {
         case DongleSucceeded
@@ -26,11 +26,12 @@ final class PairingProtocolManager: BasePairingManager {
         case DeviceTerminated
         case ServerDisconnected
         case ServerTimeout
+        case WrongData
     }
 
     weak var delegate: PairingProtocolManagerDelegate? = nil
     private var context: PairingProtocolContext! = nil
-    private lazy var cryptor = PairingProtocolCryptor()
+    private var cryptor: PairingProtocolCryptor! = nil
     private var webSocket: WebSocket! = nil
     
     // MARK: - Initialization
@@ -62,19 +63,16 @@ extension PairingProtocolManager {
         webSocket.delegate = self
         webSocket.connect()
         
-        // create context
-        context = PairingProtocolContext(internalKey: BTCKey(), externalKey: BTCKey(publicKey: LedgerDongleAttestationKeyData))
-        
-        // compute session key
-        context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, externalKey: context.externalKey)
+        // create context and cryptor
+        cryptor = PairingProtocolCryptor()
+        context = PairingProtocolContext(internalKey: BTCKey())
         
         // retain pairing Id
         context.pairingId = pairingId
-
     }
     
     private func joinRoom() {
-        if (webSocket == nil) {
+        guard webSocket != nil && context.pairingId != nil else {
             return
         }
         
@@ -84,7 +82,7 @@ extension PairingProtocolManager {
     }
     
     private func sendPublicKey() {
-        if (webSocket == nil) {
+        guard webSocket != nil else {
             return
         }
         
@@ -100,7 +98,7 @@ extension PairingProtocolManager {
     }
     
     func sendChallengeResponse(response: String) {
-        if (webSocket == nil) {
+        guard webSocket != nil && context.sessionKey != nil && context.nonce != nil else {
             return
         }
         
@@ -115,7 +113,7 @@ extension PairingProtocolManager {
     }
     
     func terminate() {
-        if (webSocket == nil) {
+        guard webSocket != nil else {
             return
         }
         
@@ -131,10 +129,8 @@ extension PairingProtocolManager {
     private func disconnectWebSocket() {
         webSocket?.delegate = nil
         ignoresWebSocketDelegate = true
-        if let isConnected = webSocket?.isConnected {
-            if isConnected == true {
-                webSocket?.disconnect()
-            }
+        if let isConnected = webSocket?.isConnected where isConnected == true {
+            webSocket?.disconnect()
         }
         webSocket = nil
     }
@@ -158,28 +154,55 @@ extension PairingProtocolManager {
     // MARK: - Messages management
     
     override func handleChallengeMessage(message: Message, webSocket: WebSocket) {
-        if let dataString = message["data"] as? String {
-            // get data
-            if let blob = BTCDataFromHex(dataString) {
-                // extract nonce and encrypted data
-                context.nonce = cryptor.nonceFromBlob(blob)
-                let encryptedData = cryptor.encryptedDataFromBlob(blob)
-                
-                // decrypt data
-                let decryptedData = cryptor.decryptData(encryptedData, sessionKey: context.sessionKey)
-                
-                // extract challenge, pairing key
-                let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
-                context.pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
-                
-                // create challenge string
-                let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
-                
-                // notify delegate
-                logger.info("Received challenge \"\(challengeString)\"")
-                delegate?.pairingProtocolManager(self, didReceiveChallenge: challengeString)
-            }
+        guard let
+            dataString = message["data"] as? String, blobData = BTCDataFromHex(dataString)
+        else {
+            disconnectWebSocket()
+            logger.info("Received wrong challenge message \"\(message)\"")
+            delegate?.pairingProtocolManager(self, didTerminateWithOutcome: .WrongData)
+            return
         }
+        
+        // try to get attestation key from message, or fallback
+        let finalAttestationKey: AttestationKey
+        if let attestationString = message["attestation"] as? String, attestationData = BTCDataFromHex(attestationString),
+            attestationKeyIDs = cryptor.attestationKeyIDsWithData(attestationData),
+            attestationKey = AttestationKey.fetchFromIDs(batchID: attestationKeyIDs.batchID, derivationID: attestationKeyIDs.derivationID) {
+            finalAttestationKey = attestationKey
+        }
+        else {
+            finalAttestationKey = AttestationKey.fetchFromIDs(batchID: 0x02, derivationID: 0x01)!
+        }
+        
+        // compute session + external key
+        context.externalKey = BTCKey(publicKey: finalAttestationKey.publicKey)
+        context.sessionKey = cryptor.sessionKeyForKeys(internalKey: context.internalKey, externalKey: context.externalKey)
+        
+        // extract nonce and encrypted data
+        context.nonce = cryptor.nonceFromBlob(blobData)
+        let encryptedData = cryptor.encryptedDataFromBlob(blobData)
+        
+        // decrypt data
+        let decryptedData = cryptor.decryptData(encryptedData, sessionKey: context.sessionKey)
+        
+        // extract challenge, pairing key
+        let challengeData = cryptor.challengeDataFromDecryptedData(decryptedData)
+        context.pairingKey = cryptor.pairingKeyFromDecryptedData(decryptedData)
+        
+        // test challenge data 
+        if !cryptor.challengeDataIsValid(challengeData) {
+            disconnectWebSocket()
+            logger.info("Decrypted challenge data is invalid")
+            delegate?.pairingProtocolManager(self, didTerminateWithOutcome: .WrongData)
+            return
+        }
+        
+        // create challenge string
+        let challengeString = cryptor.challengeStringFromChallengeData(challengeData)
+        
+        // notify delegate
+        logger.info("Received challenge \"\(challengeString)\"")
+        delegate?.pairingProtocolManager(self, didReceiveChallenge: challengeString)
     }
     
     override func handlePairingMessage(message: Message, webSocket: WebSocket) {
@@ -187,6 +210,11 @@ extension PairingProtocolManager {
             disconnectWebSocket()
             logger.info("Pairing completed successfully? \(isSuccessful)")
             delegate?.pairingProtocolManager(self, didTerminateWithOutcome: isSuccessful ? PairingOutcome.DongleSucceeded : PairingOutcome.DongleFailed)
+        }
+        else {
+            disconnectWebSocket()
+            logger.info("Received wrong pairing message \"\(message)\"")
+            delegate?.pairingProtocolManager(self, didTerminateWithOutcome: .WrongData)
         }
     }
     
