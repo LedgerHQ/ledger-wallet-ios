@@ -175,6 +175,8 @@
 		37F8E4131BFE2E0D001609BA /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8E4121BFE2E0D001609BA /* TestAppDelegate.swift */; };
 		37F8E4151BFE2E2B001609BA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8E4141BFE2E2B001609BA /* main.swift */; };
 		37F8E4161BFE2EB9001609BA /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8E4121BFE2E0D001609BA /* TestAppDelegate.swift */; };
+		37F8E41C1BFF7F9A001609BA /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8E41B1BFF7F9A001609BA /* LaunchScreenViewController.swift */; };
+		37F8E4241BFF82FC001609BA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F8E4231BFF82FC001609BA /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -418,6 +420,8 @@
 		37F283C01A655D7200F432CC /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		37F8E4121BFE2E0D001609BA /* TestAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
 		37F8E4141BFE2E2B001609BA /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		37F8E41B1BFF7F9A001609BA /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		37F8E4231BFF82FC001609BA /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -794,10 +798,11 @@
 		3796CABD1BFB2D3E00364537 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				37C3E6991BFCB3B300FCA58F /* CoreDataModel.xcdatamodeld */,
-				37F2836A1A6406A900F432CC /* Localizable.strings */,
 				37F283601A64064100F432CC /* Main.storyboard */,
 				370E838D1B5695D500D67A9D /* Pairing.storyboard */,
+				37F8E4231BFF82FC001609BA /* Launch Screen.storyboard */,
+				37C3E6991BFCB3B300FCA58F /* CoreDataModel.xcdatamodeld */,
+				37F2836A1A6406A900F432CC /* Localizable.strings */,
 				3796CABE1BFB2D6700364537 /* Images.xcassets */,
 				3796CAC01BFB2E2800364537 /* Fonts */,
 			);
@@ -913,6 +918,7 @@
 			children = (
 				37F283941A655D3400F432CC /* Base */,
 				376EF7E11BE3ACC6009E596C /* Dialogs */,
+				37F8E41A1BFF7F9A001609BA /* App */,
 				3796CA831BF9CF8F00364537 /* M2FA */,
 			);
 			name = Controllers;
@@ -985,6 +991,15 @@
 			name = Utils;
 			path = utils;
 			sourceTree = "<group>";
+		};
+		37F8E41A1BFF7F9A001609BA /* App */ = {
+			isa = PBXGroup;
+			children = (
+				37F8E41B1BFF7F9A001609BA /* LaunchScreenViewController.swift */,
+			);
+			name = App;
+			path = "ledger-wallet-ios/Controllers/App";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -1088,6 +1103,7 @@
 				3796CAA71BF9CF8F00364537 /* PairingAddNameStepViewController.xib in Resources */,
 				3796CAAD1BF9CF8F00364537 /* PairingTransactionDialogViewController.xib in Resources */,
 				37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */,
+				37F8E4241BFF82FC001609BA /* Launch Screen.storyboard in Resources */,
 				3796CAC61BFB2E2800364537 /* OpenSans-Bold.ttf in Resources */,
 				3796CAA51BF9CF8F00364537 /* PairingAddFinalizeStepViewController.xib in Resources */,
 				3796CAC81BFB2E2800364537 /* OpenSans-Light.ttf in Resources */,
@@ -1185,6 +1201,7 @@
 				376F50FC1A82190D001C6684 /* BTCBlindSignature.m in Sources */,
 				3796CABA1BF9E22000364537 /* AttestationKey.swift in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,
+				37F8E41C1BFF7F9A001609BA /* LaunchScreenViewController.swift in Sources */,
 				37AB9ECE1A8B566900A48951 /* UIViewController+Init.m in Sources */,
 				3730736F1B2ECD6200DDFE5A /* BTCProtocolBuffers.m in Sources */,
 				376F510A1A82190E001C6684 /* BTCNetwork.m in Sources */,
@@ -1372,7 +1389,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Bigot (886TTS479K)";
@@ -1508,7 +1524,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Bigot (886TTS479K)";
@@ -1531,7 +1546,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Epic Dream SAS (X6LFS5BQKN)";

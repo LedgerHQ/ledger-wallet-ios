@@ -33,8 +33,6 @@ enum CoreDataStoreType {
 final class CoreDataStack {
 
     private var logger = Logger.sharedInstance(name: "CoreDataStack")
-    private var queue = dispatch_queue_create("co.ledger.ledgerwallet.coredatastack", DISPATCH_QUEUE_SERIAL)
-
     private var privateManagedObjectContext: NSManagedObjectContext!
     private var mainManagedObjectContext: NSManagedObjectContext!
     private var persistentStoreCoordinator: NSPersistentStoreCoordinator!
@@ -43,17 +41,13 @@ final class CoreDataStack {
     // MARK: Blocks
     
     func performBlock(block: (NSManagedObjectContext) -> Void) {
-        dispatch_async(queue) { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            guard let mainManagedObjectContext = strongSelf.mainManagedObjectContext else {
-                strongSelf.logger.error("Unable to perform block (no main context)")
-                return
-            }
-            
-            mainManagedObjectContext.performBlock() {
-                block(mainManagedObjectContext)
-            }
+        guard let mainManagedObjectContext = mainManagedObjectContext else {
+            logger.error("Unable to perform block (no main context)")
+            return
+        }
+        
+        mainManagedObjectContext.performBlock() {
+            block(mainManagedObjectContext)
         }
     }
     
@@ -61,69 +55,44 @@ final class CoreDataStack {
     
     func createChildContext() -> NSManagedObjectContext {
         let context = managedObjectContextWithConcurrencyType(.PrivateQueueConcurrencyType)
-        
-        dispatch_sync(queue) { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            guard let mainManagedObjectContext = strongSelf.mainManagedObjectContext else {
-                strongSelf.logger.error("Unable to create new child context (no main context)")
-                return
-            }
-            context.parentContext = mainManagedObjectContext
+        guard let mainManagedObjectContext = mainManagedObjectContext else {
+            logger.error("Unable to create new child context (no main context)")
+            return context
         }
+        context.parentContext = mainManagedObjectContext
         return context
     }
 
     // MARK: Persistence
     
     func saveAndWait(wait: Bool) {
-        // choose dispatch method
-        let dispatchMethod: (dispatch_queue_t, dispatch_block_t) -> Void
-        if wait {
-            dispatchMethod = dispatch_sync
-        }
+        guard
+            let mainManagedObjectContext = mainManagedObjectContext,
+            privateManagedObjectContext = privateManagedObjectContext
         else {
-            dispatchMethod = dispatch_async
+            logger.error("Unable to save (no main or private context)")
+            return
         }
         
-        dispatchMethod(queue) { [weak self] in
+        performMethodForWait(wait)(mainManagedObjectContext)() { [weak self] in
             guard let strongSelf = self else { return }
-            
-            guard let mainManagedObjectContext = strongSelf.mainManagedObjectContext, privateManagedObjectContext = strongSelf.privateManagedObjectContext else {
-                strongSelf.logger.error("Unable to save (no main or private context)")
+            guard mainManagedObjectContext.hasChanges || privateManagedObjectContext.hasChanges else { return }
+    
+            do {
+                try mainManagedObjectContext.save()
+            }
+            catch {
+                strongSelf.logger.error("Unable to save main context \(error)")
                 return
             }
             
-            guard mainManagedObjectContext.hasChanges || privateManagedObjectContext.hasChanges else {
-                return
-            }
-            
-            // choose perform method
-            let performMethod: NSManagedObjectContext -> (() -> Void) -> Void
-            if wait {
-                performMethod = NSManagedObjectContext.performBlockAndWait
-            }
-            else {
-                performMethod = NSManagedObjectContext.performBlock
-            }
-            
-            // perform save
-            performMethod(mainManagedObjectContext)() {
+            strongSelf.performMethodForWait(wait)(privateManagedObjectContext)() {
                 do {
-                    try mainManagedObjectContext.save()
+                    try privateManagedObjectContext.save()
                 }
                 catch {
-                    strongSelf.logger.error("Unable to save main context \(error)")
+                    strongSelf.logger.error("Unable to save private context \(error)")
                     return
-                }
-                privateManagedObjectContext.performBlock() {
-                    do {
-                        try privateManagedObjectContext.save()
-                    }
-                    catch {
-                        strongSelf.logger.error("Unable to save private context \(error)")
-                        return
-                    }
                 }
             }
         }
@@ -198,23 +167,38 @@ final class CoreDataStack {
         return context
     }
     
+    private func dispatchMethodForWait(wait: Bool) -> (dispatch_queue_t, dispatch_block_t) -> Void {
+        if wait {
+            return dispatch_sync
+        }
+        return dispatch_async
+    }
+    
+    private func performMethodForWait(wait: Bool) -> NSManagedObjectContext -> (() -> Void) -> Void {
+        if wait {
+            return NSManagedObjectContext.performBlockAndWait
+        }
+        return NSManagedObjectContext.performBlock
+    }
+    
     // MARK: Initialization
     
-    init(storeType: CoreDataStoreType, modelName: String) {
+    init(storeType: CoreDataStoreType, modelName: String, completion: (success: Bool) -> Void) {
         guard createDatabasesDirectory() else {
+            completion(success: false)
             return
         }
         
         guard initializeContextsWithModelName(modelName) else {
+            completion(success: false)
             return
         }
         
-        dispatch_async(queue) { [weak self] in
+        dispatchAsyncOnGlobalQueueWithPriority(DISPATCH_QUEUE_PRIORITY_HIGH) { [weak self] in
             guard let strongSelf = self else { return }
-            
-            // initialize persistent store
-            guard strongSelf.initializePersistentStoreWithType(storeType) == true else {
-                return
+            let success = strongSelf.initializePersistentStoreWithType(storeType)
+            dispatchAsyncOnMainQueue() {
+                completion(success: success)
             }
         }
     }

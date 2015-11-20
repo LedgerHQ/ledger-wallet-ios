@@ -13,10 +13,10 @@ class BaseNavigationController: UINavigationController {
     // MARK: - Status bar management
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        if self.topViewController != nil {
-            return self.topViewController!.preferredStatusBarStyle()
+        guard let topViewController = topViewController else {
+            return super.preferredStatusBarStyle()
         }
-        return super.preferredStatusBarStyle()
+        return topViewController.preferredStatusBarStyle()
     }
     
 }

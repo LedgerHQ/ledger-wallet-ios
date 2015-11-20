@@ -21,8 +21,7 @@ class NavigationBar: UINavigationBar {
     }
     
     private var barHeight: CGFloat {
-        let bounds = UIScreen.mainScreen().bounds
-        if bounds.height <= 480 {
+        if DeviceManager.sharedInstance.screenHeightClass == .Small {
             return VisualFactory.Metrics.View.NavigationBar.Height.Small
         }
         return VisualFactory.Metrics.View.NavigationBar.Height.Default
@@ -34,11 +33,9 @@ class NavigationBar: UINavigationBar {
         super.layoutSubviews()
         
         // move title and buttons
-        for view in self.subviews {
-            if (view is UIButton || view is UILabel) {
-                if (view === topItem?.leftBarButtonItem?.customView || view === topItem?.rightBarButtonItem?.customView || view === topItem?.titleView) {
-                    view.frame = CGRectMake(view.frame.origin.x, round((self.bounds.size.height - view.bounds.size.height) / 2), view.frame.size.width, view.frame.size.height)
-                }
+        for view in self.subviews where (view is UIButton || view is UILabel) {
+            if (view === topItem?.leftBarButtonItem?.customView || view === topItem?.rightBarButtonItem?.customView || view === topItem?.titleView) {
+                view.frame = CGRectMake(view.frame.origin.x, round((self.bounds.size.height - view.bounds.size.height) / 2), view.frame.size.width, view.frame.size.height)
             }
         }
     }

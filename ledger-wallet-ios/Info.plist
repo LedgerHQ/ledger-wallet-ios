@@ -33,6 +33,8 @@
 		<string>OpenSans-Semibold.ttf</string>
 		<string>OpenSans-ExtraBold.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

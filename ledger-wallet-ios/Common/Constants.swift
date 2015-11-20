@@ -14,5 +14,5 @@ let LedgerAPIBaseURL = "https://api.ledgerwallet.com"
 let LedgerHelpCenterURL = "http://support.ledgerwallet.com"
 
 // CoreData
-let LedgerModelName = "CoreDataModel"
+let LedgerCoreDataModelName = "CoreDataModel"
 let LedgerSqliteDatabaseName = "ledger-wallet-ios"

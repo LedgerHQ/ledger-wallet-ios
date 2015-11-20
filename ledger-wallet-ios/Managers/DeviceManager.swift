@@ -22,11 +22,9 @@ final class DeviceManager {
     var screenSize: CGSize { return UIScreen.mainScreen().bounds.size }
     var screenScale: CGFloat { return UIScreen.mainScreen().scale }
     var screenHeightClass: HeightClass {
-        switch screenSize.height {
-        case 480.0: return HeightClass.Small
-        case 568.0: return HeightClass.Medium
-        default: return HeightClass.Large
-        }
+        if screenSize.height <= 480 { return HeightClass.Small }
+        if screenSize.height <= 568 { return HeightClass.Medium }
+        return HeightClass.Large
     }
 
     // MARK: Utilities

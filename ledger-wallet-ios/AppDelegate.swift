@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -27,12 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationManager.sharedInstance.clearTemporaryDirectory()
 
         // create coredata stack
-        coreDataStack = CoreDataStack(storeType: .Sqlite, modelName: LedgerModelName)
+        coreDataStack = CoreDataStack(storeType: .Sqlite, modelName: LedgerCoreDataModelName) { success in
+            // switch to root view controller
+            let rootViewController = PairingHomeViewController.instantiateFromStoryboard(StoryboardFactory.storyboardWithIdentifier(.Pairing))
+            self.window?.rootViewController = Navigator.embedViewController(rootViewController)
+        }
         
-        // handle root view controller
+        // create launch screen view controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let rootViewController = Navigator.embedViewController(StoryboardFactory.storyboardWithIdentifier(.Pairing).instantiateInitialViewController()!)
-        window?.rootViewController = rootViewController
+        window?.rootViewController = LaunchScreenViewController.instantiateFromMainStoryboard()
         window?.makeKeyAndVisible()
         return true
     }

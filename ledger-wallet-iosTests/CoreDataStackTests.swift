@@ -16,7 +16,12 @@ class CoreDataStackTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        coreDataStack = CoreDataStack(storeType: .Memory, modelName: LedgerModelName)
+        let expectation = expectationWithDescription("Waiting for stack to initialize")
+        coreDataStack = CoreDataStack(storeType: .Memory, modelName: LedgerCoreDataModelName) { success in
+            XCTAssertTrue(success, "Stack should be initialized")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5, handler: nil)
     }
     
     override func tearDown() {
