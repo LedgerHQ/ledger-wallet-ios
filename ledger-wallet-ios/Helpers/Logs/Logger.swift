@@ -43,6 +43,11 @@ final class Logger {
             console(logEntry)
         #endif
         
+        // write nothing if in tests
+        #if TEST
+            return
+        #endif
+        
         // log to file
         LogWriter.sharedInstance.storeLogEntry(logEntry)
     }

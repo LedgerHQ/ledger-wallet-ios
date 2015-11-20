@@ -33,8 +33,6 @@
 		<string>OpenSans-Semibold.ttf</string>
 		<string>OpenSans-ExtraBold.ttf</string>
 	</array>
-	<key>UIMainStoryboardFile</key>
-	<string>Pairing</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

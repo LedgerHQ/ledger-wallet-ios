@@ -61,7 +61,41 @@ final class LogWriter {
     }
     
     func cleanStaleLogFiles() {
-        enqueueCleanLogsFilesOperation()
+        // enqueue clean logs file operation
+        operationQueue.addOperationWithBlock() {
+            // extract list of to-keep files - (most 2 recent files) roughly 48 hours of logs
+            let filesToRemove: ArraySlice<String>
+            if let files = (try? self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath)) {
+                var allLogs = files.filter({$0.hasSuffix(".log")})
+                allLogs.sortInPlace(<)
+                filesToRemove = allLogs.prefix(max(0, allLogs.count - 2))
+            }
+            else {
+                console("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
+                return
+            }
+            
+            // abort if no file needs to be removed
+            if filesToRemove.isEmpty {
+                return
+            }
+            
+            // close all opened files
+            for (_, fileHandle) in self.fileHandles {
+                fileHandle.closeFile()
+            }
+            self.fileHandles = [:]
+            
+            // remove all stale files
+            for file in filesToRemove {
+                let filepath = (self.logsDirectoryPath as NSString).stringByAppendingPathComponent(file)
+                do {
+                    try self.fileManager.removeItemAtPath(filepath)
+                } catch _ {
+                    console("LogWriter: Unable to remove log file at path \(filepath)")
+                }
+            }
+        }
     }
     
     func exportLogsToData(sequentially sequentially: Bool, sequence: ((NSData) -> Void)? = nil, completion: ((NSData?) -> Void)) {
@@ -113,7 +147,7 @@ final class LogWriter {
         let temporypath = ApplicationManager.sharedInstance.temporaryDirectoryPath
         let filepath = ((temporypath as NSString).stringByAppendingPathComponent(uuid) as NSString).stringByAppendingPathExtension("txt")!
         
-        // remove file if it already exists (shouldnt happen)
+        // remove file if it already exists (shouldn't happen)
         if self.fileManager.fileExistsAtPath(filepath) {
             do {
                 try self.fileManager.removeItemAtPath(filepath)
@@ -203,44 +237,6 @@ final class LogWriter {
             }
             catch _ {
                 console("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
-            }
-        }
-    }
-    
-    private func enqueueCleanLogsFilesOperation() {
-        // enqueue clean logs file operation
-        operationQueue.addOperationWithBlock() {
-            // extract list of to-keep files - (most 2 recent files) roughly 48 hours of logs
-            let filesToRemove: ArraySlice<String>
-            if let files = (try? self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath)) {
-                var allLogs = files.filter({$0.hasSuffix(".log")})
-                allLogs.sortInPlace(<)
-                filesToRemove = allLogs.prefix(max(0, allLogs.count - 2))
-            }
-            else {
-                console("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
-                return
-            }
-            
-            // abort if no file needs to be removed
-            if filesToRemove.isEmpty {
-                return
-            }
-            
-            // close all opened files
-            for (_, fileHandle) in self.fileHandles {
-                fileHandle.closeFile()
-            }
-            self.fileHandles = [:]
-            
-            // remove all stale files
-            for file in filesToRemove {
-                let filepath = (self.logsDirectoryPath as NSString).stringByAppendingPathComponent(file)
-                do {
-                    try self.fileManager.removeItemAtPath(filepath)
-                } catch _ {
-                    console("LogWriter: Unable to remove log file at path \(filepath)")
-                }
             }
         }
     }

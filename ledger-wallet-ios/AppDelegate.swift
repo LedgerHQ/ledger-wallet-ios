@@ -8,9 +8,10 @@
 
 import UIKit
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private var coreDataStack: CoreDataStack!
+    
     // MARK: - States management
     
     var window: UIWindow?
@@ -24,12 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // remove all tmp files
         ApplicationManager.sharedInstance.clearTemporaryDirectory()
-        
-        // handle entry point without being embedded in a navigation controller
-        if let viewController = window?.rootViewController as? BaseViewController {
-            window?.rootViewController = Navigator.embedViewController(viewController)
-        }
 
+        // create coredata stack
+        coreDataStack = CoreDataStack(storeType: .Sqlite, modelName: LedgerModelName)
+        
+        // handle root view controller
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let rootViewController = Navigator.embedViewController(StoryboardFactory.storyboardWithIdentifier(.Pairing).instantiateInitialViewController()!)
+        window?.rootViewController = rootViewController
+        window?.makeKeyAndVisible()
         return true
     }
 
@@ -37,7 +41,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // register remote notifications
         RemoteNotificationsManager.sharedInstance.registerForRemoteNotifications()
     }
-
+    
+    func applicationWillTerminate(application: UIApplication) {
+        // save CoreData
+        coreDataStack.saveAndWait(true)
+    }
+    
+    func applicationWillResignActive(application: UIApplication) {
+        // save CoreData
+        coreDataStack.saveAndWait(true)
+    }
+    
+    func applicationDidEnterBackground(application: UIApplication) {
+        // save CoreData
+        coreDataStack.saveAndWait(true)
+    }
+    
     // MARK: - Remote notifications
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {

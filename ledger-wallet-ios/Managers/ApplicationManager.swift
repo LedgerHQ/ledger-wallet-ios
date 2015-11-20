@@ -48,7 +48,8 @@ final class ApplicationManager {
     var libraryDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] }
     var temporaryDirectoryPath: String { return NSTemporaryDirectory() }
     var logsDirectoryPath: String { return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs") }
-    
+    var databasesDirectoryPath: String { return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Databases") }
+
     private lazy var preferences = Preferences(storeName: "ApplicationManager")
     private lazy var networkActivitiesCount = 0
     private lazy var logger = Logger.sharedInstance(name: "ApplicationManager")
@@ -59,7 +60,7 @@ final class ApplicationManager {
     func handleLaunchWithOptions(launchOptions: [NSObject: AnyObject]?) {
         // print application path if needed
         #if DEBUG
-            logger.info(libraryDirectoryPath)
+            logger.info("Library path: " + libraryDirectoryPath)
         #endif
         
         // if app hasn't been launched befores
@@ -72,6 +73,11 @@ final class ApplicationManager {
     }
 
     func clearTemporaryDirectory() {
+        // if testing, no dothing
+        #if TEST
+            return
+        #endif
+        
         let directoryPath = self.temporaryDirectoryPath
         let fileManager = NSFileManager.defaultManager()
         
