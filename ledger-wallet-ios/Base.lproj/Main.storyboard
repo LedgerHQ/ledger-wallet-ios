@@ -13,7 +13,7 @@
                         <viewControllerLayoutGuide type="top" id="ZNu-tP-mmL"/>
                         <viewControllerLayoutGuide type="bottom" id="nFB-R2-K7e"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rKU-3V-2qo" customClass="View">
+                    <view key="view" contentMode="scaleToFill" id="rKU-3V-2qo" customClass="View" customModule="ledger_wallet_ios">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>

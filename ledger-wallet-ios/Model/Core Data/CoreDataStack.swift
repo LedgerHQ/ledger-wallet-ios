@@ -50,18 +50,6 @@ final class CoreDataStack {
             block(mainManagedObjectContext)
         }
     }
-    
-    // MARK: Emphemaral contexts
-    
-    func createChildContext() -> NSManagedObjectContext {
-        let context = managedObjectContextWithConcurrencyType(.PrivateQueueConcurrencyType)
-        guard let mainManagedObjectContext = mainManagedObjectContext else {
-            logger.error("Unable to create new child context (no main context)")
-            return context
-        }
-        context.parentContext = mainManagedObjectContext
-        return context
-    }
 
     // MARK: Persistence
     
