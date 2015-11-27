@@ -221,7 +221,7 @@ extension PairingTransactionsManager {
         else {
             // perform reconnect
             logger.warn("Websocket disconnected, outside transaction, reconnecting")
-            dispatchOnMainQueueAfter(3.0) {
+            dispatchAfterOnMainQueue(3.0) {
                 webSocket.connect()
             }
         }

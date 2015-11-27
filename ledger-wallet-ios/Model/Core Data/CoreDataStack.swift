@@ -50,22 +50,33 @@ final class CoreDataStack {
             block(mainManagedObjectContext)
         }
     }
-
-    // MARK: Persistence
     
-    func saveAndWait(wait: Bool) {
-        guard
-            let mainManagedObjectContext = mainManagedObjectContext,
-            privateManagedObjectContext = privateManagedObjectContext
-        else {
-            logger.error("Unable to save (no main or private context)")
+    func performBlockAndWait(block: (NSManagedObjectContext) -> Void) {
+        guard let mainManagedObjectContext = mainManagedObjectContext else {
+            logger.error("Unable to perform block and wait (no main context)")
             return
         }
         
-        performMethodForWait(wait)(mainManagedObjectContext)() { [weak self] in
-            guard let strongSelf = self else { return }
-            guard mainManagedObjectContext.hasChanges || privateManagedObjectContext.hasChanges else { return }
+        mainManagedObjectContext.performBlockAndWait() {
+            block(mainManagedObjectContext)
+        }
+    }
+
+    // MARK: Persistence
     
+    func save() {
+        guard
+            let mainManagedObjectContext = mainManagedObjectContext,
+            privateManagedObjectContext = privateManagedObjectContext
+            else {
+                logger.error("Unable to save (no main or private context)")
+                return
+        }
+        
+        mainManagedObjectContext.performBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard mainManagedObjectContext.hasChanges else { return }
+            
             do {
                 try mainManagedObjectContext.save()
             }
@@ -74,7 +85,10 @@ final class CoreDataStack {
                 return
             }
             
-            strongSelf.performMethodForWait(wait)(privateManagedObjectContext)() {
+            privateManagedObjectContext.performBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                guard privateManagedObjectContext.hasChanges else { return }
+                
                 do {
                     try privateManagedObjectContext.save()
                 }
@@ -84,6 +98,47 @@ final class CoreDataStack {
                 }
             }
         }
+    }
+    
+    func saveAndWait() -> Bool {
+        guard
+            let mainManagedObjectContext = mainManagedObjectContext,
+            privateManagedObjectContext = privateManagedObjectContext
+            else {
+                logger.error("Unable to save (no main or private context)")
+                return false
+        }
+        
+        var success = true
+
+        mainManagedObjectContext.performBlockAndWait() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard mainManagedObjectContext.hasChanges else { return }
+            
+            do {
+                try mainManagedObjectContext.save()
+            }
+            catch {
+                success = false
+                strongSelf.logger.error("Unable to save main context \(error)")
+                return
+            }
+            
+            privateManagedObjectContext.performBlockAndWait() { [weak self] in
+                guard let strongSelf = self else { return }
+                guard privateManagedObjectContext.hasChanges else { return }
+                
+                do {
+                    try privateManagedObjectContext.save()
+                }
+                catch {
+                    success = false
+                    strongSelf.logger.error("Unable to save private context \(error)")
+                    return
+                }
+            }
+        }
+        return success
     }
     
     // MARK: Stack opening
@@ -138,6 +193,7 @@ final class CoreDataStack {
             }
             else {
                 persistentStore = try persistentStoreCoordinator.addPersistentStoreWithType(storeType.systemStoreType, configuration: nil, URL: nil, options: nil)
+                logger.info("Database URL: In memory")
             }
         }
         catch {
@@ -149,24 +205,16 @@ final class CoreDataStack {
     
     // MARK: Utils
     
+    func newEphemeralManagedObjectContext() -> NSManagedObjectContext {
+        let context = managedObjectContextWithConcurrencyType(.PrivateQueueConcurrencyType)
+        context.parentContext = mainManagedObjectContext
+        return context
+    }
+    
     private func managedObjectContextWithConcurrencyType(concurrencyType: NSManagedObjectContextConcurrencyType) -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: concurrencyType)
         context.undoManager = nil
         return context
-    }
-    
-    private func dispatchMethodForWait(wait: Bool) -> (dispatch_queue_t, dispatch_block_t) -> Void {
-        if wait {
-            return dispatch_sync
-        }
-        return dispatch_async
-    }
-    
-    private func performMethodForWait(wait: Bool) -> NSManagedObjectContext -> (() -> Void) -> Void {
-        if wait {
-            return NSManagedObjectContext.performBlockAndWait
-        }
-        return NSManagedObjectContext.performBlock
     }
     
     // MARK: Initialization

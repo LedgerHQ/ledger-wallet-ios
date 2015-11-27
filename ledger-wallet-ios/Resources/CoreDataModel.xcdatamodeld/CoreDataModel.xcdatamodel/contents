@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
     <entity name="Account" representedClassName=".AccountEntity" syncable="YES">
+        <attribute name="extendedPublicKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="index" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <relationship name="operations" toMany="YES" deletionRule="Cascade" destinationEntity="Operation" inverseName="account" inverseEntity="Operation" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextExternalIndex" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="nextInternalIndex" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Address" inverseName="account" inverseEntity="Address" syncable="YES"/>
+        <relationship name="operations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Operation" inverseName="account" inverseEntity="Operation" syncable="YES"/>
         <relationship name="wallet" maxCount="1" deletionRule="Nullify" destinationEntity="Wallet" inverseName="accounts" inverseEntity="Wallet" syncable="YES"/>
+    </entity>
+    <entity name="Address" representedClassName=".AddressEntity" syncable="YES">
+        <attribute name="address" attributeType="String" syncable="YES"/>
+        <attribute name="chainIndex" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="keyIndex" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="addresses" inverseEntity="Account" syncable="YES"/>
     </entity>
     <entity name="Operation" representedClassName=".OperationEntity" syncable="YES">
         <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="operations" inverseEntity="Account" syncable="YES"/>
     </entity>
     <entity name="Wallet" representedClassName=".WalletEntity" syncable="YES">
-        <relationship name="accounts" toMany="YES" deletionRule="Cascade" destinationEntity="Account" inverseName="wallet" inverseEntity="Account" syncable="YES"/>
+        <attribute name="identifier" attributeType="String" syncable="YES"/>
+        <relationship name="accounts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Account" inverseName="wallet" inverseEntity="Account" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Wallet" positionX="-540" positionY="-81" width="128" height="58"/>
-        <element name="Account" positionX="-335" positionY="-81" width="128" height="88"/>
+        <element name="Account" positionX="-335" positionY="-81" width="128" height="165"/>
+        <element name="Address" positionX="-342" positionY="-18" width="128" height="105"/>
         <element name="Operation" positionX="-146" positionY="-72" width="128" height="58"/>
+        <element name="Wallet" positionX="-540" positionY="-81" width="128" height="75"/>
     </elements>
 </model>

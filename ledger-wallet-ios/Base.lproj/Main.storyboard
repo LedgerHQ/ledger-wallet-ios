@@ -27,6 +27,50 @@
             </objects>
             <point key="canvasLocation" x="-25" y="-358"/>
         </scene>
+        <!--Wallet Test View Controller-->
+        <scene sceneID="VCY-ck-2CP">
+            <objects>
+                <viewController storyboardIdentifier="WalletTestViewController" id="G20-4I-OqE" customClass="WalletTestViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UHn-8Y-O2D"/>
+                        <viewControllerLayoutGuide type="bottom" id="8On-Mh-093"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W6X-oo-jnS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Elr-S1-1qF">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NEs-9H-RVX">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NEs-9H-RVX" id="GBe-zZ-RqT">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Elr-S1-1qF" secondAttribute="trailing" id="2eb-Yt-vb9"/>
+                            <constraint firstItem="Elr-S1-1qF" firstAttribute="bottom" secondItem="8On-Mh-093" secondAttribute="top" id="Aqg-aL-7DN"/>
+                            <constraint firstItem="Elr-S1-1qF" firstAttribute="top" secondItem="W6X-oo-jnS" secondAttribute="top" id="HIU-vB-GsB"/>
+                            <constraint firstItem="Elr-S1-1qF" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leading" id="wGc-ni-AoR"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dVa-c4-12D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-25" y="349"/>
+        </scene>
         <!--Base Navigation Controller-->
         <scene sceneID="0aG-74-Ne4">
             <objects>

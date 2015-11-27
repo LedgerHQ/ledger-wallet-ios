@@ -30,7 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // create coredata stack
         coreDataStack = CoreDataStack(storeType: .Sqlite, modelName: LedgerCoreDataModelName) { success in
             // switch to root view controller
-            let rootViewController = PairingHomeViewController.instantiateFromStoryboard(StoryboardFactory.storyboardWithIdentifier(.Pairing))
+            let rootViewController = WalletTestViewController.instantiateFromMainStoryboard()
+            rootViewController.stack = self.coreDataStack
+            rootViewController.walletManager = WalletAPIManager(coreDataStack: self.coreDataStack)
             self.window?.rootViewController = Navigator.embedViewController(rootViewController)
         }
         
@@ -48,17 +50,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         // save CoreData
-        coreDataStack.saveAndWait(true)
+        coreDataStack.saveAndWait()
     }
     
     func applicationWillResignActive(application: UIApplication) {
         // save CoreData
-        coreDataStack.saveAndWait(true)
+        coreDataStack.saveAndWait()
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
         // save CoreData
-        coreDataStack.saveAndWait(true)
+        coreDataStack.saveAndWait()
     }
     
     // MARK: - Remote notifications

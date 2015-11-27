@@ -11,7 +11,7 @@ import Foundation
 final class Logger {
     
     let name: String
-    private static var instancesQueue = dispatch_queue_create("co.ledger.logger.dispatch-queue", DISPATCH_QUEUE_SERIAL)
+    private static var instancesQueue = dispatch_queue_create(dispatchQueueNameForIdentifier("Logger"), DISPATCH_QUEUE_SERIAL)
     private static var instances: [String: Logger] = [:]
     
     // MARK: - Log methods

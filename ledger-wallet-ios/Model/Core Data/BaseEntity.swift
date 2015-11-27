@@ -32,5 +32,11 @@ extension BaseEntity where Self: NSManagedObject, EntityClass == Self {
     static func fetchRequest() -> NSFetchRequest {
         return NSFetchRequest(entityName: entityName)
     }
+    
+    static func fetchRequestWithPredicate(predicate: String, _ arguments: AnyObject...) -> NSFetchRequest {
+        let fetchRequest = self.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: predicate, arguments)
+        return fetchRequest
+    }
 
 }

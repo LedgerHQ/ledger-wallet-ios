@@ -1,5 +1,5 @@
 //
-//  OperationEntity+CoreDataProperties.swift
+//  AddressEntity+CoreDataProperties.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 26/11/2015.
@@ -12,8 +12,11 @@
 import Foundation
 import CoreData
 
-extension OperationEntity {
+extension AddressEntity {
 
+    @NSManaged var address: String?
+    @NSManaged var chainIndex: Int32
+    @NSManaged var keyIndex: Int32
     @NSManaged var account: AccountEntity?
 
 }

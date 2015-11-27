@@ -8,6 +8,10 @@
 
 import Foundation
 
+func dispatchQueueNameForIdentifier(identifier: String) -> String {
+    return ApplicationManager.sharedInstance.bundleIdentifier + "." + identifier
+}
+
 func dispatchMainQueue() -> dispatch_queue_t {
     return dispatch_get_main_queue()
 }
@@ -24,7 +28,7 @@ func dispatchSyncOnMainQueue(block: () -> Void) {
     dispatch_sync(dispatchMainQueue(), block)
 }
 
-func dispatchOnMainQueueAfter(delay: Double, block: () -> Void) {
+func dispatchAfterOnMainQueue(delay: Double, block: () -> Void) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatchMainQueue(), block)
 }
 

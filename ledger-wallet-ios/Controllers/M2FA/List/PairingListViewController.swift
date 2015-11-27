@@ -100,7 +100,7 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
                     
                     // dismiss if empty
                     if self.pairingKeychainItems.isEmpty {
-                        dispatchOnMainQueueAfter(0.25) {
+                        dispatchAfterOnMainQueue(0.25) {
                             // dismiss
                             self.complete()
                         }
