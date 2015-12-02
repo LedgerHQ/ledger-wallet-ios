@@ -13,7 +13,7 @@ class WalletTestViewController: BaseViewController {
     
     var walletManager: WalletAPIManager!
     var timer: NSTimer!
-    var stack: CoreDataStack!
+    var stack: SQLiteStore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +23,7 @@ class WalletTestViewController: BaseViewController {
     }
 
     dynamic func t() {
-        let context = stack.newEphemeralManagedObjectContext()
-        context.performBlock() {
-            let request = WalletEntity.fetchRequestWithPredicate("identifier contains '2'")
-            let c = context.countForFetchRequest(request, error: nil)
-            print("c = \(c)")
-        }
+        
     }
     
 }

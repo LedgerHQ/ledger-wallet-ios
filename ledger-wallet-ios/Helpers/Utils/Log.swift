@@ -9,12 +9,7 @@
 import Foundation
 
 func console(value: Any) {
-    if NSThread.currentThread() == NSThread.mainThread() {
+    dispatchAsyncOnMainQueue() {
         print(value)
-    }
-    else {
-        dispatchAsyncOnMainQueue() {
-            print(value)
-        }
     }
 }

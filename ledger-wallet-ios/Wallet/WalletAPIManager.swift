@@ -12,41 +12,29 @@ typealias WalletRemoteTransaction = [String: AnyObject]
 
 final class WalletAPIManager {
     
+    private let uniqueIdentifier: String
     private let websocketListener: WalletWebsocketListener
     private let transactionsStream: WalletTransactionsStream
     private let layoutDiscoverer: WalletLayoutDiscoverer
     private let walletLayout: WalletLayout
-    
-    // MARK: Wallet management
-    
-    private func openWallet() {
-        // launch services
-        websocketListener.delegate = self
-        websocketListener.startListening()
-        layoutDiscoverer.delegate = self
-        layoutDiscoverer.startDiscovery()
-    }
-    
-    private func closeWallet() {
-        // stop services
-        websocketListener.stopListening()
-        layoutDiscoverer.stopDiscovery()
-    }
-    
+    private let dataProvider: WalletDataProvider
+    private let logger = Logger.sharedInstance(name: "WalletAPIManager")
+
     // MARK: Initialization
     
-    init(coreDataStack: CoreDataStack) {
+    init(uniqueIdentifier: String) {
+        self.uniqueIdentifier = uniqueIdentifier
+    
+        // open store
+        let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
+        let store = WalletStoreManager().manageStoreAtURL(storeURL)
+        
         // create services
+        dataProvider = WalletDataProvider(store: store)
         walletLayout = WalletLayout()
         websocketListener = WalletWebsocketListener()
         layoutDiscoverer = WalletLayoutDiscoverer(walletLayout: walletLayout)
         transactionsStream = WalletTransactionsStream(walletLayout: walletLayout)
-        
-        openWallet()
-    }
-    
-    deinit {
-        closeWallet()
     }
     
 }

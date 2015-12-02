@@ -60,10 +60,16 @@ final class ApplicationManager {
     func handleLaunchWithOptions(launchOptions: [NSObject: AnyObject]?) {
         // print application path if needed
         #if DEBUG
-            logger.info("Library path: " + libraryDirectoryPath)
+            logger.info("Library path: \"\(libraryDirectoryPath)\"")
         #endif
         
-        // if app hasn't been launched befores
+        // remove all tmp files
+        clearTemporaryDirectory()
+        
+        // clear stale log files
+        LogWriter.sharedInstance.cleanStaleLogFiles()
+        
+        // if app hasn't been launched before
         if !preferences.boolForKey("already_launched") {
             preferences.setBool(true, forKey: "already_launched")
             
@@ -72,7 +78,7 @@ final class ApplicationManager {
         }
     }
 
-    func clearTemporaryDirectory() {
+    private func clearTemporaryDirectory() {
         // if testing, no dothing
         #if TEST
             return
@@ -92,6 +98,7 @@ final class ApplicationManager {
                 do {
                     try fileManager.removeItemAtPath(filepath)
                 } catch _ {
+                    logger.warn("Unable to remove temporary file at path \"\(filepath)\"")
                 }
             }
         }

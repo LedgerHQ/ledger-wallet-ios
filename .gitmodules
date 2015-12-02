@@ -10,3 +10,6 @@
 [submodule "ledger-wallet-ios/Vendor/CoreBitcoin"]
 	path = ledger-wallet-ios/Vendor/CoreBitcoin
 	url = git@github.com:oleganza/CoreBitcoin.git
+[submodule "ledger-wallet-ios/Vendor/FMDB"]
+	path = ledger-wallet-ios/Vendor/FMDB
+	url = git@github.com:ccgus/fmdb.git

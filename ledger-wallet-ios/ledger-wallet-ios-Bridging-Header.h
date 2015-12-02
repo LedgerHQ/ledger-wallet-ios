@@ -20,3 +20,6 @@
 #import <openssl/rand.h>
 #import <openssl/crypto.h>
 #import <openssl/des.h>
+
+// FMDB
+#import "FMDB.h"
