@@ -104,6 +104,7 @@ final class SQLiteStore {
             }
             database.crashOnErrors = false
             database.logsErrors = false
+            database.setShouldCacheStatements(true)
             self.database = database
             success = true
         }

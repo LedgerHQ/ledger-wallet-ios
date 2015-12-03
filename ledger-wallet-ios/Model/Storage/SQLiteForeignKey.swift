@@ -42,7 +42,7 @@ extension SQLiteForeignKey: SQLiteRepresentable {
     
     var representativeStatement: String {
         guard let table = parentField.table else { return "" }
-        var statement = "FOREIGN KEY (\(childField.name)) REFERENCES \(table.name)(\(parentField.name))"
+        var statement = "FOREIGN KEY (\"\(childField.name)\") REFERENCES \"\(table.name)\"(\"\(parentField.name)\")"
         statement += " ON UPDATE \(updateAction.rawValue)"
         statement += " ON DELETE \(deleteAction.rawValue)"
         return statement

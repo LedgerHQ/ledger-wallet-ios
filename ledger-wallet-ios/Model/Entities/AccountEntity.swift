@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct AccountEntity: SQLiteStorable {
+struct AccountEntity: SQLiteStorableEntity {
  
     static let tableName = "account"
-    static let identifierKey = "id"
-    static let nameKey = "name"
+    
     static let indexKey = "index"
+    static let nameKey = "name"
     static let extendedPublicKeyKey = "extended_public_key"
     static let nextExternalIndexKey = "next_external_index"
     static let nextInternalIndexKey = "next_internal_index"

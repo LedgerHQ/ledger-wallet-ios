@@ -10,53 +10,32 @@ import Foundation
 
 typealias WalletRemoteTransaction = [String: AnyObject]
 
-final class WalletAPIManager {
+final class WalletAPIManager: BaseWalletManager {
     
-    private let uniqueIdentifier: String
-    private let websocketListener: WalletWebsocketListener
-    private let transactionsStream: WalletTransactionsStream
+    let uniqueIdentifier: String
     private let layoutDiscoverer: WalletLayoutDiscoverer
-    private let walletLayout: WalletLayout
-    private let dataProvider: WalletDataProvider
+    private let storeProxy: WalletStoreProxy
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
-
-    // MARK: Initialization
     
+    func lookForNewTransactions() {
+        layoutDiscoverer.startDiscovery()
+    }
+    
+    // MARK: Initialization
+
     init(uniqueIdentifier: String) {
         self.uniqueIdentifier = uniqueIdentifier
     
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
-        let store = WalletStoreManager().manageStoreAtURL(storeURL)
+        storeProxy = WalletStoreManager().storeProxyAtURL(storeURL, withUniqueIdentifier: uniqueIdentifier)
         
         // create services
-        dataProvider = WalletDataProvider(store: store)
-        walletLayout = WalletLayout()
-        websocketListener = WalletWebsocketListener()
-        layoutDiscoverer = WalletLayoutDiscoverer(walletLayout: walletLayout)
-        transactionsStream = WalletTransactionsStream(walletLayout: walletLayout)
+        layoutDiscoverer = WalletLayoutDiscoverer(storeProxy: storeProxy)
     }
     
-}
-
-extension WalletAPIManager: WalletWebsocketListenerDelegate {
-    
-    // MARK: WalletWebsocketListenerDelegate
-    
-    func websocketListener(websocketListener: WalletWebsocketListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
-        transactionsStream.enqueueTransaction(transaction)
-    }
-    
-}
-
-extension WalletAPIManager: WalletLayoutDiscovererDelegate {
-    
-    // MARK: WalletLayoutDiscovererDelegate
-    
-    func layoutDiscoverer(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
-        for transaction in transactions {
-            transactionsStream.enqueueTransaction(transaction)
-        }
+    deinit {
+        layoutDiscoverer.stopDiscovery()
     }
     
 }

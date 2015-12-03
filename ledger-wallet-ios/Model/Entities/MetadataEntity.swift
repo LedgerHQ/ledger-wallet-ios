@@ -8,10 +8,11 @@
 
 import Foundation
 
-final class MetadataEntity: SQLiteStorable {
+final class MetadataEntity: SQLiteStorableEntity {
     
     static let tableName = "metadata"
-    static let identifierKey = "id"
+    
     static let schemaVersionKey = "schema_version"
+    static let uniqueIdentifierKey = "unique_identifier"
 
 }

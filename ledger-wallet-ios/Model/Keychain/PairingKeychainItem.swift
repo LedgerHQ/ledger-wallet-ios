@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PairingKeychainItem: GenericKeychainItem, Equatable {
+final class PairingKeychainItem: BaseKeychainItem, Equatable {
     
     override class var serviceIdentifier: String { return "co.ledger.ledgerwallet.pairing" }
     override var valid: Bool { return super.valid && pairingId != nil && pairingKey != nil && dongleName != nil }

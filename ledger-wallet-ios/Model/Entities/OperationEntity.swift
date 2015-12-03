@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct OperationEntity: SQLiteStorable {
+struct OperationEntity: SQLiteStorableEntity {
     
     static let tableName = "operation"
-    static let identifierKey = "id"
-    static let accountIdentifierKey = "account_id"
+    
+    static let accountIndexKey = "account_index"
     
 }

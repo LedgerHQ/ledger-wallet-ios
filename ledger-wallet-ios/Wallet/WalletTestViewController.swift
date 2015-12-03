@@ -11,19 +11,15 @@ import UIKit
 
 class WalletTestViewController: BaseViewController {
     
-    var walletManager: WalletAPIManager!
-    var timer: NSTimer!
-    var stack: SQLiteStore!
+    var walletManager: BaseWalletManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "t", userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
 
-    dynamic func t() {
-        
+    @IBAction func scanForTransactions(sender: AnyObject) {
+        walletManager?.lookForNewTransactions()
     }
     
 }

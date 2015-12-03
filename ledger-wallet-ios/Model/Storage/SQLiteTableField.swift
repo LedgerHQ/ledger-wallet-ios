@@ -46,7 +46,7 @@ extension SQLiteTableField: SQLiteRepresentable {
     // MARK: SQLite representation
     
     var representativeStatement: String {
-        var statement = "'\(name)' \(type.rawValue)"
+        var statement = "\"\(name)\" \(type.rawValue)"
         if primaryKey { statement = statement + " PRIMARY KEY AUTOINCREMENT" }
         if unique { statement = statement + " UNIQUE" }
         if notNull { statement = statement + " NOT NULL" }

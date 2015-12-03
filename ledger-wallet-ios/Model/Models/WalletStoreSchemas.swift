@@ -10,7 +10,26 @@ import Foundation
 
 final class WalletStoreSchemas {
     
-    class func version1() -> SQLiteSchema {
+    static var currentSchema: SQLiteSchema? {
+        return schemaWithVersion(currentSchemaVersion)
+    }
+    
+    static var currentSchemaVersion: Int {
+        return 1
+    }
+    
+    static func schemaWithVersion(version: Int) -> SQLiteSchema? {
+        guard let schema = schemas[version] else {
+            return nil
+        }
+        return schema()
+    }
+    
+    private static let schemas: [Int: Void -> SQLiteSchema] = [
+        1: WalletStoreSchemas.version1
+    ]
+
+    private class func version1() -> SQLiteSchema {
         // schema
         let schema = SQLiteSchema(version: 1)
         schema.addPragmaCommand(SQLitePragmaCommand(name: "journal_mode", value: "WAL"))
@@ -18,39 +37,39 @@ final class WalletStoreSchemas {
         
         // tables
         let accountsTable = AccountEntity.eponymTable
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.identifierKey, type: .Integer, notNull: true, unique: true, primaryKey: true))
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.nameKey, type: .Text, notNull: false, unique: false))
         accountsTable.addField(SQLiteTableField(name: AccountEntity.indexKey, type: .Integer, notNull: true, unique: true))
+        accountsTable.addField(SQLiteTableField(name: AccountEntity.nameKey, type: .Text, notNull: false, unique: false))
         accountsTable.addField(SQLiteTableField(name: AccountEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false, defaultValue: 0))
         accountsTable.addField(SQLiteTableField(name: AccountEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false, defaultValue: 0))
         accountsTable.addField(SQLiteTableField(name: AccountEntity.extendedPublicKeyKey, type: .Text, notNull: false, unique: true))
         schema.addTable(accountsTable)
         
         let operationsTable = OperationEntity.eponymTable
-        operationsTable.addField(SQLiteTableField(name: OperationEntity.identifierKey, type: .Integer, notNull: true, unique: true, primaryKey: true))
-        operationsTable.addField(SQLiteTableField(name: OperationEntity.accountIdentifierKey, type: .Integer, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: OperationEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(operationsTable)
         
         let addressesTable = AddressEntity.eponymTable
-        addressesTable.addField(SQLiteTableField(name: AddressEntity.identifierKey, type: .Integer, notNull: true, unique: true, primaryKey: true))
-        addressesTable.addField(SQLiteTableField(name: AddressEntity.accountIdentifierKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: AddressEntity.addressKey, type: .Text, notNull: true, unique: true))
+        addressesTable.addField(SQLiteTableField(name: AddressEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: AddressEntity.keyIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: AddressEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(addressesTable)
         
         let metadataTable = MetadataEntity.eponymTable
-        metadataTable.addField(SQLiteTableField(name: MetadataEntity.identifierKey, type: .Integer, notNull: true, unique: true, primaryKey: true))
         metadataTable.addField(SQLiteTableField(name: MetadataEntity.schemaVersionKey, type: .Integer, notNull: true, unique: true))
+        metadataTable.addField(SQLiteTableField(name: MetadataEntity.uniqueIdentifierKey, type: .Text, notNull: true, unique: true))
         schema.addTable(metadataTable)
         
         // foreign keys
         let operationAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(AccountEntity.identifierKey)!,
-            childField: operationsTable.fieldWithName(OperationEntity.accountIdentifierKey)!,
+            parentField: accountsTable.fieldWithName(AccountEntity.indexKey)!,
+            childField: operationsTable.fieldWithName(OperationEntity.accountIndexKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         operationsTable.addForeignKey(operationAccountForeignKey)
         
         let addressAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(AccountEntity.identifierKey)!,
-            childField: addressesTable.fieldWithName(AddressEntity.accountIdentifierKey)!,
+            parentField: accountsTable.fieldWithName(AccountEntity.indexKey)!,
+            childField: addressesTable.fieldWithName(AddressEntity.accountIndexKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         addressesTable.addForeignKey(addressAccountForeignKey)
         

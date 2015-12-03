@@ -1,5 +1,5 @@
 //
-//  KeychainItem.swift
+//  BaseKeychainItem.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 26/01/2015.
@@ -9,7 +9,7 @@
 import Foundation
 import Security
 
-class GenericKeychainItem {
+class BaseKeychainItem {
     
     class var serviceIdentifier: String { return "" }
     class var itemClass: String { return kSecClassGenericPassword as String }

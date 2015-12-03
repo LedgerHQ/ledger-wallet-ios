@@ -41,7 +41,7 @@ extension SQLiteTable: SQLiteRepresentable {
     // MARK: SQLite representation
     
     var representativeStatement: String {
-        return "CREATE TABLE IF NOT EXISTS '\(name)' (\(fieldsStatement));"
+        return "CREATE TABLE IF NOT EXISTS \"\(name)\" (\(fieldsStatement));"
     }
     
     private var fieldsStatement: String {

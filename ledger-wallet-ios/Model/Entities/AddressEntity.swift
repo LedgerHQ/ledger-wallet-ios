@@ -8,10 +8,13 @@
 
 import Foundation
 
-struct AddressEntity: SQLiteStorable {
+struct AddressEntity: SQLiteStorableEntity {
     
     static let tableName = "address"
-    static let identifierKey = "id"
-    static let accountIdentifierKey = "account_id"
+    
+    static let addressKey = "address"
+    static let accountIndexKey = "account_index"
+    static let chainIndexKey = "chain_index"
+    static let keyIndexKey = "key_index"
     
 }
