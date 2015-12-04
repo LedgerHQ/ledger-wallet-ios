@@ -12,13 +12,14 @@ protocol BaseRESTClient {
     
     var baseURL: String { get }
     var httpClient: HTTPClient { get }
+    func baseURLWithPath(path: String) -> String
         
 }
 
 extension BaseRESTClient {
     
     func baseURLWithPath(path: String) -> String {
-        return baseURL.stringByAppendingString(path)
+        return (baseURL as NSString).stringByAppendingPathComponent(path)
     }
     
 }

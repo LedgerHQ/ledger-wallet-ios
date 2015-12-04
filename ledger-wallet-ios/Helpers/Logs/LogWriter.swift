@@ -43,7 +43,7 @@ final class LogWriter {
                 // create file if not existing
                 if !self.fileManager.fileExistsAtPath(logFilepath) {
                     if !self.fileManager.createFileAtPath(logFilepath, contents: nil, attributes: nil) {
-                        console("LogWriter: Unable to create log file at path \(logFilepath)")
+                        NSLog("LogWriter: Unable to create log file at path \(logFilepath)")
                     }
                 }
         
@@ -54,7 +54,7 @@ final class LogWriter {
                     self.writeLogEntryToFile(logEntry, fileHandle: fileHandle)
                 }
                 else {
-                    console("LogWriter: Unable to open log file at path \(logFilepath)")
+                    NSLog("LogWriter: Unable to open log file at path \(logFilepath)")
                 }
             }
         }
@@ -71,7 +71,7 @@ final class LogWriter {
                 filesToRemove = allLogs.prefix(max(0, allLogs.count - 2))
             }
             else {
-                console("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
+                NSLog("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
                 return
             }
             
@@ -92,7 +92,7 @@ final class LogWriter {
                 do {
                     try self.fileManager.removeItemAtPath(filepath)
                 } catch _ {
-                    console("LogWriter: Unable to remove log file at path \(filepath)")
+                    NSLog("LogWriter: Unable to remove log file at path \(filepath)")
                 }
             }
         }
@@ -109,7 +109,7 @@ final class LogWriter {
                 filesToExport = allLogs.suffix(2)
             }
             else {
-                console("LogWriter: Unable to obtain list of files to export from logs directory at path \(self.logsDirectoryPath)")
+                NSLog("LogWriter: Unable to obtain list of files to export from logs directory at path \(self.logsDirectoryPath)")
                 return
             }
             
@@ -152,13 +152,13 @@ final class LogWriter {
             do {
                 try self.fileManager.removeItemAtPath(filepath)
             } catch _ {
-                console("LogWriter: Unable to remove already existing exported empeheral log file at path \(filepath)")
+                NSLog("LogWriter: Unable to remove already existing exported empeheral log file at path \(filepath)")
                 completion(ephemeralFilepath: nil)
                 return
             }
         }
         if !self.fileManager.createFileAtPath(filepath, contents: nil, attributes: nil) {
-            console("LogWriter: Unable to create empeheral log file at path \(filepath)")
+            NSLog("LogWriter: Unable to create empeheral log file at path \(filepath)")
             completion(ephemeralFilepath: nil)
             return
         }
@@ -183,7 +183,7 @@ final class LogWriter {
                     }
                 }
                 else {
-                    console("LogWriter: Unable to write to empeheral log file at path \(filepath)")
+                    NSLog("LogWriter: Unable to write to empeheral log file at path \(filepath)")
                     do {
                         try self.fileManager.removeItemAtPath(filepath)
                     } catch _ {
@@ -193,7 +193,7 @@ final class LogWriter {
             })
         }
         else {
-            console("LogWriter: Unable to open empeheral log file for writing at path \(filepath)")
+            NSLog("LogWriter: Unable to open empeheral log file for writing at path \(filepath)")
             do {
                 try self.fileManager.removeItemAtPath(filepath)
             } catch _ {
@@ -210,7 +210,7 @@ final class LogWriter {
             fileHandle.writeData(data)
         }
         else {
-            console("LogWriter: Unable to save data \"\(finalString)\"")
+            NSLog("LogWriter: Unable to save data \"\(finalString)\"")
         }
     }
     
@@ -229,14 +229,14 @@ final class LogWriter {
                 try self.fileManager.createDirectoryAtPath(self.logsDirectoryPath, withIntermediateDirectories: true, attributes: nil)
             }
             catch _ {
-                console("LogWriter: Unable to create logs directory at path \(self.logsDirectoryPath)")
+                NSLog("LogWriter: Unable to create logs directory at path \(self.logsDirectoryPath)")
             }
             let URL = NSURL(fileURLWithPath: self.logsDirectoryPath, isDirectory: true)
             do {
                 try URL.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)
             }
             catch _ {
-                console("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
+                NSLog("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
             }
         }
     }

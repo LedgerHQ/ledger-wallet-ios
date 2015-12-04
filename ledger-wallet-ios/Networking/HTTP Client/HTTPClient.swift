@@ -12,16 +12,13 @@ typealias HTTPClientDataTask = NSURLSessionDataTask
 
 final class HTTPClient {
     
-    var timeoutInterval: NSTimeInterval = 30
-    var additionalHeaders: [String: String]? = nil
-    var session: NSURLSession {
-        if _session == nil {
-            _session = NSURLSession(configuration: preferredSessionConfiguration(), delegate: preferredSessionDelegate(), delegateQueue: preferredSessionDelegateQueue())
-        }
-        return _session
+    var additionalHeaders: [String: String]?
+    var timeoutInterval: NSTimeInterval {
+        get { return session.configuration.timeoutIntervalForRequest }
+        set { session.configuration.timeoutIntervalForRequest = newValue }
     }
-    private lazy var logger: Logger = Logger.sharedInstance(name: "HTTPClient")
-    private var _session: NSURLSession! = nil
+    private let session: NSURLSession
+    private let logger = Logger.sharedInstance(name: "HTTPClient")
     
     // MARK: - Tasks management
     
@@ -51,17 +48,27 @@ final class HTTPClient {
         
         // encode parameters
         encoding.encode(request, parameters: parameters)
-        
+
         // handler block
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { [weak self] data, response, error in
-            let httpResponse = response as! NSHTTPURLResponse
-            let statusCode = httpResponse.statusCode
-            var finalError = error
-            if finalError == nil && statusCode < 200 && statusCode > 299 {
-                finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
+            guard let strongSelf = self else { return }
+            
+            guard error == nil else {
+                completionHandler(nil, request, nil, error)
+                return
             }
-            self?.postprocessResponse(httpResponse, request: request, data: data, error: error)
-            completionHandler(data, request, httpResponse, finalError)
+            guard let httpResponse = response as? NSHTTPURLResponse else {
+                completionHandler(nil, request, nil, NSError(domain: "HTTPClientErrorDomain", code: 0, userInfo: nil))
+                return
+            }
+            let statusCode = httpResponse.statusCode
+            guard statusCode >= 200 && statusCode <= 299 else {
+                strongSelf.postprocessResponse(httpResponse, request: request)
+                completionHandler(nil, request, httpResponse, NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil))
+                return
+            }
+            strongSelf.postprocessResponse(httpResponse, request: request)
+            completionHandler(data, request, httpResponse, nil)
         }
         
         // launch request
@@ -79,8 +86,8 @@ final class HTTPClient {
         ApplicationManager.sharedInstance.startNetworkActivity()
     }
     
-    private func postprocessResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
-        logger.info("<- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
+    private func postprocessResponse(response: NSHTTPURLResponse, request: NSURLRequest) {
+        logger.info("<- \(response.statusCode) \(request.HTTPMethod!) \(request.URL!)")
         ApplicationManager.sharedInstance.stopNetworkActivity()
     }
     
@@ -90,7 +97,7 @@ final class HTTPClient {
         let request = NSMutableURLRequest()
         request.URL = NSURL(string: URL)
         request.HTTPMethod = method.rawValue
-        request.timeoutInterval = timeoutInterval
+        request.timeoutInterval = session.configuration.timeoutIntervalForRequest
         if let additionalHeaders = additionalHeaders {
             for (key, value) in additionalHeaders {
                 request.addValue(value, forHTTPHeaderField: key)
@@ -99,26 +106,20 @@ final class HTTPClient {
         return request
     }
     
-    // MARK: - Configuration
-    
-    private func preferredSessionConfiguration() -> NSURLSessionConfiguration {
-        let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-        configuration.timeoutIntervalForRequest = timeoutInterval
-        return configuration
-    }
-    
-    private func preferredSessionDelegate() -> NSURLSessionDelegate? {
-        return nil
-    }
-    
-    private func preferredSessionDelegateQueue() -> NSOperationQueue? {
-        return NSOperationQueue.mainQueue()
-    }
-    
     // MARK: - Initialization
     
+    init(delegateQueue: NSOperationQueue) {
+        let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 30
+        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: delegateQueue)
+    }
+    
+    convenience init() {
+        self.init(delegateQueue: NSOperationQueue.mainQueue())
+    }
+    
     deinit {
-        _session?.finishTasksAndInvalidate()
+        session.finishTasksAndInvalidate()
     }
     
 }

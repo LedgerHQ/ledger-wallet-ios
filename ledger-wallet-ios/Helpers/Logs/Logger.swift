@@ -40,7 +40,7 @@ final class Logger {
         
         // log to console if app is in debug
         #if DEBUG
-            console(logEntry)
+            NSLog(logEntry.debugDescription)
         #endif
         
         // write nothing if in tests

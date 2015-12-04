@@ -21,6 +21,15 @@ extension HTTPClient {
             case POST = "POST"
             case PUT = "PUT"
             case DELETE = "DELETE"
+            
+            private var encodesParameterInURL: Bool {
+                switch self {
+                case .GET, .HEAD, .DELETE:
+                    return true
+                default:
+                    return false
+                }
+            }
         }
         
         enum Encoding {
@@ -46,26 +55,16 @@ extension HTTPClient {
                         return (components.map{"\($0)=\($1)"} as [String]).joinWithSeparator("&")
                     }
                     
-                    func encodesParametersInURL(method: Method) -> Bool {
-                        switch method {
-                        case .GET, .HEAD, .DELETE:
-                            return true
-                        default:
-                            return false
-                        }
-                    }
-                    
-                    let method = Method(rawValue: URLRequest.HTTPMethod)
-                    if method != nil && encodesParametersInURL(method!) {
-                        if let URLComponents = NSURLComponents(URL: URLRequest.URL!, resolvingAgainstBaseURL: false) {
-                            URLComponents.percentEncodedQuery = (URLComponents.percentEncodedQuery != nil ? URLComponents.percentEncodedQuery! + "&" : "") + query(parameters!)
-                            URLRequest.URL = URLComponents.URL
-                        }
-                    } else {
+                    guard let method = Method(rawValue: URLRequest.HTTPMethod) where method.encodesParameterInURL else {
                         if URLRequest.valueForHTTPHeaderField("Content-Type") == nil {
                             URLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                         }
                         URLRequest.HTTPBody = query(parameters!).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+                        break
+                    }
+                    if let URLComponents = NSURLComponents(URL: URLRequest.URL!, resolvingAgainstBaseURL: false) {
+                        URLComponents.percentEncodedQuery = (URLComponents.percentEncodedQuery != nil ? URLComponents.percentEncodedQuery! + "&" : "") + query(parameters!)
+                        URLRequest.URL = URLComponents.URL
                     }
                 case .JSON:
                     do {

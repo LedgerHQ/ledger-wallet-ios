@@ -12,7 +12,7 @@ class LedgerAPIRESTClient: BaseRESTClient {
     
     lazy var baseURL = LedgerAPIBaseURL
     lazy var httpClient: HTTPClient = {
-        let httpClient = HTTPClient()
+        let httpClient = HTTPClient(delegateQueue: NSOperationQueue())
         httpClient.additionalHeaders = [
             HeaderFields.Platform.rawValue: "ios",
             HeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier

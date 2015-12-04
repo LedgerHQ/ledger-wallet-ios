@@ -15,16 +15,42 @@ final class WalletStoreProxy {
     
     // MARK: Accounts management
     
-    func fetchDiscoverableAccounts(completion: [WalletDiscoverableAccount] -> Void) {
-        let statement = "SELECT \"\(AccountEntity.indexKey)\", \(AccountEntity.nextExternalIndexKey), \(AccountEntity.nextInternalIndexKey), \(AccountEntity.extendedPublicKeyKey) FROM \(AccountEntity.tableName) ORDER BY \"\(AccountEntity.indexKey)\" ASC"
+    func fetchDiscoverableAccountWithIndex(index: Int, completion: (WalletDiscoverableAccount?) -> Void) {
+        let statement = "SELECT \"\(AccountEntity.indexKey)\", \"\(AccountEntity.extendedPublicKeyKey)\" FROM \"\(AccountEntity.tableName)\" WHERE \"\(AccountEntity.indexKey)\" = ?"
+        fetchModel(statement, index, completion: completion)
+    }
+
+    // MARK: Addresses management
+    
+    func fetchAddressesWithPaths(paths: [WalletAddressPath], completion: ([WalletCacheAddress]) -> Void) {
+        let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
+        let concatStatement = "('/' || \"\(AddressEntity.accountIndexKey)\" || '''/' || \"\(AddressEntity.chainIndexKey)\" || '/' || \"\(AddressEntity.keyIndexKey)\") AS v"
+        let fieldsStatement = "\"\(AddressEntity.accountIndexKey)\", \"\(AddressEntity.chainIndexKey)\", \"\(AddressEntity.keyIndexKey)\", \"\(AddressEntity.addressKey)\""
+        let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(AddressEntity.tableName)\" WHERE v IN (\(inStatement))"
         fetchCollection(statement, completion: completion)
     }
     
-    // MARK: Addresses management
-    
-    func fetchAddressForAccountIndex(accountIndex: Int, chainIndex: Int, keyIndex: Int, completion: WalletAddress? -> Void) {
-        let statement = "SELECT "
-        fetchModel(statement, completion: completion)
+    func storeAddresses(addresses: [WalletCacheAddress]) {
+        store.performTransaction() { [weak self] database in
+            guard let strongSelf = self else { return false }
+
+            for address in addresses {
+                // check that address is missing
+                guard let results = database.executeQuery("SELECT COUNT(*) as v FROM \"\(AddressEntity.tableName)\" WHERE \"\(AddressEntity.addressKey)\" = ?", withArgumentsInArray: [address.address]) where results.next() else {
+                    strongSelf.logger.error("Unable to retreive address: \(database.lastErrorMessage())")
+                    return false
+                }
+                if results.longForColumn("v") <= 0 {
+                    // insert it
+                    let values: [AnyObject] = [address.accountIndex, address.chainIndex, address.keyIndex, address.address]
+                    guard database.executeUpdate("INSERT INTO \"\(AddressEntity.tableName)\" (\"\(AddressEntity.accountIndexKey)\", \"\(AddressEntity.chainIndexKey)\", \"\(AddressEntity.keyIndexKey)\", \"\(AddressEntity.addressKey)\") VALUES (?, ?, ?, ?)", withArgumentsInArray: values) else {
+                        strongSelf.logger.error("Unable to store address: \(database.lastErrorMessage())")
+                        return false
+                    }
+                }
+            }
+            return true
+        }
     }
     
     // MARK: Metadata management
@@ -34,7 +60,7 @@ final class WalletStoreProxy {
             guard let strongSelf = self else { return }
 
             for statement in statements {
-                guard let _ = database.executeQuery(statement) else {
+                guard let _ = database.executeQuery(statement, withArgumentsInArray: nil) else {
                     strongSelf.logger.error("Unable to execute pragma command \"\(statement)\": \(database.lastErrorMessage())")
                     return
                 }
@@ -46,7 +72,7 @@ final class WalletStoreProxy {
         store.performBlock() { [weak self] database in
             guard let strongSelf = self else { return }
             
-            guard let results = database.executeQuery("SELECT \(MetadataEntity.schemaVersionKey) FROM \(MetadataEntity.tableName)") else {
+            guard let results = database.executeQuery("SELECT \(MetadataEntity.schemaVersionKey) FROM \(MetadataEntity.tableName)", withArgumentsInArray: nil) else {
                 strongSelf.logger.error("Unable to fetch store schema version: \(database.lastErrorMessage())")
                 dispatchAsyncOnMainQueue() { completion(nil) }
                 return
@@ -66,7 +92,7 @@ final class WalletStoreProxy {
             guard let strongSelf = self else { return false }
 
             for statement in statements {
-                guard database.executeUpdate(statement) else {
+                guard database.executeUpdate(statement, withArgumentsInArray: nil) else {
                     strongSelf.logger.error("Unable to create table \"\(statement)\": \(database.lastErrorMessage())")
                     return false
                 }
@@ -96,17 +122,21 @@ final class WalletStoreProxy {
         }
     }
     
-    // MARK: Utils
+    // MARK: Internal methods
     
-    private func fetchModel<T: SQLiteFetchableModel>(statement: String, completion: (T?) -> Void) {
+    private func fetchModel<T: SQLiteFetchableModel>(statement: String, _ values: AnyObject..., completion: (T?) -> Void) {
         store.performBlock() { [weak self] database in
             guard let strongSelf = self else {
                 dispatchAsyncOnMainQueue { completion(nil) }
                 return
             }
             
-            guard let results = database.executeQuery(statement) else {
+            guard let results = database.executeQuery(statement, withArgumentsInArray: values) else {
                 strongSelf.logger.error("Unable to fetch model of type \(T.self): \(database.lastErrorMessage())")
+                dispatchAsyncOnMainQueue { completion(nil) }
+                return
+            }
+            guard results.next() else {
                 dispatchAsyncOnMainQueue { completion(nil) }
                 return
             }
@@ -114,14 +144,14 @@ final class WalletStoreProxy {
         }
     }
     
-    private func fetchCollection<T: SQLiteFetchableModel>(statement: String, completion: ([T]) -> Void) {
+    private func fetchCollection<T: SQLiteFetchableModel>(statement: String, _ values: AnyObject..., completion: ([T]) -> Void) {
         store.performBlock() { [weak self] database in
             guard let strongSelf = self else {
                 dispatchAsyncOnMainQueue { completion([]) }
                 return
             }
             
-            guard let results = database.executeQuery(statement) else {
+            guard let results = database.executeQuery(statement, withArgumentsInArray: values) else {
                 strongSelf.logger.error("Unable to fetch collection of type \(T.self): \(database.lastErrorMessage())")
                 dispatchAsyncOnMainQueue { completion([]) }
                 return

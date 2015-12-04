@@ -11,10 +11,10 @@ import Foundation
 final class WalletStoreSchemas {
     
     static var currentSchema: SQLiteSchema? {
-        return schemaWithVersion(currentSchemaVersion)
+        return schemaWithVersion(currentVersion)
     }
     
-    static var currentSchemaVersion: Int {
+    static var currentVersion: Int {
         return 1
     }
     
@@ -41,7 +41,7 @@ final class WalletStoreSchemas {
         accountsTable.addField(SQLiteTableField(name: AccountEntity.nameKey, type: .Text, notNull: false, unique: false))
         accountsTable.addField(SQLiteTableField(name: AccountEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false, defaultValue: 0))
         accountsTable.addField(SQLiteTableField(name: AccountEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false, defaultValue: 0))
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.extendedPublicKeyKey, type: .Text, notNull: false, unique: true))
+        accountsTable.addField(SQLiteTableField(name: AccountEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
         schema.addTable(accountsTable)
         
         let operationsTable = OperationEntity.eponymTable

@@ -11,17 +11,13 @@ import Foundation
 struct WalletDiscoverableAccount: SQLiteFetchableModel {
     
     let index: Int
-    let nextInternalIndex: Int
-    let nextExternalIndex: Int
-    let extendedPublicKey: String?
+    let extendedPublicKey: String
     
     // MARK: Initialization
     
     init?(resultSet: FMResultSet) {
         index = self.dynamicType.integerForKey(AccountEntity.indexKey, resultSet: resultSet)!
-        nextInternalIndex = self.dynamicType.integerForKey(AccountEntity.nextInternalIndexKey, resultSet: resultSet)!
-        nextExternalIndex = self.dynamicType.integerForKey(AccountEntity.nextExternalIndexKey, resultSet: resultSet)!
-        extendedPublicKey = self.dynamicType.stringForKey(AccountEntity.extendedPublicKeyKey, resultSet: resultSet)
+        extendedPublicKey = self.dynamicType.stringForKey(AccountEntity.extendedPublicKeyKey, resultSet: resultSet)!
     }
     
 }

@@ -38,3 +38,11 @@ extension LogEntry: CustomStringConvertible {
     }
 
 }
+
+extension LogEntry: CustomDebugStringConvertible {
+    
+    var debugDescription: String {
+        return "[\(loggerName)][\(level)] \(string)"
+    }
+    
+}

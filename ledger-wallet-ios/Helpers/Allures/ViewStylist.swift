@@ -11,6 +11,7 @@ import UIKit
 final class ViewStylist {
     
     typealias AllureBlock = (UIView) -> Void
+    private static let logger = Logger.sharedInstance(name: "ViewStylist")
     
     class func stylizeView(view: UIView) {
         // check if full allure style name is present and apply it
@@ -19,7 +20,7 @@ final class ViewStylist {
                 allureBlock(view)
                 return
             }
-            console("ViewStylist: Unable to find allure \"\(styleName)\" for view \(view)")
+            logger.error("Unable to find allure \"\(styleName)\" for view \(view)")
         }
     }
     
@@ -30,7 +31,7 @@ final class ViewStylist {
                 allureBlock(view)
                 return
             }
-            console("ViewStylist: Cannot apply allure \"\(allureStyleName(view))\" to view \(view)")
+            logger.error("Cannot apply allure \"\(allureStyleName(view))\" to view \(view)")
         }
     }
     
