@@ -22,7 +22,7 @@ final class WalletStoreProxy {
 
     // MARK: Addresses management
     
-    func fetchAddressesWithPaths(paths: [WalletAddressPath], completion: ([WalletCacheAddress]) -> Void) {
+    func fetchAddressesWithPaths(paths: [WalletAddressPath], completion: ([WalletCacheAddress]?) -> Void) {
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
         let concatStatement = "('/' || \"\(AddressEntity.accountIndexKey)\" || '''/' || \"\(AddressEntity.chainIndexKey)\" || '/' || \"\(AddressEntity.keyIndexKey)\") AS v"
         let fieldsStatement = "\"\(AddressEntity.accountIndexKey)\", \"\(AddressEntity.chainIndexKey)\", \"\(AddressEntity.keyIndexKey)\", \"\(AddressEntity.addressKey)\""
@@ -126,10 +126,7 @@ final class WalletStoreProxy {
     
     private func fetchModel<T: SQLiteFetchableModel>(statement: String, _ values: AnyObject..., completion: (T?) -> Void) {
         store.performBlock() { [weak self] database in
-            guard let strongSelf = self else {
-                dispatchAsyncOnMainQueue { completion(nil) }
-                return
-            }
+            guard let strongSelf = self else { return }
             
             guard let results = database.executeQuery(statement, withArgumentsInArray: values) else {
                 strongSelf.logger.error("Unable to fetch model of type \(T.self): \(database.lastErrorMessage())")
@@ -144,16 +141,13 @@ final class WalletStoreProxy {
         }
     }
     
-    private func fetchCollection<T: SQLiteFetchableModel>(statement: String, _ values: AnyObject..., completion: ([T]) -> Void) {
+    private func fetchCollection<T: SQLiteFetchableModel>(statement: String, _ values: AnyObject..., completion: ([T]?) -> Void) {
         store.performBlock() { [weak self] database in
-            guard let strongSelf = self else {
-                dispatchAsyncOnMainQueue { completion([]) }
-                return
-            }
+            guard let strongSelf = self else { return }
             
             guard let results = database.executeQuery(statement, withArgumentsInArray: values) else {
                 strongSelf.logger.error("Unable to fetch collection of type \(T.self): \(database.lastErrorMessage())")
-                dispatchAsyncOnMainQueue { completion([]) }
+                dispatchAsyncOnMainQueue { completion(nil) }
                 return
             }
             dispatchAsyncOnMainQueue { completion(T.collectionFromSet(results)) }

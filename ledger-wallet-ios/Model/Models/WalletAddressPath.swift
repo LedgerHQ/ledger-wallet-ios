@@ -24,6 +24,46 @@ struct WalletAddressPath {
     var BIP44Path: String {
         return "/44'/0'" + relativePath
     }
+    
+    func rangeStringToKeyIndex(keyIndex: Int) -> String {
+        return "\(relativePath)-\(keyIndex)"
+    }
+    
+    func pathWithAcccountIndex(index: Int) -> WalletAddressPath {
+        return WalletAddressPath(accountIndex: index, chainIndex: chainIndex, keyIndex: keyIndex)
+    }
+    
+    func pathWithChainIndex(index: Int) -> WalletAddressPath {
+        return WalletAddressPath(accountIndex: accountIndex, chainIndex: index, keyIndex: keyIndex)
+    }
+    
+    func pathWithKeyIndex(index: Int) -> WalletAddressPath {
+        return WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: index)
+    }
+    
+    func pathWithNewAccountIndex(index: Int) -> WalletAddressPath {
+        return WalletAddressPath(accountIndex: index, chainIndex: 0, keyIndex: 0)
+    }
+    
+    func pathWithNewChainIndex(index: Int) -> WalletAddressPath {
+        return WalletAddressPath(accountIndex: accountIndex, chainIndex: index, keyIndex: 0)
+    }
+    
+    func pathWithNewKeyIndex(index: Int) -> WalletAddressPath {
+        return WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: index)
+    }
+
+    // MARK: Initialization
+
+    init(accountIndex: Int, chainIndex: Int, keyIndex: Int) {
+        self.accountIndex = accountIndex
+        self.chainIndex = chainIndex
+        self.keyIndex = keyIndex
+    }
+    
+    init() {
+        self.init(accountIndex: 0, chainIndex: 0, keyIndex: 0)
+    }
 }
 
 extension WalletAddressPath: Equatable {}
