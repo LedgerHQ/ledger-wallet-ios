@@ -55,6 +55,8 @@ final class HTTPClient {
             guard let strongSelf = self else { return }
             
             strongSelf.activeTasksCount--
+            ApplicationManager.sharedInstance.stopNetworkActivity()
+            
             guard error == nil else {
                 completionHandler(nil, request, nil, error)
                 return
@@ -77,7 +79,10 @@ final class HTTPClient {
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
         preprocessRequest(request)
         task.resume()
+        
         activeTasksCount++
+        ApplicationManager.sharedInstance.startNetworkActivity()
+        
         return task
     }
     
@@ -85,12 +90,10 @@ final class HTTPClient {
     
     private func preprocessRequest(request: NSURLRequest) {
         logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
-        ApplicationManager.sharedInstance.startNetworkActivity()
     }
     
     private func postprocessResponse(response: NSHTTPURLResponse, request: NSURLRequest) {
         logger.info("<- \(response.statusCode) \(request.HTTPMethod!) \(request.URL!)")
-        ApplicationManager.sharedInstance.stopNetworkActivity()
     }
     
     // MARK: - Requests
