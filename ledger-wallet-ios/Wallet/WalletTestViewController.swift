@@ -19,7 +19,7 @@ class WalletTestViewController: BaseViewController {
     }
 
     @IBAction func scanForTransactions(sender: AnyObject) {
-        walletManager?.lookForNewTransactions()
+        walletManager?.refreshTransactions()
     }
     
 }

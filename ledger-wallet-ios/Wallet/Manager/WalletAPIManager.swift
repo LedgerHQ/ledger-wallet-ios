@@ -17,7 +17,7 @@ final class WalletAPIManager: BaseWalletManager {
     private let storeProxy: WalletStoreProxy
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     
-    func lookForNewTransactions() {
+    func refreshTransactions() {
         layoutDiscoverer.startDiscovery()
     }
     

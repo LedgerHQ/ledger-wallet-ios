@@ -13,6 +13,6 @@ protocol BaseWalletManager: class {
     var uniqueIdentifier: String { get }
     
     init(uniqueIdentifier: String)
-    func lookForNewTransactions()
+    func refreshTransactions()
     
 }
