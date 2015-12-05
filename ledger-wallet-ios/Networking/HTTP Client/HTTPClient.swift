@@ -19,6 +19,7 @@ final class HTTPClient {
     }
     private let session: NSURLSession
     private let logger = Logger.sharedInstance(name: "HTTPClient")
+    private var activeTasksCount = 0
     
     // MARK: - Tasks management
     
@@ -53,6 +54,7 @@ final class HTTPClient {
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { [weak self] data, response, error in
             guard let strongSelf = self else { return }
             
+            strongSelf.activeTasksCount--
             guard error == nil else {
                 completionHandler(nil, request, nil, error)
                 return
@@ -75,7 +77,7 @@ final class HTTPClient {
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
         preprocessRequest(request)
         task.resume()
-        
+        activeTasksCount++
         return task
     }
     
@@ -119,7 +121,10 @@ final class HTTPClient {
     }
     
     deinit {
-        session.finishTasksAndInvalidate()
+        for _ in 0..<activeTasksCount {
+            ApplicationManager.sharedInstance.stopNetworkActivity()
+        }
+        session.invalidateAndCancel()
     }
     
 }
