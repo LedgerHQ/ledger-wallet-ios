@@ -42,6 +42,9 @@
                             <constraint firstItem="mR9-wG-Uzp" firstAttribute="top" secondItem="UHn-8Y-O2D" secondAttribute="bottom" id="yVh-YK-eFq"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="button" destination="mR9-wG-Uzp" id="BfN-WY-Lb5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVa-c4-12D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

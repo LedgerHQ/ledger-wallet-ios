@@ -8,9 +8,13 @@
 
 import Foundation
 
+let WalletManagerDidStartRefreshingLayoutNotification = "WalletManagerDidStartRefreshingLayoutNotification"
+let WalletManagerDidStopRefreshingLayoutNotification = "WalletManagerDidStopRefreshingLayoutNotification"
+
 protocol BaseWalletManager: class {
     
     var uniqueIdentifier: String { get }
+    var isRefreshingLayout: Bool { get }
     
     init(uniqueIdentifier: String)
     func refreshTransactions()

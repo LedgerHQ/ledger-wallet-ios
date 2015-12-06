@@ -22,6 +22,7 @@ final class WalletWebsocketListener {
     
     func startListening() {
         guard !listening else { return }
+        
         listening = true
         websocket = WebSocket(url: NSURL(string: "wss://socket.blockcypher.com/v1/btc/main")!)
         websocket.delegate = self
@@ -30,6 +31,7 @@ final class WalletWebsocketListener {
     
     func stopListening() {
         guard listening else { return }
+        
         listening = false
         websocket.disconnect()
         websocket = nil
@@ -52,17 +54,22 @@ extension WalletWebsocketListener: WebSocketDelegate {
     func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         dispatchAfterOnMainQueue(3.0) { [weak self] in
             guard let strongSelf = self else { return }
+            
             strongSelf.stopListening()
             strongSelf.startListening()
         }
     }
     
     func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        dispatchAsyncOnGlobalQueueWithPriority(DISPATCH_QUEUE_PRIORITY_DEFAULT) {
+        dispatchAsyncOnGlobalQueueWithPriority(DISPATCH_QUEUE_PRIORITY_DEFAULT) { [weak self] in
+            guard let _ = self else { return }
+            
             guard let data = text.dataUsingEncoding(NSUTF8StringEncoding) else { return }
             guard let JSON = JSON.JSONObjectFromData(data) as? WalletRemoteTransaction else { return }
+            
             dispatchAsyncOnMainQueue() { [weak self] in
                 guard let strongSelf = self else { return }
+                
                 strongSelf.delegate?.websocketListener(strongSelf, didReceiveTransaction: JSON)
             }
         }

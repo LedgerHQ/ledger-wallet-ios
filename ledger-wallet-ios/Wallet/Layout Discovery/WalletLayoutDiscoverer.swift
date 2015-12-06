@@ -27,9 +27,11 @@ protocol WalletLayoutDiscovererDelegate: class {
 
 final class WalletLayoutDiscoverer {
     
-    weak var delegate: WalletLayoutDiscovererDelegate?
     private static let keyIncrement = 20
     private static let maxChainIndex = 1
+    
+    var isDiscovering: Bool { return discoveringLayout }
+    weak var delegate: WalletLayoutDiscovererDelegate?
     private var discoveringLayout = false
     private let storeProxy: WalletStoreProxy
     private let restClient = TransactionsRESTClient()
@@ -168,6 +170,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
     }
     
     func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletCacheAddress]) {
+        // store newly generated addresses in store
         storeProxy.storeAddresses(addresses)
     }
     

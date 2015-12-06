@@ -13,12 +13,30 @@ typealias WalletRemoteTransaction = [String: AnyObject]
 final class WalletAPIManager: BaseWalletManager {
     
     let uniqueIdentifier: String
+    var isRefreshingLayout: Bool { return layoutDiscoverer.isDiscovering }
+    
     private let layoutDiscoverer: WalletLayoutDiscoverer
+    private let websocketListener: WalletWebsocketListener
+    private let transactionsStream: WalletTransactionsStream
     private let storeProxy: WalletStoreProxy
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     
+    // MARK: Wallet management
+    
     func refreshTransactions() {
         layoutDiscoverer.startDiscovery()
+    }
+    
+    private func launchServices() {
+        layoutDiscoverer.delegate = self
+        layoutDiscoverer.startDiscovery()
+        websocketListener.delegate = self
+        websocketListener.startListening()
+    }
+    
+    private func stopServices() {
+        layoutDiscoverer.stopDiscovery()
+        websocketListener.stopListening()
     }
     
     // MARK: Initialization
@@ -32,11 +50,15 @@ final class WalletAPIManager: BaseWalletManager {
         
         // create services
         layoutDiscoverer = WalletLayoutDiscoverer(storeProxy: storeProxy)
-        layoutDiscoverer.delegate = self
+        websocketListener = WalletWebsocketListener()
+        transactionsStream = WalletTransactionsStream(storeProxy: storeProxy)
+    
+        // launch services
+        launchServices()
     }
     
     deinit {
-        layoutDiscoverer.stopDiscovery()
+        stopServices()
     }
     
 }
@@ -46,14 +68,17 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
     // MARK: WalletLayoutDiscovererDelegate
 
     func layoutDiscoverDidStart(layoutDiscoverer: WalletLayoutDiscoverer) {
-
+        // notify
+        notifyObservers(WalletManagerDidStartRefreshingLayoutNotification)
     }
     
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didStopWithError error: WalletLayoutDiscovererError?) {
-
+        // notify
+        notifyObservers(WalletManagerDidStopRefreshingLayoutNotification)
     }
     
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, extendedPublicKeyAtIndex index: Int, providerBlock: (String?) -> Void) {
+        // TODO:
         let xpubs: [Int: String] = [
             0: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy",
             1: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk",
@@ -69,7 +94,29 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
     }
 
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
-        print("DID DISCOVER \(transactions.count)")
+        // enqueue transactions
+        transactionsStream.enqueueTransactions(transactions)
+    }
+    
+}
+
+extension WalletAPIManager: WalletWebsocketListenerDelegate {
+    
+    // MARK: WalletWebsocketListenerDelegate
+    
+    func websocketListener(websocketListener: WalletWebsocketListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
+        // enqueue transaction
+        transactionsStream.enqueueTransactions([transaction])
+    }
+    
+}
+
+extension WalletAPIManager {
+    
+    // MARK: Notifications management
+    
+    private func notifyObservers(notification: String, userInfo: [String: AnyObject]? = nil) {
+        NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
     }
     
 }
