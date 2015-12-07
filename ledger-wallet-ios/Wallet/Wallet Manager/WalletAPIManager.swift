@@ -50,9 +50,9 @@ final class WalletAPIManager: BaseWalletManager {
         
         // create services
         layoutDiscoverer = WalletLayoutDiscoverer(storeProxy: storeProxy)
-        websocketListener = WalletWebsocketListener()
         transactionsStream = WalletTransactionsStream(storeProxy: storeProxy)
-    
+        websocketListener = WalletWebsocketListener()
+        
         // launch services
         launchServices()
     }

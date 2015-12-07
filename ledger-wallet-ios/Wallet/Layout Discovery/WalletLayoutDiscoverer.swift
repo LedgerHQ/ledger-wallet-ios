@@ -34,7 +34,7 @@ final class WalletLayoutDiscoverer {
     weak var delegate: WalletLayoutDiscovererDelegate?
     private var discoveringLayout = false
     private let storeProxy: WalletStoreProxy
-    private let restClient = TransactionsRESTClient()
+    private let restClient = TransactionsAPIClient(handlersQueue: NSOperationQueue.mainQueue())
     private let logger = Logger.sharedInstance(name: "WalletLayoutDiscoverer")
     private var currentRequest: WalletLayoutAddressRequest?
     private var foundTransactionsInCurrentAccount = false

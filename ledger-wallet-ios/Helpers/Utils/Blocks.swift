@@ -20,22 +20,30 @@ func dispatchGlobalQueueWithPriority(priority: Int) -> dispatch_queue_t {
     return dispatch_get_global_queue(priority, 0)
 }
 
-func dispatchAsyncOnMainQueue(block: () -> Void) {
+func dispatchAsyncOnMainQueue(block: dispatch_block_t) {
     dispatch_async(dispatchMainQueue(), block)
 }
 
-func dispatchSyncOnMainQueue(block: () -> Void) {
+func dispatchSyncOnMainQueue(block: dispatch_block_t) {
     dispatch_sync(dispatchMainQueue(), block)
 }
 
-func dispatchAfterOnMainQueue(delay: Double, block: () -> Void) {
+func dispatchAsyncOnQueue(queue: dispatch_queue_t, block: dispatch_block_t) {
+    dispatch_async(queue, block)
+}
+
+func dispatchSyncOnQueue(queue: dispatch_queue_t, block: dispatch_block_t) {
+    dispatch_sync(queue, block)
+}
+
+func dispatchAfterOnMainQueue(delay: Double, block: dispatch_block_t) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatchMainQueue(), block)
 }
 
-func dispatchAsyncOnGlobalQueueWithPriority(priority: Int, block: () -> Void) {
+func dispatchAsyncOnGlobalQueueWithPriority(priority: Int, block: dispatch_block_t) {
     dispatch_async(dispatchGlobalQueueWithPriority(priority), block)
 }
 
-func dispatchSyncOnGlobalQueueWithPriority(priority: Int, block: () -> Void) {
+func dispatchSyncOnGlobalQueueWithPriority(priority: Int, block: dispatch_block_t) {
     dispatch_sync(dispatchGlobalQueueWithPriority(priority), block)
 }

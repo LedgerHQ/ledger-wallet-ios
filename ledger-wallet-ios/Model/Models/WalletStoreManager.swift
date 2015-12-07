@@ -16,7 +16,7 @@ final class WalletStoreManager {
     
     func storeProxyAtURL(URL: NSURL?, withUniqueIdentifier uniqueIdentifier: String) -> WalletStoreProxy {
         let store = SQLiteStore(URL: URL)
-        let storeProxy = WalletStoreProxy(store: store)
+        let storeProxy = WalletStoreProxy(store: store, handlersQueue: dispatchMainQueue())
         
         if let schema = WalletStoreSchemas.currentSchema {
             executePragmaCommands(storeProxy, schema: schema)

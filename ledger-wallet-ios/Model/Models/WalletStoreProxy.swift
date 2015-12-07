@@ -10,6 +10,7 @@ import Foundation
 
 final class WalletStoreProxy {
     
+    private let handlersQueue: dispatch_queue_t
     private let store: SQLiteStore
     private let logger = Logger.sharedInstance(name: "WalletStoreProxy")
     
@@ -74,16 +75,16 @@ final class WalletStoreProxy {
             
             guard let results = database.executeQuery("SELECT \(MetadataEntity.schemaVersionKey) FROM \(MetadataEntity.tableName)", withArgumentsInArray: nil) else {
                 strongSelf.logger.error("Unable to fetch store schema version: \(database.lastErrorMessage())")
-                dispatchAsyncOnMainQueue() { completion(nil) }
+                dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(nil) }
                 return
             }
             guard results.next() && !results.columnIsNull(MetadataEntity.schemaVersionKey) else {
                 strongSelf.logger.warn("Unable to fetch schema version, no row")
-                dispatchAsyncOnMainQueue() { completion(nil) }
+                dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(nil) }
                 return
             }
             let version = results.longForColumn(MetadataEntity.schemaVersionKey)
-            dispatchAsyncOnMainQueue() { completion(version > 0 ? version : nil) }
+            dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(version > 0 ? version : nil) }
         }
     }
     
@@ -130,14 +131,14 @@ final class WalletStoreProxy {
             
             guard let results = database.executeQuery(statement, withArgumentsInArray: values) else {
                 strongSelf.logger.error("Unable to fetch model of type \(T.self): \(database.lastErrorMessage())")
-                dispatchAsyncOnMainQueue { completion(nil) }
+                dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(nil) }
                 return
             }
             guard results.next() else {
-                dispatchAsyncOnMainQueue { completion(nil) }
+                dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(nil) }
                 return
             }
-            dispatchAsyncOnMainQueue { completion(T.init(resultSet: results)) }
+            dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(T.init(resultSet: results)) }
         }
     }
     
@@ -147,17 +148,18 @@ final class WalletStoreProxy {
             
             guard let results = database.executeQuery(statement, withArgumentsInArray: values) else {
                 strongSelf.logger.error("Unable to fetch collection of type \(T.self): \(database.lastErrorMessage())")
-                dispatchAsyncOnMainQueue { completion(nil) }
+                dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(nil) }
                 return
             }
-            dispatchAsyncOnMainQueue { completion(T.collectionFromSet(results)) }
+            dispatchAsyncOnQueue(strongSelf.handlersQueue) { completion(T.collectionFromSet(results)) }
         }
     }
     
     // MARK: Initialization
     
-    init(store: SQLiteStore) {
+    init(store: SQLiteStore, handlersQueue: dispatch_queue_t) {
         self.store = store
+        self.handlersQueue = handlersQueue
     }
     
 }

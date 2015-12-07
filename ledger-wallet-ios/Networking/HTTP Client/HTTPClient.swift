@@ -113,14 +113,10 @@ final class HTTPClient {
     
     // MARK: - Initialization
     
-    init(delegateQueue: NSOperationQueue) {
+    init(handlersQueue: NSOperationQueue) {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
         configuration.timeoutIntervalForRequest = 30
-        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: delegateQueue)
-    }
-    
-    convenience init() {
-        self.init(delegateQueue: NSOperationQueue.mainQueue())
+        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: handlersQueue)
     }
     
     deinit {

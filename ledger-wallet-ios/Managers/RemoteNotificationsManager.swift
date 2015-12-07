@@ -11,7 +11,7 @@ import Foundation
 final class RemoteNotificationsManager {
     
     static let sharedInstance = RemoteNotificationsManager()
-    lazy private var restClient = RemoteNotificationsRESTClient()
+    private let restClient = RemoteNotificationsAPIClient(handlersQueue: NSOperationQueue.mainQueue())
 
     // MARK: - Common
     
@@ -44,9 +44,7 @@ final class RemoteNotificationsManager {
     
     func unregisterDeviceTokenFromPairedDongleWithId(pairingId: String) {
         // if pairing item already registered a device token
-        restClient.unregisterDeviceTokenFromPairingId(pairingId) { success in
-            
-        }
+        restClient.unregisterDeviceTokenFromPairingId(pairingId) { _ in }
     }
     
     // MARK: Initialization

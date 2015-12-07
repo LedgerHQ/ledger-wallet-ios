@@ -12,7 +12,6 @@ import UIKit
 class WalletTestViewController: BaseViewController {
     
     var walletManager: BaseWalletManager?
-    var restClient = TransactionsRESTClient()
     @IBOutlet private weak var button: UIButton!
     
     override func viewDidLoad() {
