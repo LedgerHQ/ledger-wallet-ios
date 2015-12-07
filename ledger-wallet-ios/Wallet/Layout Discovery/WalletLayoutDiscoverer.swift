@@ -51,6 +51,7 @@ final class WalletLayoutDiscoverer {
         currentRequest = nil
         foundTransactionsInCurrentAccount = false
         delegate?.layoutDiscoverDidStart(self)
+        ApplicationManager.sharedInstance.startNetworkActivity()
         fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: self.dynamicType.keyIncrement - 1)
     }
     
@@ -67,6 +68,7 @@ final class WalletLayoutDiscoverer {
         discoveringLayout = false
         currentRequest = nil
         foundTransactionsInCurrentAccount = false
+        ApplicationManager.sharedInstance.stopNetworkActivity()
         delegate?.layoutDiscover(self, didStopWithError: error)
     }
     

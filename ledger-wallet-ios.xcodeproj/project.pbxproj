@@ -986,9 +986,9 @@
 		37E316DF1C14665800BE2C87 /* Layout Discovery */ = {
 			isa = PBXGroup;
 			children = (
-				37E316E01C14665800BE2C87 /* WalletLayoutAddressRequest.swift */,
-				37E316E11C14665800BE2C87 /* WalletLayoutDiscoverer.swift */,
 				37E316E21C14665800BE2C87 /* WalletWebsocketListener.swift */,
+				37E316E11C14665800BE2C87 /* WalletLayoutDiscoverer.swift */,
+				37E316E01C14665800BE2C87 /* WalletLayoutAddressRequest.swift */,
 			);
 			path = "Layout Discovery";
 			sourceTree = "<group>";
