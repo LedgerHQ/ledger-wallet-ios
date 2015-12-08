@@ -35,6 +35,10 @@ final class RESTClient {
         return httpClient.put(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
+    func cancelAllTasks() {
+        httpClient.cancelAllTasks()
+    }
+    
     // MARK: - Utils
     
     private func baseURLWithPath(path: String) -> String {
@@ -43,9 +47,13 @@ final class RESTClient {
     
     // MARK: - Initialization
     
-    init(baseURL: String, handlersQueue: NSOperationQueue) {
+    init(baseURL: String, delegateQueue: NSOperationQueue) {
         self.baseURL = baseURL
-        self.httpClient = HTTPClient(handlersQueue: handlersQueue)
+        self.httpClient = HTTPClient(delegateQueue: delegateQueue)
+    }
+    
+    deinit {
+        cancelAllTasks()
     }
     
 }

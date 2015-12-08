@@ -26,4 +26,16 @@ struct WalletAccount: SQLiteFetchableModel {
         name = self.dynamicType.stringForKey(AccountEntity.nameKey, resultSet: resultSet)
     }
     
+    init(index: Int, extendedPublicKey: String, name: String?) {
+        self.init(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: 0, nextExternalIndex: 0, name: name)
+    }
+    
+    init(index: Int, extendedPublicKey: String, nextInternalIndex: Int, nextExternalIndex: Int, name: String?) {
+        self.index = index
+        self.extendedPublicKey = extendedPublicKey
+        self.name = name
+        self.nextExternalIndex = nextExternalIndex
+        self.nextInternalIndex = nextInternalIndex
+    }
+    
 }

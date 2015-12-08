@@ -17,6 +17,11 @@ protocol BaseWalletManager: class {
     var isRefreshingLayout: Bool { get }
     
     init(uniqueIdentifier: String)
-    func refreshTransactions()
+    func startRefreshingLayout()
+    func stopRefreshingLayout()
+    func startListeningTransactions()
+    func stopListeningTransactions()
+    func startAllServices()
+    func stopAllServices()
     
 }

@@ -10,7 +10,7 @@ import Foundation
 
 final class WalletStoreProxy {
     
-    private let handlersQueue: NSOperationQueue
+    private let delegateQueue: NSOperationQueue
     private let store: SQLiteStore
     private let logger = Logger.sharedInstance(name: "WalletStoreProxy")
     
@@ -36,7 +36,7 @@ final class WalletStoreProxy {
         store.performBlock() { [weak self] context in
             guard let strongSelf = self else { return }
             let result = block(context)
-            strongSelf.handlersQueue.addOperationWithBlock() {
+            strongSelf.delegateQueue.addOperationWithBlock() {
                 guard let _ = self else { return }
                 completion(result)
             }
@@ -47,7 +47,7 @@ final class WalletStoreProxy {
         store.performBlock() { [weak self] context in
             guard let strongSelf = self else { return }
             let results = block(context)
-            strongSelf.handlersQueue.addOperationWithBlock() {
+            strongSelf.delegateQueue.addOperationWithBlock() {
                 guard let _ = self else { return }
                 completion(results)
             }
@@ -63,9 +63,9 @@ final class WalletStoreProxy {
     
     // MARK: - Initialization
     
-    init(store: SQLiteStore, handlersQueue: NSOperationQueue) {
+    init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
         self.store = store
-        self.handlersQueue = handlersQueue
+        self.delegateQueue = delegateQueue
     }
     
 }

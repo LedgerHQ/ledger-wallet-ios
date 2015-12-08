@@ -20,23 +20,36 @@ final class WalletAPIManager: BaseWalletManager {
     private let transactionsStream: WalletTransactionsStream
     private let storeProxy: WalletStoreProxy
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
+    private let delegateQueue = NSOperationQueue.mainQueue()
     
     // MARK: Wallet management
     
-    func refreshTransactions() {
+    func startRefreshingLayout() {
+        layoutDiscoverer.delegate = self
         layoutDiscoverer.startDiscovery()
     }
     
-    private func launchServices() {
-        layoutDiscoverer.delegate = self
-        layoutDiscoverer.startDiscovery()
+    func stopRefreshingLayout() {
+        layoutDiscoverer.stopDiscovery()
+    }
+    
+    func startListeningTransactions() {
         websocketListener.delegate = self
         websocketListener.startListening()
     }
     
-    private func stopServices() {
-        layoutDiscoverer.stopDiscovery()
+    func stopListeningTransactions() {
         websocketListener.stopListening()
+    }
+    
+    func startAllServices() {
+        startRefreshingLayout()
+        startListeningTransactions()
+    }
+    
+    func stopAllServices() {
+        stopRefreshingLayout()
+        stopListeningTransactions()
     }
     
     // MARK: Initialization
@@ -47,19 +60,18 @@ final class WalletAPIManager: BaseWalletManager {
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
         let store = WalletStoreManager.storeAtURL(storeURL, withUniqueIdentifier: uniqueIdentifier)
-        self.storeProxy = WalletStoreProxy(store: store, handlersQueue: NSOperationQueue.mainQueue())
+        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
-        self.layoutDiscoverer = WalletLayoutDiscoverer(storeProxy: storeProxy)
+        self.layoutDiscoverer = WalletLayoutDiscoverer(store: store, delegateQueue: NSOperationQueue(maxConcurrentOperationCount: 1))
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy)
         self.websocketListener = WalletWebsocketListener()
         
-        // launch services
-        launchServices()
+        startAllServices()
     }
     
     deinit {
-        stopServices()
+        stopAllServices()
     }
     
 }
@@ -79,19 +91,18 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
     }
     
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void) {
-//        // TODO:
-//        let xpubs: [Int: String] = [
-//            0: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy",
-//            1: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk",
-//            2: "xpub6Cec5KTvWeSNJtrFK6PqoCoP369xG8HYEDswqmTsQq63frkqF6dqYV56qRjJ7VQn1TEaejBPowG9vMGxVhsfRinhTgH5fTcAvMedABC8w6P",
-//            3: "xpub6Cec5KTvWeSNLwb2fMVRYVJn4w49WebLyg7cJM2QsbQotPggFX49H8jKvieYCMHaGCsKrW9VVknSt7KRxRuacasuGyJm74hZ4JeNRdsRB6Y",
-//            4: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb"
-//        ]
-//        guard let xpub = xpubs[index] else {
-//            providerBlock(nil)
-//            return
-//        }
-//        providerBlock(xpub)
+        let accounts: [WalletAccount] = [
+            WalletAccount(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
+            WalletAccount(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
+            WalletAccount(index: 2, extendedPublicKey: "xpub6Cec5KTvWeSNJtrFK6PqoCoP369xG8HYEDswqmTsQq63frkqF6dqYV56qRjJ7VQn1TEaejBPowG9vMGxVhsfRinhTgH5fTcAvMedABC8w6P", name: nil),
+            WalletAccount(index: 3, extendedPublicKey: "xpub6Cec5KTvWeSNLwb2fMVRYVJn4w49WebLyg7cJM2QsbQotPggFX49H8jKvieYCMHaGCsKrW9VVknSt7KRxRuacasuGyJm74hZ4JeNRdsRB6Y", name: nil),
+            WalletAccount(index: 4, extendedPublicKey: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb", name: nil)
+        ]
+        guard index < accounts.count else {
+            providerBlock(nil)
+            return
+        }
+        providerBlock(accounts[index])
     }
 
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
@@ -117,7 +128,9 @@ extension WalletAPIManager {
     // MARK: Notifications management
     
     private func notifyObservers(notification: String, userInfo: [String: AnyObject]? = nil) {
-        NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
+        delegateQueue.addOperationWithBlock() {
+            NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
+        }
     }
     
 }

@@ -30,46 +30,73 @@ final class WalletLayoutDiscoverer {
     private static let keyIncrement = 20
     private static let maxChainIndex = 1
     
-    var isDiscovering: Bool { return discoveringLayout }
     weak var delegate: WalletLayoutDiscovererDelegate?
-    private var discoveringLayout = false
-    private let storeProxy: WalletStoreProxy
-    private let restClient = TransactionsAPIClient(handlersQueue: NSOperationQueue.mainQueue())
-    private let logger = Logger.sharedInstance(name: "WalletLayoutDiscoverer")
     private var currentRequest: WalletLayoutAddressRequest?
+    private var discoveringLayout = false
     private var foundTransactionsInCurrentAccount = false
+    private let delegateQueue: NSOperationQueue
+    private let storeProxy: WalletStoreProxy
+    private let apiClient: TransactionsAPIClient
+    private var workingQueue = NSOperationQueue(name: "WalletLayoutDiscoverer", maxConcurrentOperationCount: 1)
+    private let logger = Logger.sharedInstance(name: "WalletLayoutDiscoverer")
+    
+    var isDiscovering: Bool {
+        var discovering = false
+        workingQueue.addOperationWithBlock() {
+            discovering = self.discoveringLayout
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return discovering
+    }
     
     // MARK: Layout discovery
     
     func startDiscovery() {
-        guard !discoveringLayout else {
-            return
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self where !strongSelf.discoveringLayout else { return }
+            
+            strongSelf.logger.info("Starting discovery")
+            strongSelf.discoveringLayout = true
+            strongSelf.currentRequest = nil
+            strongSelf.foundTransactionsInCurrentAccount = false
+            ApplicationManager.sharedInstance.startNetworkActivity()
+            strongSelf.fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: strongSelf.dynamicType.keyIncrement - 1)
+
+            // notify delegate
+            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.delegate?.layoutDiscoverDidStart(strongSelf)
+            }
         }
-        
-        logger.info("Starting discovery")
-        discoveringLayout = true
-        currentRequest = nil
-        foundTransactionsInCurrentAccount = false
-        delegate?.layoutDiscoverDidStart(self)
-        ApplicationManager.sharedInstance.startNetworkActivity()
-        fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: self.dynamicType.keyIncrement - 1)
     }
     
     func stopDiscovery() {
         self.stopDiscoveryWithError(nil)
     }
     
-    private func stopDiscoveryWithError(error: WalletLayoutDiscovererError?) {
-        guard discoveringLayout else {
-            return
-        }
+    private func stopDiscoveryWithError(error: WalletLayoutDiscovererError?, wait: Bool = false) {
+        apiClient.cancelAllTasks()
+        workingQueue.cancelAllOperations()
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self where strongSelf.discoveringLayout else {
+                return
+            }
         
-        logger.info("Stopping discovery")
-        discoveringLayout = false
-        currentRequest = nil
-        foundTransactionsInCurrentAccount = false
-        ApplicationManager.sharedInstance.stopNetworkActivity()
-        delegate?.layoutDiscover(self, didStopWithError: error)
+            strongSelf.logger.info("Stopping discovery")
+            strongSelf.discoveringLayout = false
+            strongSelf.currentRequest = nil
+            strongSelf.foundTransactionsInCurrentAccount = false
+            ApplicationManager.sharedInstance.stopNetworkActivity()
+
+            // notify delegate
+            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.delegate?.layoutDiscover(strongSelf, didStopWithError: error)
+            }
+        }
+        if wait {
+            workingQueue.waitUntilAllOperationsAreFinished()
+        }
     }
     
     // MARK: Internal methods
@@ -104,7 +131,7 @@ final class WalletLayoutDiscoverer {
                 else {
                     // stop discovery
                     logger.info("No transactions found for account \(currentRequest!.fromPath.accountIndex), stopping")
-                    stopDiscovery()
+                    stopDiscoveryWithError(nil)
                 }
             }
             else {
@@ -116,8 +143,13 @@ final class WalletLayoutDiscoverer {
             }
         }
         else {
+            // notify delegate
+            delegateQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.delegate?.layoutDiscover(strongSelf, didDiscoverTransactions: transactions)
+            }
+            
             // next key
-            delegate?.layoutDiscover(self, didDiscoverTransactions: transactions)
             foundTransactionsInCurrentAccount = true
             let newAddressPath = currentRequest!.fromPath.pathWithNewKeyIndex(currentRequest!.toKeyIndex + 1)
             let newKeyIndex = newAddressPath.keyIndex + self.dynamicType.keyIncrement - 1
@@ -128,19 +160,21 @@ final class WalletLayoutDiscoverer {
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy) {
-        self.storeProxy = storeProxy
+    init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
+        self.delegateQueue = delegateQueue
+        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: self.workingQueue)
+        self.apiClient = TransactionsAPIClient(delegateQueue: self.workingQueue)
     }
     
     deinit {
-        stopDiscovery()
+        stopDiscoveryWithError(nil, wait: true)
     }
     
 }
 
+// MARK: - WalletLayoutAddressRequestDelegate
+
 extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
-    
-    // MARK: WalletLayoutAddressRequestDelegate
     
     func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didFailWithError error: WalletLayoutAddressRequestError) {
         guard discoveringLayout else { return }
@@ -159,7 +193,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
         // fetch transactions from API
         let currentPath = currentRequest!.fromPath.rangeStringToKeyIndex(currentRequest!.toKeyIndex)
         logger.info("Fetching transactions for addresses in range \(currentPath)")
-        restClient.fetchTransactionsForAddresses(addresses.map() { return $0.address }) { [weak self] transactions in
+        apiClient.fetchTransactionsForAddresses(addresses.map() { return $0.address }) { [weak self] transactions in
             guard let strongSelf = self where strongSelf.discoveringLayout else { return }
             
             guard let transactions = transactions else {
@@ -178,25 +212,32 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
     
 }
 
+// MARK: - WalletLayoutAddressRequestDataSource
+
 extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
-    
-    // MARK: WalletLayoutAddressRequestDataSource
     
     func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void) {
         guard discoveringLayout else { return }
         
         // try to get account from store
         storeProxy.fetchAccountAtIndex(index) { [weak self] account in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self where strongSelf.discoveringLayout else { return }
             
             // no account to serve xpub, asking delegate
             guard let account = account else {
-                guard let delegate = strongSelf.delegate else {
+                guard let _ = strongSelf.delegate else {
                     strongSelf.logger.error("Unable to ask for an account with no delegate, aborting")
-                    strongSelf.stopDiscovery()
+                    strongSelf.stopDiscoveryWithError(nil)
                     return
                 }
-                delegate.layoutDiscover(strongSelf, accountAtIndex: index, providerBlock: providerBlock)
+                
+                // notify delegate
+                strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.delegate?.layoutDiscover(strongSelf, accountAtIndex: index) { account in
+                        strongSelf.workingQueue.addOperationWithBlock() { providerBlock(account) }
+                    }
+                }
                 return
             }
             providerBlock(account)
@@ -207,7 +248,10 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
         guard discoveringLayout else { return }
 
         // try to get addresses from store
-        storeProxy.fetchAddressesAtPaths(paths, completion: providerBlock)
+        storeProxy.fetchAddressesAtPaths(paths) { [weak self] addresses in
+            guard let strongSelf = self where strongSelf.discoveringLayout else { return }
+            providerBlock(addresses)
+        }
     }
     
 }

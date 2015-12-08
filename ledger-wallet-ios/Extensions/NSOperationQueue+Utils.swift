@@ -10,7 +10,11 @@ import Foundation
 
 extension NSOperationQueue {
     
-    convenience init(name: String, maxConcurrentOperationCount: Int) {
+    convenience init(maxConcurrentOperationCount: Int) {
+        self.init(name: nil, maxConcurrentOperationCount: maxConcurrentOperationCount)
+    }
+    
+    convenience init(name: String?, maxConcurrentOperationCount: Int) {
         self.init()
         self.name = name
         self.maxConcurrentOperationCount = maxConcurrentOperationCount

@@ -17,17 +17,23 @@ private enum LedgerAPIClientHeaderFields: String {
 class LedgerAPIClient: NSObject {
 
     let restClient: RESTClient
-    let handlersQueue: NSOperationQueue
+    let delegateQueue: NSOperationQueue
+    
+    // MARK: Public methods
+    
+    func cancelAllTasks() {
+        restClient.cancelAllTasks()
+    }
     
     // MARK: Initialization
     
-    init(handlersQueue: NSOperationQueue) {
-        self.handlersQueue = handlersQueue
+    init(delegateQueue: NSOperationQueue) {
+        self.delegateQueue = delegateQueue
         
         let workingQueue = NSOperationQueue()
         workingQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount
         workingQueue.name = dispatchQueueNameForIdentifier(self.dynamicType.className())
-        self.restClient = RESTClient(baseURL: LedgerAPIBaseURL, handlersQueue: workingQueue)
+        self.restClient = RESTClient(baseURL: LedgerAPIBaseURL, delegateQueue: workingQueue)
         self.restClient.httpClient.additionalHeaders = [
             LedgerAPIClientHeaderFields.Platform.rawValue: "ios",
             LedgerAPIClientHeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier

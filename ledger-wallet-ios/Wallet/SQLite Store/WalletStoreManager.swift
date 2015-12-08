@@ -12,7 +12,7 @@ final class WalletStoreManager {
     
     private static let logger = Logger.sharedInstance(name: "WalletStoreManager")
     
-    // MARK: Convenience method
+    // MARK: - Convenience method
     
     class func storeAtURL(URL: NSURL?, withUniqueIdentifier uniqueIdentifier: String) -> SQLiteStore {
         let store = SQLiteStore(URL: URL)
@@ -27,7 +27,7 @@ final class WalletStoreManager {
         return store
     }
     
-    // MARK: Schema installation
+    // MARK: - Schema installation
     
     private class func executePragmaCommands(store: SQLiteStore, schema: SQLiteSchema) {
         logger.info("Executing pragma commands")
@@ -64,7 +64,6 @@ final class WalletStoreManager {
         }
     }
 
-    
     private class func initializeStoreWithSchema(schema: SQLiteSchema, uniqueIdentifier: String, context: SQLiteStoreContext) -> Bool {
         let statements = schema.executableStatements
         

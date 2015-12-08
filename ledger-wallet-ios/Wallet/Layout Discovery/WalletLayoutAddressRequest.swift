@@ -112,55 +112,39 @@ final class WalletLayoutAddressRequest {
     private func cacheAddressesForMissingPaths(paths: [WalletAddressPath], extendedPublicKey: String, existingAddresses: [WalletAddress]) {
         // store missing paths
         let currentPaths = fromPath.rangeStringToKeyIndex(toKeyIndex)
-        generateAddressesAtPaths(paths, extendedPublicKey: extendedPublicKey) { [weak self] generatedAddresses in
-            guard let strongSelf = self else { return }
-            
-            guard let generatedAddresses = generatedAddresses else {
-                strongSelf.logger.error("Unable to derive missing addresses in range \(currentPaths), aborting")
-                strongSelf.delegate?.layoutAddressRequest(strongSelf, didFailWithError: .Internal)
-                return
-            }
-            
-            // store generated addresses
-            strongSelf.delegate?.layoutAddressRequest(strongSelf, didGenerateAddresses: generatedAddresses)
-            
-            // we now have all addresses known
-            strongSelf.delegate?.layoutAddressRequest(strongSelf, didSucceedWithAddresses: existingAddresses + generatedAddresses)
-        }
-    }
-    
-    private func generateAddressesAtPaths(paths: [WalletAddressPath], extendedPublicKey: String, completion: ([WalletAddress]?) -> Void) {
-        guard paths.count > 0 else {
-            completion([])
+        guard let generatedAddresses = generateAddressesAtPaths(paths, extendedPublicKey: extendedPublicKey) else {
+            logger.error("Unable to derive missing addresses in range \(currentPaths), aborting")
+            delegate?.layoutAddressRequest(self, didFailWithError: .Internal)
             return
         }
         
-        // create addresses from xpub
-        dispatchAsyncOnGlobalQueueWithPriority(DISPATCH_QUEUE_PRIORITY_DEFAULT) { [weak self] in
-            guard let _ = self else { return }
-            
-            guard let keychain = BTCKeychain(extendedKey: extendedPublicKey) else {
-                dispatchAsyncOnMainQueue() { [weak self] in
-                    guard let _ = self else { return }
-                    completion(nil)
-                }
-                return
-            }
-            
-            var cacheAddresses: [WalletAddress] = []
-            for path in paths {
-                let address = keychain.keyWithPath(path.chainPath).address.string
-                cacheAddresses.append(WalletAddress(addressPath: path, address: address))
-            }
-            dispatchAsyncOnMainQueue() { [weak self] in
-                guard let _ = self else { return }
-                completion(cacheAddresses)
-            }
-        }
+        // store generated addresses
+        delegate?.layoutAddressRequest(self, didGenerateAddresses: generatedAddresses)
+        
+        // we now have all addresses known
+        delegate?.layoutAddressRequest(self, didSucceedWithAddresses: existingAddresses + generatedAddresses)
     }
     
+    private func generateAddressesAtPaths(paths: [WalletAddressPath], extendedPublicKey: String) -> [WalletAddress]? {
+        guard paths.count > 0 else {
+            return []
+        }
+        
+        // create addresses from xpub
+        guard let keychain = BTCKeychain(extendedKey: extendedPublicKey) else {
+            return nil
+        }
+        
+        var cacheAddresses: [WalletAddress] = []
+        for path in paths {
+            let address = keychain.keyWithPath(path.chainPath).address.string
+            cacheAddresses.append(WalletAddress(addressPath: path, address: address))
+        }
+        return cacheAddresses
+    }
+
     // MARK: Initialization
-    
+
     init?(fromPath: WalletAddressPath, toKeyIndex: Int) {
         self.fromPath = fromPath
         self.toKeyIndex = toKeyIndex

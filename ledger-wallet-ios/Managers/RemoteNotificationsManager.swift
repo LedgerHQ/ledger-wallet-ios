@@ -11,7 +11,7 @@ import Foundation
 final class RemoteNotificationsManager {
     
     static let sharedInstance = RemoteNotificationsManager()
-    private let restClient = RemoteNotificationsAPIClient(handlersQueue: NSOperationQueue.mainQueue())
+    private let restClient = RemoteNotificationsAPIClient(delegateQueue: NSOperationQueue.mainQueue())
 
     // MARK: - Common
     

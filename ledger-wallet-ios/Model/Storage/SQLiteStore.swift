@@ -113,6 +113,7 @@ final class SQLiteStore {
     
     private func close() -> Bool {
         var success = false
+        queue.cancelAllOperations()
         queue.addOperationWithBlock() {
             guard let database = self.database else {
                 self.logger.warn("Unable to close: no database")

@@ -43,6 +43,14 @@ final class HTTPClient {
         return performDataRequest(.PUT, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
+    func cancelAllTasks() {
+        session.getTasksWithCompletionHandler() { dataTasks, uploadTasks, downloadTasks in
+            dataTasks.forEach({ $0.cancel() })
+            uploadTasks.forEach({ $0.cancel() })
+            downloadTasks.forEach({ $0.cancel() })
+        }
+    }
+    
     private func performDataRequest(method: Task.Method, URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         // create request
         let request = defaultRequest(method, URL: URL)
@@ -58,7 +66,9 @@ final class HTTPClient {
             ApplicationManager.sharedInstance.stopNetworkActivity()
             
             guard error == nil else {
-                completionHandler(nil, request, nil, error)
+                if error!.code != NSURLErrorCancelled {
+                    completionHandler(nil, request, nil, error)
+                }
                 return
             }
             guard let httpResponse = response as? NSHTTPURLResponse else {
@@ -113,10 +123,10 @@ final class HTTPClient {
     
     // MARK: - Initialization
     
-    init(handlersQueue: NSOperationQueue) {
+    init(delegateQueue: NSOperationQueue) {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
         configuration.timeoutIntervalForRequest = 30
-        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: handlersQueue)
+        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: delegateQueue)
     }
     
     deinit {

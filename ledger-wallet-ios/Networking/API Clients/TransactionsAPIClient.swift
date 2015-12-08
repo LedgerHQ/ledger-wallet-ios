@@ -16,7 +16,7 @@ final class TransactionsAPIClient: LedgerAPIClient {
     
     func fetchTransactionsForAddresses(addresses: [String], completion: ([[String: AnyObject]]?) -> Void) {
         guard addresses.count > 0 else {
-            handlersQueue.addOperationWithBlock() { [weak self] in
+            delegateQueue.addOperationWithBlock() { [weak self] in
                 guard self != nil else { return }
                 completion([])
             }
@@ -29,13 +29,13 @@ final class TransactionsAPIClient: LedgerAPIClient {
             
             guard error == nil, let data = data, JSON = JSON.JSONObjectFromData(data) as? [[String: AnyObject]] else {
                 strongSelf.logger.error("Unable to fetch or parse transactions JSON")
-                strongSelf.handlersQueue.addOperationWithBlock() { [weak self] in
+                strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
                     guard self != nil else { return }
                     completion(nil)
                 }
                 return
             }
-            strongSelf.handlersQueue.addOperationWithBlock() { [weak self] in
+            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
                 guard self != nil else { return }
                 completion(JSON)
             }

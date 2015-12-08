@@ -12,7 +12,8 @@ import UIKit
 class WalletTestViewController: BaseViewController {
     
     var walletManager: BaseWalletManager?
-    @IBOutlet private weak var button: UIButton!
+    @IBOutlet private weak var startButton: UIButton!
+    @IBOutlet private weak var stopButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,11 @@ class WalletTestViewController: BaseViewController {
     }
 
     @IBAction func scanForTransactions(sender: AnyObject) {
-        walletManager?.refreshTransactions()
+        walletManager?.startRefreshingLayout()
+    }
+    
+    @IBAction func stopScanForTransactions(sender: AnyObject) {
+        walletManager?.stopRefreshingLayout()
     }
     
     private dynamic func didStart() {
@@ -35,7 +40,8 @@ class WalletTestViewController: BaseViewController {
     }
     
     private func updateUI() {
-        button.enabled = !walletManager!.isRefreshingLayout
+        startButton.enabled = !walletManager!.isRefreshingLayout
+        stopButton.enabled = !startButton.enabled
     }
     
 }

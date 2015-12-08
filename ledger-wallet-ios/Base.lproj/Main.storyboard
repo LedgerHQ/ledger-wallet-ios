@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Wallet Test View Controller-->
@@ -18,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mR9-wG-Uzp">
-                                <rect key="frame" x="211" y="20" width="178" height="30"/>
+                                <rect key="frame" x="20" y="20" width="103" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Scan for new transactions"/>
+                                <state key="normal" title="Refresh Layout"/>
                                 <connections>
-                                    <action selector="scanForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="lTM-j9-wda"/>
+                                    <action selector="scanForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="gLy-b2-f2U"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U2W-yb-Asc">
@@ -30,20 +31,31 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgR-NH-I76">
+                                <rect key="frame" x="474" y="20" width="106" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Stop refreshing"/>
+                                <connections>
+                                    <action selector="stopScanForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="Oh7-zA-vgJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="centerX" secondItem="mR9-wG-Uzp" secondAttribute="centerX" id="BaH-3W-Re9"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="bottom" secondItem="8On-Mh-093" secondAttribute="top" id="UtQ-Bg-7kx"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="top" secondItem="mR9-wG-Uzp" secondAttribute="bottom" constant="8" symbolic="YES" id="bFE-YI-xRV"/>
-                            <constraint firstItem="mR9-wG-Uzp" firstAttribute="centerX" secondItem="W6X-oo-jnS" secondAttribute="centerX" id="bZP-bh-eWf"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leading" id="gOg-LK-uum"/>
-                            <constraint firstItem="mR9-wG-Uzp" firstAttribute="top" secondItem="UHn-8Y-O2D" secondAttribute="bottom" id="yVh-YK-eFq"/>
+                            <constraint firstItem="mR9-wG-Uzp" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leadingMargin" id="WNl-lH-8Ax"/>
+                            <constraint firstItem="U2W-yb-Asc" firstAttribute="top" secondItem="mR9-wG-Uzp" secondAttribute="bottom" constant="8" symbolic="YES" id="XEd-iE-IEt"/>
+                            <constraint firstItem="RgR-NH-I76" firstAttribute="trailing" secondItem="W6X-oo-jnS" secondAttribute="trailingMargin" id="XFz-xt-yNy"/>
+                            <constraint firstItem="U2W-yb-Asc" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leading" id="ZFA-mc-YPx"/>
+                            <constraint firstAttribute="trailing" secondItem="U2W-yb-Asc" secondAttribute="trailing" id="brZ-VO-5mF"/>
+                            <constraint firstItem="RgR-NH-I76" firstAttribute="top" secondItem="UHn-8Y-O2D" secondAttribute="bottom" id="hqi-dm-47w"/>
+                            <constraint firstItem="U2W-yb-Asc" firstAttribute="bottom" secondItem="8On-Mh-093" secondAttribute="top" id="m9S-4j-EQ1"/>
+                            <constraint firstItem="RgR-NH-I76" firstAttribute="baseline" secondItem="mR9-wG-Uzp" secondAttribute="baseline" id="sZa-1X-oFk"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="button" destination="mR9-wG-Uzp" id="BfN-WY-Lb5"/>
+                        <outlet property="startButton" destination="mR9-wG-Uzp" id="FKN-WH-d4B"/>
+                        <outlet property="stopButton" destination="RgR-NH-I76" id="dsb-O2-kGc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVa-c4-12D" userLabel="First Responder" sceneMemberID="firstResponder"/>
