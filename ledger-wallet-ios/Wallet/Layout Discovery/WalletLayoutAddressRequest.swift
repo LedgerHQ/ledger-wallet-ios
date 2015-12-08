@@ -20,15 +20,15 @@ enum WalletLayoutAddressRequestError: ErrorType {
 protocol WalletLayoutAddressRequestDelegate: class {
 
     func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didFailWithError error: WalletLayoutAddressRequestError)
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didSucceedWithAddresses addresses: [WalletCacheAddress])
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletCacheAddress])
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didSucceedWithAddresses addresses: [WalletAddress])
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletAddress])
     
 }
 
 protocol WalletLayoutAddressRequestDataSource: class {
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, extendedPublicKeyAtIndex index: Int, providerBlock: (String?) -> Void)
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, addressesForPaths paths: [WalletAddressPath], providerBlock: ([WalletCacheAddress]?) -> Void)
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void)
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, addressesForPaths paths: [WalletAddressPath], providerBlock: ([WalletAddress]?) -> Void)
     
 }
 
@@ -93,23 +93,23 @@ final class WalletLayoutAddressRequest {
         }
     }
     
-    private func fetchExtendedPublicKeyForMissingPaths(paths: [WalletAddressPath], existingAddresses: [WalletCacheAddress]) {
+    private func fetchExtendedPublicKeyForMissingPaths(paths: [WalletAddressPath], existingAddresses: [WalletAddress]) {
         // try to get extended public key
-        dataSource?.layoutAddressRequest(self, extendedPublicKeyAtIndex: fromPath.accountIndex) { [weak self] extendedPublicKey in
+        dataSource?.layoutAddressRequest(self, accountAtIndex: fromPath.accountIndex) { [weak self] account in
             guard let strongSelf = self else { return }
             
-            guard let extendedPublicKey = extendedPublicKey else {
-                strongSelf.logger.error("Delegate failed to provide extended public key at index \(strongSelf.fromPath.accountIndex), aborting")
+            guard let account = account else {
+                strongSelf.logger.error("Delegate failed to provide account at index \(strongSelf.fromPath.accountIndex), aborting")
                 strongSelf.delegate?.layoutAddressRequest(strongSelf, didFailWithError: .MissingExtendedPublicKey(accountIndex: strongSelf.fromPath.accountIndex))
                 return
             }
             
             // generate addresses
-            strongSelf.cacheAddressesForMissingPaths(paths, extendedPublicKey: extendedPublicKey, existingAddresses: existingAddresses)
+            strongSelf.cacheAddressesForMissingPaths(paths, extendedPublicKey: account.extendedPublicKey, existingAddresses: existingAddresses)
         }
     }
     
-    private func cacheAddressesForMissingPaths(paths: [WalletAddressPath], extendedPublicKey: String, existingAddresses: [WalletCacheAddress]) {
+    private func cacheAddressesForMissingPaths(paths: [WalletAddressPath], extendedPublicKey: String, existingAddresses: [WalletAddress]) {
         // store missing paths
         let currentPaths = fromPath.rangeStringToKeyIndex(toKeyIndex)
         generateAddressesAtPaths(paths, extendedPublicKey: extendedPublicKey) { [weak self] generatedAddresses in
@@ -129,7 +129,7 @@ final class WalletLayoutAddressRequest {
         }
     }
     
-    private func generateAddressesAtPaths(paths: [WalletAddressPath], extendedPublicKey: String, completion: ([WalletCacheAddress]?) -> Void) {
+    private func generateAddressesAtPaths(paths: [WalletAddressPath], extendedPublicKey: String, completion: ([WalletAddress]?) -> Void) {
         guard paths.count > 0 else {
             completion([])
             return
@@ -147,10 +147,10 @@ final class WalletLayoutAddressRequest {
                 return
             }
             
-            var cacheAddresses: [WalletCacheAddress] = []
+            var cacheAddresses: [WalletAddress] = []
             for path in paths {
                 let address = keychain.keyWithPath(path.chainPath).address.string
-                cacheAddresses.append(WalletCacheAddress(addressPath: path, address: address))
+                cacheAddresses.append(WalletAddress(addressPath: path, address: address))
             }
             dispatchAsyncOnMainQueue() { [weak self] in
                 guard let _ = self else { return }

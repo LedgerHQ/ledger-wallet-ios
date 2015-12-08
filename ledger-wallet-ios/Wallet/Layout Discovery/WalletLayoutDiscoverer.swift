@@ -21,7 +21,7 @@ protocol WalletLayoutDiscovererDelegate: class {
     func layoutDiscoverDidStart(layoutDiscoverer: WalletLayoutDiscoverer)
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didStopWithError error: WalletLayoutDiscovererError?)
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction])
-    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, extendedPublicKeyAtIndex index: Int, providerBlock: (String?) -> Void)
+    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void)
     
 }
 
@@ -153,7 +153,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
         }
     }
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didSucceedWithAddresses addresses: [WalletCacheAddress]) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didSucceedWithAddresses addresses: [WalletAddress]) {
         guard discoveringLayout else { return }
         
         // fetch transactions from API
@@ -171,9 +171,9 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
         }
     }
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletCacheAddress]) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletAddress]) {
         // store newly generated addresses in store
-        storeProxy.storeAddresses(addresses)
+        storeProxy.addAddresses(addresses)
     }
     
 }
@@ -182,32 +182,32 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
     
     // MARK: WalletLayoutAddressRequestDataSource
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, extendedPublicKeyAtIndex index: Int, providerBlock: (String?) -> Void) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void) {
         guard discoveringLayout else { return }
         
-        // try to get xpub from store
-        storeProxy.fetchDiscoverableAccountWithIndex(index) { [weak self] account in
+        // try to get account from store
+        storeProxy.fetchAccountAtIndex(index) { [weak self] account in
             guard let strongSelf = self else { return }
             
             // no account to serve xpub, asking delegate
             guard let account = account else {
                 guard let delegate = strongSelf.delegate else {
-                    strongSelf.logger.error("Unable to ask for an extended public key with no delegate, aborting")
+                    strongSelf.logger.error("Unable to ask for an account with no delegate, aborting")
                     strongSelf.stopDiscovery()
                     return
                 }
-                delegate.layoutDiscover(strongSelf, extendedPublicKeyAtIndex: index, providerBlock: providerBlock)
+                delegate.layoutDiscover(strongSelf, accountAtIndex: index, providerBlock: providerBlock)
                 return
             }
-            providerBlock(account.extendedPublicKey)
+            providerBlock(account)
         }
     }
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, addressesForPaths paths: [WalletAddressPath], providerBlock: ([WalletCacheAddress]?) -> Void) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, addressesForPaths paths: [WalletAddressPath], providerBlock: ([WalletAddress]?) -> Void) {
         guard discoveringLayout else { return }
 
         // try to get addresses from store
-        storeProxy.fetchAddressesWithPaths(paths, completion: providerBlock)
+        storeProxy.fetchAddressesAtPaths(paths, completion: providerBlock)
     }
     
 }

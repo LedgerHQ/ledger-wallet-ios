@@ -10,16 +10,16 @@ import Foundation
 
 protocol SQLiteFetchableModel {
     
-    static func collectionFromSet(resultSet: FMResultSet) -> [Self]
-    static func integerForKey(key: String, resultSet: FMResultSet) -> Int?
-    static func stringForKey(key: String, resultSet: FMResultSet) -> String?
-    init?(resultSet: FMResultSet)
+    static func collectionFromResultSet(resultSet: SQLiteStoreResultSet) -> [Self]
+    static func integerForKey(key: String, resultSet: SQLiteStoreResultSet) -> Int?
+    static func stringForKey(key: String, resultSet: SQLiteStoreResultSet) -> String?
+    init?(resultSet: SQLiteStoreResultSet)
     
 }
 
 extension SQLiteFetchableModel {
     
-    static func collectionFromSet(resultSet: FMResultSet) -> [Self] {
+    static func collectionFromResultSet(resultSet: SQLiteStoreResultSet) -> [Self] {
         var results: [Self] = []
         while resultSet.next() {
             if let result = self.init(resultSet: resultSet) {
@@ -29,14 +29,14 @@ extension SQLiteFetchableModel {
         return results
     }
     
-    static func integerForKey(key: String, resultSet: FMResultSet) -> Int? {
+    static func integerForKey(key: String, resultSet: SQLiteStoreResultSet) -> Int? {
         guard !resultSet.columnIsNull(key) else {
             return nil
         }
         return resultSet.longForColumn(key)
     }
     
-    static func stringForKey(key: String, resultSet: FMResultSet) -> String? {
+    static func stringForKey(key: String, resultSet: SQLiteStoreResultSet) -> String? {
         guard !resultSet.columnIsNull(key) else {
             return nil
         }

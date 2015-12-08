@@ -8,25 +8,28 @@
 
 import Foundation
 
+typealias SQLiteStoreContext = FMDatabase
+typealias SQLiteStoreResultSet = FMResultSet
+
 final class SQLiteStore {
 
     private var database: FMDatabase!
-    private let queue = dispatch_queue_create(dispatchQueueNameForIdentifier("SQLiteStore"), DISPATCH_QUEUE_SERIAL)
+    private let queue = NSOperationQueue(name: "SQLiteStore", maxConcurrentOperationCount: 1)
     private let URL: NSURL?
     private let logger = Logger.sharedInstance(name: "SQLiteStore")
     
     // MARK: Blocks management
     
-    func performBlock(block: (FMDatabase) -> Void) {
-        dispatch_async(queue) { [weak self] in
+    func performBlock(block: (SQLiteStoreContext) -> Void) {
+        queue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 
             block(strongSelf.database)
         }
     }
-    
-    func performTransaction(block: (FMDatabase) -> Bool) {
-        dispatch_async(queue) { [weak self] in
+
+    func performTransaction(block: (SQLiteStoreContext) -> Bool) {
+        queue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
             strongSelf.database.beginTransaction()
@@ -40,14 +43,13 @@ final class SQLiteStore {
     }
 
     func waitCompletionOfAllBlocks() {
-        dispatch_sync(queue) {}
+        queue.waitUntilAllOperationsAreFinished()
     }
     
     // MARK: Open/close
     
-    private func open() -> Bool {
-        var success = false
-        dispatch_sync(queue) {
+    private func open() {
+        queue.addOperationWithBlock() {
             let fileManager = NSFileManager.defaultManager()
             
             var databasePath: String? = nil
@@ -106,14 +108,12 @@ final class SQLiteStore {
             database.logsErrors = false
             database.setShouldCacheStatements(true)
             self.database = database
-            success = true
         }
-        return success
     }
     
     private func close() -> Bool {
         var success = false
-        dispatch_sync(queue) {
+        queue.addOperationWithBlock() {
             guard let database = self.database else {
                 self.logger.warn("Unable to close: no database")
                 return
@@ -136,6 +136,7 @@ final class SQLiteStore {
     
     deinit {
         close()
+        waitCompletionOfAllBlocks()
     }
     
 }

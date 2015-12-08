@@ -1,5 +1,5 @@
 //
-//  WalletCacheAddress.swift
+//  WalletAddress.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 02/12/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletCacheAddress: SQLiteFetchableModel {
+struct WalletAddress: SQLiteFetchableModel {
     
     let addressPath: WalletAddressPath
     let address: String
@@ -16,7 +16,7 @@ struct WalletCacheAddress: SQLiteFetchableModel {
     var chainIndex: Int { return addressPath.chainIndex }
     var keyIndex: Int { return addressPath.keyIndex }
     
-    init?(resultSet: FMResultSet) {
+    init?(resultSet: SQLiteStoreResultSet) {
         let accountIndex = self.dynamicType.integerForKey(AddressEntity.accountIndexKey, resultSet: resultSet)!
         let chainIndex = self.dynamicType.integerForKey(AddressEntity.chainIndexKey, resultSet: resultSet)!
         let keyIndex = self.dynamicType.integerForKey(AddressEntity.keyIndexKey, resultSet: resultSet)!
