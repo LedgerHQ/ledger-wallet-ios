@@ -78,9 +78,7 @@ final class WalletLayoutDiscoverer {
         apiClient.cancelAllTasks()
         workingQueue.cancelAllOperations()
         workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self where strongSelf.discoveringLayout else {
-                return
-            }
+            guard let strongSelf = self where strongSelf.discoveringLayout else { return }
         
             strongSelf.logger.info("Stopping discovery")
             strongSelf.discoveringLayout = false
@@ -117,26 +115,33 @@ final class WalletLayoutDiscoverer {
     
     private func continueDiscoveryWithFetchedTransactions(transactions: [WalletRemoteTransaction]) {
         guard discoveringLayout else { return }
+        guard let currentRequest = currentRequest else {
+            logger.info("No current request, stopping")
+            stopDiscoveryWithError(.Internal)
+            return
+        }
 
+        // check it is is the end of discovery
         if transactions.count == 0 {
-            if currentRequest!.fromPath.chainIndex >= self.dynamicType.maxChainIndex {
+            // if we are already on the last chain index
+            if currentRequest.fromPath.chainIndex >= self.dynamicType.maxChainIndex {
                 if foundTransactionsInCurrentAccount {
                     // next account
                     foundTransactionsInCurrentAccount = false
-                    let newAddressPath = currentRequest!.fromPath.pathWithNewAccountIndex(currentRequest!.fromPath.accountIndex + 1)
+                    let newAddressPath = currentRequest.fromPath.pathWithNewAccountIndex(currentRequest.fromPath.accountIndex + 1)
                     let newKeyIndex = self.dynamicType.keyIncrement - 1
                     logger.info("No transactions found, continuing on the next account in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
                     fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
                 }
                 else {
                     // stop discovery
-                    logger.info("No transactions found for account \(currentRequest!.fromPath.accountIndex), stopping")
+                    logger.info("No transactions found for account \(currentRequest.fromPath.accountIndex), stopping")
                     stopDiscoveryWithError(nil)
                 }
             }
             else {
                 // next chain
-                let newAddressPath = currentRequest!.fromPath.pathWithNewChainIndex(currentRequest!.fromPath.chainIndex + 1)
+                let newAddressPath = currentRequest.fromPath.pathWithNewChainIndex(currentRequest.fromPath.chainIndex + 1)
                 let newKeyIndex = self.dynamicType.keyIncrement - 1
                 logger.info("No transactions found, continuing on the next chain in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
                 fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
@@ -151,7 +156,7 @@ final class WalletLayoutDiscoverer {
             
             // next key
             foundTransactionsInCurrentAccount = true
-            let newAddressPath = currentRequest!.fromPath.pathWithNewKeyIndex(currentRequest!.toKeyIndex + 1)
+            let newAddressPath = currentRequest.fromPath.pathWithNewKeyIndex(currentRequest.toKeyIndex + 1)
             let newKeyIndex = newAddressPath.keyIndex + self.dynamicType.keyIncrement - 1
             logger.info("Transactions found, continuing on the same chain in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
             fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
@@ -201,6 +206,8 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
                 strongSelf.stopDiscoveryWithError(.UnableToFetchTransactions)
                 return
             }
+            
+            // continue discovery at next indexes
             strongSelf.continueDiscoveryWithFetchedTransactions(transactions)
         }
     }
@@ -240,6 +247,8 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
                 }
                 return
             }
+            
+            // we have the account, give it to request
             providerBlock(account)
         }
     }
@@ -250,6 +259,8 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
         // try to get addresses from store
         storeProxy.fetchAddressesAtPaths(paths) { [weak self] addresses in
             guard let strongSelf = self where strongSelf.discoveringLayout else { return }
+            
+            // give addresses to request
             providerBlock(addresses)
         }
     }
