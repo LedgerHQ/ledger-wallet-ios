@@ -194,6 +194,7 @@
 		37EF91CA1A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91C91A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift */; };
 		37F126901C185889005C4962 /* SQLiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F1268F1C185889005C4962 /* SQLiteStoreTests.swift */; };
 		37F126921C186853005C4962 /* WalletStoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F126911C186853005C4962 /* WalletStoreManagerTests.swift */; };
+		37F126941C188838005C4962 /* WalletStoreSchemasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F126931C188838005C4962 /* WalletStoreSchemasTests.swift */; };
 		37F283621A64064100F432CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F283601A64064100F432CC /* Main.storyboard */; };
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
 		37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283951A655D3400F432CC /* BaseNavigationController.swift */; };
@@ -477,6 +478,7 @@
 		37EF91C91A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BarCodeReaderOverlayView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F1268F1C185889005C4962 /* SQLiteStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteStoreTests.swift; sourceTree = "<group>"; };
 		37F126911C186853005C4962 /* WalletStoreManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStoreManagerTests.swift; sourceTree = "<group>"; };
+		37F126931C188838005C4962 /* WalletStoreSchemasTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStoreSchemasTests.swift; sourceTree = "<group>"; };
 		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37F283951A655D3400F432CC /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -812,6 +814,7 @@
 		3784FB1D1A5D2F5F0063A364 /* ledger-wallet-iosTests */ = {
 			isa = PBXGroup;
 			children = (
+				37F126931C188838005C4962 /* WalletStoreSchemasTests.swift */,
 				37F126911C186853005C4962 /* WalletStoreManagerTests.swift */,
 				37F1268F1C185889005C4962 /* SQLiteStoreTests.swift */,
 				371733231BDA2BE7000835DE /* LocalizationTests.swift */,
@@ -1479,6 +1482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				371732F11BDA265E000835DE /* PreferencesTests.swift in Sources */,
+				37F126941C188838005C4962 /* WalletStoreSchemasTests.swift in Sources */,
 				371537EB1BDE596700582193 /* PairingTransactionsCryptorTests.swift in Sources */,
 				371732F31BDA265E000835DE /* WebSocketTests.swift in Sources */,
 				37F126901C185889005C4962 /* SQLiteStoreTests.swift in Sources */,
