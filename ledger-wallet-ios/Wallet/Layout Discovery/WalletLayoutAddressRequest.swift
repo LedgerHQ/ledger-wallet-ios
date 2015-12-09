@@ -99,7 +99,7 @@ final class WalletLayoutAddressRequest {
             guard let strongSelf = self else { return }
             
             guard let account = account else {
-                strongSelf.logger.error("Delegate failed to provide account at index \(strongSelf.fromPath.accountIndex), aborting")
+                strongSelf.logger.warn("Data source failed to provide account at index \(strongSelf.fromPath.accountIndex), aborting")
                 strongSelf.delegate?.layoutAddressRequest(strongSelf, didFailWithError: .MissingExtendedPublicKey(accountIndex: strongSelf.fromPath.accountIndex))
                 return
             }

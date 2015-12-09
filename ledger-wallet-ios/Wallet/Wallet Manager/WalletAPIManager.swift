@@ -60,7 +60,7 @@ final class WalletAPIManager: BaseWalletManager {
     
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
-        self.store = WalletStoreManager.storeAtURL(storeURL, withUniqueIdentifier: uniqueIdentifier)
+        self.store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier)
         self.storeProxy = WalletStoreProxy(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services

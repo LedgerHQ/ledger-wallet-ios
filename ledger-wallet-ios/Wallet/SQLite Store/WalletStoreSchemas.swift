@@ -10,8 +10,8 @@ import Foundation
 
 final class WalletStoreSchemas {
     
-    static var currentSchema: SQLiteSchema? {
-        return schemaWithVersion(currentVersion)
+    static var currentSchema: SQLiteSchema {
+        return schemaWithVersion(currentVersion)!
     }
     
     static var currentVersion: Int {

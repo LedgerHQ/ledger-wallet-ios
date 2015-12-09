@@ -88,7 +88,7 @@ final class WalletStoreExecutor {
         return version
     }
 
-    class func setMetadata(metadata: [String: AnyObject], context: SQLiteStoreContext) -> Bool {
+    class func storeMetadata(metadata: [String: AnyObject], context: SQLiteStoreContext) -> Bool {
         let updateStatement = metadata.map { return "\"\($0.0)\" = :\($0.0)" }.joinWithSeparator(", ")
         guard context.executeUpdate("UPDATE \(WalletMetadataTableEntity.tableName) SET \(updateStatement)", withParameterDictionary: metadata) else {
             logger.error("Unable to set database metadata \(metadata): \(context.lastErrorMessage())")

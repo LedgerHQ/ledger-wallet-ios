@@ -54,7 +54,6 @@ final class WalletLayoutDiscoverer {
     func startDiscovery() {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self where !strongSelf.discoveringLayout else { return }
-            
             strongSelf.logger.info("Starting discovery")
             strongSelf.discoveringLayout = true
             strongSelf.currentRequest = nil

@@ -10,29 +10,25 @@ import Foundation
 
 final class WalletStoreManager {
     
-    private static let logger = Logger.sharedInstance(name: "WalletStoreManager")
+    private let store: SQLiteStore
+    private let logger = Logger.sharedInstance(name: "WalletStoreManager")
     
-    // MARK: - Convenience method
+    // MARK: Convenience method
     
-    class func storeAtURL(URL: NSURL?, withUniqueIdentifier uniqueIdentifier: String) -> SQLiteStore {
+    class func managedStoreAtURL(URL: NSURL?, uniqueIdentifier: String) -> SQLiteStore {
         let store = SQLiteStore(URL: URL)
+        let manager = WalletStoreManager(store: store)
+        let schema = WalletStoreSchemas.currentSchema
         
-        if let schema = WalletStoreSchemas.currentSchema {
-            store.open()
-            executePragmaCommands(store, schema: schema)
-            checkForSchemaMigration(store, schema: schema, uniqueIdentifier: uniqueIdentifier)
-        }
-        else {
-            logger.error("Unable to get current schema")
-        }
+        store.open()
+        manager.executePragmaCommands(schema)
+        manager.automigrateOrInstallSchema(schema, uniqueIdentifier: uniqueIdentifier)
         return store
     }
     
-    // MARK: - Schema installation
+    // MARK: Schema installation
     
-    private class func executePragmaCommands(store: SQLiteStore, schema: SQLiteSchema) {
-        logger.info("Executing pragma commands")
-        
+    func executePragmaCommands(schema: SQLiteSchema) {
         store.performBlock() { context in
             let statements = schema.executablePragmaCommands
             for statement in statements {
@@ -43,35 +39,34 @@ final class WalletStoreManager {
         }
     }
     
-    private class func checkForSchemaMigration(store: SQLiteStore, schema: SQLiteSchema, uniqueIdentifier: String) {
-        logger.info("Checking store for schema migration")
-        
+    func installSchema(schema: SQLiteSchema, uniqueIdentifier: String) {
         store.performBlock() { context in
-            if let storeVersion = WalletStoreExecutor.schemaVersion(context) {
-                logger.info("Store schema version \(storeVersion), current version \(schema.version)")
-                if schema.version > storeVersion {
-                    logger.warn("Current schema version is greater than store version, migrating")
-                    guard self.migrateFromSchemaWithVersion(storeVersion, toSchema: schema, context: context) else {
-                        return
-                    }
-                }
+            self.installSchema(schema, uniqueIdentifier: uniqueIdentifier, context: context)
+        }
+    }
+    
+    func migrateToSchema(schema: SQLiteSchema) {
+        store.performBlock() { context in
+            self.migrateToSchemaIfNeeded(schema, context: context)
+        }
+    }
+    
+    private func automigrateOrInstallSchema(schema: SQLiteSchema, uniqueIdentifier: String) {
+        store.performBlock() { context in
+            if self.needsToInstallSchema(schema, context: context) {
+                self.installSchema(schema, uniqueIdentifier: uniqueIdentifier, context: context)
             }
             else {
-                logger.warn("Unable to get store schema version, creating tables")
-                guard self.initializeStoreWithSchema(schema, uniqueIdentifier: uniqueIdentifier, context: context) else {
-                    return
-                }
+                self.migrateToSchemaIfNeeded(schema, context: context)
             }
         }
     }
 
-    private class func initializeStoreWithSchema(schema: SQLiteSchema, uniqueIdentifier: String, context: SQLiteStoreContext) -> Bool {
-        let statements = schema.executableStatements
-        
+    private func installSchema(schema: SQLiteSchema, uniqueIdentifier: String, context: SQLiteStoreContext) -> Bool {
         logger.info("Initializing store with schema with version \(schema.version)")
         context.beginTransaction()
         
-        for statement in statements {
+        for statement in schema.executableStatements {
             guard WalletStoreExecutor.executeTableCreation(statement, context: context) else {
                 context.rollback()
                 return false
@@ -83,7 +78,7 @@ final class WalletStoreManager {
             WalletMetadataTableEntity.schemaVersionKey: schema.version,
             WalletMetadataTableEntity.uniqueIdentifierKey: uniqueIdentifier
         ]
-        guard WalletStoreExecutor.setMetadata(metadata, context: context) else {
+        guard WalletStoreExecutor.storeMetadata(metadata, context: context) else {
             context.rollback()
             return false
         }
@@ -91,9 +86,38 @@ final class WalletStoreManager {
         context.commit()
         return true
     }
+
+    private func needsToInstallSchema(schema: SQLiteSchema, context: SQLiteStoreContext) -> Bool {
+        if WalletStoreExecutor.schemaVersion(context) != nil {
+            return false
+        }
+        return true
+    }
     
-    private class func migrateFromSchemaWithVersion(oldVersion: Int, toSchema newSchema: SQLiteSchema, context: SQLiteStoreContext) -> Bool {
-        let _ = WalletStoreSchemas.schemaWithVersion(oldVersion)
+    private func migrateToSchemaIfNeeded(schema: SQLiteSchema, context: SQLiteStoreContext) -> Bool {
+        logger.info("Checking if schema migration is required")
+        guard let storeVersion = WalletStoreExecutor.schemaVersion(context) else {
+            logger.warn("Unable to get store schema version, aborting")
+            return false
+        }
+        
+        logger.info("Store schema version \(storeVersion), current version \(schema.version)")
+        if schema.version > storeVersion {
+            logger.info("Current schema version is greater than store version, migrating")
+            guard let oldSchema = WalletStoreSchemas.schemaWithVersion(storeVersion) else {
+                logger.error("Unable to get old schema \(storeVersion), aborting")
+                return false
+            }
+            return self.migrateFromSchema(oldSchema, toSchema: schema, context: context)
+        }
+        else {
+            self.logger.info("Current schema version is equal to store version, nothing to be done")
+        }
+        return false
+    }
+
+    private func migrateFromSchema(oldSchema: SQLiteSchema, toSchema newSchema: SQLiteSchema, context: SQLiteStoreContext) -> Bool {
+        guard newSchema.version > oldSchema.version else { return false }
         
         context.beginTransaction()
         
@@ -101,6 +125,12 @@ final class WalletStoreManager {
         
         context.commit()
         return true
+    }
+    
+    // MARK: Initialization
+    
+    init(store: SQLiteStore) {
+        self.store = store
     }
     
 }

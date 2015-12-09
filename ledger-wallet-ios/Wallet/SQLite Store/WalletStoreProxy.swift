@@ -27,7 +27,7 @@ final class WalletStoreProxy {
     }
     
     func addAddresses(addresses: [WalletAddressModel]) {
-        executeModelCollectionInsert({ WalletStoreExecutor.addAddresses(addresses, context: $0) })
+        executeModelCollectionTransaction({ WalletStoreExecutor.addAddresses(addresses, context: $0) })
     }
     
     // MARK: - Internal methods
@@ -54,7 +54,7 @@ final class WalletStoreProxy {
         }
     }
     
-    private func executeModelCollectionInsert(block: (SQLiteStoreContext) -> Bool) {
+    private func executeModelCollectionTransaction(block: (SQLiteStoreContext) -> Bool) {
         store.performTransaction() { [weak self] context in
             guard let _ = self else { return false }
             return block(context)

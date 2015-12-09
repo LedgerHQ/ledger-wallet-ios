@@ -37,7 +37,7 @@ final class SQLiteStore {
             guard let strongSelf = self else { return }
             
             guard let database = strongSelf.database where database.goodConnection() else {
-                strongSelf.logger.warn("Unable to perform block: no connection")
+                strongSelf.logger.warn("Unable to perform block: not opened")
                 return
             }
 
@@ -50,7 +50,7 @@ final class SQLiteStore {
             guard let strongSelf = self else { return }
             
             guard let database = strongSelf.database where database.goodConnection() else {
-                strongSelf.logger.warn("Unable to perform transaction: no connection")
+                strongSelf.logger.warn("Unable to perform transaction: no opened")
                 return
             }
             
