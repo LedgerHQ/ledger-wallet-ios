@@ -18,11 +18,28 @@ final class SQLiteStore {
     private let URL: NSURL?
     private let logger = Logger.sharedInstance(name: "SQLiteStore")
     
+    var isOpen: Bool {
+        var open = false
+        queue.addOperationWithBlock() {
+            guard let database = self.database else {
+                return
+            }
+            open = database.goodConnection()
+        }
+        queue.waitUntilAllOperationsAreFinished()
+        return open
+    }
+    
     // MARK: Blocks management
     
     func performBlock(block: (SQLiteStoreContext) -> Void) {
         queue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
+            guard let database = strongSelf.database where database.goodConnection() else {
+                strongSelf.logger.warn("Unable to perform block: no connection")
+                return
+            }
 
             block(strongSelf.database)
         }
@@ -31,6 +48,11 @@ final class SQLiteStore {
     func performTransaction(block: (SQLiteStoreContext) -> Bool) {
         queue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
+            guard let database = strongSelf.database where database.goodConnection() else {
+                strongSelf.logger.warn("Unable to perform transaction: no connection")
+                return
+            }
             
             strongSelf.database.beginTransaction()
             if block(strongSelf.database) {
@@ -48,15 +70,18 @@ final class SQLiteStore {
     
     // MARK: Open/close
     
-    private func open() {
-        queue.addOperationWithBlock() {
+    func open() {
+        queue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard strongSelf.database == nil else { return }
+
             let fileManager = NSFileManager.defaultManager()
             
             var databasePath: String? = nil
-            if let URL = self.URL {
+            if let URL = strongSelf.URL {
                 // check that URL is a file
                 guard let path = URL.path where URL.fileURL else {
-                    self.logger.error("Unable to init store with non-file URL \"\(URL)\"")
+                    strongSelf.logger.error("Unable to init store with non-file URL \"\(URL)\"")
                     return
                 }
                 databasePath = path
@@ -65,7 +90,7 @@ final class SQLiteStore {
                 var isDirectory: ObjCBool = false
                 fileManager.fileExistsAtPath(path, isDirectory: &isDirectory)
                 guard !isDirectory else {
-                    self.logger.error("Unable to init store with directory URL \"\(URL)\"")
+                    strongSelf.logger.error("Unable to init store with directory URL \"\(URL)\"")
                     return
                 }
                 
@@ -76,7 +101,7 @@ final class SQLiteStore {
                         try fileManager.createDirectoryAtPath(databaseDirectory, withIntermediateDirectories: true, attributes: nil)
                     }
                     catch {
-                        self.logger.error("Unable to create store directory at URL \"\(databaseDirectory)\"")
+                        strongSelf.logger.error("Unable to create store directory at URL \"\(databaseDirectory)\"")
                         return
                     }
                 }
@@ -84,55 +109,55 @@ final class SQLiteStore {
                 // create database file if needed
                 if !fileManager.fileExistsAtPath(path) {
                     guard fileManager.createFileAtPath(path, contents: nil, attributes: nil) else {
-                        self.logger.error("Unable to create store file at URL \"\(URL)\"")
+                        strongSelf.logger.error("Unable to create store file at URL \"\(URL)\"")
                         return
                     }
                 }
-                self.logger.info("Opening store at URL \"\(URL)\"")
+                strongSelf.logger.info("Opening store at URL \"\(URL)\"")
             }
             else {
-                self.logger.info("Opening store in memory")
+                strongSelf.logger.info("Opening store in memory")
             }
 
             // create and open database
             guard let database = FMDatabase(path: databasePath) where database.open() else {
-                if self.URL != nil {
-                    self.logger.error("Unable to open store at URL: \(self.URL!)")
+                if strongSelf.URL != nil {
+                    strongSelf.logger.error("Unable to open store at URL: \(strongSelf.URL!)")
                 }
                 else {
-                    self.logger.error("Unable to open store in memory")
+                    strongSelf.logger.error("Unable to open store in memory")
                 }
                 return
             }
             database.crashOnErrors = false
             database.logsErrors = false
             database.setShouldCacheStatements(true)
-            self.database = database
+            strongSelf.database = database
         }
     }
     
-    private func close() -> Bool {
-        var success = false
+    func close() {
         queue.cancelAllOperations()
-        queue.addOperationWithBlock() {
-            guard let database = self.database else {
-                self.logger.warn("Unable to close: no database")
-                return
+        queue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard let database = strongSelf.database else { return }
+            
+            if strongSelf.URL != nil {
+                strongSelf.logger.info("Closing store at URL \"\(strongSelf.URL!)\"")
             }
-            if self.URL != nil {
-                self.logger.info("Closing store at URL \"\(self.URL!)\"")
+            else
+            {
+                strongSelf.logger.info("Closing store in memory")
             }
-            success = database.close()
-            self.database = nil
+            database.close()
+            strongSelf.database = nil
         }
-        return success
     }
     
     // MARK: Initialization
     
     init(URL: NSURL?) {
         self.URL = URL
-        open()
     }
     
     deinit {

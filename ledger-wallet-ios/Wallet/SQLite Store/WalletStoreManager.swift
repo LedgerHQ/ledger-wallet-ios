@@ -18,6 +18,7 @@ final class WalletStoreManager {
         let store = SQLiteStore(URL: URL)
         
         if let schema = WalletStoreSchemas.currentSchema {
+            store.open()
             executePragmaCommands(store, schema: schema)
             checkForSchemaMigration(store, schema: schema, uniqueIdentifier: uniqueIdentifier)
         }

@@ -19,6 +19,7 @@ final class WalletAPIManager: BaseWalletManager {
     private let websocketListener: WalletWebsocketListener
     private let transactionsStream: WalletTransactionsStream
     private let storeProxy: WalletStoreProxy
+    private let store: SQLiteStore
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
     
@@ -59,11 +60,11 @@ final class WalletAPIManager: BaseWalletManager {
     
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
-        let store = WalletStoreManager.storeAtURL(storeURL, withUniqueIdentifier: uniqueIdentifier)
-        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
+        self.store = WalletStoreManager.storeAtURL(storeURL, withUniqueIdentifier: uniqueIdentifier)
+        self.storeProxy = WalletStoreProxy(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
-        self.layoutDiscoverer = WalletLayoutDiscoverer(store: store, delegateQueue: NSOperationQueue.mainQueue())
+        self.layoutDiscoverer = WalletLayoutDiscoverer(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy)
         self.websocketListener = WalletWebsocketListener()
         
@@ -72,6 +73,7 @@ final class WalletAPIManager: BaseWalletManager {
     
     deinit {
         stopAllServices()
+        store.close()
     }
     
 }
