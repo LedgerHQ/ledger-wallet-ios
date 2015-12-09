@@ -16,18 +16,18 @@ final class WalletStoreProxy {
     
     // MARK: - Accounts management
     
-    func fetchAccountAtIndex(index: Int, completion: (WalletAccount?) -> Void) {
+    func fetchAccountAtIndex(index: Int, completion: (WalletAccountModel?) -> Void) {
         executeModelFetch({ WalletStoreExecutor.accountAtIndex(index, context: $0) }, completion: completion)
     }
 
     // MARK: - Addresses management
     
-    func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddress]?) -> Void) {
+    func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddressModel]?) -> Void) {
         executeModelCollectionFetch({ WalletStoreExecutor.addressesAtPath(paths, context: $0) }, completion: completion)
     }
     
-    func addAddresses(addresses: [WalletAddress]) {
-        executeModelCollectionInsert({ WalletStoreExecutor.storeAddresses(addresses, context: $0) })
+    func addAddresses(addresses: [WalletAddressModel]) {
+        executeModelCollectionInsert({ WalletStoreExecutor.addAddresses(addresses, context: $0) })
     }
     
     // MARK: - Internal methods

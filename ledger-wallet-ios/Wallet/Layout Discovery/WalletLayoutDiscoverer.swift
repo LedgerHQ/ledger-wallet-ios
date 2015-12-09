@@ -21,7 +21,7 @@ protocol WalletLayoutDiscovererDelegate: class {
     func layoutDiscoverDidStart(layoutDiscoverer: WalletLayoutDiscoverer)
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didStopWithError error: WalletLayoutDiscovererError?)
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction])
-    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void)
+    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, accountAtIndex index: Int, providerBlock: (WalletAccountModel?) -> Void)
     
 }
 
@@ -192,7 +192,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
         }
     }
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didSucceedWithAddresses addresses: [WalletAddress]) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didSucceedWithAddresses addresses: [WalletAddressModel]) {
         guard discoveringLayout else { return }
         
         // fetch transactions from API
@@ -212,7 +212,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
         }
     }
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletAddress]) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, didGenerateAddresses addresses: [WalletAddressModel]) {
         // store newly generated addresses in store
         storeProxy.addAddresses(addresses)
     }
@@ -223,7 +223,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDelegate {
 
 extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, accountAtIndex index: Int, providerBlock: (WalletAccount?) -> Void) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, accountAtIndex index: Int, providerBlock: (WalletAccountModel?) -> Void) {
         guard discoveringLayout else { return }
         
         // try to get account from store
@@ -253,7 +253,7 @@ extension WalletLayoutDiscoverer: WalletLayoutAddressRequestDataSource {
         }
     }
     
-    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, addressesForPaths paths: [WalletAddressPath], providerBlock: ([WalletAddress]?) -> Void) {
+    func layoutAddressRequest(layoutAddressRequest: WalletLayoutAddressRequest, addressesForPaths paths: [WalletAddressPath], providerBlock: ([WalletAddressModel]?) -> Void) {
         guard discoveringLayout else { return }
 
         // try to get addresses from store

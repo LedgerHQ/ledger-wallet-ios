@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletAccount: SQLiteFetchableModel {
+struct WalletAccountModel {
     
     let index: Int
     let extendedPublicKey: String
@@ -17,14 +17,6 @@ struct WalletAccount: SQLiteFetchableModel {
     let name: String?
     
     // MARK: Initialization
-    
-    init?(resultSet: SQLiteStoreResultSet) {
-        index = self.dynamicType.integerForKey(AccountEntity.indexKey, resultSet: resultSet)!
-        extendedPublicKey = self.dynamicType.stringForKey(AccountEntity.extendedPublicKeyKey, resultSet: resultSet)!
-        nextInternalIndex = self.dynamicType.integerForKey(AccountEntity.nextInternalIndexKey, resultSet: resultSet)!
-        nextExternalIndex = self.dynamicType.integerForKey(AccountEntity.nextExternalIndexKey, resultSet: resultSet)!
-        name = self.dynamicType.stringForKey(AccountEntity.nameKey, resultSet: resultSet)
-    }
     
     init(index: Int, extendedPublicKey: String, name: String?) {
         self.init(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: 0, nextExternalIndex: 0, name: name)
@@ -36,6 +28,20 @@ struct WalletAccount: SQLiteFetchableModel {
         self.name = name
         self.nextExternalIndex = nextExternalIndex
         self.nextInternalIndex = nextInternalIndex
+    }
+    
+}
+
+// MARK: - SQLiteFetchableModel
+
+extension WalletAccountModel: SQLiteFetchableModel {
+        
+    init?(resultSet: SQLiteStoreResultSet) {
+        index = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.indexKey, resultSet: resultSet)!
+        extendedPublicKey = self.dynamicType.optionalStringForKey(WalletAccountTableEntity.extendedPublicKeyKey, resultSet: resultSet)!
+        nextInternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.nextInternalIndexKey, resultSet: resultSet)!
+        nextExternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.nextExternalIndexKey, resultSet: resultSet)!
+        name = self.dynamicType.optionalStringForKey(WalletAccountTableEntity.nameKey, resultSet: resultSet)
     }
     
 }

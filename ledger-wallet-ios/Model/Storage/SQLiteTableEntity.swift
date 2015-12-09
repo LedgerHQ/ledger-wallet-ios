@@ -8,17 +8,15 @@
 
 import Foundation
 
-protocol SQLiteStorableEntity {
+protocol SQLiteTableEntity {
     
     static var tableName: String { get }
     static var eponymTable: SQLiteTable { get }
     
 }
 
-extension SQLiteStorableEntity {
+extension SQLiteTableEntity {
     
-    static var eponymTable: SQLiteTable {
-        return SQLiteTable(name: tableName)
-    }
-    
+    static var eponymTable: SQLiteTable { return SQLiteTable(name: tableName) }
+
 }

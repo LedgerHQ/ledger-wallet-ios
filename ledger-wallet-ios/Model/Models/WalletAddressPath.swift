@@ -9,6 +9,7 @@
 import Foundation
 
 struct WalletAddressPath {
+    
     let accountIndex: Int
     let chainIndex: Int
     let keyIndex: Int
@@ -66,7 +67,10 @@ struct WalletAddressPath {
     }
 }
 
+// MARK: - Equatable
+
 extension WalletAddressPath: Equatable {}
+
 func ==(lhs: WalletAddressPath, rhs: WalletAddressPath) -> Bool {
     return lhs.accountIndex == rhs.accountIndex && lhs.chainIndex == rhs.chainIndex && lhs.keyIndex == rhs.keyIndex
 }

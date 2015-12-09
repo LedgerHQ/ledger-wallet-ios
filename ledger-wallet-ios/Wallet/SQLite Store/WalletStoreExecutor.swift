@@ -14,37 +14,56 @@ final class WalletStoreExecutor {
 
     // MARK: - Accounts management
     
-    class func accountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccount? {
-        let statement = "SELECT \"\(AccountEntity.indexKey)\", \"\(AccountEntity.extendedPublicKeyKey)\" FROM \"\(AccountEntity.tableName)\" WHERE \"\(AccountEntity.indexKey)\" = ?"
-        return fetchModel(statement, [index], context: context)
+    class func accountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccountModel? {
+        let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" WHERE \"\(WalletAccountTableEntity.indexKey)\" = ?"
+        return fetchModel(statement, values: [index], context: context)
+    }
+    
+    class func addAccount(account: WalletAccountModel, context: SQLiteStoreContext) -> Bool {
+        let fieldsStatement = "(\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\")"
+        let statement = "INSERT INTO \"\(WalletAccountTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?)"
+        let values = [account.index, account.name ?? NSNull(), account.extendedPublicKey, account.nextExternalIndex, account.nextInternalIndex]
+        guard context.executeUpdate(statement, withArgumentsInArray: values) else {
+            logger.error("Unable to insert account: \(context.lastErrorMessage())")
+            return false
+        }
+        return true
     }
     
     // MARK: - Addresses management
     
-    class func addressesAtPath(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddress]? {
+    class func addressesAtPath(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
-        let concatStatement = "('/' || \"\(AddressEntity.accountIndexKey)\" || '''/' || \"\(AddressEntity.chainIndexKey)\" || '/' || \"\(AddressEntity.keyIndexKey)\") AS v"
-        let fieldsStatement = "\"\(AddressEntity.accountIndexKey)\", \"\(AddressEntity.chainIndexKey)\", \"\(AddressEntity.keyIndexKey)\", \"\(AddressEntity.addressKey)\""
-        let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(AddressEntity.tableName)\" WHERE v IN (\(inStatement))"
+        let concatStatement = "('/' || \"\(WalletAddressTableEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressTableEntity.chainIndexKey)\" || '/' || \"\(WalletAddressTableEntity.keyIndexKey)\") AS path"
+        let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
+        let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE path IN (\(inStatement))"
         return fetchModelCollection(statement, context: context)
     }
     
-    class func storeAddresses(addresses: [WalletAddress], context: SQLiteStoreContext) -> Bool {
+    class func addressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddressModel? {
+        let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE \"\(WalletAddressTableEntity.addressKey)\" = ?"
+        return fetchModel(statement, values: [address], context: context)
+    }
+    
+    class func addAddress(address: WalletAddressModel, context: SQLiteStoreContext) -> Bool {
+        guard addressWithAddress(address.address, context: context) == nil else { return true }
+        
+        let fieldsStatement = "(\"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\", \"\(WalletAddressTableEntity.addressKey)\")"
+        let statement = "INSERT INTO \"\(WalletAddressTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
+        let values: [AnyObject] = [address.accountIndex, address.chainIndex, address.keyIndex, address.address]
+        guard context.executeUpdate(statement, withArgumentsInArray: values) else {
+            logger.error("Unable to insert address: \(context.lastErrorMessage())")
+            return false
+        }
+        return true
+    }
+    
+    class func addAddresses(addresses: [WalletAddressModel], context: SQLiteStoreContext) -> Bool {
         for address in addresses {
-            // check that address is missing
-            let updateStatement = "SELECT COUNT(*) as v FROM \"\(AddressEntity.tableName)\" WHERE \"\(AddressEntity.addressKey)\" = ?"
-            guard let results = context.executeQuery(updateStatement, withArgumentsInArray: [address.address]) where results.next() else {
-                logger.error("Unable to retreive address: \(context.lastErrorMessage())")
+            guard addAddress(address, context: context) else {
                 return false
-            }
-            if results.longForColumn("v") <= 0 {
-                // insert it
-                let insertStatement = "INSERT INTO \"\(AddressEntity.tableName)\" (\"\(AddressEntity.accountIndexKey)\", \"\(AddressEntity.chainIndexKey)\", \"\(AddressEntity.keyIndexKey)\", \"\(AddressEntity.addressKey)\") VALUES (?, ?, ?, ?)"
-                let values: [AnyObject] = [address.accountIndex, address.chainIndex, address.keyIndex, address.address]
-                guard context.executeUpdate(insertStatement, withArgumentsInArray: values) else {
-                    logger.error("Unable to store address: \(context.lastErrorMessage())")
-                    return false
-                }
             }
         }
         return true
@@ -53,15 +72,15 @@ final class WalletStoreExecutor {
     // MARK: - Schema management
     
     class func schemaVersion(context: SQLiteStoreContext) -> Int? {
-        guard let results = context.executeQuery("SELECT \(MetadataEntity.schemaVersionKey) FROM \(MetadataEntity.tableName)", withArgumentsInArray: nil) else {
+        guard let results = context.executeQuery("SELECT \(WalletMetadataTableEntity.schemaVersionKey) FROM \(WalletMetadataTableEntity.tableName)", withArgumentsInArray: nil) else {
             logger.warn("Unable to fetch schema version: \(context.lastErrorMessage())")
             return nil
         }
-        guard results.next() && !results.columnIsNull(MetadataEntity.schemaVersionKey) else {
+        guard results.next() && !results.columnIsNull(WalletMetadataTableEntity.schemaVersionKey) else {
             logger.warn("Unable to fetch schema version: no row")
             return nil
         }
-        let version = results.longForColumn(MetadataEntity.schemaVersionKey)
+        let version = results.longForColumn(WalletMetadataTableEntity.schemaVersionKey)
         guard version > 0 else {
             logger.error("Unabel to fetch schema version: value is <= 0")
             return nil
@@ -71,14 +90,14 @@ final class WalletStoreExecutor {
 
     class func setMetadata(metadata: [String: AnyObject], context: SQLiteStoreContext) -> Bool {
         let updateStatement = metadata.map { return "\"\($0.0)\" = :\($0.0)" }.joinWithSeparator(", ")
-        guard context.executeUpdate("UPDATE \(MetadataEntity.tableName) SET \(updateStatement)", withParameterDictionary: metadata) else {
+        guard context.executeUpdate("UPDATE \(WalletMetadataTableEntity.tableName) SET \(updateStatement)", withParameterDictionary: metadata) else {
             logger.error("Unable to set database metadata \(metadata): \(context.lastErrorMessage())")
             return false
         }
         if context.changes() == 0 {
             let insertStatement = metadata.map { "\"\($0.0)\"" }.joinWithSeparator(", ")
             let valuesStatement = metadata.map { ":\($0.0)" }.joinWithSeparator(", ")
-            guard context.executeUpdate("INSERT INTO \(MetadataEntity.tableName) (\(insertStatement)) VALUES (\(valuesStatement))", withParameterDictionary: metadata) else {
+            guard context.executeUpdate("INSERT INTO \(WalletMetadataTableEntity.tableName) (\(insertStatement)) VALUES (\(valuesStatement))", withParameterDictionary: metadata) else {
                 logger.error("Unable to set database metadata \(metadata): \(context.lastErrorMessage())")
                 return false
             }
@@ -104,7 +123,7 @@ final class WalletStoreExecutor {
     
     // MARK: - Internal methods
     
-    private class func fetchModel<T: SQLiteFetchableModel>(statement: String, _ values: [AnyObject]? = nil, context: SQLiteStoreContext) -> T? {
+    private class func fetchModel<T: SQLiteFetchableModel>(statement: String, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> T? {
         guard let results = context.executeQuery(statement, withArgumentsInArray: values) else {
             logger.error("Unable to fetch model of type \(T.self): \(context.lastErrorMessage())")
             return nil
@@ -115,7 +134,7 @@ final class WalletStoreExecutor {
         return T.init(resultSet: results)
     }
     
-    private class func fetchModelCollection<T: SQLiteFetchableModel>(statement: String, _ values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [T]? {
+    private class func fetchModelCollection<T: SQLiteFetchableModel>(statement: String, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [T]? {
         guard let results = context.executeQuery(statement, withArgumentsInArray: values) else {
             logger.error("Unable to fetch model collection of type \(T.self): \(context.lastErrorMessage())")
             return nil

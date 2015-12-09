@@ -36,40 +36,40 @@ final class WalletStoreSchemas {
         schema.addPragmaCommand(SQLitePragmaCommand(name: "foreign_keys", value: "ON"))
         
         // tables
-        let accountsTable = AccountEntity.eponymTable
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.indexKey, type: .Integer, notNull: true, unique: true))
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.nameKey, type: .Text, notNull: false, unique: false))
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false, defaultValue: 0))
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false, defaultValue: 0))
-        accountsTable.addField(SQLiteTableField(name: AccountEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
+        let accountsTable = WalletAccountTableEntity.eponymTable
+        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.indexKey, type: .Integer, notNull: true, unique: true))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.nameKey, type: .Text, notNull: false, unique: false))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
         schema.addTable(accountsTable)
         
-        let operationsTable = OperationEntity.eponymTable
-        operationsTable.addField(SQLiteTableField(name: OperationEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
+        let operationsTable = WalletOperationTableEntity.eponymTable
+        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(operationsTable)
         
-        let addressesTable = AddressEntity.eponymTable
-        addressesTable.addField(SQLiteTableField(name: AddressEntity.addressKey, type: .Text, notNull: true, unique: true))
-        addressesTable.addField(SQLiteTableField(name: AddressEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
-        addressesTable.addField(SQLiteTableField(name: AddressEntity.keyIndexKey, type: .Integer, notNull: true, unique: false))
-        addressesTable.addField(SQLiteTableField(name: AddressEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
+        let addressesTable = WalletAddressTableEntity.eponymTable
+        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.addressKey, type: .Text, notNull: true, unique: true))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.keyIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(addressesTable)
         
-        let metadataTable = MetadataEntity.eponymTable
-        metadataTable.addField(SQLiteTableField(name: MetadataEntity.schemaVersionKey, type: .Integer, notNull: true, unique: true))
-        metadataTable.addField(SQLiteTableField(name: MetadataEntity.uniqueIdentifierKey, type: .Text, notNull: true, unique: true))
+        let metadataTable = WalletMetadataTableEntity.eponymTable
+        metadataTable.addField(SQLiteTableField(name: WalletMetadataTableEntity.schemaVersionKey, type: .Integer, notNull: true, unique: true))
+        metadataTable.addField(SQLiteTableField(name: WalletMetadataTableEntity.uniqueIdentifierKey, type: .Text, notNull: true, unique: true))
         schema.addTable(metadataTable)
         
         // foreign keys
         let operationAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(AccountEntity.indexKey)!,
-            childField: operationsTable.fieldWithName(OperationEntity.accountIndexKey)!,
+            parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
+            childField: operationsTable.fieldWithName(WalletOperationTableEntity.accountIndexKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         operationsTable.addForeignKey(operationAccountForeignKey)
         
         let addressAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(AccountEntity.indexKey)!,
-            childField: addressesTable.fieldWithName(AddressEntity.accountIndexKey)!,
+            parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
+            childField: addressesTable.fieldWithName(WalletAddressTableEntity.accountIndexKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         addressesTable.addForeignKey(addressAccountForeignKey)
         

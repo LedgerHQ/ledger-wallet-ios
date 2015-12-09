@@ -1,5 +1,5 @@
 //
-//  MetadataEntity.swift
+//  WalletMetadataTableEntity.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 01/12/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class MetadataEntity: SQLiteStorableEntity {
+final class WalletMetadataTableEntity: SQLiteTableEntity {
     
     static let tableName = "metadata"
     

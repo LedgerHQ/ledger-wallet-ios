@@ -79,8 +79,8 @@ final class WalletStoreManager {
         
         logger.info("Setting default store metadata")
         let metadata: [String: AnyObject] = [
-            MetadataEntity.schemaVersionKey: schema.version,
-            MetadataEntity.uniqueIdentifierKey: uniqueIdentifier
+            WalletMetadataTableEntity.schemaVersionKey: schema.version,
+            WalletMetadataTableEntity.uniqueIdentifierKey: uniqueIdentifier
         ]
         guard WalletStoreExecutor.setMetadata(metadata, context: context) else {
             context.rollback()

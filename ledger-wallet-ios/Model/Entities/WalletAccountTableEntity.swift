@@ -1,5 +1,5 @@
 //
-//  AccountEntity.swift
+//  WalletAccountTableEntity.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 30/11/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AccountEntity: SQLiteStorableEntity {
+struct WalletAccountTableEntity: SQLiteTableEntity {
  
     static let tableName = "account"
     
