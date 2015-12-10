@@ -51,6 +51,7 @@ final class WalletAPIManager: WalletManagerType {
     func stopAllServices() {
         stopRefreshingLayout()
         stopListeningTransactions()
+        transactionsStream.discardPendingTransactions()
     }
     
     // MARK: Initialization
@@ -65,7 +66,7 @@ final class WalletAPIManager: WalletManagerType {
         // create services
         self.layoutDiscoverer = WalletLayoutDiscoverer(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
         self.websocketListener = WalletWebsocketListener(delegateQueue: NSOperationQueue.mainQueue())
-        self.transactionsStream = WalletTransactionsStream(store: self.store)
+        self.transactionsStream = WalletTransactionsStream(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
         
         startAllServices()
     }

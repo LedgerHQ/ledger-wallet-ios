@@ -30,9 +30,7 @@ class LedgerAPIClient: NSObject {
     init(delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
         
-        let workingQueue = NSOperationQueue()
-        workingQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount
-        workingQueue.name = dispatchQueueNameForIdentifier(self.dynamicType.className())
+        let workingQueue = NSOperationQueue(name: self.dynamicType.className(), maxConcurrentOperationCount: NSOperationQueueDefaultMaxConcurrentOperationCount)
         self.restClient = RESTClient(baseURL: LedgerAPIBaseURL, delegateQueue: workingQueue)
         self.restClient.httpClient.additionalHeaders = [
             LedgerAPIClientHeaderFields.Platform.rawValue: "ios",
