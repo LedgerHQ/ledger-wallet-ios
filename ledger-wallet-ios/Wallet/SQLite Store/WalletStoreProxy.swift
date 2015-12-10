@@ -31,7 +31,7 @@ final class WalletStoreProxy {
     // MARK: - Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddressModel]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.addressesAtPath(paths, context: $0) }, completion: completion)
+        executeModelCollectionFetch({ WalletStoreExecutor.addressesAtPaths(paths, context: $0) }, completion: completion)
     }
     
     func addAddresses(addresses: [WalletAddressModel]) {

@@ -78,7 +78,7 @@ final class WalletStoreManager {
             WalletMetadataTableEntity.schemaVersionKey: schema.version,
             WalletMetadataTableEntity.uniqueIdentifierKey: uniqueIdentifier
         ]
-        guard WalletStoreExecutor.storeMetadata(metadata, context: context) else {
+        guard WalletStoreExecutor.updateMetadata(metadata, context: context) else {
             context.rollback()
             return false
         }

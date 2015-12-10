@@ -39,12 +39,22 @@ final class WalletStoreExecutor {
     
     // MARK: - Addresses management
     
-    class func addressesAtPath(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
+    class func addressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
         let concatStatement = "('/' || \"\(WalletAddressTableEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressTableEntity.chainIndexKey)\" || '/' || \"\(WalletAddressTableEntity.keyIndexKey)\") AS path"
         let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
         let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE path IN (\(inStatement))"
         return fetchModelCollection(statement, context: context)
+    }
+    
+    class func addressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddressModel? {
+        guard let results = addressesAtPaths([path], context: context) else {
+            return nil
+        }
+        guard results.count == 1 else {
+            return nil
+        }
+        return results[0]
     }
     
     class func addressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddressModel? {
@@ -55,6 +65,7 @@ final class WalletStoreExecutor {
     
     class func addAddress(address: WalletAddressModel, context: SQLiteStoreContext) -> Bool {
         guard addressWithAddress(address.address, context: context) == nil else { return true }
+        guard addressAtPath(address.addressPath, context: context) == nil else { return true }
         
         let fieldsStatement = "(\"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\", \"\(WalletAddressTableEntity.addressKey)\")"
         let statement = "INSERT INTO \"\(WalletAddressTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
@@ -88,13 +99,15 @@ final class WalletStoreExecutor {
         }
         let version = results.longForColumn(WalletMetadataTableEntity.schemaVersionKey)
         guard version > 0 else {
-            logger.error("Unabel to fetch schema version: value is <= 0")
+            logger.error("Unable to fetch schema version: value is <= 0")
             return nil
         }
         return version
     }
 
-    class func storeMetadata(metadata: [String: AnyObject], context: SQLiteStoreContext) -> Bool {
+    class func updateMetadata(metadata: [String: AnyObject], context: SQLiteStoreContext) -> Bool {
+        guard metadata.count > 0 else { return true }
+        
         let updateStatement = metadata.map { return "\"\($0.0)\" = :\($0.0)" }.joinWithSeparator(", ")
         guard context.executeUpdate("UPDATE \(WalletMetadataTableEntity.tableName) SET \(updateStatement)", withParameterDictionary: metadata) else {
             logger.error("Unable to set database metadata \(metadata): \(context.lastErrorMessage())")
