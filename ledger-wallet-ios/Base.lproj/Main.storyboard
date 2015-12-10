@@ -26,7 +26,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U2W-yb-Asc">
-                                <rect key="frame" x="0.0" y="58" width="600" height="542"/>
+                                <rect key="frame" x="0.0" y="96" width="600" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgR-NH-I76">
@@ -36,20 +36,40 @@
                                     <action selector="stopScanForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="Oh7-zA-vgJ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPp-cZ-QYS">
+                                <rect key="frame" x="20" y="58" width="130" height="30"/>
+                                <state key="normal" title="Listen transactions"/>
+                                <connections>
+                                    <action selector="listenForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="IMX-mO-6ox"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLg-1M-7Dr">
+                                <rect key="frame" x="486" y="58" width="94" height="30"/>
+                                <state key="normal" title="Stop listening"/>
+                                <connections>
+                                    <action selector="stopListenForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="dE9-Ua-HpO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mR9-wG-Uzp" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leadingMargin" id="WNl-lH-8Ax"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="top" secondItem="mR9-wG-Uzp" secondAttribute="bottom" constant="8" symbolic="YES" id="XEd-iE-IEt"/>
-                            <constraint firstItem="RgR-NH-I76" firstAttribute="trailing" secondItem="W6X-oo-jnS" secondAttribute="trailingMargin" id="XFz-xt-yNy"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leading" id="ZFA-mc-YPx"/>
-                            <constraint firstAttribute="trailing" secondItem="U2W-yb-Asc" secondAttribute="trailing" id="brZ-VO-5mF"/>
-                            <constraint firstItem="RgR-NH-I76" firstAttribute="top" secondItem="UHn-8Y-O2D" secondAttribute="bottom" id="hqi-dm-47w"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="bottom" secondItem="8On-Mh-093" secondAttribute="top" id="m9S-4j-EQ1"/>
-                            <constraint firstItem="RgR-NH-I76" firstAttribute="baseline" secondItem="mR9-wG-Uzp" secondAttribute="baseline" id="sZa-1X-oFk"/>
+                            <constraint firstItem="U2W-yb-Asc" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leading" id="2Uo-5s-dRL"/>
+                            <constraint firstAttribute="trailing" secondItem="U2W-yb-Asc" secondAttribute="trailing" id="5Nt-MV-8uh"/>
+                            <constraint firstItem="RgR-NH-I76" firstAttribute="baseline" secondItem="mR9-wG-Uzp" secondAttribute="baseline" id="DbU-g3-gab"/>
+                            <constraint firstItem="RgR-NH-I76" firstAttribute="trailing" secondItem="oLg-1M-7Dr" secondAttribute="trailing" id="Dzf-BT-Dhl"/>
+                            <constraint firstItem="mR9-wG-Uzp" firstAttribute="top" secondItem="UHn-8Y-O2D" secondAttribute="bottom" id="Mg5-WG-58o"/>
+                            <constraint firstItem="LPp-cZ-QYS" firstAttribute="top" secondItem="mR9-wG-Uzp" secondAttribute="bottom" constant="8" symbolic="YES" id="ODQ-Hc-4Wx"/>
+                            <constraint firstItem="LPp-cZ-QYS" firstAttribute="leading" secondItem="mR9-wG-Uzp" secondAttribute="leading" id="RMf-UY-Scb"/>
+                            <constraint firstItem="U2W-yb-Asc" firstAttribute="bottom" secondItem="8On-Mh-093" secondAttribute="top" id="S9C-Nd-d3q"/>
+                            <constraint firstItem="LPp-cZ-QYS" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leadingMargin" id="TTu-kD-k0m"/>
+                            <constraint firstItem="oLg-1M-7Dr" firstAttribute="baseline" secondItem="LPp-cZ-QYS" secondAttribute="baseline" id="maL-Sy-hof"/>
+                            <constraint firstItem="U2W-yb-Asc" firstAttribute="top" secondItem="LPp-cZ-QYS" secondAttribute="bottom" constant="8" symbolic="YES" id="mpk-Oh-bVc"/>
+                            <constraint firstItem="oLg-1M-7Dr" firstAttribute="trailing" secondItem="W6X-oo-jnS" secondAttribute="trailingMargin" id="r6q-SF-onP"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="listenStartButton" destination="LPp-cZ-QYS" id="PPQ-zh-uYs"/>
+                        <outlet property="listenStopButton" destination="oLg-1M-7Dr" id="1aK-IL-a54"/>
                         <outlet property="startButton" destination="mR9-wG-Uzp" id="FKN-WH-d4B"/>
                         <outlet property="stopButton" destination="RgR-NH-I76" id="dsb-O2-kGc"/>
                     </connections>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="SLb-pj-maR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="SLb-pj-maR">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="fontawesome-webfont.ttf">
@@ -21,7 +21,6 @@
                     <view key="view" contentMode="scaleToFill" id="w3J-lR-FOx" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
@@ -55,7 +54,6 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qlf-0Y-Pa8" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
                                         <rect key="frame" x="197" y="25" width="207" height="34"/>
-                                        <animations/>
                                         <state key="normal" title="PAIR_A_LEDGER_WALLET">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -68,7 +66,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <constraints>
                                     <constraint firstItem="Qlf-0Y-Pa8" firstAttribute="top" secondItem="KME-ZQ-Ide" secondAttribute="top" constant="25" id="Lw3-j5-5z9"/>
                                     <constraint firstAttribute="centerX" secondItem="Qlf-0Y-Pa8" secondAttribute="centerX" id="Lx1-oC-moy"/>
@@ -80,7 +77,6 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="IMg-UO-yaQ" customClass="TableView" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="452"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PairingListTableViewCell" id="NMK-7R-CAp" customClass="PairingListTableViewCell" customModule="ledger_wallet_ios" customModuleProvider="target">
@@ -92,7 +88,6 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_dongle_name_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlL-i4-fNA" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="30" y="21" width="116" height="21"/>
-                                                    <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -102,7 +97,6 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jac-JW-Ean" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="530" y="12" width="70" height="60"/>
-                                                    <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="R64-Pi-v3N"/>
                                                         <constraint firstAttribute="width" constant="70" id="rEA-Ls-VX2"/>
@@ -122,7 +116,6 @@
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_pairing_date_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tM-Ch-UDd" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                     <rect key="frame" x="30" y="43" width="109" height="21"/>
-                                                    <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -131,7 +124,6 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
-                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="9tM-Ch-UDd" secondAttribute="centerY" constant="-11" id="63O-NA-p1L"/>
                                                 <constraint firstItem="XlL-i4-fNA" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="30" id="7hD-wc-yYz"/>
@@ -141,7 +133,6 @@
                                                 <constraint firstItem="9tM-Ch-UDd" firstAttribute="leading" secondItem="32r-YR-OB3" secondAttribute="leading" constant="30" id="rdS-av-PCN"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <animations/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="allure" value="_tableViewCell.transparent"/>
                                         </userDefinedRuntimeAttributes>
@@ -160,7 +151,6 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="IMg-UO-yaQ" secondAttribute="trailing" id="20a-Mk-vtb"/>
@@ -180,7 +170,6 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wcF-mn-L2t" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="447" y="7" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
                                 <state key="normal" title="DONE">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -226,7 +215,6 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="_step_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyE-5l-4qi" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="48" height="21"/>
-                                                <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -236,7 +224,6 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_step_indication_" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7b-R8-cEZ" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
                                                 <rect key="frame" x="63" y="0.0" width="240" height="21"/>
-                                                <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="240" id="yZe-zo-vcL"/>
                                                 </constraints>
@@ -248,7 +235,6 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="HyE-5l-4qi" firstAttribute="top" secondItem="acL-ZJ-vaz" secondAttribute="top" id="Au8-Dg-o4A"/>
@@ -264,7 +250,6 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="acL-ZJ-vaz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KCH-EO-UU7" secondAttribute="leading" id="7kT-bV-yYt"/>
@@ -280,14 +265,12 @@
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="St0-fs-pXA" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="51" width="600" height="485"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="St0-fs-pXA" firstAttribute="leading" secondItem="2rR-I9-yyf" secondAttribute="leading" id="Amq-YD-5Dh"/>
@@ -307,7 +290,6 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ng7-Fx-Yew" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="20" y="7" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
                                 <state key="normal" title="CANCEL">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -323,7 +305,6 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fPU-Xm-63Z" customClass="Button" customModule="ledger_wallet_ios" customModuleProvider="target">
                                 <rect key="frame" x="447" y="7" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
                                 <state key="normal" title="DONE">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>

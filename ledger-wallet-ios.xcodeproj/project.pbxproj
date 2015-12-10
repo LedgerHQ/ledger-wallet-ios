@@ -176,7 +176,7 @@
 		37E316E71C14665800BE2C87 /* WalletLayoutAddressRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316E01C14665800BE2C87 /* WalletLayoutAddressRequest.swift */; };
 		37E316E81C14665800BE2C87 /* WalletLayoutDiscoverer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316E11C14665800BE2C87 /* WalletLayoutDiscoverer.swift */; };
 		37E316E91C14665800BE2C87 /* WalletWebsocketListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316E21C14665800BE2C87 /* WalletWebsocketListener.swift */; };
-		37E316EA1C14665800BE2C87 /* BaseWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316E51C14665800BE2C87 /* BaseWalletManager.swift */; };
+		37E316EA1C14665800BE2C87 /* WalletManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316E51C14665800BE2C87 /* WalletManagerType.swift */; };
 		37E316EB1C14665800BE2C87 /* WalletAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316E61C14665800BE2C87 /* WalletAPIManager.swift */; };
 		37E316ED1C14667600BE2C87 /* WalletTransactionsStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316EC1C14667600BE2C87 /* WalletTransactionsStream.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
@@ -462,7 +462,7 @@
 		37E316E01C14665800BE2C87 /* WalletLayoutAddressRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLayoutAddressRequest.swift; sourceTree = "<group>"; };
 		37E316E11C14665800BE2C87 /* WalletLayoutDiscoverer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLayoutDiscoverer.swift; sourceTree = "<group>"; };
 		37E316E21C14665800BE2C87 /* WalletWebsocketListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletWebsocketListener.swift; sourceTree = "<group>"; };
-		37E316E51C14665800BE2C87 /* BaseWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletManager.swift; sourceTree = "<group>"; };
+		37E316E51C14665800BE2C87 /* WalletManagerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManagerType.swift; sourceTree = "<group>"; };
 		37E316E61C14665800BE2C87 /* WalletAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAPIManager.swift; sourceTree = "<group>"; };
 		37E316EC1C14667600BE2C87 /* WalletTransactionsStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStream.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1019,9 +1019,9 @@
 		37E316DF1C14665800BE2C87 /* Layout Discovery */ = {
 			isa = PBXGroup;
 			children = (
-				37E316E21C14665800BE2C87 /* WalletWebsocketListener.swift */,
 				37E316E11C14665800BE2C87 /* WalletLayoutDiscoverer.swift */,
 				37E316E01C14665800BE2C87 /* WalletLayoutAddressRequest.swift */,
+				37E316E21C14665800BE2C87 /* WalletWebsocketListener.swift */,
 			);
 			path = "Layout Discovery";
 			sourceTree = "<group>";
@@ -1037,7 +1037,7 @@
 		37E316E41C14665800BE2C87 /* Wallet Manager */ = {
 			isa = PBXGroup;
 			children = (
-				37E316E51C14665800BE2C87 /* BaseWalletManager.swift */,
+				37E316E51C14665800BE2C87 /* WalletManagerType.swift */,
 				37E316E61C14665800BE2C87 /* WalletAPIManager.swift */,
 			);
 			path = "Wallet Manager";
@@ -1175,10 +1175,10 @@
 			isa = PBXGroup;
 			children = (
 				3778224F1C05EDBE009FD634 /* WalletTestViewController.swift */,
-				37A115D01C15D7DD00322437 /* SQLite Store */,
 				37E316E41C14665800BE2C87 /* Wallet Manager */,
 				37E316DF1C14665800BE2C87 /* Layout Discovery */,
 				37E316E31C14665800BE2C87 /* Transactions Stream */,
+				37A115D01C15D7DD00322437 /* SQLite Store */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1342,7 +1342,7 @@
 				37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */,
 				37F8E4161BFE2EB9001609BA /* TestAppDelegate.swift in Sources */,
 				379197101BB441140051CD22 /* BTCPaymentProtocol.m in Sources */,
-				37E316EA1C14665800BE2C87 /* BaseWalletManager.swift in Sources */,
+				37E316EA1C14665800BE2C87 /* WalletManagerType.swift in Sources */,
 				37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */,
 				3796CAAB1BF9CF8F00364537 /* PairingConfirmationDialogViewController.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,

@@ -11,15 +11,19 @@ import UIKit
 
 class WalletTestViewController: BaseViewController {
     
-    var walletManager: BaseWalletManager?
+    var walletManager: WalletManagerType?
     @IBOutlet private weak var startButton: UIButton!
     @IBOutlet private weak var stopButton: UIButton!
+    @IBOutlet private weak var listenStartButton: UIButton!
+    @IBOutlet private weak var listenStopButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didStart", name: WalletManagerDidStartRefreshingLayoutNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didStop", name: WalletManagerDidStopRefreshingLayoutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStartRefreshingLayoutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStopRefreshingLayoutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStartListeningTransactionsNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStopListeningTransactionsNotification, object: nil)
         updateUI()
     }
 
@@ -31,17 +35,19 @@ class WalletTestViewController: BaseViewController {
         walletManager?.stopRefreshingLayout()
     }
     
-    private dynamic func didStart() {
-        updateUI()
+    @IBAction func listenForTransactions(sender: AnyObject) {
+        walletManager?.startListeningTransactions()
     }
     
-    private dynamic func didStop() {
-        updateUI()
+    @IBAction func stopListenForTransactions(sender: AnyObject) {
+        walletManager?.stopListeningTransactions()
     }
     
-    private func updateUI() {
+    private dynamic func updateUI() {
         startButton.enabled = !walletManager!.isRefreshingLayout
         stopButton.enabled = !startButton.enabled
+        listenStartButton.enabled = !walletManager!.isListeningTransactions
+        listenStopButton.enabled = !listenStartButton.enabled
     }
     
 }

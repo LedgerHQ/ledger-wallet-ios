@@ -42,8 +42,9 @@ final class WalletLayoutDiscoverer {
     
     var isDiscovering: Bool {
         var discovering = false
-        workingQueue.addOperationWithBlock() {
-            discovering = self.discoveringLayout
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            discovering = strongSelf.discoveringLayout
         }
         workingQueue.waitUntilAllOperationsAreFinished()
         return discovering
@@ -54,7 +55,8 @@ final class WalletLayoutDiscoverer {
     func startDiscovery() {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self where !strongSelf.discoveringLayout else { return }
-            strongSelf.logger.info("Starting discovery")
+            
+            strongSelf.logger.info("Start discovering layout")
             strongSelf.discoveringLayout = true
             strongSelf.currentRequest = nil
             strongSelf.foundTransactionsInCurrentAccount = false
@@ -79,7 +81,7 @@ final class WalletLayoutDiscoverer {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self where strongSelf.discoveringLayout else { return }
         
-            strongSelf.logger.info("Stopping discovery")
+            strongSelf.logger.info("Stop discovering layout")
             strongSelf.discoveringLayout = false
             strongSelf.currentRequest = nil
             strongSelf.foundTransactionsInCurrentAccount = false

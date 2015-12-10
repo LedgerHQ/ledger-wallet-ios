@@ -20,8 +20,8 @@ final class WalletTransactionsStream {
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy) {
-        self.storeProxy = storeProxy
+    init(store: SQLiteStore) {
+        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
     }
     
 }

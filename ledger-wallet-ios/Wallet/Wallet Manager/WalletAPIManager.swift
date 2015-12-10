@@ -10,15 +10,15 @@ import Foundation
 
 typealias WalletRemoteTransaction = [String: AnyObject]
 
-final class WalletAPIManager: BaseWalletManager {
+final class WalletAPIManager: WalletManagerType {
     
     let uniqueIdentifier: String
     var isRefreshingLayout: Bool { return layoutDiscoverer.isDiscovering }
+    var isListeningTransactions: Bool { return websocketListener.isListening }
     
     private let layoutDiscoverer: WalletLayoutDiscoverer
     private let websocketListener: WalletWebsocketListener
     private let transactionsStream: WalletTransactionsStream
-    private let storeProxy: WalletStoreProxy
     private let store: SQLiteStore
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
@@ -61,12 +61,11 @@ final class WalletAPIManager: BaseWalletManager {
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
         self.store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier)
-        self.storeProxy = WalletStoreProxy(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
         self.layoutDiscoverer = WalletLayoutDiscoverer(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
-        self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy)
-        self.websocketListener = WalletWebsocketListener()
+        self.websocketListener = WalletWebsocketListener(delegateQueue: NSOperationQueue.mainQueue())
+        self.transactionsStream = WalletTransactionsStream(store: self.store)
         
         startAllServices()
     }
@@ -78,10 +77,22 @@ final class WalletAPIManager: BaseWalletManager {
     
 }
 
+// MARK: - Notifications management
+
+extension WalletAPIManager {
+    
+    private func notifyObservers(notification: String, userInfo: [String: AnyObject]? = nil) {
+        delegateQueue.addOperationWithBlock() {
+            NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
+        }
+    }
+    
+}
+
+// MARK: - WalletLayoutDiscovererDelegate
+
 extension WalletAPIManager: WalletLayoutDiscovererDelegate {
     
-    // MARK: WalletLayoutDiscovererDelegate
-
     func layoutDiscoverDidStart(layoutDiscoverer: WalletLayoutDiscoverer) {
         // notify
         notifyObservers(WalletManagerDidStartRefreshingLayoutNotification)
@@ -114,25 +125,23 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
     
 }
 
+// MARK: - WalletWebsocketListenerDelegate
+
 extension WalletAPIManager: WalletWebsocketListenerDelegate {
     
-    // MARK: WalletWebsocketListenerDelegate
+    func websocketListenerDidStart(websocketListener: WalletWebsocketListener) {
+        // notify
+        notifyObservers(WalletManagerDidStartListeningTransactionsNotification)
+    }
+    
+    func websocketListenerDidStop(websocketListener: WalletWebsocketListener) {
+        // notify
+        notifyObservers(WalletManagerDidStopListeningTransactionsNotification)
+    }
     
     func websocketListener(websocketListener: WalletWebsocketListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
         // enqueue transaction
         transactionsStream.enqueueTransactions([transaction])
-    }
-    
-}
-
-extension WalletAPIManager {
-    
-    // MARK: Notifications management
-    
-    private func notifyObservers(notification: String, userInfo: [String: AnyObject]? = nil) {
-        delegateQueue.addOperationWithBlock() {
-            NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
-        }
     }
     
 }
