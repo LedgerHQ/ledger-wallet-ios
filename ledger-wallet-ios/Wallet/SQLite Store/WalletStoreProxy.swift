@@ -16,8 +16,16 @@ final class WalletStoreProxy {
     
     // MARK: - Accounts management
     
+    func fetchAllAccounts(completion: ([WalletAccountModel]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.allAccounts($0) }, completion: completion)
+    }
+    
     func fetchAccountAtIndex(index: Int, completion: (WalletAccountModel?) -> Void) {
         executeModelFetch({ WalletStoreExecutor.accountAtIndex(index, context: $0) }, completion: completion)
+    }
+    
+    func addAccount(account: WalletAccountModel) {
+        executeTransaction({ return WalletStoreExecutor.addAccount(account, context: $0) })
     }
 
     // MARK: - Addresses management
@@ -27,7 +35,7 @@ final class WalletStoreProxy {
     }
     
     func addAddresses(addresses: [WalletAddressModel]) {
-        executeModelCollectionTransaction({ WalletStoreExecutor.addAddresses(addresses, context: $0) })
+        executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) })
     }
     
     // MARK: - Internal methods
@@ -54,7 +62,7 @@ final class WalletStoreProxy {
         }
     }
     
-    private func executeModelCollectionTransaction(block: (SQLiteStoreContext) -> Bool) {
+    private func executeTransaction(block: (SQLiteStoreContext) -> Bool) {
         store.performTransaction() { [weak self] context in
             guard let _ = self else { return false }
             return block(context)

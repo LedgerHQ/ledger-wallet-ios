@@ -14,6 +14,12 @@ final class WalletStoreExecutor {
 
     // MARK: - Accounts management
     
+    class func allAccounts(context: SQLiteStoreContext) -> [WalletAccountModel]? {
+        let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" ORDER BY \"\(WalletAccountTableEntity.indexKey)\" ASC"
+        return fetchModelCollection(statement, context: context)
+    }
+    
     class func accountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccountModel? {
         let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
         let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" WHERE \"\(WalletAccountTableEntity.indexKey)\" = ?"
