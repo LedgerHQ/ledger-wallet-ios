@@ -1,59 +1,106 @@
-
-/*Localizable.strings
+/* 
+  Localizable.strings
   ledger-wallet-ios
-
   Created by Nicolas Bigot on 12/01/2015.
   Copyright (c) 2015 Ledger. All rights reserved.
+*/
+// Common
 
- Common*/
+
 "ledger_wallet" = "Ledger Wallet";
+
 "CANCEL" = "ABBRECHEN";
+
 "OK" = "OK";
+
 "CONFIRM" = "BESTÄTIGEN";
+
 "CLOSE" = "SCHLIESSEN";
+
 "REJECT" = "ABLEHNEN";
+
 "DONE" = "ABGESCHLOSSEN";
+
 "yes" = "Ja";
+
 "no" = "Nein";
+
 "cancel" = "Abrrechen";
+
 "delete" = "Löschen";
 
-/*Pairing*/
-"PAIR_A_LEDGER_WALLET" = "PAAREN SIE EINE LEDGER WALLET";
-"CONFIRM_TRANSACTION" = "BESTÄTIGEN SIE DIE TRANSAKTION";
-"PAIRING_SUCCEEDED" = "PAARUNG ERFOLGREICH";
-"PAIRING_FAILED" = "PAARUNG ERFOLGREICH";
-"PAIRED_LEDGER_WALLETS" = "GEPAARTE LEDGER WALLETS";
-"pairing_in_progress..." = "Paarung im Gange...";
-"establishing_connection..." = "Erstelle Verbindung...";
-"waiting_for_transactions..." = "Warte auf Transaktionen...";
-"this_operation_may_take_a_while" = "Bitte warten Sie, diese Aktion kann eine Weile dauern.";
-"scan_the_pairing_qr_code" = "Scannen Sie den Paarungs-QR-Code in der Ledger Wallet-Chromeanwendung.";
-"enter_security_card_value" = "Halten Sie Ihre Security Card bereit und geben Sie den passenden Wert für jeden Buchstaben ein.";
-"your_device_is_now_paired" = "Der Paarungsprozess ist abgeschlossen. Bitte geben Sie einen Namen für diese Ledger Wallet ein.";
-"ledger_wallet_name" = "Name der Ledger Wallet";
-"my_ledger_wallet" = "Meine Ledger Wallet";
-"assign_a_name_to_this_ledger_wallet" = "Wählen Sie einen Namen zur Zuordnung für diese Ledger Wallet aus.";
-"enter_letter_or_value_matching_%@" = "Geben Sie den Buchstaben oder die Zahl in die schwarze Box ein, die mit \"%@\" auf Ihrer Security Card übereinstimmt.";
-"your_device_is_creating_secure_connection" = "Dieses Smartphone erstellt eine sichere Verbindung zu Ihrer Ledger Wallet.";
-"ledger_wallet_is_finalizing_pairing" = "Ihre Ledger Wallet schließt den Verbindungsprozess mit diesem Smartphone ab.";
-"error_pairing_unknown" = "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
-"error_pairing_network" = "Ein Netzwerkfehler trat auf. Bitte überprüfen Sie Ihre Internetverbindung.";
-"error_pairing_dongle_cancelled" = "Die Ledger Wallet-Chromeanwendung brach den Paarungsprozess ab.";
-"error_pairing_wrong_validation_code" = "Der Security Card-Bestätigungscode ist fehlerhaft. Bitte versuchen Sie es erneut.";
-"error_pairing_timeout" = "Der Paarungsprozess dauerte zu lange (Zeitüberschreitung).";
-"success_pairing_named_%@" = "Ihre Ledger Wallet \"%@\" ist nun mit diesem Smartphone gepaart.";
-"no_paired_ledger_wallet" = "Keine gepaarte Ledger Wallet.";
-"to_enable_second_factor_pair_device" = "Um Zwei-Faktor-Authentifizierung zu aktivieren, paaren Sie Ihre Ledger Wallet mit diesem Smartphone.";
-"transactions_will_automatically_appear" = "Transaktionen erscheinen automatisch, wenn eine manuelle Bestätigung erforderlich ist.";
 "need_help_visit_help_center" = "Hilfe? Besuchen Sie unseren Hilfe-Bereich!";
-"requested_on_%@" = "Angefordert am %@";
-"paired_on_%@" = "Gepaart mit %@";
-"you_need_to_provide_a_dongle_name" = "Sie müssen einen einzigartigen Namen für Ihre Ledger Wallet bereitstellen.";
-"a_dongle_with_this_name_already_exists" = "Dieser Name wird bereits von einer anderen gepaarten Ledger Wallet benutzt.";
-"deleting_this_dongle_pairing" = "Wenn Sie diese Ledger Wallet löschen, werden Sie nicht mehr in der Lage sein, manuell Transaktionen von diesem Smartphone zu validieren. Möchten Sie fortfahren?";
-"PAIRING" = "PAARUNG";
-"PAIRED_DEVICES" = "GEPAARTE GERÄTE";
+
+// Errors
+
 "error_unknown" = "An unknown error occurred.\nPlease try again later.";
+
 "error_network" = "A network error occurred.\nPlease check your internet connection.";
+
 "error_internal_error" = "An internal error occured.\nPlease try again later or contact Ledger support if the problem persists.";
+
+"error_pairing_dongle_cancelled" = "Die Ledger Wallet-Chromeanwendung brach den Paarungsprozess ab.";
+
+"error_pairing_wrong_validation_code" = "Der Security Card-Bestätigungscode ist fehlerhaft. Bitte versuchen Sie es erneut.";
+
+"error_pairing_timeout" = "Der Paarungsprozess dauerte zu lange (Zeitüberschreitung).";
+
+// M2FA
+
+"PAIR_A_LEDGER_WALLET" = "PAAREN SIE EINE LEDGER WALLET";
+
+"PAIRING" = "PAARUNG";
+
+"CONFIRM_TRANSACTION" = "BESTÄTIGEN SIE DIE TRANSAKTION";
+
+"PAIRING_SUCCEEDED" = "PAARUNG ERFOLGREICH";
+
+"PAIRING_FAILED" = "PAARUNG ERFOLGREICH";
+
+"PAIRED_LEDGER_WALLETS" = "GEPAARTE LEDGER WALLETS";
+
+"PAIRED_DEVICES" = "GEPAARTE GERÄTE";
+
+"pairing_in_progress..." = "Paarung im Gange...";
+
+"establishing_connection..." = "Erstelle Verbindung...";
+
+"waiting_for_transactions..." = "Warte auf Transaktionen...";
+
+"this_operation_may_take_a_while" = "Bitte warten Sie, diese Aktion kann eine Weile dauern.";
+
+"scan_the_pairing_qr_code" = "Scannen Sie den Paarungs-QR-Code in der Ledger Wallet-Chromeanwendung.";
+
+"enter_security_card_value" = "Halten Sie Ihre Security Card bereit und geben Sie den passenden Wert für jeden Buchstaben ein.";
+
+"your_device_is_now_paired" = "Der Paarungsprozess ist abgeschlossen. Bitte geben Sie einen Namen für diese Ledger Wallet ein.";
+
+"ledger_wallet_name" = "Name der Ledger Wallet";
+
+"my_ledger_wallet" = "Meine Ledger Wallet";
+
+"assign_a_name_to_this_ledger_wallet" = "Wählen Sie einen Namen zur Zuordnung für diese Ledger Wallet aus.";
+
+"enter_letter_or_value_matching_%@" = "Geben Sie den Buchstaben oder die Zahl in die schwarze Box ein, die mit \"%@\" auf Ihrer Security Card übereinstimmt.";
+
+"your_device_is_creating_secure_connection" = "Dieses Smartphone erstellt eine sichere Verbindung zu Ihrer Ledger Wallet.";
+
+"ledger_wallet_is_finalizing_pairing" = "Ihre Ledger Wallet schließt den Verbindungsprozess mit diesem Smartphone ab.";
+
+"success_pairing_named_%@" = "Ihre Ledger Wallet \"%@\" ist nun mit diesem Smartphone gepaart.";
+
+"no_paired_ledger_wallet" = "Keine gepaarte Ledger Wallet.";
+
+"to_enable_second_factor_pair_device" = "Um Zwei-Faktor-Authentifizierung zu aktivieren, paaren Sie Ihre Ledger Wallet mit diesem Smartphone.";
+
+"transactions_will_automatically_appear" = "Transaktionen erscheinen automatisch, wenn eine manuelle Bestätigung erforderlich ist.";
+
+"requested_on_%@" = "Angefordert am %@";
+
+"paired_on_%@" = "Gepaart mit %@";
+
+"you_need_to_provide_a_dongle_name" = "Sie müssen einen einzigartigen Namen für Ihre Ledger Wallet bereitstellen.";
+
+"a_dongle_with_this_name_already_exists" = "Dieser Name wird bereits von einer anderen gepaarten Ledger Wallet benutzt.";
+
+"deleting_this_dongle_pairing" = "Wenn Sie diese Ledger Wallet löschen, werden Sie nicht mehr in der Lage sein, manuell Transaktionen von diesem Smartphone zu validieren. Möchten Sie fortfahren?";
