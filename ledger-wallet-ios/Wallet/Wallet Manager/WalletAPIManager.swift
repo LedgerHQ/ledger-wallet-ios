@@ -20,6 +20,7 @@ final class WalletAPIManager: WalletManagerType {
     private let websocketListener: WalletWebsocketListener
     private let transactionsStream: WalletTransactionsStream
     private let store: SQLiteStore
+    private let externalStoreProxy: WalletStoreProxy
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
     
@@ -54,6 +55,10 @@ final class WalletAPIManager: WalletManagerType {
         transactionsStream.discardPendingTransactions()
     }
     
+    func registerAccount(account: WalletAccountModel) {
+        externalStoreProxy.addAccount(account)
+    }
+    
     // MARK: Initialization
 
     init(uniqueIdentifier: String) {
@@ -62,6 +67,7 @@ final class WalletAPIManager: WalletManagerType {
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
         self.store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier)
+        self.externalStoreProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
         self.layoutDiscoverer = WalletLayoutDiscoverer(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
@@ -95,16 +101,14 @@ extension WalletAPIManager {
 extension WalletAPIManager: WalletLayoutDiscovererDelegate {
     
     func layoutDiscoverDidStart(layoutDiscoverer: WalletLayoutDiscoverer) {
-        // notify
         notifyObservers(WalletManagerDidStartRefreshingLayoutNotification)
     }
     
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didStopWithError error: WalletLayoutDiscovererError?) {
-        // notify
         notifyObservers(WalletManagerDidStopRefreshingLayoutNotification)
     }
     
-    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, accountAtIndex index: Int, providerBlock: (WalletAccountModel?) -> Void) {
+    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
         let accounts: [WalletAccountModel] = [
             WalletAccountModel(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
             WalletAccountModel(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
@@ -113,14 +117,14 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
             WalletAccountModel(index: 4, extendedPublicKey: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb", name: nil)
         ]
         guard index < accounts.count else {
-            providerBlock(nil)
+            continueBlock(false)
             return
         }
-        providerBlock(accounts[index])
+        registerAccount(accounts[index])
+        continueBlock(true)
     }
 
     func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
-        // enqueue transactions
         transactionsStream.enqueueTransactions(transactions)
     }
     
@@ -131,17 +135,14 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
 extension WalletAPIManager: WalletWebsocketListenerDelegate {
     
     func websocketListenerDidStart(websocketListener: WalletWebsocketListener) {
-        // notify
         notifyObservers(WalletManagerDidStartListeningTransactionsNotification)
     }
     
     func websocketListenerDidStop(websocketListener: WalletWebsocketListener) {
-        // notify
         notifyObservers(WalletManagerDidStopListeningTransactionsNotification)
     }
     
     func websocketListener(websocketListener: WalletWebsocketListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
-        // enqueue transaction
         transactionsStream.enqueueTransactions([transaction])
     }
     

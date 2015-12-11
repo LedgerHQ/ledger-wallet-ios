@@ -16,14 +16,10 @@ final class WalletStoreProxy {
     
     // MARK: - Accounts management
     
-    func fetchAllAccounts(completion: ([WalletAccountModel]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.allAccounts($0) }, completion: completion)
+    func fetchAccountsAtIndexes(indexes: [Int], completion: ([WalletAccountModel]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, completion: completion)
     }
-    
-    func fetchAccountAtIndex(index: Int, completion: (WalletAccountModel?) -> Void) {
-        executeModelFetch({ WalletStoreExecutor.accountAtIndex(index, context: $0) }, completion: completion)
-    }
-    
+
     func addAccount(account: WalletAccountModel) {
         executeTransaction({ return WalletStoreExecutor.addAccount(account, context: $0) })
     }
@@ -31,7 +27,11 @@ final class WalletStoreProxy {
     // MARK: - Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddressModel]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.addressesAtPaths(paths, context: $0) }, completion: completion)
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, completion: completion)
+    }
+    
+    func fetchAddressesWithAddresses(addresses: [String], completion: ([WalletAddressModel]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, completion: completion)
     }
     
     func addAddresses(addresses: [WalletAddressModel]) {

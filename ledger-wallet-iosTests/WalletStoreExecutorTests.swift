@@ -25,58 +25,7 @@ class WalletStoreExecutorTests: XCTestCase {
     }
     
     // MARK: Accounts tests
-    
-    func testAllAccountsNoResults() {
-        let expectation = expectationWithDescription("Waiting for executor to perform")
-        store.performBlock() { context in
-            let results = WalletStoreExecutor.allAccounts(context)
-            XCTAssertNotNil(results, "Results should not be nil")
-            XCTAssertEqual(results!.count, 0, "There should be no results")
-            expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(3, handler: nil)
-    }
-    
-    func testAllAccountsWithResults() {
-        let account1 = WalletAccountModel(index: 0, extendedPublicKey: "xpub1", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
-        let account2 = WalletAccountModel(index: 1, extendedPublicKey: "xpub2", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
-        let expectation = expectationWithDescription("Waiting for executor to perform")
-        store.performBlock() { context in
-            XCTAssertTrue(WalletStoreExecutor.addAccount(account1, context: context), "It should be possible to add an account")
-            XCTAssertTrue(WalletStoreExecutor.addAccount(account2, context: context), "It should be possible to add an account")
-            let results = WalletStoreExecutor.allAccounts(context)
-            XCTAssertNotNil(results, "Results should not be nil")
-            XCTAssertEqual(results!.count, 2, "There should be two accounts")
-            XCTAssertEqual(results![0].index, 0, "Account index should match")
-            XCTAssertEqual(results![1].index, 1, "Account index should match")
-            expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(3, handler: nil)
-    }
-    
-    func testAccountAtRealIndex() {
-        let account = WalletAccountModel(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
-        let expectation = expectationWithDescription("Waiting for executor to perform")
-        store.performBlock() { context in
-            XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
-            let results = WalletStoreExecutor.accountAtIndex(0, context: context)
-            XCTAssertNotNil(results, "Results should not be nil")
-            XCTAssertEqual(results!.index, account.index, "Accounts indexes should match")
-            expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(3, handler: nil)
-    }
-    
-    func testAccountAtFakeIndex() {
-        let expectation = expectationWithDescription("Waiting for executor to perform")
-        store.performBlock() { context in
-            let results = WalletStoreExecutor.accountAtIndex(1, context: context)
-            XCTAssertNil(results, "Results should be nil")
-            expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(3, handler: nil)
-    }
-    
+        
     func testAddSingleAccount() {
         let account = WalletAccountModel(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
         let expectation = expectationWithDescription("Waiting for executor to perform")
@@ -103,7 +52,7 @@ class WalletStoreExecutorTests: XCTestCase {
     func testAddressesNoResults() {
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
-            let results = WalletStoreExecutor.addressesAtPaths([], context: context)
+            let results = WalletStoreExecutor.fetchAddressesAtPaths([], context: context)
             XCTAssertNotNil(results, "Results should not be nil")
             XCTAssertEqual(results!.count, 0, "There should be no results")
             expectation.fulfill()
@@ -115,7 +64,7 @@ class WalletStoreExecutorTests: XCTestCase {
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
-            let results = WalletStoreExecutor.addressesAtPaths(paths, context: context)
+            let results = WalletStoreExecutor.fetchAddressesAtPaths(paths, context: context)
             XCTAssertNotNil(results, "Results should not be nil")
             XCTAssertEqual(results!.count, 0, "There should be no results")
             expectation.fulfill()
@@ -131,7 +80,7 @@ class WalletStoreExecutorTests: XCTestCase {
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
             XCTAssertTrue(WalletStoreExecutor.addAddresses(addresses, context: context), "It should be possible to add addresses")
-            let results = WalletStoreExecutor.addressesAtPaths(paths, context: context)
+            let results = WalletStoreExecutor.fetchAddressesAtPaths(paths, context: context)
             XCTAssertNotNil(results, "Results should not be nil")
             XCTAssertEqual(results!.count, paths.count, "There should be some results")
             expectation.fulfill()
@@ -143,7 +92,7 @@ class WalletStoreExecutorTests: XCTestCase {
         let path = WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
-            let results = WalletStoreExecutor.addressAtPath(path, context: context)
+            let results = WalletStoreExecutor.fetchAddressAtPath(path, context: context)
             XCTAssertNil(results, "Results should be nil")
             expectation.fulfill()
         }
@@ -158,7 +107,7 @@ class WalletStoreExecutorTests: XCTestCase {
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
             XCTAssertTrue(WalletStoreExecutor.addAddress(address, context: context), "It should be possible to add an address")
-            let results = WalletStoreExecutor.addressAtPath(path, context: context)
+            let results = WalletStoreExecutor.fetchAddressAtPath(path, context: context)
             XCTAssertNotNil(results, "Results should not be nil")
             XCTAssertEqual(results!.addressPath, address.addressPath, "Address paths should match")
             expectation.fulfill()
@@ -185,7 +134,7 @@ class WalletStoreExecutorTests: XCTestCase {
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
             XCTAssertTrue(WalletStoreExecutor.addAddress(address, context: context), "It should be possible to add an address")
-            let results = WalletStoreExecutor.addressWithAddress(addressString, context: context)
+            let results = WalletStoreExecutor.fetchAddressWithAddress(addressString, context: context)
             XCTAssertNotNil(results, "Results should no be nil")
             XCTAssertEqual(results!.address, addressString, "Addresses should match")
             expectation.fulfill()

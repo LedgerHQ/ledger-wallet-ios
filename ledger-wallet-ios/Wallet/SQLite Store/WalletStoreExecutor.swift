@@ -13,19 +13,16 @@ final class WalletStoreExecutor {
     private static let logger = Logger.sharedInstance(name: "WalletStoreExecutor")
 
     // MARK: - Accounts management
-    
-    class func allAccounts(context: SQLiteStoreContext) -> [WalletAccountModel]? {
+
+    class func fetchAccountsAtIndexes(indexes: [Int], context: SQLiteStoreContext) -> [WalletAccountModel]? {
+        guard indexes.count > 0 else { return [] }
+        
+        let inStatement = indexes.map({ return "\($0)" }).joinWithSeparator(", ")
         let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" ORDER BY \"\(WalletAccountTableEntity.indexKey)\" ASC"
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" WHERE \"\(WalletAccountTableEntity.indexKey)\" IN (\(inStatement))"
         return fetchModelCollection(statement, context: context)
     }
-    
-    class func accountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccountModel? {
-        let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" WHERE \"\(WalletAccountTableEntity.indexKey)\" = ?"
-        return fetchModel(statement, values: [index], context: context)
-    }
-    
+
     class func addAccount(account: WalletAccountModel, context: SQLiteStoreContext) -> Bool {
         let fieldsStatement = "(\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\")"
         let statement = "INSERT INTO \"\(WalletAccountTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?)"
@@ -39,7 +36,9 @@ final class WalletStoreExecutor {
     
     // MARK: - Addresses management
     
-    class func addressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
+    class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
+        guard paths.count > 0 else { return [] }
+        
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
         let concatStatement = "('/' || \"\(WalletAddressTableEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressTableEntity.chainIndexKey)\" || '/' || \"\(WalletAddressTableEntity.keyIndexKey)\") AS path"
         let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
@@ -47,25 +46,18 @@ final class WalletStoreExecutor {
         return fetchModelCollection(statement, context: context)
     }
     
-    class func addressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddressModel? {
-        guard let results = addressesAtPaths([path], context: context) else {
-            return nil
-        }
-        guard results.count == 1 else {
-            return nil
-        }
-        return results[0]
-    }
-    
-    class func addressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddressModel? {
+    class func fetchAddressesWithAddresses(addresses: [String], context: SQLiteStoreContext) -> [WalletAddressModel]? {
+        guard addresses.count > 0 else { return [] }
+
+        let inStatement = addresses.map({ return "\"\($0)\"" }).joinWithSeparator(", ")
         let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE \"\(WalletAddressTableEntity.addressKey)\" = ?"
-        return fetchModel(statement, values: [address], context: context)
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE \"\(WalletAddressTableEntity.addressKey)\" IN (\(inStatement))"
+        return fetchModelCollection(statement, context: context)
     }
     
     class func addAddress(address: WalletAddressModel, context: SQLiteStoreContext) -> Bool {
-        guard addressWithAddress(address.address, context: context) == nil else { return true }
-        guard addressAtPath(address.addressPath, context: context) == nil else { return true }
+        guard fetchAddressWithAddress(address.address, context: context) == nil else { return true }
+        guard fetchAddressAtPath(address.addressPath, context: context) == nil else { return true }
         
         let fieldsStatement = "(\"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\", \"\(WalletAddressTableEntity.addressKey)\")"
         let statement = "INSERT INTO \"\(WalletAddressTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
@@ -78,12 +70,23 @@ final class WalletStoreExecutor {
     }
     
     class func addAddresses(addresses: [WalletAddressModel], context: SQLiteStoreContext) -> Bool {
-        for address in addresses {
-            guard addAddress(address, context: context) else {
-                return false
-            }
+        guard addresses.count > 0 else { return true }
+        
+        return addresses.reduce(true) { $0 && addAddress($1, context: context) }
+    }
+    
+    private class func fetchAddressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddressModel? {
+        guard let results = fetchAddressesAtPaths([path], context: context) where results.count >= 1 else {
+            return nil
         }
-        return true
+        return results[0]
+    }
+    
+    private class func fetchAddressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddressModel? {
+        guard let results = fetchAddressesWithAddresses([address], context: context) where results.count >= 1 else {
+            return nil
+        }
+        return results[0]
     }
     
     // MARK: - Schema management
