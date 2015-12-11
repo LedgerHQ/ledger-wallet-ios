@@ -1,10 +1,10 @@
 
 /*Localizable.strings
- ledger-wallet-ios
- 
- Created by Nicolas Bigot on 12/01/2015.
- Copyright (c) 2015 Ledger. All rights reserved.
- 
+  ledger-wallet-ios
+
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+
  Common*/
 "ledger_wallet" = "Ledger Wallet";
 "CANCEL" = "キャンセル";
@@ -54,3 +54,6 @@
 "deleting_this_dongle_pairing" = "このペアリングされたLedger Walletを削除することで、このスマートフォンから手動でトランザクションを検証することができなくなります。\n続行しますか？";
 "PAIRING" = "ペアリング";
 "PAIRED_DEVICES" = "デバイスの組み合わせ";
+"error_unknown" = "An unknown error occurred.\nPlease try again later.";
+"error_network" = "A network error occurred.\nPlease check your internet connection.";
+"error_internal_error" = "An internal error occured.\nPlease try again later or contact Ledger support if the problem persists.";
