@@ -16,7 +16,7 @@ class DialogAnimationController: NSObject, UIViewControllerAnimatedTransitioning
     private var containerView: UIView!
     private var yConstraint: NSLayoutConstraint!
     
-    // MARK: - Transition
+    // MARK: Transition
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!

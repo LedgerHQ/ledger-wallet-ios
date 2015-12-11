@@ -11,6 +11,7 @@ import Foundation
 final class PairingTransactionsCryptor {
     
     private struct BytesLength {
+        
         static let version = 4
         static let encryptionKey = 16
         static let checksum = 2
@@ -34,12 +35,14 @@ final class PairingTransactionsCryptor {
     }
     
     private enum ContextKeys {
+        
         case RegularCoinVersion
         case P2SHCoinVersion
         case PinCode
+    
     }
     
-    // MARK: - Transaction info extraction
+    // MARK: Transaction info extraction
     
     func transactionInfoFromRequestMessage(message: BaseM2FAManager.Message, pairingKey: NSData) -> PairingTransactionInfo? {
         // make sure second factor data is present
@@ -134,7 +137,7 @@ final class PairingTransactionsCryptor {
         )
     }
     
-    // MARK: - Output data extraction
+    // MARK: Output data extraction
     
     private func buildTransactionInfoFromOutputData(outputData: NSData, context: [ContextKeys: AnyObject]) -> PairingTransactionInfo? {
         // read number of outputs
@@ -185,7 +188,7 @@ final class PairingTransactionsCryptor {
         )
     }
     
-    // MARK: - Utilities
+    // MARK: Utilities
     
     private func decryptData(data: NSData, withKey key: NSData) -> NSData? {
         // get splitted key

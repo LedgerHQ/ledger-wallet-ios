@@ -14,7 +14,7 @@ final class WalletStoreProxy {
     private let store: SQLiteStore
     private let logger = Logger.sharedInstance(name: "WalletStoreProxy")
     
-    // MARK: - Accounts management
+    // MARK: Accounts management
     
     func fetchAllAccounts(completion: ([WalletAccountModel]?) -> Void) {
         executeModelCollectionFetch({ WalletStoreExecutor.fetchAllAccounts($0) }, completion: completion)
@@ -32,7 +32,7 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.addAccount(account, context: $0) })
     }
 
-    // MARK: - Addresses management
+    // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddressModel]?) -> Void) {
         executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, completion: completion)
@@ -46,7 +46,7 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) })
     }
     
-    // MARK: - Internal methods
+    // MARK: Internal methods
     
     private func executeModelFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> T?, completion: (T?) -> Void) {
         store.performBlock() { [weak self] context in
@@ -77,7 +77,7 @@ final class WalletStoreProxy {
         }
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
         self.store = store

@@ -25,7 +25,7 @@ final class PairingTransactionsManager: BaseM2FAManager {
     private var currentTransactionWebSocket: WebSocket? = nil
     private var currentTransactionPairingKeychainItem: PairingKeychainItem? = nil
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     deinit {
         stopListening()
@@ -33,9 +33,9 @@ final class PairingTransactionsManager: BaseM2FAManager {
     
 }
 
+// MARK: - Transactions management
+
 extension PairingTransactionsManager {
-    
-    // MARK: - Transactions management
     
     func tryListening() -> Bool {
         // create all webSockets
@@ -147,9 +147,9 @@ extension PairingTransactionsManager {
     
 }
 
+// MARK: Messages management
+
 extension PairingTransactionsManager {
-    
-    // MARK: Messages management
     
     override func handleRequestMessage(message: Message, webSocket: WebSocket) {
         // make sure we're not already confirming a transaction
@@ -189,9 +189,9 @@ extension PairingTransactionsManager {
     
 }
 
+// MARK: - WebSocket events management
+
 extension PairingTransactionsManager {
-    
-    // MARK: - WebSocket events management
     
     override func handleWebSocketDidConnect(webSocket: WebSocket) {
         guard !confirmingTransaction else {

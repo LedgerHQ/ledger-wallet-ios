@@ -12,7 +12,7 @@ final class WalletStoreExecutor {
     
     private static let logger = Logger.sharedInstance(name: "WalletStoreExecutor")
 
-    // MARK: - Accounts management
+    // MARK: Accounts management
 
     class func fetchAllAccounts(context: SQLiteStoreContext) -> [WalletAccountModel]? {
         let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
@@ -45,7 +45,7 @@ final class WalletStoreExecutor {
         return true
     }
     
-    // MARK: - Addresses management
+    // MARK: Addresses management
     
     class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
         guard paths.count > 0 else { return [] }
@@ -95,7 +95,7 @@ final class WalletStoreExecutor {
         return results[0]
     }
     
-    // MARK: - Schema management
+    // MARK: Schema management
     
     class func schemaVersion(context: SQLiteStoreContext) -> Int? {
         guard let results = context.executeQuery("SELECT \(WalletMetadataTableEntity.schemaVersionKey) FROM \(WalletMetadataTableEntity.tableName)", withArgumentsInArray: nil) else {
@@ -149,7 +149,7 @@ final class WalletStoreExecutor {
         return true
     }
     
-    // MARK: - Internal methods
+    // MARK: Internal methods
     
     private class func fetchModel<T: SQLiteFetchableModel>(statement: String, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> T? {
         guard let results = context.executeQuery(statement, withArgumentsInArray: values) else {

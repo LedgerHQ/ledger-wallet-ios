@@ -15,13 +15,13 @@ final class PairingListViewController: BaseViewController {
     
     private var pairingKeychainItems: [PairingKeychainItem] = []
 
-    // MARK: - Actions
+    // MARK: Actions
     
     @IBAction func pairNewDeviceButtonTouched() {
         Navigator.Pairing.presentAddViewController(fromViewController: self, delegate: self)
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -29,13 +29,13 @@ final class PairingListViewController: BaseViewController {
         actionBar.borderPosition = ActionBarView.BorderPosition.Top
     }
     
-    // MARK: - Model
+    // MARK: Model
     
     func updateModel() {
         pairingKeychainItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
     }
     
-    // MARK: - View lifecycle
+    // MARK: View lifecycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,6 +46,8 @@ final class PairingListViewController: BaseViewController {
     
 }
 
+// MARK: - CompletionResultable
+
 extension PairingListViewController: CompletionResultable {
     
     @IBAction func complete() {
@@ -54,9 +56,9 @@ extension PairingListViewController: CompletionResultable {
     
 }
 
-extension PairingListViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    // MARK: - UITableview delegate, data source
+// MARK: - UITableViewDelegate
+
+extension PairingListViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pairingKeychainItems.count
@@ -71,9 +73,9 @@ extension PairingListViewController: UITableViewDelegate, UITableViewDataSource 
     
 }
 
+// MARK: - PairingListTableViewCellDelegate
+
 extension PairingListViewController: PairingListTableViewCellDelegate {
-    
-    // MARK: - PairingListTableViewCell delegate
     
     func pairingListTableViewCellDidTapDeleteButton(pairingListTableViewCell: PairingListTableViewCell) {
         if let indexPath = tableView.indexPathForCell(pairingListTableViewCell) {
@@ -119,9 +121,9 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
     
 }
 
+// MARK: - PairingAddViewControllerDelegate
+
 extension PairingListViewController: PairingAddViewControllerDelegate {
-    
-    // MARK: - PairingAddViewController delegate
     
     func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // dismiss

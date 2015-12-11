@@ -39,6 +39,8 @@ struct AttestationKey {
     
 }
 
+// MARK: - Equatable
+
 extension AttestationKey: Equatable { }
 
 func ==(lhs: AttestationKey, rhs: AttestationKey) -> Bool {

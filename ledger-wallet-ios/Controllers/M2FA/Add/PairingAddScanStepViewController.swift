@@ -19,7 +19,7 @@ final class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         return 1
     }
 
-    // MARK: - Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -27,7 +27,7 @@ final class PairingAddScanStepViewController: PairingAddBaseStepViewController {
         barCodeReader.delegate = self
     }
     
-    // MARK: - View lifecycle
+    // MARK: View lifecycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,9 +43,9 @@ final class PairingAddScanStepViewController: PairingAddBaseStepViewController {
     
 }
 
+// MARK: - BarCodeReaderViewDelegate
+
 extension PairingAddScanStepViewController: BarCodeReaderViewDelegate {
-    
-    // MARK: - Barcode reader delegate
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String) {
         // check that code is correct

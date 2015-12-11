@@ -27,7 +27,7 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
         return false
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     private func checkThatNameIsUnique(name: String?) -> Bool {
         guard let name = name else { return false }
@@ -73,6 +73,8 @@ final class PairingAddNameStepViewController: PairingAddBaseStepViewController {
     
 }
 
+// MARK: - CompletionResultable
+
 extension PairingAddNameStepViewController: CompletionResultable {
     
     func complete() {
@@ -83,6 +85,8 @@ extension PairingAddNameStepViewController: CompletionResultable {
     }
     
 }
+
+// MARK: - UITextFieldDelegate
 
 extension PairingAddNameStepViewController: UITextFieldDelegate {
     

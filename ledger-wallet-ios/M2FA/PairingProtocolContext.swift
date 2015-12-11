@@ -17,7 +17,7 @@ final class PairingProtocolContext {
     var externalKey: BTCKey! = nil
     let internalKey: BTCKey
     
-    // MARK: - Keychain item management
+    // MARK: Keychain item management
     
     class func canCreatePairingKeychainItemNamed(name: String) -> Bool {
         // check if this name already exists
@@ -47,7 +47,7 @@ final class PairingProtocolContext {
         return pairingKeychainItem
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     init(internalKey: BTCKey) {
         self.internalKey = internalKey

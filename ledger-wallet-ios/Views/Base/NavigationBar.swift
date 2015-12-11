@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationBar: UINavigationBar {
     
-    // MARK: - Content size
+    // MARK: Content size
     
     override func intrinsicContentSize() -> CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight)
@@ -27,7 +27,7 @@ class NavigationBar: UINavigationBar {
         return VisualFactory.Metrics.View.NavigationBar.Height.Default
     }
     
-    // MARK: - Layout
+    // MARK: Layout
     
     override func layoutSubviews() {
         super.layoutSubviews()

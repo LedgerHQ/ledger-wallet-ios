@@ -14,7 +14,7 @@ final class Logger {
     private static var instancesQueue = dispatch_queue_create(dispatchQueueNameForIdentifier("Logger"), DISPATCH_QUEUE_SERIAL)
     private static var instances: [String: Logger] = [:]
     
-    // MARK: - Log methods
+    // MARK: Log methods
     
     func debug(string: String) {
         log(string, level: .Debug)
@@ -56,7 +56,7 @@ final class Logger {
         return LogEntry(string: string, level: logLevel, loggerName: self.name)
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     class func sharedInstance(name name: String) -> Logger {
         dispatch_sync(instancesQueue) {

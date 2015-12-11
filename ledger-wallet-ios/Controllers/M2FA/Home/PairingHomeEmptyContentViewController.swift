@@ -10,7 +10,7 @@ import Foundation
 
 final class PairingHomeEmptyContentViewController: PairingHomeBaseContentViewController {
     
-    // MARK: - Actions
+    // MARK: Actions
     
     @IBAction private func pairNewDeviceButtonTouched() {
         Navigator.Pairing.presentAddViewController(fromViewController: parentHomeViewController, delegate: self)
@@ -18,9 +18,9 @@ final class PairingHomeEmptyContentViewController: PairingHomeBaseContentViewCon
     
 }
 
+// MARK: - PairingAddViewControllerDelegate
+
 extension PairingHomeEmptyContentViewController: PairingAddViewControllerDelegate {
-    
-    // MARK: - PairingAddViewController delegate
     
     func pairingAddViewController(pairingAddViewController: PairingAddViewController, didCompleteWithOutcome outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         let parentHomeViewController = self.parentHomeViewController

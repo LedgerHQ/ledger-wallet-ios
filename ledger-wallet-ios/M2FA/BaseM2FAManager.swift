@@ -40,8 +40,6 @@ class BaseM2FAManager: NSObject {
     private var timeoutTimer: NSTimer? = nil
     private var _logger: Logger! = nil
     
-    // MARK: - Messages management
-
     dynamic func handleChallengeMessage(message: Message, webSocket: WebSocket) {
         
     }
@@ -66,7 +64,7 @@ class BaseM2FAManager: NSObject {
         
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     override init() {
         super.init()
@@ -82,9 +80,9 @@ class BaseM2FAManager: NSObject {
     
 }
 
+// MARK: - Timeout management
+
 extension BaseM2FAManager {
-    
-    // MARK: - Timeout management
     
     func handleWebsocketTimeout() {
         
@@ -108,9 +106,9 @@ extension BaseM2FAManager {
     }
 }
 
+// MARK: - Messages management
+
 extension BaseM2FAManager {
-    
-    // MARK: - Messages management
     
     func sendMessage(message: Message, webSocket: WebSocket) {
         if let JSONData = JSON.dataFromJSONObject(message) {
@@ -150,9 +148,9 @@ extension BaseM2FAManager {
     
 }
 
+// MARK: - Websocket events management
+
 extension BaseM2FAManager {
-    
-    // MARK: - Websocket events management
     
     func handleWebSocket(webSocket: WebSocket, didReceiveMessage message: String) {
         if (ignoresWebSocketDelegate) {
@@ -177,9 +175,9 @@ extension BaseM2FAManager {
     
 }
 
-extension BaseM2FAManager: WebSocketDelegate {
+// MARK: - WebSocketDelegate
 
-     // MARK: - WebSocket delegate
+extension BaseM2FAManager: WebSocketDelegate {
 
     func websocketDidConnect(socket: WebSocket) {
         if (ignoresWebSocketDelegate) {

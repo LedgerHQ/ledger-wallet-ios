@@ -36,9 +36,9 @@ final class SQLiteForeignKey {
 
 }
 
+// MARK: - SQLiteRepresentable
+
 extension SQLiteForeignKey: SQLiteRepresentable {
-    
-    // MARK: SQLite representation
     
     var representativeStatement: String {
         guard let table = parentField.table else { return "" }

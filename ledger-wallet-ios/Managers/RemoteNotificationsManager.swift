@@ -13,7 +13,7 @@ final class RemoteNotificationsManager {
     static let sharedInstance = RemoteNotificationsManager()
     private let restClient = RemoteNotificationsAPIClient(delegateQueue: NSOperationQueue.mainQueue())
 
-    // MARK: - Common
+    // MARK: Common
     
     func registerForRemoteNotifications() {
         let application = UIApplication.sharedApplication()
@@ -25,7 +25,7 @@ final class RemoteNotificationsManager {
         registerDeviceTokenToPairedDongles(token)
     }
     
-    // MARK: - Pairing
+    // MARK: Pairing
     
     func registerDeviceTokenToPairedDongles(token: NSData) {
         // loop through all pairing keychain items

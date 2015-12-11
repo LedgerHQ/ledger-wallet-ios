@@ -20,7 +20,7 @@ final class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         return 3
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -39,9 +39,9 @@ final class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
     }
 }
 
+// MARK: - PinCodeViewDelegate
+
 extension PairingAddCodeStepViewController: PinCodeViewDelegate {
-    
-    // MARK: - PinCodeView delegate
     
     func pinCodeViewDidComplete(pinCodeView: PinCodeView, text: String) {
         self.pinCodeView?.resignFirstResponder()

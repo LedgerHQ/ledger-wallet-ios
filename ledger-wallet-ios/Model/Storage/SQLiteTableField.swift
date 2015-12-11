@@ -41,10 +41,10 @@ final class SQLiteTableField {
 
 }
 
+// MARK: - SQLiteRepresentable
+
 extension SQLiteTableField: SQLiteRepresentable {
-    
-    // MARK: SQLite representation
-    
+        
     var representativeStatement: String {
         var statement = "\"\(name)\" \(type.rawValue)"
         if primaryKey { statement = statement + " PRIMARY KEY AUTOINCREMENT" }

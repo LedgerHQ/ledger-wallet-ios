@@ -20,13 +20,13 @@ final class PairingListTableViewCell: TableViewCell {
     @IBOutlet private weak var pairingDateLabel: Label!
     weak var delegate: PairingListTableViewCellDelegate? = nil
     
-    // MARK: - Actions
+    // MARK: Actions
     
     @IBAction func deleteButtonTouched(sender: AnyObject) {
         delegate?.pairingListTableViewCellDidTapDeleteButton(self)
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     func configureWithPairingItem(pairingItem: PairingKeychainItem) {
         dongleTitleLabel?.text = pairingItem.dongleName!

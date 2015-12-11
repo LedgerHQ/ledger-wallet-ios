@@ -14,7 +14,7 @@ final class Preferences {
     private let userDefaults: NSUserDefaults
     private var inBatchUpdate = false
 
-    // MARK: - Setters
+    // MARK: Setters
     
     func setObject(value: AnyObject?, forKey defaultName: String) {
         userDefaults.setObject(value, forKey: persistentKeyForName(defaultName))
@@ -46,7 +46,7 @@ final class Preferences {
         synchronizeIfNeeded()
     }
     
-    // MARK: - Getters
+    // MARK: Getters
     
     func objectForKey(defaultName: String) -> AnyObject? {
         return userDefaults.objectForKey(persistentKeyForName(defaultName))
@@ -88,7 +88,7 @@ final class Preferences {
         return userDefaults.URLForKey(persistentKeyForName(defaultName))
     }
     
-    // MARK: - Utils
+    // MARK: Utils
 
     func beginBatchUpdate() {
         guard inBatchUpdate == false else { return }
@@ -135,7 +135,7 @@ final class Preferences {
         return "\(storeName).\(name)"
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     init(storeName: String) {
         self.storeName = storeName

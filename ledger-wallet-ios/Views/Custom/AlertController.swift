@@ -44,7 +44,7 @@ final class AlertController: NSObject {
         viewController.presentViewController(alertController, animated: animated, completion: nil)
     }
     
-    // MARK - Initialization
+    // MARK Initialization
     
     init(title: String?, message: String?) {
         self.title = title

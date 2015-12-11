@@ -29,7 +29,7 @@ class BarCodeReaderView: View {
     private var captureMetadataOutput: AVCaptureMetadataOutput?
     private var captureDispatchQueue: dispatch_queue_t?
     
-    // MARK: - Video Capture
+    // MARK: Video Capture
     
     func startCapture() {
         guard isCapturing == false else { return }
@@ -94,7 +94,7 @@ class BarCodeReaderView: View {
         return AVCaptureVideoPreviewLayer.self
     }
 
-    // MARK: - Initialization
+    // MARK: Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,9 +121,9 @@ class BarCodeReaderView: View {
     
 }
 
+// MARK: - Notifications
+
 extension BarCodeReaderView {
-    
-    // MARK: - Notifications
     
     private func listenNotifications(listen: Bool) {
         if (listen) {
@@ -149,9 +149,9 @@ extension BarCodeReaderView {
     
 }
 
+// MARK: - AVCaptureMetadataOutputObjectsDelegate
+
 extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
-    
-    // MARK: - Metadata objects delegate
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
         if let metadataObjects = metadataObjects {

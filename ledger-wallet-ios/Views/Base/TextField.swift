@@ -10,7 +10,7 @@ import UIKit
 
 class TextField: UITextField {
 
-    // MARK: - Style management
+    // MARK: Style management
     
     override var text: String? {
         didSet {
@@ -24,7 +24,7 @@ class TextField: UITextField {
         }
     }
     
-    // MARK: - Localization
+    // MARK: Localization
     
     override func awakeFromNib() {
         super.awakeFromNib()

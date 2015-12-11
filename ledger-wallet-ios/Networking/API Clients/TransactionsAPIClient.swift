@@ -12,7 +12,7 @@ final class TransactionsAPIClient: LedgerAPIClient {
     
     private let logger = Logger.sharedInstance(name: "TransactionsAPIClient")
     
-    // MARK: - Transactions mangement
+    // MARK: Transactions mangement
     
     func fetchTransactionsForAddresses(addresses: [String], completion: ([[String: AnyObject]]?) -> Void) {
         guard addresses.count > 0 else {

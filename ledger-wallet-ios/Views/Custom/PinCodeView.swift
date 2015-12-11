@@ -84,12 +84,13 @@ class PinCodeView: View {
         return textField
     }()
     
-    // MARK: - Value
+    // MARK: Value
+    
     func text() -> String {
         return _textField.text ?? ""
     }
 
-    // MARK: - Responder
+    // MARK: Responder
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
@@ -113,13 +114,13 @@ class PinCodeView: View {
         return _textField.canBecomeFirstResponder()
     }
     
-    // MARK: - Content size
+    // MARK: Content size
     
     override func intrinsicContentSize() -> CGSize {
         return CGSizeMake((boxSize.width * CGFloat(length)) + CGFloat(boxSpacing * CGFloat(length)) - (length > 0 ? boxSpacing : CGFloat(0)), length > 0 ? boxSize.height : 0)
     }
     
-    // MARK: - Drawing
+    // MARK: Drawing
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
@@ -177,7 +178,7 @@ class PinCodeView: View {
         }
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     private func initialize() {
         backgroundColor = VisualFactory.Colors.Transparent
@@ -204,9 +205,9 @@ class PinCodeView: View {
     
 }
 
+// MARK: - UITextFieldDelegate
+
 extension PinCodeView: UITextFieldDelegate {
-    
-    // MARK: - UITextField delegate
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         if let restrictedCharacterSet = restrictedCharacterSet {
@@ -223,9 +224,9 @@ extension PinCodeView: UITextFieldDelegate {
     
 }
 
+// MARK: - Notifications
+
 extension PinCodeView {
-    
-    // MARK: - Notifications
     
     private func observeTextFieldNotifications(observe: Bool) {
         if (observe) {

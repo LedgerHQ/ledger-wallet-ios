@@ -22,9 +22,9 @@ final class SQLitePragmaCommand {
     
 }
 
+// MARK: - SQLiteRepresentable
+
 extension SQLitePragmaCommand: SQLiteRepresentable {
-    
-    // MARK: SQLite representation
     
     var representativeStatement: String {
         return "PRAGMA \(name) = \(value);"

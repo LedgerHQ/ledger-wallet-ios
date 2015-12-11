@@ -18,6 +18,7 @@ protocol PairingProtocolManagerDelegate: class {
 final class PairingProtocolManager: BaseM2FAManager {
     
     enum PairingOutcome {
+        
         case DongleSucceeded
         case DongleFailed
         case DongleTerminated
@@ -27,6 +28,7 @@ final class PairingProtocolManager: BaseM2FAManager {
         case ServerDisconnected
         case ServerTimeout
         case WrongData
+        
     }
 
     weak var delegate: PairingProtocolManagerDelegate? = nil
@@ -34,7 +36,7 @@ final class PairingProtocolManager: BaseM2FAManager {
     private var cryptor: PairingProtocolCryptor! = nil
     private var webSocket: WebSocket! = nil
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     override init() {
         super.init()
@@ -48,9 +50,9 @@ final class PairingProtocolManager: BaseM2FAManager {
     
 }
 
+// MARK: - Pairing management
+
 extension PairingProtocolManager {
-    
-    // MARK: - Pairing management
     
     func connectToRoomWithId(pairingId: String) {
         if (webSocket != nil) {
@@ -137,9 +139,9 @@ extension PairingProtocolManager {
     
 }
 
+// MARK: - Timeout management
+
 extension PairingProtocolManager {
-    
-    // MARK: - Timeout management
     
     override func handleWebsocketTimeout() {
         logger.error("Timeout, aborting")
@@ -149,9 +151,9 @@ extension PairingProtocolManager {
     
 }
 
+// MARK: - Messages management
+
 extension PairingProtocolManager {
-    
-    // MARK: - Messages management
     
     override func handleChallengeMessage(message: Message, webSocket: WebSocket) {
         guard let
@@ -232,9 +234,9 @@ extension PairingProtocolManager {
     
 }
 
+// MARK: - WebSocket messages management
+
 extension PairingProtocolManager {
-    
-    // MARK: - WebSocket messages management
     
     override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         logger.info("Websocket disconnected, aborting")

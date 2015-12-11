@@ -47,7 +47,7 @@ final class VarIntParser {
         return CFSwapInt64LittleToHost(UInt64(value))
     }
 
-    // MARK: - Initialization
+    // MARK: Initialization
     
     init(data: NSData) {
         self.data = data

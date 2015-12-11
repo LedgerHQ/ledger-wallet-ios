@@ -9,6 +9,7 @@
 import Foundation
 
 enum MessageDialogActionType {
+    
     case Positive
     case Neutral
     
@@ -18,6 +19,7 @@ enum MessageDialogActionType {
         case .Neutral: return "grey"
         }
     }
+    
 }
 
 final class MessageDialogAction {
@@ -39,6 +41,7 @@ final class MessageDialogAction {
 }
 
 enum MessageDialogType: String {
+    
     case Error
     case Success
     case Confirmation
@@ -46,6 +49,7 @@ enum MessageDialogType: String {
     private func imageName() -> String {
         return "icon_" + self.rawValue.lowercaseString
     }
+    
 }
 
 class MessageDialogViewController: DialogViewController {

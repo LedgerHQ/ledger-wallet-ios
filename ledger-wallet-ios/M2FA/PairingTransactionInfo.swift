@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PairingTransactionInfo: Equatable {
+struct PairingTransactionInfo {
     
     let pinCode: String
     let recipientAddress: String
@@ -24,6 +24,10 @@ struct PairingTransactionInfo: Equatable {
     }
     
 }
+
+// MARK: - Equatable
+
+extension PairingTransactionInfo: Equatable {}
 
 func ==(lhs: PairingTransactionInfo, rhs: PairingTransactionInfo) -> Bool {
     return lhs.pinCode == rhs.pinCode && lhs.recipientAddress == rhs.recipientAddress &&

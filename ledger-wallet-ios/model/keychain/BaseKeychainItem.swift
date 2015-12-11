@@ -30,7 +30,7 @@ class BaseKeychainItem {
     private var keysAndValues: [String: String] = [:]
     private var inBatchUpdate = false
     
-    // MARK: - Static methods
+    // MARK: Static methods
     
     static func fetchAll() -> [AnyObject] {
         // build query
@@ -70,7 +70,7 @@ class BaseKeychainItem {
         return status == errSecSuccess || status == errSecItemNotFound
     }
     
-    // MARK: - Public interface
+    // MARK: Public interface
     
     func beginBatchUpdate() {
         guard !inBatchUpdate else { return }
@@ -129,7 +129,7 @@ class BaseKeychainItem {
         return status == errSecSuccess
     }
     
-    // MARK: - Private interface
+    // MARK: Private interface
     
     private class func defaultQuery() -> [String: AnyObject] {
         return [
@@ -160,7 +160,7 @@ class BaseKeychainItem {
         creationDate = nil
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     private func loadAttributes(attributes: [String: AnyObject]) {
         // load mandatory internal properties

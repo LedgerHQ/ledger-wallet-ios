@@ -9,9 +9,11 @@
 import Foundation
 
 private enum LedgerAPIClientHeaderFields: String {
+    
     case Platform = "X-Ledger-Platform"
     case Environment = "X-Ledger-Environment"
     case Locale = "X-Ledger-Locale"
+
 }
 
 class LedgerAPIClient: NSObject {

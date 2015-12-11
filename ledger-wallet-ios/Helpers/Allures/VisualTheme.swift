@@ -12,7 +12,7 @@ final class VisualTheme {
     
     static let allureBlocks: [String: ViewStylist.AllureBlock] = [
         
-        // MARK: - View allures
+        // MARK: View allures
         
         "view.background": ViewStylist.wrapAllureBlock({ (view: UIView) in
             view.backgroundColor = VisualFactory.Colors.BackgroundColor
@@ -61,7 +61,7 @@ final class VisualTheme {
             loadingIndicator.dotsCount = 9
         }),
         
-        // MARK: - Label allures
+        // MARK: Label allures
         
         "label.navigationBar.title": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.PageTitle)
@@ -136,7 +136,7 @@ final class VisualTheme {
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeLightCentered)
         }),
 
-        // MARK: - Button allures
+        // MARK: Button allures
     
         "button.navigationBar.grey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
             var highlightedStyle = VisualFactory.TextAttributes.NavigationBarText
@@ -192,7 +192,7 @@ final class VisualTheme {
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
         }),
 
-        // MARK: - TextField allures
+        // MARK: TextField allures
     
         "textField.huge.light": ViewStylist.wrapAllureBlock({ (textField: UITextField) in
             var placeholderAttributes = VisualFactory.TextAttributes.HugeLight

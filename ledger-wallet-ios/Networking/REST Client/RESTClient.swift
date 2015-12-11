@@ -13,7 +13,7 @@ final class RESTClient {
     let baseURL: String
     let httpClient: HTTPClient
     
-    // MARK: - Requests management
+    // MARK: Requests management
     
     func get(path: String, parameters: HTTPClient.Task.Parameters? = nil, encoding: HTTPClient.Task.Encoding = .URL, completionHandler: HTTPClient.Task.CompletionHandler) -> HTTPClientDataTask {
         return httpClient.get(baseURLWithPath(path), parameters: parameters, encoding: encoding, completionHandler: completionHandler)
@@ -39,13 +39,13 @@ final class RESTClient {
         httpClient.cancelAllTasks()
     }
     
-    // MARK: - Utils
+    // MARK: Utils
     
     private func baseURLWithPath(path: String) -> String {
         return (baseURL as NSString).stringByAppendingPathComponent(path)
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     init(baseURL: String, delegateQueue: NSOperationQueue) {
         self.baseURL = baseURL

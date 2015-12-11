@@ -40,9 +40,9 @@ final class SQLiteSchema {
     
 }
 
+// MARK: - SQLiteRepresentable
+
 extension SQLiteSchema: SQLiteRepresentable {
-    
-    // MARK: SQLite representation
     
     var representativeStatement: String {
         return tables.reduce("") { $0 + $1.representativeStatement }

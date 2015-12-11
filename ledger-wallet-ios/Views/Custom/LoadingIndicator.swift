@@ -50,7 +50,7 @@ class LoadingIndicator: View {
     private var timer: NSTimer? = nil
     private var highlightedLayerIndex = -1
     
-    // MARK: - Animation
+    // MARK: Animation
     
     func startAnimating() {
         if (animating) {
@@ -99,7 +99,7 @@ class LoadingIndicator: View {
         }
     }
     
-    // MARK: - Layers
+    // MARK: Layers
     
     private func generateLayers() {
         removeLayers()
@@ -133,7 +133,7 @@ class LoadingIndicator: View {
         }
     }
     
-    // MARK: - Layout
+    // MARK: Layout
     
     override func layoutSublayersOfLayer(layer: CALayer) {
         super.layoutSublayersOfLayer(layer)
@@ -157,7 +157,7 @@ class LoadingIndicator: View {
         return CGSizeMake(preferredWidth, preferredWidth)
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()

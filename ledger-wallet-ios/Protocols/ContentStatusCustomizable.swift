@@ -10,10 +10,12 @@ import UIKit
 import Foundation
 
 enum ContentStatus {
+    
     case Available
     case Loading
     case Empty
     case Error
+    
 }
 
 protocol ContentStatusCustomizable: class {

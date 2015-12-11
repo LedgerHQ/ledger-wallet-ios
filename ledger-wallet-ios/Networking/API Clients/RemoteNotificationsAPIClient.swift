@@ -12,7 +12,7 @@ final class RemoteNotificationsAPIClient: LedgerAPIClient {
     
     private let logger = Logger.sharedInstance(name: "RemoteNotificationsAPIClient")
     
-    // MARK: - Push token management
+    // MARK: Push token management
     
     func registerDeviceToken(token: NSData, toPairingId pairingId: String, completion: (Bool) -> Void) {
         guard let tokenBase16String = BTCHexFromData(token) else {

@@ -25,7 +25,7 @@ final class PairingAddViewController: BaseViewController {
     private var pairingProtocolManager: PairingProtocolManager? = nil
     private var currentStepViewController: PairingAddBaseStepViewController? = nil
     
-    // MARK: - Interface
+    // MARK: Interface
     
     func updateView() {
         navigationItem.leftBarButtonItem?.customView?.hidden = !currentStepViewController!.cancellable
@@ -41,7 +41,7 @@ final class PairingAddViewController: BaseViewController {
         navigateToStep(PairingAddScanStepViewController.self, dataToPass: nil, completion: nil)
     }
     
-    // MARK: - View lifecycle
+    // MARK: View lifecycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,7 +67,7 @@ final class PairingAddViewController: BaseViewController {
         pairingProtocolManager?.delegate = self
     }
     
-    // MARK: - Layout
+    // MARK: Layout
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -77,9 +77,9 @@ final class PairingAddViewController: BaseViewController {
     
 }
 
+// MARK: - Steps management
+
 extension PairingAddViewController {
-    
-    // MARK: - Steps management
     
     private class CompletionBlockWrapper {
         let closure: (Bool) -> Void
@@ -165,9 +165,9 @@ extension PairingAddViewController {
 
 }
 
+// MARK: - PairingProtocolManagerDelegate
+
 extension PairingAddViewController: PairingProtocolManagerDelegate {
-    
-    // MARK: - PairingProtocolManager delegate
     
     func pairingProtocolManager(pairingProtocolManager: PairingProtocolManager, didReceiveChallenge challenge: String) {
         // go to code
@@ -187,9 +187,9 @@ extension PairingAddViewController: PairingProtocolManagerDelegate {
     
 }
 
+// MARK: - KeyboardObservable
+
 extension PairingAddViewController: KeyboardObservable {
-    
-    // MARK: - Keyboard management
     
     func keyboardWillHide(notification: NSNotification) {
         let duration = (valueFromKeyboardNotification(notification, forKey: UIKeyboardAnimationDurationUserInfoKey) as! NSNumber).doubleValue
@@ -220,6 +220,8 @@ extension PairingAddViewController: KeyboardObservable {
     
 }
 
+// MARK: - CompletionResultable
+
 extension PairingAddViewController: CompletionResultable {
     
     @IBAction func complete() {
@@ -246,9 +248,9 @@ extension PairingAddViewController: CompletionResultable {
     
 }
 
+// MARK: - CATransitionDelegate
+
 extension PairingAddViewController {
-    
-    // MARK: - CATransition delegate
     
     override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         // remove previous view controller view

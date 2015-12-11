@@ -10,7 +10,7 @@ import Foundation
 
 final class PairingConfirmationDialogViewController: MessageDialogViewController {
         
-    // MARK: - Configuration
+    // MARK: Configuration
     
     func configureWithPairingOutcome(outcome: PairingProtocolManager.PairingOutcome, pairingItem: PairingKeychainItem?) {
         // default to error
@@ -43,7 +43,7 @@ final class PairingConfirmationDialogViewController: MessageDialogViewController
         }))
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     override class func interfaceBuilderIdentifier() -> String! {
         return MessageDialogViewController.className()

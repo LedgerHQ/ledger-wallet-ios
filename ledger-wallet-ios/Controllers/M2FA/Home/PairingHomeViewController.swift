@@ -14,7 +14,7 @@ final class PairingHomeViewController: BaseViewController {
     private var currentContentViewController: PairingHomeBaseContentViewController! = nil
     private var pairingTransactionDialogViewController: PairingTransactionDialogViewController? = nil
     
-    // MARK: - Content
+    // MARK: Content
     
     private func switchToContentViewControllerWithClass(viewControllerClass: PairingHomeBaseContentViewController.Type) {
         // destroy current content view controller
@@ -30,7 +30,7 @@ final class PairingHomeViewController: BaseViewController {
         view.setNeedsLayout()
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -38,7 +38,7 @@ final class PairingHomeViewController: BaseViewController {
         pairingTransactionsManager.delegate = self
     }
     
-    // MARK: - Layout
+    // MARK: Layout
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -46,7 +46,7 @@ final class PairingHomeViewController: BaseViewController {
         currentContentViewController?.view.frame = view.bounds
     }
     
-    // MARK: - View lifecycle
+    // MARK: View lifecycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,9 +67,9 @@ final class PairingHomeViewController: BaseViewController {
     
 }
 
+// MARK: - PairingTransactionsManagerDelegate
+
 extension PairingHomeViewController: PairingTransactionsManagerDelegate {
-    
-    // MARK: - PairingTransactionsManager delagate
 
     func pairingTransactionsManager(pairingTransactionsManager: PairingTransactionsManager, didReceiveNewTransactionInfo transactionInfo: PairingTransactionInfo) {
         pairingTransactionDialogViewController = PairingTransactionDialogViewController.instantiateFromNib()
@@ -84,9 +84,9 @@ extension PairingHomeViewController: PairingTransactionsManagerDelegate {
     
 }
 
+// MARK: - PairingTransactionDialogViewControllerDelegate
+
 extension PairingHomeViewController: PairingTransactionDialogViewControllerDelegate {
-    
-    // MARK: - PairingTransactionDialogViewController delegate
     
     func pairingTransactionDialogViewController(pairingTransactionDialogViewController: PairingTransactionDialogViewController, didConfirmTransactionInfo transactionInfo: PairingTransactionInfo) {
         pairingTransactionsManager.confirmTransaction(transactionInfo)

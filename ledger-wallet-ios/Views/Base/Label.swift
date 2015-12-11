@@ -10,7 +10,7 @@ import UIKit
 
 class Label: UILabel {
     
-    // MARK: - Style management
+    // MARK: Style management
     
     override var text: String? {
         didSet {
@@ -18,7 +18,7 @@ class Label: UILabel {
         }
     }
 
-    // MARK: - Localization
+    // MARK: Localization
     
     override func awakeFromNib() {
         super.awakeFromNib()

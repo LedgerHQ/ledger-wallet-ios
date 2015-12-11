@@ -10,7 +10,7 @@ import UIKit
 
 final class Navigator {
     
-    // MARK: - Utilities
+    // MARK: Utilities
     
     class func embedViewController(viewController: UIViewController) -> BaseNavigationController {
         let navigationController = BaseNavigationController.instantiateFromStoryboard(StoryboardFactory.storyboardWithIdentifier(.Main))
@@ -20,10 +20,10 @@ final class Navigator {
     
 }
 
+// MARK: - Pairing navigation
+
 extension Navigator {
     
-    // MARK: - Pairing navigation
-
     final class Pairing {
         
         class func presentAddViewController(fromViewController fromViewController: UIViewController, delegate: PairingAddViewControllerDelegate) {

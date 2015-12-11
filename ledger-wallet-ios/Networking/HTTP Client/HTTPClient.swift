@@ -21,7 +21,7 @@ final class HTTPClient {
     private let logger = Logger.sharedInstance(name: "HTTPClient")
     private var activeTasksCount = 0
     
-    // MARK: - Tasks management
+    // MARK: Tasks management
     
     func get(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         return performDataRequest(.GET, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
@@ -96,7 +96,7 @@ final class HTTPClient {
         return task
     }
     
-    // MARK: - Utilities
+    // MARK: Utilities
     
     private func preprocessRequest(request: NSURLRequest) {
         logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
@@ -106,7 +106,7 @@ final class HTTPClient {
         logger.info("<- \(response.statusCode) \(request.HTTPMethod!) \(request.URL!)")
     }
     
-    // MARK: - Requests
+    // MARK: Requests
     
     private func defaultRequest(method: Task.Method, URL: String) -> NSMutableURLRequest {
         let request = NSMutableURLRequest()
@@ -121,7 +121,7 @@ final class HTTPClient {
         return request
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     init(delegateQueue: NSOperationQueue) {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()

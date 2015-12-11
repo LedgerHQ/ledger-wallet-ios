@@ -29,7 +29,7 @@ final class PairingTransactionDialogViewController: DialogViewController {
         }
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     override func configureView() {
         super.configureView()
@@ -45,6 +45,8 @@ final class PairingTransactionDialogViewController: DialogViewController {
     }
 
 }
+
+// MARK: - CompletionResultable
 
 extension PairingTransactionDialogViewController: CompletionResultable {
     

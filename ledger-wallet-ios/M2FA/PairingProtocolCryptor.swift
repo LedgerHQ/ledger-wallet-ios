@@ -17,7 +17,7 @@ final class PairingProtocolCryptor {
     private let challengeBytesLength = 4
     private let attestationKeyIDsLength = 8
     
-    // MARK: - Session key
+    // MARK: Session key
     
     func sessionKeyForKeys(internalKey internalKey: BTCKey, externalKey: BTCKey) -> NSData {
         // compute shared secret
@@ -43,7 +43,7 @@ final class PairingProtocolCryptor {
         return data.tripeDESCBCWithKeys(key1: key1, key2: key2, key3: key1, encrypt: true)!
     }
     
-    // MARK: - Challenge data
+    // MARK: Challenge data
     
     func nonceFromBlob(data: NSData) -> NSData {
         return data.subdataWithRange(NSMakeRange(0, nonceBytesLength))

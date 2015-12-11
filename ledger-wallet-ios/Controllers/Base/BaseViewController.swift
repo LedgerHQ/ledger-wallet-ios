@@ -10,19 +10,19 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
-    // MARK: - Status bar style
+    // MARK: Status bar style
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
     
-    // MARK: - Interface
+    // MARK: Interface
     
     func configureView() {
 
     }
 
-    // MARK: - Layout 
+    // MARK: Layout 
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

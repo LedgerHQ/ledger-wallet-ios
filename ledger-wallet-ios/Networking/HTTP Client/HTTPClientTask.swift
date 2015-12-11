@@ -16,6 +16,7 @@ extension HTTPClient {
         typealias Parameters = [String: AnyObject]
      
         enum Method: String {
+            
             case GET = "GET"
             case HEAD = "HEAD"
             case POST = "POST"
@@ -30,9 +31,11 @@ extension HTTPClient {
                     return false
                 }
             }
+            
         }
         
         enum Encoding {
+            
             case URL
             case JSON
             
@@ -99,8 +102,8 @@ extension HTTPClient {
                 let legalURLCharactersToBeEscaped: CFStringRef = ":/?&=;+!@#$()',*"
                 return CFURLCreateStringByAddingPercentEscapes(nil, string, nil, legalURLCharactersToBeEscaped, CFStringBuiltInEncodings.UTF8.rawValue) as String
             }
+            
         }
-
         
     }
     

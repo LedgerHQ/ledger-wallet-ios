@@ -14,7 +14,7 @@ class DialogViewController: BaseViewController {
     lazy var containerMargin = UIEdgeInsetsMake(VisualFactory.Metrics.Padding.Small, VisualFactory.Metrics.Padding.Small, VisualFactory.Metrics.Padding.Small, VisualFactory.Metrics.Padding.Small)
     private lazy var dialogAnimationController = DialogAnimationController()
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     private func initialize() {
         transitioningDelegate = self
@@ -35,9 +35,9 @@ class DialogViewController: BaseViewController {
     
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
 extension DialogViewController: UIViewControllerTransitioningDelegate {
-    
-    // MARK: - Transitioning delegate
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dialogAnimationController
