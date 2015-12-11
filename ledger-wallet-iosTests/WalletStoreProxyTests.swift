@@ -84,7 +84,44 @@ class WalletStoreProxyTests: XCTestCase {
             XCTAssertNotNil(accounts, "Accounts should be found")
             XCTAssertEqual(accounts!.count, 2, "Account should be found")
             XCTAssertEqual(accounts![0].index, 0, "Index should be 0")
-            XCTAssertEqual(accounts![1].index, 1, "Index should be 0")
+            XCTAssertEqual(accounts![1].index, 1, "Index should be 1")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+    
+    func testFetchAccountsAtNoIndexes() {
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAccountsAtIndexes([]) { accounts in
+            XCTAssertNotNil(accounts, "Accounts should be found")
+            XCTAssertEqual(accounts!.count, 0, "No account should be found")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+    
+    func testFetchAccountsAtWrongIndexes() {
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAccountsAtIndexes([0, 1]) { accounts in
+            XCTAssertNotNil(accounts, "Accounts should be found")
+            XCTAssertEqual(accounts!.count, 0, "No account should be found")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+    
+    func testFetchAccountsAtIndexes() {
+        let account1 = WalletAccountModel(index: 0, extendedPublicKey: "super xpub 1", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        storeProxy.addAccount(account1)
+        let account2 = WalletAccountModel(index: 1, extendedPublicKey: "super xpub 2", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        storeProxy.addAccount(account2)
+        
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAccountsAtIndexes([0, 1]) { accounts in
+            XCTAssertNotNil(accounts, "Accounts should be found")
+            XCTAssertEqual(accounts!.count, 2, "Account should be found")
+            XCTAssertEqual(accounts![0].index, 0, "Index should be 0")
+            XCTAssertEqual(accounts![1].index, 1, "Index should be 1")
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(3, handler: nil)
@@ -92,7 +129,18 @@ class WalletStoreProxyTests: XCTestCase {
     
     // MARK: Addresses tests
     
-    func testFetchNoAddressWithPaths() {
+    func testFetchAddressesWithNoPaths() {
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAddressesAtPaths([]) { addresses in
+            XCTAssertNotNil(addresses, "Addresses should be found")
+            XCTAssertEqual(addresses!.count, 0, "No addresses should be found")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+
+    
+    func testFetchAddressesWithWrongPaths() {
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
         let expectation = expectationWithDescription("Waiting for fetch completion")
         storeProxy.fetchAddressesAtPaths(paths) { addresses in
@@ -127,6 +175,43 @@ class WalletStoreProxyTests: XCTestCase {
         
         let expectation = expectationWithDescription("Waiting for fetch completion")
         storeProxy.fetchAddressesAtPaths(paths) { addresses in
+            XCTAssertNotNil(addresses, "Addresses should be found")
+            XCTAssertEqual(addresses!.count, paths.count, "Addresses should be found")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+    
+    func testFetchAddressesWithNoAddresses() {
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAddressesWithAddresses([]) { addresses in
+            XCTAssertNotNil(addresses, "Addresses should be found")
+            XCTAssertEqual(addresses!.count, 0, "No addresses should be found")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+    
+    func testFetchAddressesWithWrongAddresses() {
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAddressesWithAddresses(["this is an address", "another address"]) { addresses in
+            XCTAssertNotNil(addresses, "Addresses should be found")
+            XCTAssertEqual(addresses!.count, 0, "No addresses should be found")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+    
+    func testFetchAddressesWithAddresses() {
+        let account = WalletAccountModel(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        storeProxy.addAccount(account)
+
+        let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
+        let addresses = paths.map({ return WalletAddressModel(addressPath: $0, address: $0.relativePath)})
+        storeProxy.addAddresses(addresses)
+        
+        let expectation = expectationWithDescription("Waiting for fetch completion")
+        storeProxy.fetchAddressesWithAddresses(paths.map{ $0.relativePath }) { addresses in
             XCTAssertNotNil(addresses, "Addresses should be found")
             XCTAssertEqual(addresses!.count, paths.count, "Addresses should be found")
             expectation.fulfill()

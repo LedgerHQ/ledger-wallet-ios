@@ -14,6 +14,17 @@ final class WalletStoreExecutor {
 
     // MARK: - Accounts management
 
+    class func fetchAllAccounts(context: SQLiteStoreContext) -> [WalletAccountModel]? {
+        let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" ORDER BY \"\(WalletAccountTableEntity.indexKey)\" ASC"
+        return fetchModelCollection(statement, context: context)
+    }
+    
+    class func fetchAccountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccountModel? {
+        guard let accounts = fetchAccountsAtIndexes([index], context: context) where accounts.count > 0 else { return nil }
+        return accounts[0]
+    }
+    
     class func fetchAccountsAtIndexes(indexes: [Int], context: SQLiteStoreContext) -> [WalletAccountModel]? {
         guard indexes.count > 0 else { return [] }
         
@@ -71,21 +82,16 @@ final class WalletStoreExecutor {
     
     class func addAddresses(addresses: [WalletAddressModel], context: SQLiteStoreContext) -> Bool {
         guard addresses.count > 0 else { return true }
-        
         return addresses.reduce(true) { $0 && addAddress($1, context: context) }
     }
     
     private class func fetchAddressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddressModel? {
-        guard let results = fetchAddressesAtPaths([path], context: context) where results.count >= 1 else {
-            return nil
-        }
+        guard let results = fetchAddressesAtPaths([path], context: context) where results.count >= 1 else { return nil }
         return results[0]
     }
     
     private class func fetchAddressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddressModel? {
-        guard let results = fetchAddressesWithAddresses([address], context: context) where results.count >= 1 else {
-            return nil
-        }
+        guard let results = fetchAddressesWithAddresses([address], context: context) where results.count >= 1 else { return nil }
         return results[0]
     }
     
