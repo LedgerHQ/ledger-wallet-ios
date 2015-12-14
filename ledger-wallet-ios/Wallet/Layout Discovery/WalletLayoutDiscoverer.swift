@@ -26,7 +26,6 @@ protocol WalletLayoutDiscovererDelegate: class {
 
 final class WalletLayoutDiscoverer {
     
-    private static let keyIncrement = 20
     private static let maxChainIndex = 1
     
     weak var delegate: WalletLayoutDiscovererDelegate?
@@ -57,7 +56,7 @@ final class WalletLayoutDiscoverer {
             strongSelf.logger.info("Start discovering layout")
             strongSelf.discoveringLayout = true
             strongSelf.foundTransactionsInCurrentAccount = false
-            strongSelf.fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: strongSelf.dynamicType.keyIncrement - 1)
+            strongSelf.fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: WalletLayoutHolder.BIP44AddressesGap - 1)
             ApplicationManager.sharedInstance.startNetworkActivity()
             
             // notify delegate
@@ -174,7 +173,7 @@ final class WalletLayoutDiscoverer {
                     // next account
                     foundTransactionsInCurrentAccount = false
                     let newAddressPath = startingPath.pathWithNewAccountIndex(startingPath.accountIndex + 1)
-                    let newKeyIndex = self.dynamicType.keyIncrement - 1
+                    let newKeyIndex = WalletLayoutHolder.BIP44AddressesGap - 1
                     logger.info("No transactions found, continuing on the next account in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
                     fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
                 }
@@ -187,7 +186,7 @@ final class WalletLayoutDiscoverer {
             else {
                 // next chain
                 let newAddressPath = startingPath.pathWithNewChainIndex(startingPath.chainIndex + 1)
-                let newKeyIndex = self.dynamicType.keyIncrement - 1
+                let newKeyIndex = WalletLayoutHolder.BIP44AddressesGap - 1
                 logger.info("No transactions found, continuing on the next chain in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
                 fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
             }
@@ -202,7 +201,7 @@ final class WalletLayoutDiscoverer {
             // next key
             foundTransactionsInCurrentAccount = true
             let newAddressPath = startingPath.pathWithNewKeyIndex(keyIndex + 1)
-            let newKeyIndex = newAddressPath.keyIndex + self.dynamicType.keyIncrement - 1
+            let newKeyIndex = newAddressPath.keyIndex + WalletLayoutHolder.BIP44AddressesGap - 1
             logger.info("Transactions found, continuing on the same chain in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
             fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
         }

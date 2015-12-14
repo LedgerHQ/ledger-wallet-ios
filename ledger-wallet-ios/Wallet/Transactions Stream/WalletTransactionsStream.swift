@@ -10,10 +10,12 @@ import Foundation
 
 final class WalletTransactionsStream {
     
-    private let storeProxy: WalletStoreProxy
     private var pendingTransactions: [WalletRemoteTransaction] = []
+    private let addressCache: WalletAddressCache
+    private let layoutHolder: WalletLayoutHolder
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "WalletTransactionsStream", maxConcurrentOperationCount: 1)
+    private let logger = Logger.sharedInstance(name: "WalletTransactionsStream")
     
     // MARK: Transactions management
     
@@ -35,15 +37,27 @@ final class WalletTransactionsStream {
         }
     }
     
+    func reloadLayout() {
+        layoutHolder.reload()
+    }
+    
     private func processNextPendingTransaction() {
+        // pop first transaction
+        guard let transaction = pendingTransactions.first else {
+            self.logger.warn("No more pending transactions to process")
+            return
+        }
+        pendingTransactions.removeFirst()
         
+        print("handle transation")
     }
     
     // MARK: Initialization
     
     init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
-        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: workingQueue)
+        self.layoutHolder = WalletLayoutHolder(store: store)
+        self.addressCache = WalletAddressCache(store: store, delegateQueue: workingQueue)
     }
     
     deinit {

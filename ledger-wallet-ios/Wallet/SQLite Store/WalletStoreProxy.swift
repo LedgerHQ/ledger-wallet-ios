@@ -31,7 +31,15 @@ final class WalletStoreProxy {
     func addAccount(account: WalletAccountModel) {
         executeTransaction({ return WalletStoreExecutor.addAccount(account, context: $0) })
     }
-
+    
+    func setNextExternalIndex(index: Int, forAccountAtIndex accountIndex: Int) {
+        executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: true, context: $0) })
+    }
+    
+    func setNextInternalIndex(index: Int, forAccountAtIndex accountIndex: Int) {
+        executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: false, context: $0) })
+    }
+    
     // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddressModel]?) -> Void) {
@@ -52,10 +60,7 @@ final class WalletStoreProxy {
         store.performBlock() { [weak self] context in
             guard let strongSelf = self else { return }
             let result = block(context)
-            strongSelf.delegateQueue.addOperationWithBlock() {
-                guard let _ = self else { return }
-                completion(result)
-            }
+            strongSelf.delegateQueue.addOperationWithBlock() { completion(result) }
         }
     }
     
@@ -63,10 +68,7 @@ final class WalletStoreProxy {
         store.performBlock() { [weak self] context in
             guard let strongSelf = self else { return }
             let results = block(context)
-            strongSelf.delegateQueue.addOperationWithBlock() {
-                guard let _ = self else { return }
-                completion(results)
-            }
+            strongSelf.delegateQueue.addOperationWithBlock() { completion(results) }
         }
     }
     

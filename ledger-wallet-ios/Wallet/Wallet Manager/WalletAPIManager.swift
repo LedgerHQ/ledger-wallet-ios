@@ -56,7 +56,11 @@ final class WalletAPIManager: WalletManagerType {
     }
     
     func registerAccount(account: WalletAccountModel) {
+        let internalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
+        let externalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
         externalStoreProxy.addAccount(account)
+        externalStoreProxy.fetchAddressesAtPaths(internalPaths + externalPaths, completion: { _ in })
+        transactionsStream.reloadLayout()
     }
     
     // MARK: Initialization
@@ -70,10 +74,11 @@ final class WalletAPIManager: WalletManagerType {
         self.externalStoreProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
-        self.layoutDiscoverer = WalletLayoutDiscoverer(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
+        self.layoutDiscoverer = WalletLayoutDiscoverer(store: store, delegateQueue: NSOperationQueue.mainQueue())
         self.websocketListener = WalletWebsocketListener(delegateQueue: NSOperationQueue.mainQueue())
-        self.transactionsStream = WalletTransactionsStream(store: self.store, delegateQueue: NSOperationQueue.mainQueue())
+        self.transactionsStream = WalletTransactionsStream(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
+        // start services
         startAllServices()
     }
     

@@ -45,6 +45,31 @@ final class WalletStoreExecutor {
         return true
     }
     
+    class func setNextIndex(index: Int, forAccountAtIndex accountIndex: Int, external: Bool, context: SQLiteStoreContext) -> Bool {
+        guard let currentIndex = fetchNextIndexForAccountAtIndex(accountIndex, external: external, context: context) else { return false }
+        guard index > currentIndex else { return true }
+        
+        let fieldName = external ? WalletAccountTableEntity.nextExternalIndexKey : WalletAccountTableEntity.nextInternalIndexKey
+        let statement = "UPDATE \"\(WalletAccountTableEntity.tableName)\" SET \"\(fieldName)\" = ? WHERE \"\(WalletAccountTableEntity.indexKey)\" = ?"
+        guard context.executeUpdate(statement, withArgumentsInArray: [index, accountIndex]) else {
+            logger.error("Unable to set \(fieldName) for account at index \(accountIndex): \(context.lastErrorMessage())")
+            return false
+        }
+        return true
+    }
+    
+    private class func fetchNextIndexForAccountAtIndex(index: Int, external: Bool, context: SQLiteStoreContext) -> Int? {
+        let fieldName = external ? WalletAccountTableEntity.nextExternalIndexKey : WalletAccountTableEntity.nextInternalIndexKey
+        guard let account = fetchAccountAtIndex(index, context: context) else {
+            logger.error("Unable to fetch account at index \(index) to fetch \(fieldName): \(context.lastErrorMessage())")
+            return nil
+        }
+        if external {
+            return account.nextExternalIndex
+        }
+        return account.nextInternalIndex
+    }
+    
     // MARK: Addresses management
     
     class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
