@@ -37,11 +37,20 @@ struct WalletAccountModel {
 extension WalletAccountModel: SQLiteFetchableModel {
         
     init?(resultSet: SQLiteStoreResultSet) {
-        index = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.indexKey, resultSet: resultSet)!
-        extendedPublicKey = self.dynamicType.optionalStringForKey(WalletAccountTableEntity.extendedPublicKeyKey, resultSet: resultSet)!
-        nextInternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.nextInternalIndexKey, resultSet: resultSet)!
-        nextExternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.nextExternalIndexKey, resultSet: resultSet)!
-        name = self.dynamicType.optionalStringForKey(WalletAccountTableEntity.nameKey, resultSet: resultSet)
+        guard let
+            index = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.indexKey, resultSet: resultSet),
+            extendedPublicKey = self.dynamicType.optionalStringForKey(WalletAccountTableEntity.extendedPublicKeyKey, resultSet: resultSet),
+            nextInternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.nextInternalIndexKey, resultSet: resultSet),
+            nextExternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountTableEntity.nextExternalIndexKey, resultSet: resultSet)
+        else {
+            return nil
+        }
+        
+        self.index = index
+        self.extendedPublicKey = extendedPublicKey
+        self.nextInternalIndex = nextInternalIndex
+        self.nextExternalIndex = nextExternalIndex
+        self.name = self.dynamicType.optionalStringForKey(WalletAccountTableEntity.nameKey, resultSet: resultSet)
     }
     
 }
