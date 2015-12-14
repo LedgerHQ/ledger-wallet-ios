@@ -1,5 +1,5 @@
 //
-//  WalletWebsocketListener.swift
+//  WalletTransactionsListener.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 25/11/2015.
@@ -8,22 +8,22 @@
 
 import Foundation
 
-protocol WalletWebsocketListenerDelegate: class {
+protocol WalletTransactionsListenerDelegate: class {
     
-    func websocketListenerDidStart(websocketListener: WalletWebsocketListener)
-    func websocketListenerDidStop(websocketListener: WalletWebsocketListener)
-    func websocketListener(websocketListener: WalletWebsocketListener, didReceiveTransaction transaction: WalletRemoteTransaction)
+    func transactionsListenerDidStart(transactionsListener: WalletTransactionsListener)
+    func transactionsListenerDidStop(transactionsListener: WalletTransactionsListener)
+    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletRemoteTransaction)
     
 }
 
-final class WalletWebsocketListener {
+final class WalletTransactionsListener {
     
-    weak var delegate: WalletWebsocketListenerDelegate?
+    weak var delegate: WalletTransactionsListenerDelegate?
     private var websocket: WebSocket!
     private var listening = false
     private let delegateQueue: NSOperationQueue
-    private let workingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("WalletWebsocketListener"))
-    private let logger = Logger.sharedInstance(name: "WalletWebsocketListener")
+    private let workingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("WalletTransactionsListener"))
+    private let logger = Logger.sharedInstance(name: "WalletTransactionsListener")
     
     var isListening: Bool {
         var value = false
@@ -48,7 +48,7 @@ final class WalletWebsocketListener {
             // notify delegate
             strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
                 guard let strongSelf = self else { return }
-                strongSelf.delegate?.websocketListenerDidStart(strongSelf)
+                strongSelf.delegate?.transactionsListenerDidStart(strongSelf)
             }
         }
     }
@@ -65,7 +65,7 @@ final class WalletWebsocketListener {
             // notify delegate
             strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
                 guard let strongSelf = self else { return }
-                strongSelf.delegate?.websocketListenerDidStop(strongSelf)
+                strongSelf.delegate?.transactionsListenerDidStop(strongSelf)
             }
         }
     }
@@ -85,7 +85,7 @@ final class WalletWebsocketListener {
 
 // MARK: - WebSocketDelegate
 
-extension WalletWebsocketListener: WebSocketDelegate {
+extension WalletTransactionsListener: WebSocketDelegate {
     
     func websocketDidConnect(socket: WebSocket) {
         guard listening else { return }
@@ -113,7 +113,7 @@ extension WalletWebsocketListener: WebSocketDelegate {
         
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self where strongSelf.listening else { return }
-            strongSelf.delegate?.websocketListener(strongSelf, didReceiveTransaction: JSON)
+            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: JSON)
         }
     }
     

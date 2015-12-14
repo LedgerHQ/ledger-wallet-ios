@@ -20,19 +20,19 @@ class WalletTestViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStartRefreshingLayoutNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStopRefreshingLayoutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStartRefreshingTransactionsNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStopRefreshingTransactionsNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStartListeningTransactionsNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStopListeningTransactionsNotification, object: nil)
         updateUI()
     }
 
     @IBAction func scanForTransactions(sender: AnyObject) {
-        walletManager?.startRefreshingLayout()
+        walletManager?.startRefreshingTransactions()
     }
     
     @IBAction func stopScanForTransactions(sender: AnyObject) {
-        walletManager?.stopRefreshingLayout()
+        walletManager?.stopRefreshingTransactions()
     }
     
     @IBAction func listenForTransactions(sender: AnyObject) {
@@ -44,7 +44,7 @@ class WalletTestViewController: BaseViewController {
     }
     
     private dynamic func updateUI() {
-        startButton.enabled = !walletManager!.isRefreshingLayout
+        startButton.enabled = !walletManager!.isRefreshingTransactions
         stopButton.enabled = !startButton.enabled
         listenStartButton.enabled = !walletManager!.isListeningTransactions
         listenStopButton.enabled = !listenStartButton.enabled

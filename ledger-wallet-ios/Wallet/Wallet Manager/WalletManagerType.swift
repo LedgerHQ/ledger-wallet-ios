@@ -8,19 +8,19 @@
 
 import Foundation
 
-let WalletManagerDidStartRefreshingLayoutNotification = "WalletManagerDidStartRefreshingLayoutNotification"
-let WalletManagerDidStopRefreshingLayoutNotification = "WalletManagerDidStopRefreshingLayoutNotification"
+let WalletManagerDidStartRefreshingTransactionsNotification = "WalletManagerDidStartRefreshingTransactionsNotification"
+let WalletManagerDidStopRefreshingTransactionsNotification = "WalletManagerDidStopRefreshingTransactionsNotification"
 let WalletManagerDidStartListeningTransactionsNotification = "WalletManagerDidStartListeningTransactionsNotification"
 let WalletManagerDidStopListeningTransactionsNotification = "WalletManagerDidStopListeningTransactionsNotification"
 
 protocol WalletManagerType: class {
     
     var uniqueIdentifier: String { get }
-    var isRefreshingLayout: Bool { get }
+    var isRefreshingTransactions: Bool { get }
     var isListeningTransactions: Bool { get }
     
-    func startRefreshingLayout()
-    func stopRefreshingLayout()
+    func startRefreshingTransactions()
+    func stopRefreshingTransactions()
     func startListeningTransactions()
     func stopListeningTransactions()
     func startAllServices()

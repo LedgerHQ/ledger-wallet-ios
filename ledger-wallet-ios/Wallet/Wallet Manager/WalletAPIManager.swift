@@ -13,11 +13,11 @@ typealias WalletRemoteTransaction = [String: AnyObject]
 final class WalletAPIManager: WalletManagerType {
     
     let uniqueIdentifier: String
-    var isRefreshingLayout: Bool { return layoutDiscoverer.isDiscovering }
-    var isListeningTransactions: Bool { return websocketListener.isListening }
+    var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
+    var isListeningTransactions: Bool { return transactionsListener.isListening }
     
-    private let layoutDiscoverer: WalletLayoutDiscoverer
-    private let websocketListener: WalletWebsocketListener
+    private let transactionsConsumer: WalletTransactionsConsumer
+    private let transactionsListener: WalletTransactionsListener
     private let transactionsStream: WalletTransactionsStream
     private let store: SQLiteStore
     private let externalStoreProxy: WalletStoreProxy
@@ -26,31 +26,31 @@ final class WalletAPIManager: WalletManagerType {
     
     // MARK: Wallet management
     
-    func startRefreshingLayout() {
-        layoutDiscoverer.delegate = self
-        layoutDiscoverer.startDiscovery()
+    func startRefreshingTransactions() {
+        transactionsConsumer.delegate = self
+        transactionsConsumer.startRefreshing()
     }
     
-    func stopRefreshingLayout() {
-        layoutDiscoverer.stopDiscovery()
+    func stopRefreshingTransactions() {
+        transactionsConsumer.stopRefreshing()
     }
     
     func startListeningTransactions() {
-        websocketListener.delegate = self
-        websocketListener.startListening()
+        transactionsListener.delegate = self
+        transactionsListener.startListening()
     }
     
     func stopListeningTransactions() {
-        websocketListener.stopListening()
+        transactionsListener.stopListening()
     }
     
     func startAllServices() {
-        startRefreshingLayout()
+        startRefreshingTransactions()
         startListeningTransactions()
     }
     
     func stopAllServices() {
-        stopRefreshingLayout()
+        stopRefreshingTransactions()
         stopListeningTransactions()
         transactionsStream.discardPendingTransactions()
     }
@@ -74,8 +74,8 @@ final class WalletAPIManager: WalletManagerType {
         self.externalStoreProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
-        self.layoutDiscoverer = WalletLayoutDiscoverer(store: store, delegateQueue: NSOperationQueue.mainQueue())
-        self.websocketListener = WalletWebsocketListener(delegateQueue: NSOperationQueue.mainQueue())
+        self.transactionsConsumer = WalletTransactionsConsumer(store: store, delegateQueue: NSOperationQueue.mainQueue())
+        self.transactionsListener = WalletTransactionsListener(delegateQueue: NSOperationQueue.mainQueue())
         self.transactionsStream = WalletTransactionsStream(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
         // start services
@@ -101,19 +101,19 @@ extension WalletAPIManager {
     
 }
 
-// MARK: - WalletLayoutDiscovererDelegate
+// MARK: - WalletTransactionsConsumerDelegate
 
-extension WalletAPIManager: WalletLayoutDiscovererDelegate {
+extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     
-    func layoutDiscoverDidStart(layoutDiscoverer: WalletLayoutDiscoverer) {
-        notifyObservers(WalletManagerDidStartRefreshingLayoutNotification)
+    func transactionsConsumerDidStart(transactionsConsumer: WalletTransactionsConsumer) {
+        notifyObservers(WalletManagerDidStartRefreshingTransactionsNotification)
     }
     
-    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didStopWithError error: WalletLayoutDiscovererError?) {
-        notifyObservers(WalletManagerDidStopRefreshingLayoutNotification)
+    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didStopWithError error: WalletTransactionsConsumerError?) {
+        notifyObservers(WalletManagerDidStopRefreshingTransactionsNotification)
     }
     
-    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
+    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
         let accounts: [WalletAccountModel] = [
             WalletAccountModel(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
             WalletAccountModel(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
@@ -129,25 +129,25 @@ extension WalletAPIManager: WalletLayoutDiscovererDelegate {
         continueBlock(true)
     }
 
-    func layoutDiscover(layoutDiscoverer: WalletLayoutDiscoverer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
+    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
         transactionsStream.enqueueTransactions(transactions)
     }
     
 }
 
-// MARK: - WalletWebsocketListenerDelegate
+// MARK: - WalletTransactionsListenerDelegate
 
-extension WalletAPIManager: WalletWebsocketListenerDelegate {
+extension WalletAPIManager: WalletTransactionsListenerDelegate {
     
-    func websocketListenerDidStart(websocketListener: WalletWebsocketListener) {
+    func transactionsListenerDidStart(transactionsListener: WalletTransactionsListener) {
         notifyObservers(WalletManagerDidStartListeningTransactionsNotification)
     }
     
-    func websocketListenerDidStop(websocketListener: WalletWebsocketListener) {
+    func transactionsListenerDidStop(transactionsListener: WalletTransactionsListener) {
         notifyObservers(WalletManagerDidStopListeningTransactionsNotification)
     }
     
-    func websocketListener(websocketListener: WalletWebsocketListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
+    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
         transactionsStream.enqueueTransactions([transaction])
     }
     
