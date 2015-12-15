@@ -22,6 +22,7 @@ extension SQLiteFetchableModel {
     
     static func collectionFromResultSet(resultSet: SQLiteStoreResultSet) -> [Self] {
         var results: [Self] = []
+        
         while resultSet.next() {
             if let result = self.init(resultSet: resultSet) {
                 results.append(result)
