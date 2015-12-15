@@ -108,12 +108,18 @@ extension WalletTransactionsListener: WebSocketDelegate {
     func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         guard listening else { return }
 
-        guard let data = text.dataUsingEncoding(NSUTF8StringEncoding) else { return }
-        guard let JSON = JSON.JSONObjectFromData(data) as? WalletRemoteTransaction else { return }
+        guard let data = text.dataUsingEncoding(NSUTF8StringEncoding), JSON = JSON.JSONObjectFromData(data) as? [String: AnyObject] else {
+            logger.error("Unable to get or parse data from message")
+            return
+        }
+        guard let transaction = WalletRemoteTransaction(JSONObject: JSON) else {
+            logger.warn("Received transaction but was unable to build model")
+            return
+        }
         
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self where strongSelf.listening else { return }
-            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: JSON)
+            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: transaction)
         }
     }
     

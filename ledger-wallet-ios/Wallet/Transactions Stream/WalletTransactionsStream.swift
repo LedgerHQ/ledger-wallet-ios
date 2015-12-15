@@ -47,7 +47,9 @@ final class WalletTransactionsStream {
     private func processNextPendingTransaction() {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            guard !strongSelf.busy else { return }
+            guard !strongSelf.busy else {
+                return
+            }
             
             // mark busy
             strongSelf.busy = true
