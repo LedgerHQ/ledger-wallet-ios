@@ -16,10 +16,7 @@ final class RemoteNotificationsAPIClient: LedgerAPIClient {
     
     func registerDeviceToken(token: NSData, toPairingId pairingId: String, completion: (Bool) -> Void) {
         guard let tokenBase16String = BTCHexFromData(token) else {
-            delegateQueue.addOperationWithBlock() { [weak self] in
-                guard self != nil else { return }
-                completion(false)
-            }
+            delegateQueue.addOperationWithBlock() { completion(false) }
             return
         }
         
@@ -30,10 +27,7 @@ final class RemoteNotificationsAPIClient: LedgerAPIClient {
             if !success {
                 strongSelf.logger.error("Unable to register device token to pairing id \(pairingId)")
             }
-            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
-                guard self != nil else { return }
-                completion(success)
-            }
+            strongSelf.delegateQueue.addOperationWithBlock() { completion(success) }
         }
     }
     
@@ -45,10 +39,7 @@ final class RemoteNotificationsAPIClient: LedgerAPIClient {
             if !success {
                 strongSelf.logger.error("Unable to unregister device token from pairing id \(pairingId)")
             }
-            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
-                guard self != nil else { return }
-                completion(success)
-            }
+            strongSelf.delegateQueue.addOperationWithBlock() { completion(success) }
         }
     }
     

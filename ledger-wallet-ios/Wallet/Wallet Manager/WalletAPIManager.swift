@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias WalletRemoteTransaction = [String: AnyObject]
-
 final class WalletAPIManager: WalletManagerType {
     
     let uniqueIdentifier: String

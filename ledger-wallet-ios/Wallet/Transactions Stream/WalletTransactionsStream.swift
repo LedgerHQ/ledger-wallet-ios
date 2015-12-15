@@ -11,6 +11,7 @@ import Foundation
 final class WalletTransactionsStream {
     
     private var pendingTransactions: [WalletRemoteTransaction] = []
+    private var busy = false
     private let addressCache: WalletAddressCache
     private let layoutHolder: WalletLayoutHolder
     private let delegateQueue: NSOperationQueue
@@ -41,15 +42,40 @@ final class WalletTransactionsStream {
         layoutHolder.reload()
     }
     
+    // MARK: Internal methods
+    
     private func processNextPendingTransaction() {
-        // pop first transaction
-        guard let transaction = pendingTransactions.first else {
-            self.logger.warn("No more pending transactions to process")
-            return
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard !strongSelf.busy else { return }
+            
+            // mark busy
+            strongSelf.busy = true
+            
+            // pop first transaction
+            guard let transaction = strongSelf.pendingTransactions.first else {
+                strongSelf.busy = false
+                return
+            }
+            strongSelf.pendingTransactions.removeFirst()
+            
+            // check if we need to discard the transaction
+            strongSelf.checkIfTransactionShouldBeDiscarded(transaction)
         }
-        pendingTransactions.removeFirst()
+    }
+
+    private func checkIfTransactionShouldBeDiscarded(transaction: WalletRemoteTransaction) {
         
-        print("handle transation")
+    }
+
+    private func processTransaction(transaction: WalletRemoteTransaction) {
+        
+    }
+    
+    // MARK: Utils
+    
+    private func allAdressesInTransaction(transaction: WalletRemoteTransaction) -> [String] {
+        return []
     }
     
     // MARK: Initialization

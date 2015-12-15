@@ -14,7 +14,7 @@ final class TransactionsAPIClient: LedgerAPIClient {
     
     // MARK: Transactions mangement
     
-    func fetchTransactionsForAddresses(addresses: [String], completion: ([[String: AnyObject]]?) -> Void) {
+    func fetchTransactionsForAddresses(addresses: [String], completion: ([WalletRemoteTransaction]?) -> Void) {
         guard addresses.count > 0 else {
             delegateQueue.addOperationWithBlock() { [weak self] in
                 guard self != nil else { return }
@@ -29,16 +29,15 @@ final class TransactionsAPIClient: LedgerAPIClient {
             
             guard error == nil, let data = data, JSON = JSON.JSONObjectFromData(data) as? [[String: AnyObject]] else {
                 strongSelf.logger.error("Unable to fetch or parse transactions JSON")
-                strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
-                    guard self != nil else { return }
-                    completion(nil)
-                }
+                strongSelf.delegateQueue.addOperationWithBlock() { completion(nil) }
                 return
             }
-            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
-                guard self != nil else { return }
-                completion(JSON)
+            
+            let transactions = WalletRemoteTransaction.collectionFromJSONArray(JSON)
+            if transactions.count != JSON.count {
+                strongSelf.logger.warn("Received \(JSON.count) transactions but only built \(transactions.count) models")
             }
+            strongSelf.delegateQueue.addOperationWithBlock() { completion(transactions) }
         }
     }
     
