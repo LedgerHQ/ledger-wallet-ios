@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class WalletMetadataTableEntity: SQLiteTableEntity {
+final class WalletMetadataTableEntity: SQLiteTableEntityType {
     
     static let tableName = "metadata"
     

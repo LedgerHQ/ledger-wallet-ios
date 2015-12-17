@@ -14,6 +14,9 @@ struct WalletAddressPath {
     let chainIndex: Int
     let keyIndex: Int
     
+    var isExternal: Bool { return chainIndex == 0 }
+    var isInternal: Bool { return chainIndex == 1 }
+    
     var relativePath: String {
         return "/\(accountIndex)'" + chainPath
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletAccountTableEntity: SQLiteTableEntity {
+struct WalletAccountTableEntity: SQLiteTableEntityType {
  
     static let tableName = "account"
     

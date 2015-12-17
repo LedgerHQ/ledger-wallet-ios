@@ -50,8 +50,14 @@ final class WalletStoreProxy {
         executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, completion: completion)
     }
     
-    func addAddresses(addresses: [WalletAddressModel]) {
-        executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) })
+    func storeAddresses(addresses: [WalletAddressModel]) {
+        executeTransaction({ return WalletStoreExecutor.storeAddresses(addresses, context: $0) })
+    }
+    
+    // MARK: Transactions management
+    
+    func storeTransactions(transactions: [WalletRemoteTransaction]) {
+        executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) })
     }
     
     // MARK: Internal methods

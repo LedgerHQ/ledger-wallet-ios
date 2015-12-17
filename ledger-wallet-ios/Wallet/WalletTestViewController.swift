@@ -43,6 +43,10 @@ class WalletTestViewController: BaseViewController {
         walletManager?.stopListeningTransactions()
     }
     
+    @IBAction func dropWallet(sender: AnyObject) {
+        walletManager = nil
+    }
+
     private dynamic func updateUI() {
         startButton.enabled = !walletManager!.isRefreshingTransactions
         stopButton.enabled = !startButton.enabled

@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol SQLiteTableEntity {
+protocol SQLiteTableEntityType {
     
     static var tableName: String { get }
     static var eponymTable: SQLiteTable { get }
     
 }
 
-extension SQLiteTableEntity {
+extension SQLiteTableEntityType {
     
     static var eponymTable: SQLiteTable { return SQLiteTable(name: tableName) }
 

@@ -10,10 +10,9 @@ import Foundation
 
 final class WalletTransactionsStream {
     
-    private var pendingTransactions: [WalletRemoteTransaction] = []
     private var busy = false
-    private let addressCache: WalletAddressCache
-    private let layoutHolder: WalletLayoutHolder
+    private var pendingTransactions: [WalletRemoteTransaction] = []
+    private var funnels: [WalletTransactionsStreamFunnelType] = []
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "WalletTransactionsStream", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStream")
@@ -21,25 +20,25 @@ final class WalletTransactionsStream {
     // MARK: Transactions management
     
     func enqueueTransactions(transactions: [WalletRemoteTransaction]) {
+        guard transactions.count > 0 else { return }
+        
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
+            // enqueue transactions
+            strongSelf.logger.info("Got \(transactions.count) enqueued transaction(s) to process")
             strongSelf.pendingTransactions.appendContentsOf(transactions)
-            strongSelf.processNextPendingTransaction()
-        }
-    }
-    
-    func discardPendingTransactions() {
-        workingQueue.cancelAllOperations()
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
             
-            strongSelf.pendingTransactions = []
+            // process next pending transaction if not busy
+            if !strongSelf.busy {
+                strongSelf.busy = true
+                strongSelf.processNextPendingTransaction()
+            }
         }
     }
-    
+
     func reloadLayout() {
-        layoutHolder.reload()
+//        layoutHolder.reload()
     }
     
     // MARK: Internal methods
@@ -47,50 +46,74 @@ final class WalletTransactionsStream {
     private func processNextPendingTransaction() {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            guard !strongSelf.busy else {
-                return
-            }
-            
-            // mark busy
-            strongSelf.busy = true
             
             // pop first transaction
             guard let transaction = strongSelf.pendingTransactions.first else {
                 strongSelf.busy = false
+                strongSelf.funnels.forEach({ $0.flush() })
                 return
             }
             strongSelf.pendingTransactions.removeFirst()
             
-            // check if we need to discard the transaction
-            strongSelf.checkIfTransactionShouldBeDiscarded(transaction)
+            // build context
+            let context = WalletTransactionsStreamContext(transaction: transaction)
+            if strongSelf.funnels.count > 0 {
+                strongSelf.pushContext(context, intoFunnel: strongSelf.funnels[0])
+            }
+            else {
+                strongSelf.processNextPendingTransaction()
+            }
         }
     }
+    
+    private func pushContext(context: WalletTransactionsStreamContext, intoFunnel funnel: WalletTransactionsStreamFunnelType) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let _ = self else { return }
 
-    private func checkIfTransactionShouldBeDiscarded(transaction: WalletRemoteTransaction) {
-        
-    }
-
-    private func processTransaction(transaction: WalletRemoteTransaction) {
-        
+            // process context in funnel
+            funnel.process(context) { [weak self] keepPushing in
+                guard let strongSelf = self else { return }
+                
+                if keepPushing, let nextFunnel = strongSelf.funnelAfter(funnel) {
+                    strongSelf.pushContext(context, intoFunnel: nextFunnel)
+                }
+                else {
+                    strongSelf.processNextPendingTransaction()
+                }
+            }
+        }
     }
     
-    // MARK: Utils
-    
-    private func allAdressesInTransaction(transaction: WalletRemoteTransaction) -> [String] {
-        return []
+    private func funnelAfter(funnel: WalletTransactionsStreamFunnelType) -> WalletTransactionsStreamFunnelType? {
+        guard let index = funnels.indexOf({ $0 === funnel }) where funnels.count > index + 1 else {
+            return nil
+        }
+        return funnels[index + 1]
+    }
+
+    private func funnelWithType(type: WalletTransactionsStreamFunnelType.Type) -> WalletTransactionsStreamFunnelType? {
+        return funnels.filter({ return $0.self === type }).first
     }
     
     // MARK: Initialization
     
     init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
-        self.layoutHolder = WalletLayoutHolder(store: store)
-        self.addressCache = WalletAddressCache(store: store, delegateQueue: workingQueue)
+        self.funnels.append(WalletTransactionsStreamDiscardFunnel(store: store, callingQueue: workingQueue))
+        self.funnels.append(WalletTransactionsStreamLayoutFunnel(store: store, callingQueue: workingQueue))
+        self.funnels.append(WalletTransactionsStreamOperationFunnel(store: store, callingQueue: workingQueue))
+        self.funnels.append(WalletTransactionsStreamSaveFunnel(store: store, callingQueue: workingQueue))
+        (funnelWithType(WalletTransactionsStreamLayoutFunnel.self) as? WalletTransactionsStreamLayoutFunnel)?.delegate = self
     }
     
-    deinit {
-        discardPendingTransactions()
-        workingQueue.waitUntilAllOperationsAreFinished()
+}
+
+// MARK: - WalletTransactionsStreamLayoutFunnelDelegate
+
+extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
+    
+    func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
+        
     }
     
 }

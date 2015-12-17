@@ -35,7 +35,7 @@ final class TransactionsAPIClient: LedgerAPIClient {
             
             let transactions = WalletRemoteTransaction.collectionFromJSONArray(JSON)
             if transactions.count != JSON.count {
-                strongSelf.logger.warn("Received \(JSON.count) transactions but only built \(transactions.count) models")
+                strongSelf.logger.error("Received \(JSON.count) transactions but only built \(transactions.count) models")
             }
             strongSelf.delegateQueue.addOperationWithBlock() { completion(transactions) }
         }

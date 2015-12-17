@@ -26,7 +26,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U2W-yb-Asc">
-                                <rect key="frame" x="0.0" y="96" width="600" height="504"/>
+                                <rect key="frame" x="0.0" y="96" width="600" height="446"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgR-NH-I76">
@@ -50,6 +50,13 @@
                                     <action selector="stopListenForTransactions:" destination="G20-4I-OqE" eventType="touchUpInside" id="dE9-Ua-HpO"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWc-Aq-leA">
+                                <rect key="frame" x="261" y="550" width="78" height="30"/>
+                                <state key="normal" title="Drop wallet"/>
+                                <connections>
+                                    <action selector="dropWallet:" destination="G20-4I-OqE" eventType="touchUpInside" id="cXh-tk-Ld2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -60,11 +67,13 @@
                             <constraint firstItem="mR9-wG-Uzp" firstAttribute="top" secondItem="UHn-8Y-O2D" secondAttribute="bottom" id="Mg5-WG-58o"/>
                             <constraint firstItem="LPp-cZ-QYS" firstAttribute="top" secondItem="mR9-wG-Uzp" secondAttribute="bottom" constant="8" symbolic="YES" id="ODQ-Hc-4Wx"/>
                             <constraint firstItem="LPp-cZ-QYS" firstAttribute="leading" secondItem="mR9-wG-Uzp" secondAttribute="leading" id="RMf-UY-Scb"/>
-                            <constraint firstItem="U2W-yb-Asc" firstAttribute="bottom" secondItem="8On-Mh-093" secondAttribute="top" id="S9C-Nd-d3q"/>
                             <constraint firstItem="LPp-cZ-QYS" firstAttribute="leading" secondItem="W6X-oo-jnS" secondAttribute="leadingMargin" id="TTu-kD-k0m"/>
+                            <constraint firstItem="EWc-Aq-leA" firstAttribute="top" secondItem="U2W-yb-Asc" secondAttribute="bottom" constant="8" symbolic="YES" id="j3X-k0-yAw"/>
                             <constraint firstItem="oLg-1M-7Dr" firstAttribute="baseline" secondItem="LPp-cZ-QYS" secondAttribute="baseline" id="maL-Sy-hof"/>
                             <constraint firstItem="U2W-yb-Asc" firstAttribute="top" secondItem="LPp-cZ-QYS" secondAttribute="bottom" constant="8" symbolic="YES" id="mpk-Oh-bVc"/>
                             <constraint firstItem="oLg-1M-7Dr" firstAttribute="trailing" secondItem="W6X-oo-jnS" secondAttribute="trailingMargin" id="r6q-SF-onP"/>
+                            <constraint firstItem="EWc-Aq-leA" firstAttribute="centerX" secondItem="U2W-yb-Asc" secondAttribute="centerX" id="xbb-lY-iup"/>
+                            <constraint firstAttribute="bottom" secondItem="EWc-Aq-leA" secondAttribute="bottom" constant="20" symbolic="YES" id="yRm-db-yET"/>
                         </constraints>
                     </view>
                     <connections>
@@ -76,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVa-c4-12D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-25" y="349"/>
+            <point key="canvasLocation" x="-145" y="284"/>
         </scene>
         <!--Base Navigation Controller-->
         <scene sceneID="0aG-74-Ne4">

@@ -39,6 +39,16 @@ final class WalletAddressCache {
         }
     }
     
+    func addressesWithAddresses(addresses: [String], completion: ([WalletAddressModel]?) -> Void) {
+        storeProxy.fetchAddressesWithAddresses(addresses) { [weak self] addresses in
+            guard let strongSelf = self else { return }
+
+            strongSelf.delegateQueue.addOperationWithBlock() { completion(addresses) }
+        }
+    }
+    
+    // MARK: Internal methods
+    
     private func fetchAccountsForAddressesAtPaths(paths: [WalletAddressPath], requestedPaths: [WalletAddressPath], existingAddresses: [WalletAddressModel], completion: ([WalletAddressModel]?) -> Void) {
         // get missing paths
         let missingPaths = requestedPaths.filter({ !paths.contains($0) })
@@ -104,7 +114,7 @@ final class WalletAddressCache {
         }
         
         // save addresses
-        storeProxy.addAddresses(addressesCache)
+        storeProxy.storeAddresses(addressesCache)
 
         delegateQueue.addOperationWithBlock() { completion(existingAddresses + addressesCache) }
     }

@@ -113,7 +113,7 @@ extension WalletTransactionsListener: WebSocketDelegate {
             return
         }
         guard let transaction = WalletRemoteTransaction(JSONObject: JSON) else {
-            logger.warn("Received transaction but was unable to build model")
+            logger.error("Received transaction but was unable to build model")
             return
         }
         

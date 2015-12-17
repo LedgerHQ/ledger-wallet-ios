@@ -19,14 +19,29 @@ final class WalletLayoutHolder {
     
     // MARK: Indexes management
     
-    var numberOfAccounts: Int {
-        var value = 0
+    var observableAccountIndex: Int? {
+        var value: Int? = nil
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            value = strongSelf.accounts.count
+            strongSelf.accounts.forEach() { account in
+                if account.nextExternalIndex == 0 && account.nextInternalIndex == 0 {
+                    value = account.index
+                    return
+                }
+            }
         }
         workingQueue.waitUntilAllOperationsAreFinished()
         return value
+    }
+    
+    func externalIndex(index: Int, isInsideObservableRangeForAccountAtIndex accountIndex: Int) -> Bool {
+        guard let range = observableExternalRangeForAccountAtIndex(accountIndex) else { return false }
+        return range.contains(index)
+    }
+    
+    func internalIndex(index: Int, isInsideObservableRangeForAccountAtIndex accountIndex: Int) -> Bool {
+        guard let range = observableInternalRangeForAccountAtIndex(accountIndex) else { return false }
+        return range.contains(index)
     }
     
     func nextExternalIndexForAccountAtIndex(index: Int) -> Int? {
@@ -45,12 +60,12 @@ final class WalletLayoutHolder {
         setNextIndex(index, forAccountAtIndex: accountIndex, external: false)
     }
     
-    func observableExternalIndexesForAccountAtIndex(index: Int) -> (begin: Int, end: Int)? {
-        return observableIndexesForAccountAtIndex(index, external: true)
+    func observableExternalRangeForAccountAtIndex(index: Int) -> Range<Int>? {
+        return observableRangeForAccountAtIndex(index, external: true)
     }
     
-    func observableInternalIndexesForAccountAtIndex(index: Int) -> (begin: Int, end: Int)? {
-        return observableIndexesForAccountAtIndex(index, external: false)
+    func observableInternalRangeForAccountAtIndex(index: Int) -> Range<Int>? {
+        return observableRangeForAccountAtIndex(index, external: false)
     }
     
     private func nextIndexForAccountAtIndex(index: Int, external: Bool) -> Int? {
@@ -73,8 +88,8 @@ final class WalletLayoutHolder {
     private func setNextIndex(index: Int, forAccountAtIndex accountIndex: Int, external: Bool) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            guard strongSelf.accounts.count > index else {
-                strongSelf.logger.error("Unable to fetch account \(index) to set next index")
+            guard strongSelf.accounts.count > accountIndex else {
+                strongSelf.logger.error("Unable to fetch account \(accountIndex) to set next index")
                 return
             }
             
@@ -106,9 +121,9 @@ final class WalletLayoutHolder {
         }
     }
     
-    private func observableIndexesForAccountAtIndex(index: Int, external: Bool) -> (begin: Int, end: Int)? {
+    private func observableRangeForAccountAtIndex(index: Int, external: Bool) -> Range<Int>? {
         guard let index = nextIndexForAccountAtIndex(index, external: external) else { return nil }
-        return (index, index + self.dynamicType.BIP44AddressesGap - 1)
+        return index...index + self.dynamicType.BIP44AddressesGap - 1
     }
     
     // MARK: Restoration

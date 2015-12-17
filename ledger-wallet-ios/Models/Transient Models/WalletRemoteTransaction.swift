@@ -16,11 +16,26 @@ struct WalletRemoteTransaction {
     let outputs: [WalletRemoteTransactionOutput]
     let lockTime: Int
     let confirmations: Int
-    let amount: Int64
     let fees: Int64
     let blockHash: String?
     let blockTime: String?
     let blockHeight: Int?
+    
+    var allAddresses: [String] {
+        var addresses: [String] = []
+        
+        for input in inputs {
+            if let regularInput = input as? WalletRemoteTransactionRegularInput, address = regularInput.address where !addresses.contains(address) {
+                addresses.append(address)
+            }
+        }
+        for output in outputs {
+            if let address = output.address where !addresses.contains(address) {
+                addresses.append(address)
+            }
+        }
+        return addresses
+    }
 
 }
 
@@ -34,7 +49,6 @@ extension WalletRemoteTransaction: JSONInitializableModel {
             receiveAt = JSONObject["chain_received_at"] as? String,
             lockTime = JSONObject["lock_time"] as? Int,
             confirmations = JSONObject["confirmations"] as? Int,
-            amount = JSONObject["amount"] as? NSNumber,
             fees = JSONObject["fees"] as? NSNumber,
         	inputs = JSONObject["inputs"] as? [[String: AnyObject]],
             outputs = JSONObject["outputs"] as? [[String: AnyObject]]
@@ -61,7 +75,6 @@ extension WalletRemoteTransaction: JSONInitializableModel {
         self.receiveAt = receiveAt
         self.lockTime = lockTime
         self.confirmations = confirmations
-        self.amount = amount.longLongValue
         self.fees = fees.longLongValue
         self.blockHash = JSONObject["block_hash"] as? String
         self.blockTime = JSONObject["block_time"] as? String

@@ -44,13 +44,12 @@ final class WalletAPIManager: WalletManagerType {
     
     func startAllServices() {
         startRefreshingTransactions()
-        startListeningTransactions()
+        //startListeningTransactions()
     }
     
     func stopAllServices() {
         stopRefreshingTransactions()
         stopListeningTransactions()
-        transactionsStream.discardPendingTransactions()
     }
     
     func registerAccount(account: WalletAccountModel) {
@@ -58,6 +57,7 @@ final class WalletAPIManager: WalletManagerType {
         let externalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
         externalStoreProxy.addAccount(account)
         externalStoreProxy.fetchAddressesAtPaths(internalPaths + externalPaths, completion: { _ in })
+        // TODO: Call address cache, not proxy to store adresses
         transactionsStream.reloadLayout()
     }
     

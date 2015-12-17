@@ -12,9 +12,6 @@ struct WalletAddressModel {
     
     let address: String
     let addressPath: WalletAddressPath
-    var accountIndex: Int { return addressPath.accountIndex }
-    var chainIndex: Int { return addressPath.chainIndex }
-    var keyIndex: Int { return addressPath.keyIndex }
     
     // MARK: Initialization
     

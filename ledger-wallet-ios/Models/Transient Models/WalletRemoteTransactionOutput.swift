@@ -13,7 +13,7 @@ struct WalletRemoteTransactionOutput {
     let value: Int64
     let scriptHex: String
     let address: String?
-    let outputIndex: Int
+    let index: Int
     
 }
 
@@ -26,14 +26,14 @@ extension WalletRemoteTransactionOutput: JSONInitializableModel {
             addresses = JSONObject["addresses"] as? [String],
             value = JSONObject["value"] as? NSNumber,
             scriptHex = JSONObject["script_hex"] as? String,
-            outputIndex = JSONObject["output_index"] as? Int
+            index = JSONObject["output_index"] as? Int
         else {
             return nil
         }
         
         self.address = addresses.first
         self.scriptHex = scriptHex
-        self.outputIndex = outputIndex
+        self.index = index
         self.value = value.longLongValue
     }
     
