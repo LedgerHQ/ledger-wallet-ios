@@ -44,10 +44,6 @@ final class WalletStoreSchemas {
         accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
         schema.addTable(accountsTable)
         
-        let operationsTable = WalletOperationTableEntity.eponymTable
-        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
-        schema.addTable(operationsTable)
-        
         let addressesTable = WalletAddressTableEntity.eponymTable
         addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.addressKey, type: .Text, notNull: true, unique: true))
         addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
@@ -87,14 +83,16 @@ final class WalletStoreSchemas {
         transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.indexKey, type: .Integer, notNull: true, unique: false))
         transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
         schema.addTable(transactionOutputsTable)
+        
+        let operationsTable = WalletOperationTableEntity.eponymTable
+        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.uidKey, type: .Text, notNull: true, unique: true))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.kindKey, type: .Text, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.amountKey, type: .Integer, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
+        schema.addTable(operationsTable)
 
         // foreign keys
-        let operationAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
-            childField: operationsTable.fieldWithName(WalletOperationTableEntity.accountIndexKey)!,
-            updateAction: .Cascade, deleteAction: .Cascade)
-        operationsTable.addForeignKey(operationAccountForeignKey)
-        
         let addressAccountForeignKey = SQLiteForeignKey(
             parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
             childField: addressesTable.fieldWithName(WalletAddressTableEntity.accountIndexKey)!,
@@ -112,6 +110,18 @@ final class WalletStoreSchemas {
             childField: transactionOutputsTable.fieldWithName(WalletTransactionOutputTableEntity.transactionHashKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         transactionOutputsTable.addForeignKey(outputTransactionForeignKey)
+        
+        let operationAccountForeignKey = SQLiteForeignKey(
+            parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
+            childField: operationsTable.fieldWithName(WalletOperationTableEntity.accountIndexKey)!,
+            updateAction: .Cascade, deleteAction: .Cascade)
+        operationsTable.addForeignKey(operationAccountForeignKey)
+        
+        let operationTransactionForeignKey = SQLiteForeignKey(
+            parentField: transactionsTable.fieldWithName(WalletTransactionTableEntity.hashKey)!,
+            childField: operationsTable.fieldWithName(WalletOperationTableEntity.transactionHashKey)!,
+            updateAction: .Cascade, deleteAction: .Cascade)
+        operationsTable.addForeignKey(operationTransactionForeignKey)
         
         return schema
     }

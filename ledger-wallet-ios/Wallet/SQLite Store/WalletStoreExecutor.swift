@@ -220,6 +220,39 @@ final class WalletStoreExecutor {
         return true
     }
     
+    // MARK: Operations management
+    
+    class func storeOperations(operations: [WalletOperationModel], context: SQLiteStoreContext) -> Bool {
+        guard operations.count > 0 else { return true }
+        return operations.reduce(true) { $0 && storeOperation($1, context: context) }
+    }
+    
+    private class func storeOperation(operation: WalletOperationModel, context: SQLiteStoreContext) -> Bool {
+        let updateFieldsStatement = "\"\(WalletOperationTableEntity.amountKey)\" = ?"
+        let updateStatement = "UPDATE \"\(WalletOperationTableEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletOperationTableEntity.uidKey)\" = ?"
+        let updateValues = [NSNumber(longLong: operation.amount), operation.uid]
+        guard context.executeUpdate(updateStatement, withArgumentsInArray: updateValues) else {
+            logger.error("Unable to update operation \(operation.uid): \(context.lastErrorMessage())")
+            return false
+        }
+        if context.changes() == 0 {
+            let insertFieldsStatement = "\"\(WalletOperationTableEntity.accountIndexKey)\", \"\(WalletOperationTableEntity.amountKey)\", \"\(WalletOperationTableEntity.kindKey)\", \"\(WalletOperationTableEntity.uidKey)\", \"\(WalletOperationTableEntity.transactionHashKey)\""
+            let insertStatement = "INSERT INTO \"\(WalletOperationTableEntity.tableName)\" (\(insertFieldsStatement)) VALUES (?, ?, ?, ?, ?)"
+            let insertValues = [
+                operation.accountIndex,
+                NSNumber(longLong: operation.amount),
+                operation.kind.rawValue,
+                operation.uid,
+                operation.transactionHash
+            ]
+            guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
+                logger.error("Unable to insert operation \(operation.uid): \(context.lastErrorMessage())")
+                return false
+            }
+        }
+        return true
+    }
+    
     // MARK: Schema management
     
     class func schemaVersion(context: SQLiteStoreContext) -> Int? {

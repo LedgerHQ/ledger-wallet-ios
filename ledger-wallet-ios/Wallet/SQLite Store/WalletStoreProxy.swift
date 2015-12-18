@@ -60,6 +60,12 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) })
     }
     
+    // MARK: Operations management
+    
+    func storeOperations(operations: [WalletOperationModel]) {
+        executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) })
+    }
+    
     // MARK: Internal methods
     
     private func executeModelFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> T?, completion: (T?) -> Void) {

@@ -38,6 +38,13 @@ extension SQLiteFetchableModel {
         return resultSet.longForColumn(key)
     }
     
+    static func optionalInteger64ForKey(key: String, resultSet: SQLiteStoreResultSet) -> Int64? {
+        guard !resultSet.columnIsNull(key) else {
+            return nil
+        }
+        return resultSet.longLongIntForColumn(key)
+    }
+    
     static func optionalStringForKey(key: String, resultSet: SQLiteStoreResultSet) -> String? {
         guard !resultSet.columnIsNull(key) else {
             return nil
