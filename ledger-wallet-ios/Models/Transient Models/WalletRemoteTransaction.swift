@@ -20,7 +20,7 @@ struct WalletRemoteTransaction {
     let blockHash: String?
     let blockTime: String?
     let blockHeight: Int?
-    
+
     var allAddresses: [String] {
         var addresses: [String] = []
         
@@ -35,6 +35,14 @@ struct WalletRemoteTransaction {
             }
         }
         return addresses
+    }
+    
+    func regularInputWithAddress(address: String) -> WalletRemoteTransactionRegularInput? {
+        return inputs.flatMap({ $0 as? WalletRemoteTransactionRegularInput }).filter({ $0.address == address }).first
+    }
+    
+    func outputWithAddress(address: String) -> WalletRemoteTransactionOutput? {
+        return outputs.filter({ $0.address == address }).first
     }
 
 }

@@ -99,11 +99,15 @@ final class WalletTransactionsStream {
     
     init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
-        self.funnels.append(WalletTransactionsStreamDiscardFunnel(store: store, callingQueue: workingQueue))
-        self.funnels.append(WalletTransactionsStreamLayoutFunnel(store: store, callingQueue: workingQueue))
-        self.funnels.append(WalletTransactionsStreamOperationFunnel(store: store, callingQueue: workingQueue))
-        self.funnels.append(WalletTransactionsStreamSaveFunnel(store: store, callingQueue: workingQueue))
-        (funnelWithType(WalletTransactionsStreamLayoutFunnel.self) as? WalletTransactionsStreamLayoutFunnel)?.delegate = self
+        let funnelTypes: [WalletTransactionsStreamFunnelType.Type] = [
+            WalletTransactionsStreamDiscardFunnel.self,
+            WalletTransactionsStreamLayoutFunnel.self,
+            WalletTransactionsStreamOperationsFunnel.self,
+            WalletTransactionsStreamSaveFunnel.self,
+            WalletTransactionsStreamSpentFunnel.self
+        ]
+        funnelTypes.forEach() { self.funnels.append($0.init(store: store, callingQueue: workingQueue)) }
+        (funnelWithType(WalletTransactionsStreamLayoutFunnel) as? WalletTransactionsStreamLayoutFunnel)?.delegate = self
     }
     
 }

@@ -38,3 +38,19 @@ extension WalletRemoteTransactionOutput: JSONInitializableModel {
     }
     
 }
+
+// MARK: Equatable
+
+extension WalletRemoteTransactionOutput: Equatable {}
+
+func ==(lhs: WalletRemoteTransactionOutput, rhs: WalletRemoteTransactionOutput) -> Bool {
+    return lhs.value == rhs.value && lhs.scriptHex == rhs.scriptHex && lhs.index == rhs.index
+}
+
+// MARK: Hashable
+
+extension WalletRemoteTransactionOutput: Hashable {
+    
+    var hashValue: Int { return "\(index) \(scriptHex) \(value)".hashValue }
+    
+}

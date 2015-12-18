@@ -1,5 +1,5 @@
 //
-//  WalletTransactionsStreamOperationFunnel.swift
+//  WalletTransactionsStreamOperationsFunnel.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 17/12/2015.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-final class WalletTransactionsStreamOperationFunnel: WalletTransactionsStreamFunnelType {
+final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFunnelType {
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        
+        completion(true)
     }
     
     func flush() {

@@ -22,6 +22,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamLayoutFunnel")
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+        
         completion(true)
     }
     

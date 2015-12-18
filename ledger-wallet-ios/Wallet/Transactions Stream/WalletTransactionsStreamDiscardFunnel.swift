@@ -16,7 +16,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
         let allAddresses = context.transaction.allAddresses
         guard allAddresses.count > 0 else {
-            logger.error("Got transaction with empty addresses, continuing")
+            logger.warn("Got transaction with empty addresses, aborting")
             completion(false)
             return
         }
@@ -26,24 +26,44 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
             guard let strongSelf = self else { return }
             
             guard let addresses = addresses else {
-                strongSelf.logger.error("Unable to fetch addresses from transaction addresses, continuing")
+                strongSelf.logger.error("Unable to fetch addresses from transaction addresses, aborting")
                 completion(false)
                 return
             }
             
             guard addresses.count > 0 else {
-                strongSelf.logger.info("Unknown transaction from wallet, continuing")
+                strongSelf.logger.info("Unknown transaction from wallet, aborting")
                 completion(false)
                 return
             }
             
-            context.addresses = addresses
+            strongSelf.mapAddresses(addresses, toTransactionInContext: context)
             completion(true)
         }
     }
     
     func flush() {
         
+    }
+    
+    private func mapAddresses(addresses: [WalletAddressModel], toTransactionInContext context: WalletTransactionsStreamContext) {
+        for input in context.transaction.inputs {
+            if let input = input as? WalletRemoteTransactionRegularInput, address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
+                context.inputs[input] = addressModel
+            }
+        }
+        for output in context.transaction.outputs {
+            if let address = output.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
+                context.outputs[output] = addressModel
+            }
+        }
+        if context.inputs.count + context.outputs.count < addresses.count {
+            logger.error("Mapped \(context.inputs.count + context.outputs.count) addresses but found \(addresses.count) from store")
+        }
+    }
+    
+    private func addressWithAddress(address: String, fromBucket addresses: [WalletAddressModel]) -> WalletAddressModel? {
+        return addresses.filter({ $0.address == address }).first
     }
     
     // MARK: Initialization

@@ -66,3 +66,20 @@ extension WalletRemoteTransactionCoinbaseInput: JSONInitializableModel {
     }
     
 }
+
+// MARK: Equatable
+
+extension WalletRemoteTransactionRegularInput: Equatable {}
+
+func ==(lhs: WalletRemoteTransactionRegularInput, rhs: WalletRemoteTransactionRegularInput) -> Bool {
+    return lhs.outputHash == rhs.outputHash && lhs.outputIndex == rhs.outputIndex && lhs.value == rhs.value &&
+    lhs.scriptSignature == rhs.scriptSignature
+}
+
+// MARK: Hashable
+
+extension WalletRemoteTransactionRegularInput: Hashable {
+    
+    var hashValue: Int { return "\(outputHash) \(outputIndex) \(value) \(scriptSignature)".hashValue }
+    
+}
