@@ -49,16 +49,16 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     private func mapAddresses(addresses: [WalletAddressModel], toTransactionInContext context: WalletTransactionsStreamContext) {
         for input in context.transaction.inputs {
             if let input = input as? WalletRemoteTransactionRegularInput, address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
-                context.inputs[input] = addressModel
+                context.mappedInputs[input] = addressModel
             }
         }
         for output in context.transaction.outputs {
             if let address = output.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
-                context.outputs[output] = addressModel
+                context.mappedOutputs[output] = addressModel
             }
         }
-        if context.inputs.count + context.outputs.count < addresses.count {
-            logger.error("Mapped \(context.inputs.count + context.outputs.count) addresses but found \(addresses.count) from store")
+        if context.mappedInputs.count + context.mappedOutputs.count < addresses.count {
+            logger.error("Mapped \(context.mappedInputs.count + context.mappedOutputs.count) addresses but found \(addresses.count) from store")
         }
     }
     
