@@ -11,6 +11,7 @@ import Foundation
 final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFunnelType {
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+        
         completion(true)
     }
     

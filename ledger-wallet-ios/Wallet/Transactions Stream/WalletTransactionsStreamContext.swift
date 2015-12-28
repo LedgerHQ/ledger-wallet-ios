@@ -11,11 +11,12 @@ import Foundation
 final class WalletTransactionsStreamContext {
     
     let transaction: WalletRemoteTransaction
+    var operations: [WalletOperationModel] = []
     var mappedInputs: [WalletRemoteTransactionRegularInput: WalletAddressModel] = [:]
     var mappedOutputs: [WalletRemoteTransactionOutput: WalletAddressModel] = [:]
     
     init(transaction: WalletRemoteTransaction) {
         self.transaction = transaction
-    }
+    } 
 
 }

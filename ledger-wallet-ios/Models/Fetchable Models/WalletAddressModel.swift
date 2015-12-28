@@ -13,6 +13,9 @@ struct WalletAddressModel {
     let address: String
     let addressPath: WalletAddressPath
     
+    var isExternal: Bool { return addressPath.isExternal }
+    var isInternal: Bool { return addressPath.isInternal }
+    
     // MARK: Initialization
     
     init(addressPath: WalletAddressPath, address: String) {

@@ -13,32 +13,70 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     private static let writeBatchSize = 100
     private let storeProxy: WalletStoreProxy
     private var pendingTransactions: [WalletRemoteTransaction] = []
+    private var pendingOperations: [WalletOperationModel] = []
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamSaveFunnel")
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+        // write transaction
         pendingTransactions.append(context.transaction)
         while writeTransactionsIfNeeded() {}
+        
+        // write operations
+        pendingOperations.appendContentsOf(context.operations)
+        while writeOperationsIfNeeded() {}
         completion(true)
     }
     
     func flush() {
+        // flush transactions
         while writeTransactionsIfNeeded() {}
         if pendingTransactions.count > 0 {
-            logger.info("Writting transaction batch (\(pendingTransactions.count)) to store")
-            storeProxy.storeTransactions(pendingTransactions)
+            writeTransactions(pendingTransactions)
             pendingTransactions = []
+        }
+        
+        // flush operations
+        while writeOperationsIfNeeded() {}
+        if pendingOperations.count > 0 {
+            writeOperations(pendingOperations)
+            pendingOperations = []
         }
     }
     
+    // MARK: Transactions management
+    
     private func writeTransactionsIfNeeded() -> Bool {
-        if pendingTransactions.count >= self.dynamicType.writeBatchSize {
-            logger.info("Writting transaction batch (\(self.dynamicType.writeBatchSize)) to store")
-            let transactions = Array(pendingTransactions.prefix(self.dynamicType.writeBatchSize))
-            pendingTransactions.removeFirst(self.dynamicType.writeBatchSize)
-            storeProxy.storeTransactions(transactions)
-            return true
+        guard pendingTransactions.count >= self.dynamicType.writeBatchSize else {
+            return false
         }
-        return false
+        
+        let transactions = Array(pendingTransactions.prefix(self.dynamicType.writeBatchSize))
+        pendingTransactions.removeFirst(self.dynamicType.writeBatchSize)
+        writeTransactions(transactions)
+        return true
+    }
+    
+    private func writeTransactions(transactions: [WalletRemoteTransaction]) {
+        logger.info("Writing batch of \(transactions.count) transaction(s) to store")
+        storeProxy.storeTransactions(transactions)
+    }
+    
+    // MARK: Operations management
+    
+    private func writeOperationsIfNeeded() -> Bool {
+        guard pendingOperations.count >= self.dynamicType.writeBatchSize else {
+            return false
+        }
+        
+        let operations = Array(pendingOperations.prefix(self.dynamicType.writeBatchSize))
+        pendingOperations.removeFirst(self.dynamicType.writeBatchSize)
+        writeOperations(operations)
+        return true
+    }
+    
+    private func writeOperations(operations: [WalletOperationModel]) {
+        logger.info("Writing batch of \(operations.count) operation(s) to store")
+        storeProxy.storeOperations(operations)
     }
     
     // MARK: Initialization
