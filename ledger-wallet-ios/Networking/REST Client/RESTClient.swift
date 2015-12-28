@@ -42,6 +42,9 @@ final class RESTClient {
     // MARK: Utils
     
     private func baseURLWithPath(path: String) -> String {
+        if let URL = NSURL(string: path, relativeToURL: NSURL(string: baseURL)) {
+            return URL.absoluteString
+        }
         return (baseURL as NSString).stringByAppendingPathComponent(path)
     }
     

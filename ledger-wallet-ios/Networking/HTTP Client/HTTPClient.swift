@@ -67,21 +67,23 @@ final class HTTPClient {
             
             guard error == nil else {
                 if error!.code != NSURLErrorCancelled {
+                    strongSelf.postprocessResponse(nil, request: request, error: error)
                     completionHandler(nil, request, nil, error)
                 }
                 return
             }
             guard let httpResponse = response as? NSHTTPURLResponse else {
-                completionHandler(nil, request, nil, NSError(domain: "HTTPClientErrorDomain", code: 0, userInfo: nil))
+                strongSelf.postprocessResponse(nil, request: request, error: error)
+                completionHandler(nil, request, nil, error)
                 return
             }
             let statusCode = httpResponse.statusCode
             guard statusCode >= 200 && statusCode <= 299 else {
-                strongSelf.postprocessResponse(httpResponse, request: request)
-                completionHandler(nil, request, httpResponse, NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil))
+                strongSelf.postprocessResponse(httpResponse, request: request, error: error)
+                completionHandler(nil, request, httpResponse, error)
                 return
             }
-            strongSelf.postprocessResponse(httpResponse, request: request)
+            strongSelf.postprocessResponse(httpResponse, request: request, error: error)
             completionHandler(data, request, httpResponse, nil)
         }
         
@@ -102,8 +104,14 @@ final class HTTPClient {
         logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
     }
     
-    private func postprocessResponse(response: NSHTTPURLResponse, request: NSURLRequest) {
-        logger.info("<- \(response.statusCode) \(request.HTTPMethod!) \(request.URL!)")
+    private func postprocessResponse(response: NSHTTPURLResponse?, request: NSURLRequest, error: NSError?) {
+        let statusCode = response?.statusCode ?? 0
+        if let error = error {
+            logger.error("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!) | \(error.localizedDescription)")
+        }
+        else {
+            logger.info("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!)")
+        }
     }
     
     // MARK: Requests
