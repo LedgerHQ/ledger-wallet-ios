@@ -11,7 +11,8 @@ import Foundation
 final class WalletTransactionsStreamContext {
     
     let transaction: WalletRemoteTransaction
-    var operations: [WalletOperationModel] = []
+    var sendOperations: [WalletLocalOperation] = []
+    var receiveOperations: [WalletLocalOperation] = []
     var mappedInputs: [WalletRemoteTransactionRegularInput: WalletAddressModel] = [:]
     var mappedOutputs: [WalletRemoteTransactionOutput: WalletAddressModel] = [:]
     

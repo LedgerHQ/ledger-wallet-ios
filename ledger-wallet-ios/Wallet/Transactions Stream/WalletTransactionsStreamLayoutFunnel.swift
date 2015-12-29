@@ -26,10 +26,6 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         completion(true)
     }
     
-    func flush() {
-        
-    }
-    
     // MARK: Initialization
     
     init(store: SQLiteStore, callingQueue: NSOperationQueue) {

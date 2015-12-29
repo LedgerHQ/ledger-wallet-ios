@@ -62,7 +62,7 @@ final class WalletStoreProxy {
     
     // MARK: Operations management
     
-    func storeOperations(operations: [WalletOperationModel]) {
+    func storeOperations(operations: [WalletLocalOperation]) {
         executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) })
     }
     

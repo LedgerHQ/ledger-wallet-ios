@@ -16,3 +16,16 @@ protocol WalletTransactionsStreamFunnelType: class {
     init(store: SQLiteStore, callingQueue: NSOperationQueue)
     
 }
+
+extension WalletTransactionsStreamFunnelType {
+    
+    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void)
+    {
+        completion(true)
+    }
+    
+    func flush() {
+        
+    }
+    
+}

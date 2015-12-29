@@ -93,11 +93,11 @@ final class WalletStoreExecutor {
     
     class func storeAddress(address: WalletAddressModel, context: SQLiteStoreContext) -> Bool {
         guard fetchAddressWithAddress(address.address, context: context) == nil else { return true }
-        guard fetchAddressAtPath(address.addressPath, context: context) == nil else { return true }
+        guard fetchAddressAtPath(address.path, context: context) == nil else { return true }
         
         let fieldsStatement = "(\"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\", \"\(WalletAddressTableEntity.addressKey)\")"
         let statement = "INSERT INTO \"\(WalletAddressTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
-        let values: [AnyObject] = [address.addressPath.accountIndex, address.addressPath.chainIndex, address.addressPath.keyIndex, address.address]
+        let values: [AnyObject] = [address.path.accountIndex, address.path.chainIndex, address.path.keyIndex, address.address]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
             logger.error("Unable to insert address: \(context.lastErrorMessage())")
             return false
@@ -222,12 +222,12 @@ final class WalletStoreExecutor {
     
     // MARK: Operations management
     
-    class func storeOperations(operations: [WalletOperationModel], context: SQLiteStoreContext) -> Bool {
+    class func storeOperations(operations: [WalletLocalOperation], context: SQLiteStoreContext) -> Bool {
         guard operations.count > 0 else { return true }
         return operations.reduce(true) { $0 && storeOperation($1, context: context) }
     }
     
-    private class func storeOperation(operation: WalletOperationModel, context: SQLiteStoreContext) -> Bool {
+    private class func storeOperation(operation: WalletLocalOperation, context: SQLiteStoreContext) -> Bool {
         let updateFieldsStatement = "\"\(WalletOperationTableEntity.amountKey)\" = ?"
         let updateStatement = "UPDATE \"\(WalletOperationTableEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletOperationTableEntity.uidKey)\" = ?"
         let updateValues = [NSNumber(longLong: operation.amount), operation.uid]

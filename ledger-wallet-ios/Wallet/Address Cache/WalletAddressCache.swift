@@ -30,7 +30,7 @@ final class WalletAddressCache {
             
             // check that we have all the addresses
             guard addresses.count == paths.count else {
-                let fetchedPaths = addresses.map({ $0.addressPath })
+                let fetchedPaths = addresses.map({ $0.path })
                 strongSelf.fetchAccountsForAddressesAtPaths(fetchedPaths, requestedPaths: paths, existingAddresses: addresses, completion: completion)
                 return
             }
@@ -110,7 +110,7 @@ final class WalletAddressCache {
                 delegateQueue.addOperationWithBlock() { completion(nil) }
                 return
             }
-            addressesCache.append(WalletAddressModel(addressPath: path, address: address.string))
+            addressesCache.append(WalletAddressModel(address: address.string, path: path))
         }
         
         // save addresses

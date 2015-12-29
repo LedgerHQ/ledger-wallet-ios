@@ -11,14 +11,62 @@ import Foundation
 final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFunnelType {
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+        // flatten inputs and outputs into operations
+        var sendOperations = flattenInputs(context)
+        var receiveInternalOperations = flattenOutputs(context, external: false)
+        var receiveExternalOperations = flattenOutputs(context, external: true)
         
+        // normalize operations
+        decreaseSendOperationAmounts(&sendOperations, internalOperations: receiveInternalOperations)
+        convertInternalOperationsToExternal(sendOperations, internalOperations: &receiveInternalOperations, externalOperations: &receiveExternalOperations)
+        
+        // update context
+        context.sendOperations.appendContentsOf(sendOperations.values)
+        context.receiveOperations.appendContentsOf(receiveExternalOperations.values)
         completion(true)
     }
     
-    func flush() {
+    // MARK: Inputs/ouputs management
+    
+    private func flattenInputs(context: WalletTransactionsStreamContext) -> [Int: WalletLocalOperation] {
+        var operations: [Int: WalletLocalOperation] = [:]
         
+        for (input, address) in context.mappedInputs {
+            let operation = operations[address.path.accountIndex] ??
+                WalletLocalOperation(accountIndex: address.path.accountIndex, transactionHash: context.transaction.hash, kind: .Send, amount: 0)
+            operations[address.path.accountIndex] = operation.increaseAmount(input.value)
+        }
+        return operations
     }
     
+    private func flattenOutputs(context: WalletTransactionsStreamContext, external: Bool) -> [Int: WalletLocalOperation] {
+        var operations: [Int: WalletLocalOperation] = [:]
+        
+        for (output, address) in context.mappedOutputs where address.path.isInternal == !external {
+            let operation = operations[address.path.accountIndex] ??
+                WalletLocalOperation(accountIndex: address.path.accountIndex, transactionHash: context.transaction.hash, kind: .Receive, amount: 0)
+            operations[address.path.accountIndex] = operation.increaseAmount(output.value)
+        }
+        return operations
+    }
+    
+    private func decreaseSendOperationAmounts(inout sendOperations: [Int: WalletLocalOperation], internalOperations: [Int: WalletLocalOperation]) {
+        for (accountIndex, operation) in sendOperations {
+            if let internalOperation = internalOperations[accountIndex] {
+                sendOperations[accountIndex] = operation.decreaseAmount(internalOperation.amount)
+            }
+        }
+    }
+    
+    private func convertInternalOperationsToExternal(sendOperations: [Int: WalletLocalOperation], inout internalOperations: [Int: WalletLocalOperation], inout externalOperations: [Int: WalletLocalOperation]) {
+        guard internalOperations.count == 0 && internalOperations.count > 0 && externalOperations.count == 0 else {
+            return
+        }
+        
+        externalOperations = internalOperations
+        internalOperations.removeAll()
+    }
+
     // MARK: Initialization
     
     init(store: SQLiteStore, callingQueue: NSOperationQueue) {

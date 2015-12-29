@@ -13,11 +13,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
         completion(true)
     }
-    
-    func flush() {
-        
-    }
-    
+
     // MARK: Initialization
     
     init(store: SQLiteStore, callingQueue: NSOperationQueue) {

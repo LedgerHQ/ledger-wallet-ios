@@ -11,15 +11,12 @@ import Foundation
 struct WalletAddressModel {
     
     let address: String
-    let addressPath: WalletAddressPath
-    
-    var isExternal: Bool { return addressPath.isExternal }
-    var isInternal: Bool { return addressPath.isInternal }
+    let path: WalletAddressPath
     
     // MARK: Initialization
     
-    init(addressPath: WalletAddressPath, address: String) {
-        self.addressPath = addressPath
+    init(address: String, path: WalletAddressPath) {
+        self.path = path
         self.address = address
     }
     
@@ -40,7 +37,7 @@ extension WalletAddressModel: SQLiteFetchableModel {
         }
         
         self.address = address
-        self.addressPath = WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
+        self.path = WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
     }
     
 }
