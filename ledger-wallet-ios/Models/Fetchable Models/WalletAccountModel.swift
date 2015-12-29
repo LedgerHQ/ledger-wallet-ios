@@ -16,14 +16,12 @@ struct WalletAccountModel {
     let nextExternalIndex: Int
     let name: String?
     
-    // MARK: Mutating methods
-    
-    mutating func setNextInternalIndex(index: Int) {
-        self = WalletAccountModel(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name)
+    func withNextInternalIndex(index: Int) -> WalletAccountModel {
+        return WalletAccountModel(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name)
     }
     
-    mutating func setNextExternalIndex(index: Int) {
-        self = WalletAccountModel(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name)
+    func withNextExternalIndex(index: Int) -> WalletAccountModel {
+        return WalletAccountModel(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name)
     }
     
     // MARK: Initialization
