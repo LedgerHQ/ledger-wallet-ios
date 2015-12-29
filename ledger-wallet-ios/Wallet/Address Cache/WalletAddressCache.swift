@@ -17,7 +17,7 @@ final class WalletAddressCache {
     
     // MARK: Addresses management
 
-    func addressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddressModel]?) -> Void) {
+    func addressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddress]?) -> Void) {
         storeProxy.fetchAddressesAtPaths(paths) { [weak self] addresses in
             guard let strongSelf = self else { return }
             
@@ -39,7 +39,7 @@ final class WalletAddressCache {
         }
     }
     
-    func addressesWithAddresses(addresses: [String], completion: ([WalletAddressModel]?) -> Void) {
+    func addressesWithAddresses(addresses: [String], completion: ([WalletAddress]?) -> Void) {
         storeProxy.fetchAddressesWithAddresses(addresses) { [weak self] addresses in
             guard let strongSelf = self else { return }
 
@@ -49,7 +49,7 @@ final class WalletAddressCache {
     
     // MARK: Internal methods
     
-    private func fetchAccountsForAddressesAtPaths(paths: [WalletAddressPath], requestedPaths: [WalletAddressPath], existingAddresses: [WalletAddressModel], completion: ([WalletAddressModel]?) -> Void) {
+    private func fetchAccountsForAddressesAtPaths(paths: [WalletAddressPath], requestedPaths: [WalletAddressPath], existingAddresses: [WalletAddress], completion: ([WalletAddress]?) -> Void) {
         // get missing paths
         let missingPaths = requestedPaths.filter({ !paths.contains($0) })
         guard missingPaths.count + existingAddresses.count == requestedPaths.count else {
@@ -87,9 +87,9 @@ final class WalletAddressCache {
         }
     }
     
-    private func deriveAddressesAtPaths(paths: [WalletAddressPath], accounts: [WalletAccountModel], existingAddresses: [WalletAddressModel], completion: ([WalletAddressModel]?) -> Void) {
+    private func deriveAddressesAtPaths(paths: [WalletAddressPath], accounts: [WalletAccount], existingAddresses: [WalletAddress], completion: ([WalletAddress]?) -> Void) {
         // derive all addresses
-        var addressesCache: [WalletAddressModel] = []
+        var addressesCache: [WalletAddress] = []
         for path in paths {
             // get account
             guard let account = accountAtIndex(path.accountIndex, accounts: accounts) else {
@@ -110,11 +110,11 @@ final class WalletAddressCache {
                 delegateQueue.addOperationWithBlock() { completion(nil) }
                 return
             }
-            addressesCache.append(WalletAddressModel(address: address.string, path: path))
+            addressesCache.append(WalletAddress(address: address.string, path: path))
         }
         
         // save addresses
-        storeProxy.storeAddresses(addressesCache)
+        storeProxy.addAddresses(addressesCache)
 
         delegateQueue.addOperationWithBlock() { completion(existingAddresses + addressesCache) }
     }
@@ -130,7 +130,7 @@ final class WalletAddressCache {
         return uniqueAccounts
     }
     
-    private func accountAtIndex(index: Int, accounts: [WalletAccountModel]) -> WalletAccountModel? {
+    private func accountAtIndex(index: Int, accounts: [WalletAccount]) -> WalletAccount? {
         return accounts.filter({ $0.index == index }).first
     }
     

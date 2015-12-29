@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletAccountModel {
+struct WalletAccount {
     
     let index: Int
     let extendedPublicKey: String
@@ -16,12 +16,12 @@ struct WalletAccountModel {
     let nextExternalIndex: Int
     let name: String?
     
-    func withNextInternalIndex(index: Int) -> WalletAccountModel {
-        return WalletAccountModel(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name)
+    func withNextInternalIndex(index: Int) -> WalletAccount {
+        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name)
     }
     
-    func withNextExternalIndex(index: Int) -> WalletAccountModel {
-        return WalletAccountModel(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name)
+    func withNextExternalIndex(index: Int) -> WalletAccount {
+        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name)
     }
     
     // MARK: Initialization
@@ -42,7 +42,7 @@ struct WalletAccountModel {
 
 // MARK: - SQLiteFetchableModel
 
-extension WalletAccountModel: SQLiteFetchableModel {
+extension WalletAccount: SQLiteFetchableModel {
         
     init?(resultSet: SQLiteStoreResultSet) {
         guard let

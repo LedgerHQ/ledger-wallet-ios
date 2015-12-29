@@ -10,8 +10,6 @@ import Foundation
 
 protocol WalletRemoteTransactionInputType { }
 
-// MARK: WalletRemoteTransactionRegularInput
-
 struct WalletRemoteTransactionRegularInput: WalletRemoteTransactionInputType {
     
     let outputHash: String
@@ -21,8 +19,6 @@ struct WalletRemoteTransactionRegularInput: WalletRemoteTransactionInputType {
     let address: String?
     
 }
-
-// MARK: WalletRemoteTransactionCoinbaseInput
 
 struct WalletRemoteTransactionCoinbaseInput: WalletRemoteTransactionInputType {
     

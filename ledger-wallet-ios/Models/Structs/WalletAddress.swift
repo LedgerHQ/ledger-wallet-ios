@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletAddressModel {
+struct WalletAddress {
     
     let address: String
     let path: WalletAddressPath
@@ -24,7 +24,7 @@ struct WalletAddressModel {
 
 // MARK: - SQLiteFetchableModel
 
-extension WalletAddressModel: SQLiteFetchableModel {
+extension WalletAddress: SQLiteFetchableModel {
     
     init?(resultSet: SQLiteStoreResultSet) {
         guard let

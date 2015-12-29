@@ -146,7 +146,7 @@ final class WalletTransactionsConsumer {
         }
     }
     
-    private func fetchTransactionsForAddresses(addresses: [WalletAddressModel], startingPath: WalletAddressPath, toKeyIndex keyIndex: Int) {
+    private func fetchTransactionsForAddresses(addresses: [WalletAddress], startingPath: WalletAddressPath, toKeyIndex keyIndex: Int) {
         // fetch transactions from API
         let currentPath = startingPath.rangeStringToKeyIndex(keyIndex)
         logger.info("Fetching transactions for addresses in range \(currentPath)")

@@ -45,7 +45,7 @@ extension WalletRemoteTransactionOutput: Equatable {}
 
 func ==(lhs: WalletRemoteTransactionOutput, rhs: WalletRemoteTransactionOutput) -> Bool {
     return lhs.value == rhs.value && lhs.scriptHex == rhs.scriptHex && lhs.index == rhs.index
-}
+} 
 
 // MARK: Hashable
 

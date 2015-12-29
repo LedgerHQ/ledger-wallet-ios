@@ -14,18 +14,18 @@ final class WalletStoreExecutor {
 
     // MARK: Accounts management
 
-    class func fetchAllAccounts(context: SQLiteStoreContext) -> [WalletAccountModel]? {
+    class func fetchAllAccounts(context: SQLiteStoreContext) -> [WalletAccount]? {
         let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
         let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" ORDER BY \"\(WalletAccountTableEntity.indexKey)\" ASC"
         return fetchModelCollection(statement, context: context)
     }
     
-    class func fetchAccountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccountModel? {
+    class func fetchAccountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccount? {
         guard let accounts = fetchAccountsAtIndexes([index], context: context) where accounts.count > 0 else { return nil }
         return accounts[0]
     }
     
-    class func fetchAccountsAtIndexes(indexes: [Int], context: SQLiteStoreContext) -> [WalletAccountModel]? {
+    class func fetchAccountsAtIndexes(indexes: [Int], context: SQLiteStoreContext) -> [WalletAccount]? {
         guard indexes.count > 0 else { return [] }
         
         let inStatement = indexes.map({ return "\($0)" }).joinWithSeparator(", ")
@@ -34,7 +34,7 @@ final class WalletStoreExecutor {
         return fetchModelCollection(statement, context: context)
     }
 
-    class func addAccount(account: WalletAccountModel, context: SQLiteStoreContext) -> Bool {
+    class func addAccount(account: WalletAccount, context: SQLiteStoreContext) -> Bool {
         let fieldsStatement = "(\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\")"
         let statement = "INSERT INTO \"\(WalletAccountTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?)"
         let values = [account.index, account.name ?? NSNull(), account.extendedPublicKey, account.nextExternalIndex, account.nextInternalIndex]
@@ -72,7 +72,7 @@ final class WalletStoreExecutor {
     
     // MARK: Addresses management
     
-    class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddressModel]? {
+    class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddress]? {
         guard paths.count > 0 else { return [] }
         
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
@@ -82,7 +82,7 @@ final class WalletStoreExecutor {
         return fetchModelCollection(statement, context: context)
     }
     
-    class func fetchAddressesWithAddresses(addresses: [String], context: SQLiteStoreContext) -> [WalletAddressModel]? {
+    class func fetchAddressesWithAddresses(addresses: [String], context: SQLiteStoreContext) -> [WalletAddress]? {
         guard addresses.count > 0 else { return [] }
 
         let inStatement = addresses.map({ return "\"\($0)\"" }).joinWithSeparator(", ")
@@ -91,7 +91,7 @@ final class WalletStoreExecutor {
         return fetchModelCollection(statement, context: context)
     }
     
-    class func storeAddress(address: WalletAddressModel, context: SQLiteStoreContext) -> Bool {
+    class func addAddress(address: WalletAddress, context: SQLiteStoreContext) -> Bool {
         guard fetchAddressWithAddress(address.address, context: context) == nil else { return true }
         guard fetchAddressAtPath(address.path, context: context) == nil else { return true }
         
@@ -105,17 +105,17 @@ final class WalletStoreExecutor {
         return true
     }
     
-    class func storeAddresses(addresses: [WalletAddressModel], context: SQLiteStoreContext) -> Bool {
+    class func addAddresses(addresses: [WalletAddress], context: SQLiteStoreContext) -> Bool {
         guard addresses.count > 0 else { return true }
-        return addresses.reduce(true) { $0 && storeAddress($1, context: context) }
+        return addresses.reduce(true) { $0 && addAddress($1, context: context) }
     }
     
-    private class func fetchAddressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddressModel? {
+    private class func fetchAddressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddress? {
         guard let results = fetchAddressesAtPaths([path], context: context) where results.count >= 1 else { return nil }
         return results[0]
     }
     
-    private class func fetchAddressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddressModel? {
+    private class func fetchAddressWithAddress(address: String, context: SQLiteStoreContext) -> WalletAddress? {
         guard let results = fetchAddressesWithAddresses([address], context: context) where results.count >= 1 else { return nil }
         return results[0]
     }
@@ -222,12 +222,12 @@ final class WalletStoreExecutor {
     
     // MARK: Operations management
     
-    class func storeOperations(operations: [WalletLocalOperation], context: SQLiteStoreContext) -> Bool {
+    class func storeOperations(operations: [WalletOperation], context: SQLiteStoreContext) -> Bool {
         guard operations.count > 0 else { return true }
         return operations.reduce(true) { $0 && storeOperation($1, context: context) }
     }
     
-    private class func storeOperation(operation: WalletLocalOperation, context: SQLiteStoreContext) -> Bool {
+    private class func storeOperation(operation: WalletOperation, context: SQLiteStoreContext) -> Bool {
         let updateFieldsStatement = "\"\(WalletOperationTableEntity.amountKey)\" = ?"
         let updateStatement = "UPDATE \"\(WalletOperationTableEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletOperationTableEntity.uidKey)\" = ?"
         let updateValues = [NSNumber(longLong: operation.amount), operation.uid]

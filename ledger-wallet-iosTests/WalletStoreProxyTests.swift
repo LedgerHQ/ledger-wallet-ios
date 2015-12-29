@@ -37,7 +37,7 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testAddAccount() {
-        let account = WalletAccountModel(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account = WalletAccount(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account)
         
         let expectation = expectationWithDescription("Waiting for fetch completion")
@@ -50,7 +50,7 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testAddTwiceAccount() {
-        let account = WalletAccountModel(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account = WalletAccount(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account)
         storeProxy.addAccount(account)
         
@@ -74,9 +74,9 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testFetchAllAccounts() {
-        let account1 = WalletAccountModel(index: 0, extendedPublicKey: "super xpub 1", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account1 = WalletAccount(index: 0, extendedPublicKey: "super xpub 1", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account1)
-        let account2 = WalletAccountModel(index: 1, extendedPublicKey: "super xpub 2", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account2 = WalletAccount(index: 1, extendedPublicKey: "super xpub 2", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account2)
 
         let expectation = expectationWithDescription("Waiting for fetch completion")
@@ -111,9 +111,9 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testFetchAccountsAtIndexes() {
-        let account1 = WalletAccountModel(index: 0, extendedPublicKey: "super xpub 1", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account1 = WalletAccount(index: 0, extendedPublicKey: "super xpub 1", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account1)
-        let account2 = WalletAccountModel(index: 1, extendedPublicKey: "super xpub 2", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account2 = WalletAccount(index: 1, extendedPublicKey: "super xpub 2", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account2)
         
         let expectation = expectationWithDescription("Waiting for fetch completion")
@@ -153,7 +153,7 @@ class WalletStoreProxyTests: XCTestCase {
     
     func testAddAddressesWithoutAccount() {
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
-        let addresses = paths.map({ return WalletAddressModel(addressPath: $0, address: NSUUID().UUIDString)})
+        let addresses = paths.map({ return WalletAddress(address: NSUUID().UUIDString, path: $0)})
         storeProxy.addAddresses(addresses)
         
         let expectation = expectationWithDescription("Waiting for fetch completion")
@@ -166,11 +166,11 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testAddAddressesWithAccount() {
-        let account = WalletAccountModel(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account = WalletAccount(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account)
         
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
-        let addresses = paths.map({ return WalletAddressModel(addressPath: $0, address: NSUUID().UUIDString)})
+        let addresses = paths.map({ return WalletAddress(address: NSUUID().UUIDString, path: $0)})
         storeProxy.addAddresses(addresses)
         
         let expectation = expectationWithDescription("Waiting for fetch completion")
@@ -203,11 +203,11 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testFetchAddressesWithAddresses() {
-        let account = WalletAccountModel(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account = WalletAccount(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account)
 
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
-        let addresses = paths.map({ return WalletAddressModel(addressPath: $0, address: $0.relativePath)})
+        let addresses = paths.map({ return WalletAddress(address: $0.relativePath, path: $0)})
         storeProxy.addAddresses(addresses)
         
         let expectation = expectationWithDescription("Waiting for fetch completion")
@@ -220,11 +220,11 @@ class WalletStoreProxyTests: XCTestCase {
     }
     
     func testAddTwiceAddresses() {
-        let account = WalletAccountModel(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
+        let account = WalletAccount(index: 0, extendedPublicKey: "super xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: "this is a name")
         storeProxy.addAccount(account)
 
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
-        let addresses = paths.map({ return WalletAddressModel(addressPath: $0, address: "this is an address")})
+        let addresses = paths.map({ return WalletAddress(address: "this is an address", path: $0)})
         storeProxy.addAddresses(addresses)
         
         let expectation = expectationWithDescription("Waiting for fetch completion")

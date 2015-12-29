@@ -42,7 +42,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
         }
     }
     
-    private func mapAddresses(addresses: [WalletAddressModel], toTransactionInContext context: WalletTransactionsStreamContext) {
+    private func mapAddresses(addresses: [WalletAddress], toTransactionInContext context: WalletTransactionsStreamContext) {
         for input in context.transaction.inputs {
             if let input = input as? WalletRemoteTransactionRegularInput, address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
                 context.mappedInputs[input] = addressModel
@@ -58,7 +58,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
         }
     }
     
-    private func addressWithAddress(address: String, fromBucket addresses: [WalletAddressModel]) -> WalletAddressModel? {
+    private func addressWithAddress(address: String, fromBucket addresses: [WalletAddress]) -> WalletAddress? {
         return addresses.filter({ $0.address == address }).first
     }
     

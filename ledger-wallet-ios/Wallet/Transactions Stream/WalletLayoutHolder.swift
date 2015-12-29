@@ -13,7 +13,7 @@ final class WalletLayoutHolder {
     static let BIP44AddressesGap = 20
     
     private let storeProxy: WalletStoreProxy
-    private var accounts: [WalletAccountModel] = []
+    private var accounts: [WalletAccount] = []
     private let workingQueue = NSOperationQueue(name: "WalletLayoutHolder", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "WalletLayoutHolder")
     

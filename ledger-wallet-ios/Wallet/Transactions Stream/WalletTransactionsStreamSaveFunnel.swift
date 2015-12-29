@@ -13,7 +13,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     private static let writeBatchSize = 100
     private let storeProxy: WalletStoreProxy
     private var pendingTransactions: [WalletRemoteTransaction] = []
-    private var pendingOperations: [WalletLocalOperation] = []
+    private var pendingOperations: [WalletOperation] = []
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamSaveFunnel")
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
@@ -75,7 +75,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         return true
     }
     
-    private func writeOperations(operations: [WalletLocalOperation]) {
+    private func writeOperations(operations: [WalletOperation]) {
         logger.info("Writing batch of \(operations.count) operation(s) to store")
         storeProxy.storeOperations(operations)
     }
