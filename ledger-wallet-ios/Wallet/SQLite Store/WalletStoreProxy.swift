@@ -10,26 +10,25 @@ import Foundation
 
 final class WalletStoreProxy {
     
-    private let delegateQueue: NSOperationQueue
     private let store: SQLiteStore
     private let logger = Logger.sharedInstance(name: "WalletStoreProxy")
     
     // MARK: Accounts management
     
-    func fetchAllAccounts(completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllAccounts($0) }, completion: completion)
+    func fetchAllAccounts(queue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllAccounts($0) }, queue: queue, completion: completion)
     }
     
-    func fetchAccountAtIndex(index: Int, completion: (WalletAccount?) -> Void) {
-        executeModelFetch({ WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, completion: completion)
+    func fetchAccountAtIndex(index: Int, queue: NSOperationQueue, completion: (WalletAccount?) -> Void) {
+        executeModelFetch({ WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, queue: queue, completion: completion)
     }
     
-    func fetchAccountsAtIndexes(indexes: [Int], completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, completion: completion)
+    func fetchAccountsAtIndexes(indexes: [Int], queue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, queue: queue, completion: completion)
     }
     
-    func fetchAllVisibleAccounts(completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllVisibleAccounts($0) }, completion: completion)
+    func fetchAllVisibleAccounts(queue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllVisibleAccounts($0) }, queue: queue, completion: completion)
     }
 
     func addAccount(account: WalletAccount) {
@@ -46,12 +45,12 @@ final class WalletStoreProxy {
     
     // MARK: Addresses management
     
-    func fetchAddressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddress]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, completion: completion)
+    func fetchAddressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, queue: queue, completion: completion)
     }
     
-    func fetchAddressesWithAddresses(addresses: [String], completion: ([WalletAddress]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, completion: completion)
+    func fetchAddressesWithAddresses(addresses: [String], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, queue: queue, completion: completion)
     }
     
     func addAddresses(addresses: [WalletAddress]) {
@@ -72,19 +71,19 @@ final class WalletStoreProxy {
     
     // MARK: Internal methods
     
-    private func executeModelFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> T?, completion: (T?) -> Void) {
+    private func executeModelFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> T?, queue: NSOperationQueue, completion: (T?) -> Void) {
         store.performBlock() { [weak self] context in
-            guard let strongSelf = self else { return }
+            guard let _ = self else { return }
             let result = block(context)
-            strongSelf.delegateQueue.addOperationWithBlock() { completion(result) }
+            queue.addOperationWithBlock() { completion(result) }
         }
     }
     
-    private func executeModelCollectionFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> [T]?, completion: ([T]?) -> Void) {
+    private func executeModelCollectionFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> [T]?, queue: NSOperationQueue, completion: ([T]?) -> Void) {
         store.performBlock() { [weak self] context in
-            guard let strongSelf = self else { return }
+            guard let _ = self else { return }
             let results = block(context)
-            strongSelf.delegateQueue.addOperationWithBlock() { completion(results) }
+            queue.addOperationWithBlock() { completion(results) }
         }
     }
     
@@ -97,9 +96,8 @@ final class WalletStoreProxy {
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
+    init(store: SQLiteStore) {
         self.store = store
-        self.delegateQueue = delegateQueue
     }
     
 }

@@ -10,6 +10,7 @@ import Foundation
 
 final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunnelType {
 
+    private let callingQueue: NSOperationQueue
     private let addressCache: WalletAddressCache
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamDiscardFunnel")
     
@@ -22,7 +23,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
         }
         
         // fetch addresses from cache
-        addressCache.addressesWithAddresses(allAddresses) { [weak self] addresses in
+        addressCache.addressesWithAddresses(allAddresses, queue: callingQueue) { [weak self] addresses in
             guard let strongSelf = self else { return }
             
             guard let addresses = addresses else {
@@ -64,8 +65,9 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, callingQueue: NSOperationQueue) {
-        self.addressCache = WalletAddressCache(store: store, delegateQueue: callingQueue)
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
+        self.addressCache = addressCache
+        self.callingQueue = callingQueue
     }
     
 }

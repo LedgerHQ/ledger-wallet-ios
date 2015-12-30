@@ -10,51 +10,65 @@ import Foundation
 
 final class WalletAddressCache {
     
-    private let delegateQueue: NSOperationQueue
-    private let workingQueue = NSOperationQueue(name: "WalletAddressCache", maxConcurrentOperationCount: 1)
     private let storeProxy: WalletStoreProxy
+    private let workingQueue = NSOperationQueue(name: "WalletAddressCache", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "WalletAddressCache")
     
     // MARK: Addresses management
 
-    func addressesAtPaths(paths: [WalletAddressPath], completion: ([WalletAddress]?) -> Void) {
-        storeProxy.fetchAddressesAtPaths(paths) { [weak self] addresses in
+    func addressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            
-            // check that we found some addresses
-            guard let addresses = addresses else {
-                strongSelf.logger.error("Unable to fetch first addresses for given paths")
-                strongSelf.delegateQueue.addOperationWithBlock() { completion(nil) }
-                return
+        
+            strongSelf.storeProxy.fetchAddressesAtPaths(paths, queue: strongSelf.workingQueue) { [weak self] addresses in
+                guard let strongSelf = self else { return }
+                
+                // check that we found some addresses
+                guard let addresses = addresses else {
+                    strongSelf.logger.error("Unable to fetch first addresses for given paths")
+                    queue.addOperationWithBlock() { completion(nil) }
+                    return
+                }
+                
+                // check that we have all the addresses
+                guard addresses.count == paths.count else {
+                    let fetchedPaths = addresses.map({ $0.path })
+                    strongSelf.fetchAccountsForAddressesAtPaths(fetchedPaths, requestedPaths: paths, existingAddresses: addresses, queue: queue, completion: completion)
+                    return
+                }
+                
+                queue.addOperationWithBlock() { completion(addresses) }
             }
-            
-            // check that we have all the addresses
-            guard addresses.count == paths.count else {
-                let fetchedPaths = addresses.map({ $0.path })
-                strongSelf.fetchAccountsForAddressesAtPaths(fetchedPaths, requestedPaths: paths, existingAddresses: addresses, completion: completion)
-                return
-            }
-            
-            strongSelf.delegateQueue.addOperationWithBlock() { completion(addresses) }
         }
     }
     
-    func addressesWithAddresses(addresses: [String], completion: ([WalletAddress]?) -> Void) {
-        storeProxy.fetchAddressesWithAddresses(addresses) { [weak self] addresses in
+    func addressesWithAddresses(addresses: [String], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 
-            strongSelf.delegateQueue.addOperationWithBlock() { completion(addresses) }
+            strongSelf.storeProxy.fetchAddressesWithAddresses(addresses, queue: strongSelf.workingQueue) { [weak self] addresses in
+                guard let strongSelf = self else { return }
+                
+                // check that we found some addresses
+                guard let addresses = addresses else {
+                    strongSelf.logger.error("Unable to fetch addresses for given addresses")
+                    queue.addOperationWithBlock() { completion(nil) }
+                    return
+                }
+                
+                queue.addOperationWithBlock() { completion(addresses) }
+            }
         }
     }
     
     // MARK: Internal methods
     
-    private func fetchAccountsForAddressesAtPaths(paths: [WalletAddressPath], requestedPaths: [WalletAddressPath], existingAddresses: [WalletAddress], completion: ([WalletAddress]?) -> Void) {
+    private func fetchAccountsForAddressesAtPaths(paths: [WalletAddressPath], requestedPaths: [WalletAddressPath], existingAddresses: [WalletAddress], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
         // get missing paths
         let missingPaths = requestedPaths.filter({ !paths.contains($0) })
         guard missingPaths.count + existingAddresses.count == requestedPaths.count else {
             logger.error("Unable to compute missing paths to derive addresses")
-            delegateQueue.addOperationWithBlock() { completion(nil) }
+            queue.addOperationWithBlock() { completion(nil) }
             return
         }
         
@@ -62,61 +76,74 @@ final class WalletAddressCache {
         let uniqueAccounts = uniqueAccountsForPaths(missingPaths)
         guard uniqueAccounts.count > 0 else {
             logger.error("Unable to compute unique accounts to derive addresses")
-            delegateQueue.addOperationWithBlock() { completion(nil) }
+            queue.addOperationWithBlock() { completion(nil) }
             return
         }
         
         // fetch accounts
-        storeProxy.fetchAccountsAtIndexes(uniqueAccounts) { [weak self] accounts in
+        storeProxy.fetchAccountsAtIndexes(uniqueAccounts, queue: workingQueue) { [weak self] accounts in
             guard let strongSelf = self else { return }
             
             guard let accounts = accounts else {
                 strongSelf.logger.error("Unable to fetch accounts to derive addresses")
-                strongSelf.delegateQueue.addOperationWithBlock() { completion(nil) }
+                queue.addOperationWithBlock() { completion(nil) }
                 return
             }
             
             // check that we have all the accounts
             guard accounts.count == uniqueAccounts.count else {
                 strongSelf.logger.warn("Unable to fetch accounts with indexes \(uniqueAccounts)")
-                strongSelf.delegateQueue.addOperationWithBlock() { completion(nil) }
+                queue.addOperationWithBlock() { completion(nil) }
                 return
             }
             
-            strongSelf.deriveAddressesAtPaths(missingPaths, accounts: accounts, existingAddresses: existingAddresses, completion: completion)
+            strongSelf.deriveAddressesAtPaths(missingPaths, accounts: accounts, existingAddresses: existingAddresses, queue: queue, completion: completion)
         }
     }
     
-    private func deriveAddressesAtPaths(paths: [WalletAddressPath], accounts: [WalletAccount], existingAddresses: [WalletAddress], completion: ([WalletAddress]?) -> Void) {
-        // derive all addresses
+    private func deriveAddressesAtPaths(paths: [WalletAddressPath], accounts: [WalletAccount], existingAddresses: [WalletAddress], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
         var addressesCache: [WalletAddress] = []
+        var keychainCache: [Int: BTCKeychain] = [:]
+        
+        // derive all addresses
         for path in paths {
-            // get account
-            guard let account = accountAtIndex(path.accountIndex, accounts: accounts) else {
-                logger.error("Unable to get account at index \(path.accountIndex)")
-                delegateQueue.addOperationWithBlock() { completion(nil) }
-                return
+            let deriver: (BTCKeychain, WalletAddressPath) -> Void = { keychain, path in
+                guard let key = keychain.keyWithPath(path.chainPath), let address = key.address else {
+                    self.logger.error("Unable to derive address for account at index \(path.accountIndex)")
+                    queue.addOperationWithBlock() { completion(nil) }
+                    return
+                }
+                
+                addressesCache.append(WalletAddress(address: address.string, path: path))
             }
             
-            // create addresses from xpub
-            guard let keychain = BTCKeychain(extendedKey: account.extendedPublicKey) else {
-                logger.error("Unable to create keychain for account at index \(path.accountIndex)")
-                delegateQueue.addOperationWithBlock() { completion(nil) }
-                return
+            // try to get keychain from account number
+            if let keychain = keychainCache[path.accountIndex] {
+                deriver(keychain, path)
             }
-
-            guard let key = keychain.keyWithPath(path.chainPath), let address = key.address else {
-                logger.error("Unable to derive address for account at index \(path.accountIndex)")
-                delegateQueue.addOperationWithBlock() { completion(nil) }
-                return
+            else {
+                // get account
+                guard let account = accountAtIndex(path.accountIndex, accounts: accounts) else {
+                    logger.error("Unable to get account at index \(path.accountIndex)")
+                    queue.addOperationWithBlock() { completion(nil) }
+                    return
+                }
+                
+                // create addresses from xpub
+                guard let keychain = BTCKeychain(extendedKey: account.extendedPublicKey) else {
+                    logger.error("Unable to create keychain for account at index \(path.accountIndex)")
+                    queue.addOperationWithBlock() { completion(nil) }
+                    return
+                }
+                keychainCache[path.accountIndex] = keychain
+                deriver(keychain, path)
             }
-            addressesCache.append(WalletAddress(address: address.string, path: path))
         }
         
         // save addresses
         storeProxy.addAddresses(addressesCache)
 
-        delegateQueue.addOperationWithBlock() { completion(existingAddresses + addressesCache) }
+        queue.addOperationWithBlock() { completion(existingAddresses + addressesCache) }
     }
     
     private func uniqueAccountsForPaths(paths: [WalletAddressPath]) -> [Int] {
@@ -136,9 +163,8 @@ final class WalletAddressCache {
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
-        self.delegateQueue = delegateQueue
-        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: workingQueue)
+    init(storeProxy: WalletStoreProxy) {
+        self.storeProxy = storeProxy
     }
     
 }

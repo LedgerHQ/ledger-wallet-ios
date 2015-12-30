@@ -93,7 +93,7 @@ final class WalletTransactionsConsumer {
 
         // get addresses
         logger.info("Fetching addresses for paths in range \(path.rangeStringToKeyIndex(keyIndex))")
-        addressCache.addressesAtPaths(requestedPaths) { [weak self] addresses in
+        addressCache.addressesAtPaths(requestedPaths, queue: workingQueue) { [weak self] addresses in
             guard let strongSelf = self where strongSelf.refreshing else { return }
             
             // check we got the addresses
@@ -123,7 +123,7 @@ final class WalletTransactionsConsumer {
             
             // get addresses
             strongSelf.logger.info("Delegate provided account at index \(accountIndex), retrying")
-            strongSelf.addressCache.addressesAtPaths(requestedPaths) { [weak self] addresses in
+            strongSelf.addressCache.addressesAtPaths(requestedPaths, queue: strongSelf.workingQueue) { [weak self] addresses in
                 guard let strongSelf = self where strongSelf.refreshing else { return }
                 
                 guard let addresses = addresses else {
@@ -209,9 +209,9 @@ final class WalletTransactionsConsumer {
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
+    init(addressCache: WalletAddressCache, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
-        self.addressCache = WalletAddressCache(store: store, delegateQueue: self.workingQueue)
+        self.addressCache = addressCache
         self.apiClient = TransactionsAPIClient(delegateQueue: self.workingQueue)
     }
     

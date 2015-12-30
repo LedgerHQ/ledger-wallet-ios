@@ -22,15 +22,18 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamLayoutFunnel")
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        
+        // update internal and external indexes
+        for (output, address) in context.mappedOutputs {
+            
+        }
         completion(true)
     }
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, callingQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
         self.callingQueue = callingQueue
-        self.layoutHolder = WalletLayoutHolder(store: store)
+        self.layoutHolder = layoutHolder
     }
 
 }

@@ -25,7 +25,6 @@ protocol WalletManagerType: class {
     func stopListeningTransactions()
     func startAllServices()
     func stopAllServices()
-    func registerAccount(account: WalletAccount)
     
     init(uniqueIdentifier: String)
     

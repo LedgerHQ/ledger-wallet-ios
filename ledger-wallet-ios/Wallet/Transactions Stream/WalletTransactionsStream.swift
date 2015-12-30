@@ -45,10 +45,6 @@ final class WalletTransactionsStream {
         }
     }
 
-    func reloadLayout() {
-//        layoutHolder.reload()
-    }
-    
     // MARK: Internal methods
     
     private func processNextPendingTransaction() {
@@ -105,7 +101,7 @@ final class WalletTransactionsStream {
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
         
         // create funnels
@@ -117,7 +113,7 @@ final class WalletTransactionsStream {
             WalletTransactionsStreamSpentFunnel.self
         ]
         funnelTypes.forEach() {
-            self.funnels.append($0.init(store: store, callingQueue: workingQueue))
+            self.funnels.append($0.init(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, callingQueue: workingQueue))
         }
         
         // plug delegates

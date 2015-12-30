@@ -94,8 +94,8 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     
     // MARK: Initialization
     
-    init(store: SQLiteStore, callingQueue: NSOperationQueue) {
-        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: callingQueue)
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
+        self.storeProxy = storeProxy
     }
     
 }

@@ -13,7 +13,7 @@ protocol WalletTransactionsStreamFunnelType: class {
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void)
     func flush()
     
-    init(store: SQLiteStore, callingQueue: NSOperationQueue)
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue)
     
 }
 

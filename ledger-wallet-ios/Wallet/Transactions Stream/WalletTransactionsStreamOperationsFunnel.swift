@@ -69,7 +69,7 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
 
     // MARK: Initialization
     
-    init(store: SQLiteStore, callingQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
         
     }
     

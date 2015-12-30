@@ -132,7 +132,7 @@ final class WalletLayoutHolder {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
         
-            strongSelf.storeProxy.fetchAllAccounts() { [weak self] accounts in
+            strongSelf.storeProxy.fetchAllAccounts(strongSelf.workingQueue) { [weak self] accounts in
                 guard let strongSelf = self else { return }
                 
                 // ensure we fetched accounts
@@ -149,8 +149,8 @@ final class WalletLayoutHolder {
     
     // MARK: Initialization
     
-    init(store: SQLiteStore) {
-        self.storeProxy = WalletStoreProxy(store: store, delegateQueue: workingQueue)
+    init(storeProxy: WalletStoreProxy) {
+        self.storeProxy = storeProxy
         reload()
     }
     

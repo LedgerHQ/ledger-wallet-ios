@@ -14,11 +14,15 @@ final class WalletAPIManager: WalletManagerType {
     var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
     var isListeningTransactions: Bool { return transactionsListener.isListening }
     
+    private let store: SQLiteStore
+    private let storeProxy: WalletStoreProxy
+    private let addressCache: WalletAddressCache
+    private let layoutHolder: WalletLayoutHolder
+    
     private let transactionsConsumer: WalletTransactionsConsumer
     private let transactionsListener: WalletTransactionsListener
     private let transactionsStream: WalletTransactionsStream
-    private let store: SQLiteStore
-    private let externalStoreProxy: WalletStoreProxy
+    
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
     
@@ -52,13 +56,17 @@ final class WalletAPIManager: WalletManagerType {
         stopListeningTransactions()
     }
     
-    func registerAccount(account: WalletAccount) {
+    private func registerAccount(account: WalletAccount) {
+        // add account
+        storeProxy.addAccount(account)
+        
+        // reload layout
+        layoutHolder.reload()
+        
+        // cache 20 first internal + external addresses
         let internalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
         let externalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
-        externalStoreProxy.addAccount(account)
-        externalStoreProxy.fetchAddressesAtPaths(internalPaths + externalPaths, completion: { _ in })
-        // TODO: Call address cache, not proxy to store adresses
-        transactionsStream.reloadLayout()
+        addressCache.addressesAtPaths(internalPaths + externalPaths, queue: NSOperationQueue.mainQueue(), completion: { _ in })
     }
     
     // MARK: Initialization
@@ -69,12 +77,14 @@ final class WalletAPIManager: WalletManagerType {
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
         self.store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier)
-        self.externalStoreProxy = WalletStoreProxy(store: store, delegateQueue: NSOperationQueue.mainQueue())
         
         // create services
-        self.transactionsConsumer = WalletTransactionsConsumer(store: store, delegateQueue: NSOperationQueue.mainQueue())
+        self.storeProxy = WalletStoreProxy(store: store)
+        self.addressCache = WalletAddressCache(storeProxy: storeProxy)
+        self.layoutHolder = WalletLayoutHolder(storeProxy: storeProxy)
+        self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, delegateQueue: NSOperationQueue.mainQueue())
         self.transactionsListener = WalletTransactionsListener(delegateQueue: NSOperationQueue.mainQueue())
-        self.transactionsStream = WalletTransactionsStream(store: store, delegateQueue: NSOperationQueue.mainQueue())
+        self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: NSOperationQueue.mainQueue())
         
         // start services
         startAllServices()

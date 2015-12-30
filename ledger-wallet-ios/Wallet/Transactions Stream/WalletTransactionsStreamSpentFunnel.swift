@@ -16,7 +16,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
 
     // MARK: Initialization
     
-    init(store: SQLiteStore, callingQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
         
     }
     
