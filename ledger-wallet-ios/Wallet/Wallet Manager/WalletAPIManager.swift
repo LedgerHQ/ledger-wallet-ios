@@ -56,6 +56,8 @@ final class WalletAPIManager: WalletManagerType {
         stopListeningTransactions()
     }
     
+    // MARK: Utils
+    
     private func registerAccount(account: WalletAccount) {
         // add account
         storeProxy.addAccount(account)
