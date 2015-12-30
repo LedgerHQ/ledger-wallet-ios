@@ -28,7 +28,7 @@ struct WalletAccount {
     // MARK: Initialization
     
     init(index: Int, extendedPublicKey: String, name: String?) {
-        self.init(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: -1, nextExternalIndex: -1, name: name, hidden: false)
+        self.init(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: 0, nextExternalIndex: 0, name: name, hidden: false)
     }
     
     init(index: Int, extendedPublicKey: String, nextInternalIndex: Int, nextExternalIndex: Int, name: String?, hidden: Bool) {
