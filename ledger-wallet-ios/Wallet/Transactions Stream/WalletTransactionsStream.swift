@@ -8,8 +8,16 @@
 
 import Foundation
 
+protocol WalletTransactionsStreamDelegate: class {
+    
+    func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidUpdateLayout(transactionsStream: WalletTransactionsStream)
+    
+}
+
 final class WalletTransactionsStream {
     
+    weak var delegate: WalletTransactionsStreamDelegate?
     private var busy = false
     private var pendingTransactions: [WalletRemoteTransaction] = []
     private var funnels: [WalletTransactionsStreamFunnelType] = []
@@ -56,8 +64,8 @@ final class WalletTransactionsStream {
             strongSelf.pendingTransactions.removeFirst()
             
             // build context
-            let context = WalletTransactionsStreamContext(remoteTransaction: transaction)
             if strongSelf.funnels.count > 0 {
+                let context = WalletTransactionsStreamContext(remoteTransaction: transaction)
                 strongSelf.pushContext(context, intoFunnel: strongSelf.funnels[0])
             }
             else {
@@ -91,14 +99,16 @@ final class WalletTransactionsStream {
         return funnels[index + 1]
     }
 
-    private func funnelWithType(type: WalletTransactionsStreamFunnelType.Type) -> WalletTransactionsStreamFunnelType? {
-        return funnels.filter({ return $0.self === type }).first
+    private func funnelWithType<T: WalletTransactionsStreamFunnelType>(type: T.Type) -> T? {
+        return funnels.filter({ return $0 is T }).first as? T
     }
     
     // MARK: Initialization
     
     init(store: SQLiteStore, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
+        
+        // create funnels
         let funnelTypes: [WalletTransactionsStreamFunnelType.Type] = [
             WalletTransactionsStreamDiscardFunnel.self,
             WalletTransactionsStreamLayoutFunnel.self,
@@ -106,8 +116,13 @@ final class WalletTransactionsStream {
             WalletTransactionsStreamSaveFunnel.self,
             WalletTransactionsStreamSpentFunnel.self
         ]
-        funnelTypes.forEach() { self.funnels.append($0.init(store: store, callingQueue: workingQueue)) }
-        (funnelWithType(WalletTransactionsStreamLayoutFunnel) as? WalletTransactionsStreamLayoutFunnel)?.delegate = self
+        funnelTypes.forEach() {
+            self.funnels.append($0.init(store: store, callingQueue: workingQueue))
+        }
+        
+        // plug delegates
+        funnelWithType(WalletTransactionsStreamLayoutFunnel)?.delegate = self
+        funnelWithType(WalletTransactionsStreamSaveFunnel)?.delegate = self
     }
     
 }
@@ -117,6 +132,16 @@ final class WalletTransactionsStream {
 extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
     
     func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
+        
+    }
+    
+}
+
+// MARK: - WalletTransactionsStreamSaveFunnelDelegate
+
+extension WalletTransactionsStream: WalletTransactionsStreamSaveFunnelDelegate {
+    
+    func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel) {
         
     }
     

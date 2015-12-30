@@ -8,8 +8,15 @@
 
 import Foundation
 
+protocol WalletTransactionsStreamSaveFunnelDelegate: class {
+    
+    func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel)
+    
+}
+
 final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelType {
     
+    weak var delegate: WalletTransactionsStreamSaveFunnelDelegate?
     private static let writeBatchSize = 100
     private let storeProxy: WalletStoreProxy
     private var pendingTransactions: [WalletRemoteTransaction] = []
@@ -35,7 +42,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
             writeTransactions(pendingTransactions)
             pendingTransactions = []
         }
-        
+
         // flush operations
         while writeOperationsIfNeeded() {}
         if pendingOperations.count > 0 {
@@ -58,6 +65,8 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     }
     
     private func writeTransactions(transactions: [WalletRemoteTransaction]) {
+        guard transactions.count > 0 else { return }
+
         logger.info("Writing batch of \(transactions.count) transaction(s) to store")
         storeProxy.storeTransactions(transactions)
     }
@@ -76,8 +85,11 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     }
     
     private func writeOperations(operations: [WalletOperation]) {
+        guard operations.count > 0 else { return }
+        
         logger.info("Writing batch of \(operations.count) operation(s) to store")
         storeProxy.storeOperations(operations)
+        delegate?.saveFunnelDidUpdateOperations(self)
     }
     
     // MARK: Initialization
