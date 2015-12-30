@@ -18,7 +18,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
         // write transaction
-        pendingTransactions.append(context.transaction)
+        pendingTransactions.append(context.remoteTransaction)
         while writeTransactionsIfNeeded() {}
         
         // write operations

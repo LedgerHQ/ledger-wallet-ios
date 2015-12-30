@@ -284,7 +284,7 @@ class WalletStoreExecutorTests: XCTestCase {
         store.performBlock() { context in
             let version = WalletStoreExecutor.schemaVersion(context)
             XCTAssertNotNil(version, "Version should not be nil")
-            XCTAssertTrue(WalletStoreExecutor.updateMetadata([WalletMetadataTableEntity.schemaVersionKey: 42], context: context), "It should be possible to update metadata")
+            XCTAssertTrue(WalletStoreExecutor.updateMetadata([WalletMetadataEntity.schemaVersionKey: 42], context: context), "It should be possible to update metadata")
             let versionAfter = WalletStoreExecutor.schemaVersion(context)
             XCTAssertNotNil(version, "After version should not be nil")
             XCTAssertEqual(versionAfter!, 42, "Versions should be equal")

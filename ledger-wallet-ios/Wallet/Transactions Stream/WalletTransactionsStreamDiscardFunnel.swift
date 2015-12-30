@@ -14,7 +14,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamDiscardFunnel")
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        let allAddresses = context.transaction.allAddresses
+        let allAddresses = context.remoteTransaction.allAddresses
         guard allAddresses.count > 0 else {
             logger.warn("Got transaction with empty addresses, aborting")
             completion(false)
@@ -43,12 +43,12 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     }
     
     private func mapAddresses(addresses: [WalletAddress], toTransactionInContext context: WalletTransactionsStreamContext) {
-        for input in context.transaction.inputs {
-            if let input = input as? WalletRemoteTransactionRegularInput, address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
+        for input in context.remoteTransaction.inputs {
+            if let input = input as? WalletTransactionRegularInput, address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
                 context.mappedInputs[input] = addressModel
             }
         }
-        for output in context.transaction.outputs {
+        for output in context.remoteTransaction.outputs {
             if let address = output.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
                 context.mappedOutputs[output] = addressModel
             }

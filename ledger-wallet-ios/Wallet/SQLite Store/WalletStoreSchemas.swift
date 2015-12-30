@@ -36,90 +36,90 @@ final class WalletStoreSchemas {
         schema.addPragmaCommand(SQLitePragmaCommand(name: "foreign_keys", value: "ON"))
         
         // tables
-        let accountsTable = WalletAccountTableEntity.eponymTable
-        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.indexKey, type: .Integer, notNull: true, unique: true))
-        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.nameKey, type: .Text, notNull: false, unique: false))
-        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false))
-        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false))
-        accountsTable.addField(SQLiteTableField(name: WalletAccountTableEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
+        let accountsTable = WalletAccountEntity.eponymTable
+        accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.indexKey, type: .Integer, notNull: true, unique: true))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.nameKey, type: .Text, notNull: false, unique: false))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
         schema.addTable(accountsTable)
         
-        let addressesTable = WalletAddressTableEntity.eponymTable
-        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.addressKey, type: .Text, notNull: true, unique: true))
-        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
-        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.keyIndexKey, type: .Integer, notNull: true, unique: false))
-        addressesTable.addField(SQLiteTableField(name: WalletAddressTableEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
+        let addressesTable = WalletAddressEntity.eponymTable
+        addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.addressKey, type: .Text, notNull: true, unique: true))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.keyIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(addressesTable)
         
-        let metadataTable = WalletMetadataTableEntity.eponymTable
-        metadataTable.addField(SQLiteTableField(name: WalletMetadataTableEntity.schemaVersionKey, type: .Integer, notNull: true, unique: true))
-        metadataTable.addField(SQLiteTableField(name: WalletMetadataTableEntity.uniqueIdentifierKey, type: .Text, notNull: true, unique: true))
+        let metadataTable = WalletMetadataEntity.eponymTable
+        metadataTable.addField(SQLiteTableField(name: WalletMetadataEntity.schemaVersionKey, type: .Integer, notNull: true, unique: true))
+        metadataTable.addField(SQLiteTableField(name: WalletMetadataEntity.uniqueIdentifierKey, type: .Text, notNull: true, unique: true))
         schema.addTable(metadataTable)
         
-        let transactionsTable = WalletTransactionTableEntity.eponymTable
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.hashKey, type: .Text, notNull: true, unique: true))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.receptionDateKey, type: .Text, notNull: true, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.lockTimeKey, type: .Integer, notNull: true, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.feesKey, type: .Integer, notNull: true, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.blockHashKey, type: .Text, notNull: false, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.blockHeightKey, type: .Integer, notNull: false, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionTableEntity.blockTimeKey, type: .Text, notNull: false, unique: false))
+        let transactionsTable = WalletTransactionEntity.eponymTable
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.hashKey, type: .Text, notNull: true, unique: true))
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.receptionDateKey, type: .Text, notNull: true, unique: false))
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.lockTimeKey, type: .Integer, notNull: true, unique: false))
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.feesKey, type: .Integer, notNull: true, unique: false))
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.blockHashKey, type: .Text, notNull: false, unique: false))
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.blockHeightKey, type: .Integer, notNull: false, unique: false))
+        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.blockTimeKey, type: .Text, notNull: false, unique: false))
         schema.addTable(transactionsTable)
 
-        let transactionInputsTable = WalletTransactionInputTableEntity.eponymTable
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.outputHashKey, type: .Text, notNull: false, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.outputIndexKey, type: .Integer, notNull: false, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.valueKey, type: .Text, notNull: false, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.scriptSignature, type: .Text, notNull: false, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.addressKey, type: .Text, notNull: false, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.coinbaseKey, type: .Integer, notNull: true, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputTableEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
+        let transactionInputsTable = WalletTransactionInputEntity.eponymTable
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.outputHashKey, type: .Text, notNull: false, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.outputIndexKey, type: .Integer, notNull: false, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.valueKey, type: .Text, notNull: false, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.scriptSignature, type: .Text, notNull: false, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.addressKey, type: .Text, notNull: false, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.coinbaseKey, type: .Integer, notNull: true, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
         schema.addTable(transactionInputsTable)
 
-        let transactionOutputsTable = WalletTransactionOutputTableEntity.eponymTable
-        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.scriptHexKey, type: .Text, notNull: true, unique: false))
-        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.valueKey, type: .Integer, notNull: true, unique: false))
-        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.addressKey, type: .Text, notNull: false, unique: false))
-        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.indexKey, type: .Integer, notNull: true, unique: false))
-        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputTableEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
+        let transactionOutputsTable = WalletTransactionOutputEntity.eponymTable
+        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputEntity.scriptHexKey, type: .Text, notNull: true, unique: false))
+        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputEntity.valueKey, type: .Integer, notNull: true, unique: false))
+        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputEntity.addressKey, type: .Text, notNull: false, unique: false))
+        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputEntity.indexKey, type: .Integer, notNull: true, unique: false))
+        transactionOutputsTable.addField(SQLiteTableField(name: WalletTransactionOutputEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
         schema.addTable(transactionOutputsTable)
         
-        let operationsTable = WalletOperationTableEntity.eponymTable
-        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.uidKey, type: .Text, notNull: true, unique: true))
-        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.kindKey, type: .Text, notNull: true, unique: false))
-        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.amountKey, type: .Integer, notNull: true, unique: false))
-        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
-        operationsTable.addField(SQLiteTableField(name: WalletOperationTableEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
+        let operationsTable = WalletOperationEntity.eponymTable
+        operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.uidKey, type: .Text, notNull: true, unique: true))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.kindKey, type: .Text, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.amountKey, type: .Integer, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
+        operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(operationsTable)
 
         // foreign keys
         let addressAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
-            childField: addressesTable.fieldWithName(WalletAddressTableEntity.accountIndexKey)!,
+            parentField: accountsTable.fieldWithName(WalletAccountEntity.indexKey)!,
+            childField: addressesTable.fieldWithName(WalletAddressEntity.accountIndexKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         addressesTable.addForeignKey(addressAccountForeignKey)
         
         let inputTransactionForeignKey = SQLiteForeignKey(
-            parentField: transactionsTable.fieldWithName(WalletTransactionTableEntity.hashKey)!,
-            childField: transactionInputsTable.fieldWithName(WalletTransactionInputTableEntity.transactionHashKey)!,
+            parentField: transactionsTable.fieldWithName(WalletTransactionEntity.hashKey)!,
+            childField: transactionInputsTable.fieldWithName(WalletTransactionInputEntity.transactionHashKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         transactionInputsTable.addForeignKey(inputTransactionForeignKey)
         
         let outputTransactionForeignKey = SQLiteForeignKey(
-            parentField: transactionsTable.fieldWithName(WalletTransactionTableEntity.hashKey)!,
-            childField: transactionOutputsTable.fieldWithName(WalletTransactionOutputTableEntity.transactionHashKey)!,
+            parentField: transactionsTable.fieldWithName(WalletTransactionEntity.hashKey)!,
+            childField: transactionOutputsTable.fieldWithName(WalletTransactionOutputEntity.transactionHashKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         transactionOutputsTable.addForeignKey(outputTransactionForeignKey)
         
         let operationAccountForeignKey = SQLiteForeignKey(
-            parentField: accountsTable.fieldWithName(WalletAccountTableEntity.indexKey)!,
-            childField: operationsTable.fieldWithName(WalletOperationTableEntity.accountIndexKey)!,
+            parentField: accountsTable.fieldWithName(WalletAccountEntity.indexKey)!,
+            childField: operationsTable.fieldWithName(WalletOperationEntity.accountIndexKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         operationsTable.addForeignKey(operationAccountForeignKey)
         
         let operationTransactionForeignKey = SQLiteForeignKey(
-            parentField: transactionsTable.fieldWithName(WalletTransactionTableEntity.hashKey)!,
-            childField: operationsTable.fieldWithName(WalletOperationTableEntity.transactionHashKey)!,
+            parentField: transactionsTable.fieldWithName(WalletTransactionEntity.hashKey)!,
+            childField: operationsTable.fieldWithName(WalletOperationEntity.transactionHashKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         operationsTable.addForeignKey(operationTransactionForeignKey)
         

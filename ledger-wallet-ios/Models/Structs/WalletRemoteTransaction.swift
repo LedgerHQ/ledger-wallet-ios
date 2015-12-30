@@ -10,22 +10,15 @@ import Foundation
 
 struct WalletRemoteTransaction {
     
-    let hash: String
-    let receiveAt: String
-    let inputs: [WalletRemoteTransactionInputType]
-    let outputs: [WalletRemoteTransactionOutput]
-    let lockTime: Int
-    let confirmations: Int
-    let fees: Int64
-    let blockHash: String?
-    let blockTime: String?
-    let blockHeight: Int?
+    let transaction: WalletTransaction
+    let inputs: [WalletTransactionInputType]
+    let outputs: [WalletTransactionOutput]
 
     var allAddresses: [String] {
         var addresses: [String] = []
         
         for input in inputs {
-            if let regularInput = input as? WalletRemoteTransactionRegularInput, address = regularInput.address where !addresses.contains(address) {
+            if let regularInput = input as? WalletTransactionRegularInput, address = regularInput.address where !addresses.contains(address) {
                 addresses.append(address)
             }
         }
@@ -36,14 +29,6 @@ struct WalletRemoteTransaction {
         }
         return addresses
     }
-    
-    func regularInputWithAddress(address: String) -> WalletRemoteTransactionRegularInput? {
-        return inputs.flatMap({ $0 as? WalletRemoteTransactionRegularInput }).filter({ $0.address == address }).first
-    }
-    
-    func outputWithAddress(address: String) -> WalletRemoteTransactionOutput? {
-        return outputs.filter({ $0.address == address }).first
-    }
 
 }
 
@@ -53,24 +38,20 @@ extension WalletRemoteTransaction: JSONInitializableModel {
     
     init?(JSONObject: [String : AnyObject]) {
         guard let
-            hash = JSONObject["hash"] as? String,
-            receiveAt = JSONObject["chain_received_at"] as? String,
-            lockTime = JSONObject["lock_time"] as? Int,
-            confirmations = JSONObject["confirmations"] as? Int,
-            fees = JSONObject["fees"] as? NSNumber,
+            transaction = WalletTransaction(JSONObject: JSONObject),
         	inputs = JSONObject["inputs"] as? [[String: AnyObject]],
             outputs = JSONObject["outputs"] as? [[String: AnyObject]]
         else {
             return nil
         }
         
-        let finalOutputs = WalletRemoteTransactionOutput.collectionFromJSONArray(outputs)
-        var finalInputs: [WalletRemoteTransactionInputType] = []
+        let finalOutputs = WalletTransactionOutput.collectionFromJSONArray(outputs)
+        var finalInputs: [WalletTransactionInputType] = []
         for input in inputs {
-            if let regularInput = WalletRemoteTransactionRegularInput(JSONObject: input) {
+            if let regularInput = WalletTransactionRegularInput(JSONObject: input) {
                 finalInputs.append(regularInput)
             }
-            else if let coinbaseInput = WalletRemoteTransactionCoinbaseInput(JSONObject: input) {
+            else if let coinbaseInput = WalletTransactionCoinbaseInput(JSONObject: input) {
                 finalInputs.append(coinbaseInput)
             }
         }
@@ -79,14 +60,7 @@ extension WalletRemoteTransaction: JSONInitializableModel {
             return nil
         }
     
-        self.hash = hash
-        self.receiveAt = receiveAt
-        self.lockTime = lockTime
-        self.confirmations = confirmations
-        self.fees = fees.longLongValue
-        self.blockHash = JSONObject["block_hash"] as? String
-        self.blockTime = JSONObject["block_time"] as? String
-        self.blockHeight = JSONObject["block_height"] as? Int
+        self.transaction = transaction
         self.inputs = finalInputs
         self.outputs = finalOutputs
     }

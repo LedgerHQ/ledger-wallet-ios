@@ -1,34 +1,36 @@
 //
-//  WalletRemoteTransactionInput.swift
+//  WalletTransactionInput.swift
 //  ledger-wallet-ios
 //
-//  Created by Nicolas Bigot on 14/12/2015.
+//  Created by Nicolas Bigot on 30/12/2015.
 //  Copyright © 2015 Ledger. All rights reserved.
 //
 
 import Foundation
 
-protocol WalletRemoteTransactionInputType { }
+protocol WalletTransactionInputType { }
 
-struct WalletRemoteTransactionRegularInput: WalletRemoteTransactionInputType {
+struct WalletTransactionRegularInput: WalletTransactionInputType {
     
     let outputHash: String
     let outputIndex: Int
     let value: Int64
     let scriptSignature: String
     let address: String?
+    let transactionHash: String?
     
 }
 
-struct WalletRemoteTransactionCoinbaseInput: WalletRemoteTransactionInputType {
+struct WalletTransactionCoinbaseInput: WalletTransactionInputType {
     
     let coinbase: String
+    let transactionHash: String?
     
 }
 
 // MARK: JSONInitializableModel
 
-extension WalletRemoteTransactionRegularInput: JSONInitializableModel {
+extension WalletTransactionRegularInput: JSONInitializableModel {
     
     init?(JSONObject: [String : AnyObject]) {
         guard let
@@ -46,10 +48,11 @@ extension WalletRemoteTransactionRegularInput: JSONInitializableModel {
         self.outputHash = outputHash
         self.value = value.longLongValue
         self.scriptSignature = scriptSignature
+        self.transactionHash = nil
     }
 }
 
-extension WalletRemoteTransactionCoinbaseInput: JSONInitializableModel {
+extension WalletTransactionCoinbaseInput: JSONInitializableModel {
     
     init?(JSONObject: [String : AnyObject]) {
         guard let
@@ -59,23 +62,24 @@ extension WalletRemoteTransactionCoinbaseInput: JSONInitializableModel {
         }
         
         self.coinbase = coinbase
+        self.transactionHash = nil
     }
     
 }
 
 // MARK: Equatable
 
-extension WalletRemoteTransactionRegularInput: Equatable {}
+extension WalletTransactionRegularInput: Equatable {}
 
-func ==(lhs: WalletRemoteTransactionRegularInput, rhs: WalletRemoteTransactionRegularInput) -> Bool {
+func ==(lhs: WalletTransactionRegularInput, rhs: WalletTransactionRegularInput) -> Bool {
     return lhs.outputHash == rhs.outputHash && lhs.outputIndex == rhs.outputIndex && lhs.value == rhs.value &&
-    lhs.scriptSignature == rhs.scriptSignature
+        lhs.scriptSignature == rhs.scriptSignature && lhs.address == rhs.address && lhs.transactionHash == rhs.transactionHash
 }
 
 // MARK: Hashable
 
-extension WalletRemoteTransactionRegularInput: Hashable {
+extension WalletTransactionRegularInput: Hashable {
     
-    var hashValue: Int { return "\(outputHash) \(outputIndex) \(value) \(scriptSignature)".hashValue }
+    var hashValue: Int { return "\(outputHash) \(outputIndex) \(value) \(scriptSignature) \(address) \(transactionHash)".hashValue }
     
 }

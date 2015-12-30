@@ -1,5 +1,5 @@
 //
-//  WalletTransactionTableEntity.swift
+//  WalletTransactionEntity.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 15/12/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletTransactionTableEntity: SQLiteTableEntityType {
+struct WalletTransactionEntity: SQLiteEntityType {
     
     static let tableName = "transaction"
     

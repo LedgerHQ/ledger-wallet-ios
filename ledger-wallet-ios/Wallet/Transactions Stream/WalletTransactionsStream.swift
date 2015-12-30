@@ -56,7 +56,7 @@ final class WalletTransactionsStream {
             strongSelf.pendingTransactions.removeFirst()
             
             // build context
-            let context = WalletTransactionsStreamContext(transaction: transaction)
+            let context = WalletTransactionsStreamContext(remoteTransaction: transaction)
             if strongSelf.funnels.count > 0 {
                 strongSelf.pushContext(context, intoFunnel: strongSelf.funnels[0])
             }

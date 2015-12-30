@@ -9,8 +9,10 @@
 import Foundation
 
 enum WalletOperationKind: String {
+    
     case Send = "send"
     case Receive = "receive"
+    
 }
 
 struct WalletOperation {

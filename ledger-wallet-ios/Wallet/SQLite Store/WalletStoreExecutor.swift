@@ -15,8 +15,8 @@ final class WalletStoreExecutor {
     // MARK: Accounts management
 
     class func fetchAllAccounts(context: SQLiteStoreContext) -> [WalletAccount]? {
-        let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" ORDER BY \"\(WalletAccountTableEntity.indexKey)\" ASC"
+        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountEntity.tableName)\" ORDER BY \"\(WalletAccountEntity.indexKey)\" ASC"
         return fetchModelCollection(statement, context: context)
     }
     
@@ -29,14 +29,14 @@ final class WalletStoreExecutor {
         guard indexes.count > 0 else { return [] }
         
         let inStatement = indexes.map({ return "\($0)" }).joinWithSeparator(", ")
-        let fieldsStatement = "\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountTableEntity.tableName)\" WHERE \"\(WalletAccountTableEntity.indexKey)\" IN (\(inStatement))"
+        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountEntity.tableName)\" WHERE \"\(WalletAccountEntity.indexKey)\" IN (\(inStatement))"
         return fetchModelCollection(statement, context: context)
     }
 
     class func addAccount(account: WalletAccount, context: SQLiteStoreContext) -> Bool {
-        let fieldsStatement = "(\"\(WalletAccountTableEntity.indexKey)\", \"\(WalletAccountTableEntity.nameKey)\", \"\(WalletAccountTableEntity.extendedPublicKeyKey)\", \"\(WalletAccountTableEntity.nextExternalIndexKey)\", \"\(WalletAccountTableEntity.nextInternalIndexKey)\")"
-        let statement = "INSERT INTO \"\(WalletAccountTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?)"
+        let fieldsStatement = "(\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\")"
+        let statement = "INSERT INTO \"\(WalletAccountEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?)"
         let values = [account.index, account.name ?? NSNull(), account.extendedPublicKey, account.nextExternalIndex, account.nextInternalIndex]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
             logger.error("Unable to insert account: \(context.lastErrorMessage())")
@@ -49,8 +49,8 @@ final class WalletStoreExecutor {
         guard let currentIndex = fetchNextIndexForAccountAtIndex(accountIndex, external: external, context: context) else { return false }
         guard index > currentIndex else { return true }
         
-        let fieldName = external ? WalletAccountTableEntity.nextExternalIndexKey : WalletAccountTableEntity.nextInternalIndexKey
-        let statement = "UPDATE \"\(WalletAccountTableEntity.tableName)\" SET \"\(fieldName)\" = ? WHERE \"\(WalletAccountTableEntity.indexKey)\" = ?"
+        let fieldName = external ? WalletAccountEntity.nextExternalIndexKey : WalletAccountEntity.nextInternalIndexKey
+        let statement = "UPDATE \"\(WalletAccountEntity.tableName)\" SET \"\(fieldName)\" = ? WHERE \"\(WalletAccountEntity.indexKey)\" = ?"
         guard context.executeUpdate(statement, withArgumentsInArray: [index, accountIndex]) else {
             logger.error("Unable to set \(fieldName) for account at index \(accountIndex): \(context.lastErrorMessage())")
             return false
@@ -59,7 +59,7 @@ final class WalletStoreExecutor {
     }
     
     private class func fetchNextIndexForAccountAtIndex(index: Int, external: Bool, context: SQLiteStoreContext) -> Int? {
-        let fieldName = external ? WalletAccountTableEntity.nextExternalIndexKey : WalletAccountTableEntity.nextInternalIndexKey
+        let fieldName = external ? WalletAccountEntity.nextExternalIndexKey : WalletAccountEntity.nextInternalIndexKey
         guard let account = fetchAccountAtIndex(index, context: context) else {
             logger.error("Unable to fetch account at index \(index) to fetch \(fieldName): \(context.lastErrorMessage())")
             return nil
@@ -76,9 +76,9 @@ final class WalletStoreExecutor {
         guard paths.count > 0 else { return [] }
         
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
-        let concatStatement = "('/' || \"\(WalletAddressTableEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressTableEntity.chainIndexKey)\" || '/' || \"\(WalletAddressTableEntity.keyIndexKey)\") AS path"
-        let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
-        let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE path IN (\(inStatement))"
+        let concatStatement = "('/' || \"\(WalletAddressEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressEntity.chainIndexKey)\" || '/' || \"\(WalletAddressEntity.keyIndexKey)\") AS path"
+        let fieldsStatement = "\"\(WalletAddressEntity.addressKey)\", \"\(WalletAddressEntity.accountIndexKey)\", \"\(WalletAddressEntity.chainIndexKey)\", \"\(WalletAddressEntity.keyIndexKey)\""
+        let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(WalletAddressEntity.tableName)\" WHERE path IN (\(inStatement))"
         return fetchModelCollection(statement, context: context)
     }
     
@@ -86,8 +86,8 @@ final class WalletStoreExecutor {
         guard addresses.count > 0 else { return [] }
 
         let inStatement = addresses.map({ return "\"\($0)\"" }).joinWithSeparator(", ")
-        let fieldsStatement = "\"\(WalletAddressTableEntity.addressKey)\", \"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressTableEntity.tableName)\" WHERE \"\(WalletAddressTableEntity.addressKey)\" IN (\(inStatement))"
+        let fieldsStatement = "\"\(WalletAddressEntity.addressKey)\", \"\(WalletAddressEntity.accountIndexKey)\", \"\(WalletAddressEntity.chainIndexKey)\", \"\(WalletAddressEntity.keyIndexKey)\""
+        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressEntity.tableName)\" WHERE \"\(WalletAddressEntity.addressKey)\" IN (\(inStatement))"
         return fetchModelCollection(statement, context: context)
     }
     
@@ -95,8 +95,8 @@ final class WalletStoreExecutor {
         guard fetchAddressWithAddress(address.address, context: context) == nil else { return true }
         guard fetchAddressAtPath(address.path, context: context) == nil else { return true }
         
-        let fieldsStatement = "(\"\(WalletAddressTableEntity.accountIndexKey)\", \"\(WalletAddressTableEntity.chainIndexKey)\", \"\(WalletAddressTableEntity.keyIndexKey)\", \"\(WalletAddressTableEntity.addressKey)\")"
-        let statement = "INSERT INTO \"\(WalletAddressTableEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
+        let fieldsStatement = "(\"\(WalletAddressEntity.accountIndexKey)\", \"\(WalletAddressEntity.chainIndexKey)\", \"\(WalletAddressEntity.keyIndexKey)\", \"\(WalletAddressEntity.addressKey)\")"
+        let statement = "INSERT INTO \"\(WalletAddressEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
         let values: [AnyObject] = [address.path.accountIndex, address.path.chainIndex, address.path.keyIndex, address.address]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
             logger.error("Unable to insert address: \(context.lastErrorMessage())")
@@ -128,32 +128,32 @@ final class WalletStoreExecutor {
     }
     
     class func storeTransaction(transaction: WalletRemoteTransaction, context: SQLiteStoreContext) -> Bool {
-        let updateFieldsStatement = "\"\(WalletTransactionTableEntity.blockHashKey)\" = ?, \"\(WalletTransactionTableEntity.blockHeightKey)\" = ?, \"\(WalletTransactionTableEntity.blockTimeKey)\" = ?"
-        let updateStatement = "UPDATE \"\(WalletTransactionTableEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletTransactionTableEntity.hashKey)\" = ?"
+        let updateFieldsStatement = "\"\(WalletTransactionEntity.blockHashKey)\" = ?, \"\(WalletTransactionEntity.blockHeightKey)\" = ?, \"\(WalletTransactionEntity.blockTimeKey)\" = ?"
+        let updateStatement = "UPDATE \"\(WalletTransactionEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletTransactionEntity.hashKey)\" = ?"
         let updateValues = [
-            transaction.blockHash ?? NSNull(),
-            transaction.blockHeight ?? NSNull(),
-            transaction.blockTime ?? NSNull(),
-            transaction.hash
+            transaction.transaction.blockHash ?? NSNull(),
+            transaction.transaction.blockHeight ?? NSNull(),
+            transaction.transaction.blockTime ?? NSNull(),
+            transaction.transaction.hash
         ]
         guard context.executeUpdate(updateStatement, withArgumentsInArray: updateValues) else {
-            logger.error("Unable to update transaction \(transaction.hash): \(context.lastErrorMessage())")
+            logger.error("Unable to update transaction \(transaction.transaction.hash): \(context.lastErrorMessage())")
             return false
         }
         if context.changes() == 0 {
-            let insertFieldsStatement = "(\"\(WalletTransactionTableEntity.hashKey)\", \"\(WalletTransactionTableEntity.receptionDateKey)\", \"\(WalletTransactionTableEntity.lockTimeKey)\", \"\(WalletTransactionTableEntity.feesKey)\", \"\(WalletTransactionTableEntity.blockHashKey)\", \"\(WalletTransactionTableEntity.blockHeightKey)\", \"\(WalletTransactionTableEntity.blockTimeKey)\")"
-            let insertStatement = "INSERT INTO \"\(WalletTransactionTableEntity.tableName)\" \(insertFieldsStatement) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            let insertFieldsStatement = "(\"\(WalletTransactionEntity.hashKey)\", \"\(WalletTransactionEntity.receptionDateKey)\", \"\(WalletTransactionEntity.lockTimeKey)\", \"\(WalletTransactionEntity.feesKey)\", \"\(WalletTransactionEntity.blockHashKey)\", \"\(WalletTransactionEntity.blockHeightKey)\", \"\(WalletTransactionEntity.blockTimeKey)\")"
+            let insertStatement = "INSERT INTO \"\(WalletTransactionEntity.tableName)\" \(insertFieldsStatement) VALUES (?, ?, ?, ?, ?, ?, ?)"
             let insertValues = [
-                transaction.hash,
-                transaction.receiveAt,
-                transaction.lockTime,
-                NSNumber(longLong: transaction.fees),
-                transaction.blockHash ?? NSNull(),
-                transaction.blockHeight ?? NSNull(),
-                transaction.blockTime ?? NSNull()
+                transaction.transaction.hash,
+                transaction.transaction.receiveAt,
+                transaction.transaction.lockTime,
+                NSNumber(longLong: transaction.transaction.fees),
+                transaction.transaction.blockHash ?? NSNull(),
+                transaction.transaction.blockHeight ?? NSNull(),
+                transaction.transaction.blockTime ?? NSNull()
             ]
             guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
-                logger.error("Unable to insert transaction \(transaction.hash): \(context.lastErrorMessage())")
+                logger.error("Unable to insert transaction \(transaction.transaction.hash): \(context.lastErrorMessage())")
                 return false
             }
             guard addTransactionInputs(transaction, context: context) else { return false }
@@ -166,9 +166,9 @@ final class WalletStoreExecutor {
         guard transaction.inputs.count > 0 else { return true }
         
         for input in transaction.inputs {
-            let insertFieldsStatement = "(\"\(WalletTransactionInputTableEntity.addressKey)\", \"\(WalletTransactionInputTableEntity.outputHashKey)\", \"\(WalletTransactionInputTableEntity.outputIndexKey)\", \"\(WalletTransactionInputTableEntity.valueKey)\", \"\(WalletTransactionInputTableEntity.scriptSignature)\", \"\(WalletTransactionInputTableEntity.coinbaseKey)\", \"\(WalletTransactionInputTableEntity.transactionHashKey)\")"
+            let insertFieldsStatement = "(\"\(WalletTransactionInputEntity.addressKey)\", \"\(WalletTransactionInputEntity.outputHashKey)\", \"\(WalletTransactionInputEntity.outputIndexKey)\", \"\(WalletTransactionInputEntity.valueKey)\", \"\(WalletTransactionInputEntity.scriptSignature)\", \"\(WalletTransactionInputEntity.coinbaseKey)\", \"\(WalletTransactionInputEntity.transactionHashKey)\")"
             let insertValues: [AnyObject]
-            if let input = input as? WalletRemoteTransactionRegularInput {
+            if let input = input as? WalletTransactionRegularInput {
                 insertValues = [
                     input.address ?? NSNull(),
                     input.outputHash,
@@ -176,7 +176,7 @@ final class WalletStoreExecutor {
                     NSNumber(longLong: input.value),
                     input.scriptSignature,
                     false,
-                    transaction.hash
+                    transaction.transaction.hash
                 ]
             }
             else {
@@ -187,12 +187,12 @@ final class WalletStoreExecutor {
                     NSNull(),
                     NSNull(),
                     true,
-                    transaction.hash
+                    transaction.transaction.hash
                 ]
             }
-            let insertStatement = "INSERT INTO \"\(WalletTransactionInputTableEntity.tableName)\" \(insertFieldsStatement) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            let insertStatement = "INSERT INTO \"\(WalletTransactionInputEntity.tableName)\" \(insertFieldsStatement) VALUES (?, ?, ?, ?, ?, ?, ?)"
             guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
-                logger.error("Unable to insert input for transaction \(transaction.hash): \(context.lastErrorMessage())")
+                logger.error("Unable to insert input for transaction \(transaction.transaction.hash): \(context.lastErrorMessage())")
                 return false
             }
         }
@@ -203,17 +203,17 @@ final class WalletStoreExecutor {
         guard transaction.outputs.count > 0 else { return true }
 
         for output in transaction.outputs {
-            let insertFieldsStatement = "(\"\(WalletTransactionOutputTableEntity.addressKey)\", \"\(WalletTransactionOutputTableEntity.scriptHexKey)\", \"\(WalletTransactionOutputTableEntity.valueKey)\", \"\(WalletTransactionOutputTableEntity.indexKey)\", \"\(WalletTransactionOutputTableEntity.transactionHashKey)\")"
+            let insertFieldsStatement = "(\"\(WalletTransactionOutputEntity.addressKey)\", \"\(WalletTransactionOutputEntity.scriptHexKey)\", \"\(WalletTransactionOutputEntity.valueKey)\", \"\(WalletTransactionOutputEntity.indexKey)\", \"\(WalletTransactionOutputEntity.transactionHashKey)\")"
             let insertValues = [
                 output.address ?? NSNull(),
                 output.scriptHex,
                 NSNumber(longLong: output.value),
                 output.index,
-                transaction.hash
+                transaction.transaction.hash
             ]
-            let insertStatement = "INSERT INTO \"\(WalletTransactionOutputTableEntity.tableName)\" \(insertFieldsStatement) VALUES (?, ?, ?, ?, ?)"
+            let insertStatement = "INSERT INTO \"\(WalletTransactionOutputEntity.tableName)\" \(insertFieldsStatement) VALUES (?, ?, ?, ?, ?)"
             guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
-                logger.error("Unable to insert output for transaction \(transaction.hash): \(context.lastErrorMessage())")
+                logger.error("Unable to insert output for transaction \(transaction.transaction.hash): \(context.lastErrorMessage())")
                 return false
             }
         }
@@ -228,16 +228,16 @@ final class WalletStoreExecutor {
     }
     
     private class func storeOperation(operation: WalletOperation, context: SQLiteStoreContext) -> Bool {
-        let updateFieldsStatement = "\"\(WalletOperationTableEntity.amountKey)\" = ?"
-        let updateStatement = "UPDATE \"\(WalletOperationTableEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletOperationTableEntity.uidKey)\" = ?"
+        let updateFieldsStatement = "\"\(WalletOperationEntity.amountKey)\" = ?"
+        let updateStatement = "UPDATE \"\(WalletOperationEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletOperationEntity.uidKey)\" = ?"
         let updateValues = [NSNumber(longLong: operation.amount), operation.uid]
         guard context.executeUpdate(updateStatement, withArgumentsInArray: updateValues) else {
             logger.error("Unable to update operation \(operation.uid): \(context.lastErrorMessage())")
             return false
         }
         if context.changes() == 0 {
-            let insertFieldsStatement = "\"\(WalletOperationTableEntity.accountIndexKey)\", \"\(WalletOperationTableEntity.amountKey)\", \"\(WalletOperationTableEntity.kindKey)\", \"\(WalletOperationTableEntity.uidKey)\", \"\(WalletOperationTableEntity.transactionHashKey)\""
-            let insertStatement = "INSERT INTO \"\(WalletOperationTableEntity.tableName)\" (\(insertFieldsStatement)) VALUES (?, ?, ?, ?, ?)"
+            let insertFieldsStatement = "\"\(WalletOperationEntity.accountIndexKey)\", \"\(WalletOperationEntity.amountKey)\", \"\(WalletOperationEntity.kindKey)\", \"\(WalletOperationEntity.uidKey)\", \"\(WalletOperationEntity.transactionHashKey)\""
+            let insertStatement = "INSERT INTO \"\(WalletOperationEntity.tableName)\" (\(insertFieldsStatement)) VALUES (?, ?, ?, ?, ?)"
             let insertValues = [
                 operation.accountIndex,
                 NSNumber(longLong: operation.amount),
@@ -256,15 +256,15 @@ final class WalletStoreExecutor {
     // MARK: Schema management
     
     class func schemaVersion(context: SQLiteStoreContext) -> Int? {
-        guard let results = context.executeQuery("SELECT \(WalletMetadataTableEntity.schemaVersionKey) FROM \(WalletMetadataTableEntity.tableName)", withArgumentsInArray: nil) else {
+        guard let results = context.executeQuery("SELECT \(WalletMetadataEntity.schemaVersionKey) FROM \(WalletMetadataEntity.tableName)", withArgumentsInArray: nil) else {
             logger.warn("Unable to fetch schema version: \(context.lastErrorMessage())")
             return nil
         }
-        guard results.next() && !results.columnIsNull(WalletMetadataTableEntity.schemaVersionKey) else {
+        guard results.next() && !results.columnIsNull(WalletMetadataEntity.schemaVersionKey) else {
             logger.warn("Unable to fetch schema version: no row")
             return nil
         }
-        let version = results.longForColumn(WalletMetadataTableEntity.schemaVersionKey)
+        let version = results.longForColumn(WalletMetadataEntity.schemaVersionKey)
         guard version > 0 else {
             logger.error("Unable to fetch schema version: value is <= 0")
             return nil
@@ -276,14 +276,14 @@ final class WalletStoreExecutor {
         guard metadata.count > 0 else { return true }
         
         let updateStatement = metadata.map { return "\"\($0.0)\" = :\($0.0)" }.joinWithSeparator(", ")
-        guard context.executeUpdate("UPDATE \"\(WalletMetadataTableEntity.tableName)\" SET \(updateStatement)", withParameterDictionary: metadata) else {
+        guard context.executeUpdate("UPDATE \"\(WalletMetadataEntity.tableName)\" SET \(updateStatement)", withParameterDictionary: metadata) else {
             logger.error("Unable to set database metadata \(metadata): \(context.lastErrorMessage())")
             return false
         }
         if context.changes() == 0 {
             let insertStatement = metadata.map { "\"\($0.0)\"" }.joinWithSeparator(", ")
             let valuesStatement = metadata.map { ":\($0.0)" }.joinWithSeparator(", ")
-            guard context.executeUpdate("INSERT INTO \"\(WalletMetadataTableEntity.tableName)\" (\(insertStatement)) VALUES (\(valuesStatement))", withParameterDictionary: metadata) else {
+            guard context.executeUpdate("INSERT INTO \"\(WalletMetadataEntity.tableName)\" (\(insertStatement)) VALUES (\(valuesStatement))", withParameterDictionary: metadata) else {
                 logger.error("Unable to set database metadata \(metadata): \(context.lastErrorMessage())")
                 return false
             }

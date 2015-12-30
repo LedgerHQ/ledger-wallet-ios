@@ -28,10 +28,10 @@ extension WalletAddress: SQLiteFetchableModel {
     
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
-            accountIndex = self.dynamicType.optionalIntegerForKey(WalletAddressTableEntity.accountIndexKey, resultSet: resultSet),
-            chainIndex = self.dynamicType.optionalIntegerForKey(WalletAddressTableEntity.chainIndexKey, resultSet: resultSet),
-            keyIndex = self.dynamicType.optionalIntegerForKey(WalletAddressTableEntity.keyIndexKey, resultSet: resultSet),
-            address = self.dynamicType.optionalStringForKey(WalletAddressTableEntity.addressKey, resultSet: resultSet)
+            accountIndex = self.dynamicType.optionalIntegerForKey(WalletAddressEntity.accountIndexKey, resultSet: resultSet),
+            chainIndex = self.dynamicType.optionalIntegerForKey(WalletAddressEntity.chainIndexKey, resultSet: resultSet),
+            keyIndex = self.dynamicType.optionalIntegerForKey(WalletAddressEntity.keyIndexKey, resultSet: resultSet),
+            address = self.dynamicType.optionalStringForKey(WalletAddressEntity.addressKey, resultSet: resultSet)
         else {
             return nil
         }

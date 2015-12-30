@@ -1,5 +1,5 @@
 //
-//  WalletTransactionOutputTableEntity.swift
+//  WalletTransactionOutputEntity.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 15/12/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletTransactionOutputTableEntity: SQLiteTableEntityType {
+struct WalletTransactionOutputEntity: SQLiteEntityType {
     
     static let tableName = "transaction_output"
     

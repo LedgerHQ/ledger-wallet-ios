@@ -1,5 +1,5 @@
 //
-//  SQLiteStorableEntity.swift
+//  SQLiteTableEntity.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 30/11/2015.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol SQLiteTableEntityType {
+protocol SQLiteEntityType {
     
     static var tableName: String { get }
     static var eponymTable: SQLiteTable { get }
     
 }
 
-extension SQLiteTableEntityType {
+extension SQLiteEntityType {
     
     static var eponymTable: SQLiteTable { return SQLiteTable(name: tableName) }
 

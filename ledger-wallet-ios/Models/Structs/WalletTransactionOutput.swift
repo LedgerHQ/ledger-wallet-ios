@@ -1,25 +1,26 @@
 //
-//  WalletRemoteTransactionOutput.swift
+//  WalletTransactionOutput.swift
 //  ledger-wallet-ios
 //
-//  Created by Nicolas Bigot on 14/12/2015.
+//  Created by Nicolas Bigot on 30/12/2015.
 //  Copyright © 2015 Ledger. All rights reserved.
 //
 
 import Foundation
 
-struct WalletRemoteTransactionOutput {
-
+struct WalletTransactionOutput {
+    
     let value: Int64
     let scriptHex: String
     let address: String?
     let index: Int
+    let transactionHash: String?
     
 }
 
 // MARK: JSONInitializableModel
 
-extension WalletRemoteTransactionOutput: JSONInitializableModel {
+extension WalletTransactionOutput: JSONInitializableModel {
     
     init?(JSONObject: [String : AnyObject]) {
         guard let
@@ -35,22 +36,23 @@ extension WalletRemoteTransactionOutput: JSONInitializableModel {
         self.scriptHex = scriptHex
         self.index = index
         self.value = value.longLongValue
+        self.transactionHash = nil
     }
     
 }
 
 // MARK: Equatable
 
-extension WalletRemoteTransactionOutput: Equatable {}
+extension WalletTransactionOutput: Equatable {}
 
-func ==(lhs: WalletRemoteTransactionOutput, rhs: WalletRemoteTransactionOutput) -> Bool {
-    return lhs.value == rhs.value && lhs.scriptHex == rhs.scriptHex && lhs.index == rhs.index
-} 
+func ==(lhs: WalletTransactionOutput, rhs: WalletTransactionOutput) -> Bool {
+    return lhs.value == rhs.value && lhs.scriptHex == rhs.scriptHex && lhs.index == rhs.index && lhs.transactionHash == rhs.transactionHash && lhs.address == rhs.address
+}
 
 // MARK: Hashable
 
-extension WalletRemoteTransactionOutput: Hashable {
+extension WalletTransactionOutput: Hashable {
     
-    var hashValue: Int { return "\(index) \(scriptHex) \(value)".hashValue }
+    var hashValue: Int { return "\(index) \(scriptHex) \(value) \(transactionHash) \(address)".hashValue }
     
 }

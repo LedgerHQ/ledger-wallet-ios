@@ -13,6 +13,7 @@ protocol SQLiteFetchableModel {
     static func collectionFromResultSet(resultSet: SQLiteStoreResultSet) -> [Self]
     static func optionalIntegerForKey(key: String, resultSet: SQLiteStoreResultSet) -> Int?
     static func optionalStringForKey(key: String, resultSet: SQLiteStoreResultSet) -> String?
+    static func optionalInteger64ForKey(key: String, resultSet: SQLiteStoreResultSet) -> Int64?
     
     init?(resultSet: SQLiteStoreResultSet)
     

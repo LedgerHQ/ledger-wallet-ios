@@ -33,7 +33,7 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
         
         for (input, address) in context.mappedInputs {
             let operation = operations[address.path.accountIndex] ??
-                WalletOperation(accountIndex: address.path.accountIndex, transactionHash: context.transaction.hash, kind: .Send, amount: 0)
+                WalletOperation(accountIndex: address.path.accountIndex, transactionHash: context.remoteTransaction.transaction.hash, kind: .Send, amount: 0)
             operations[address.path.accountIndex] = operation.increaseAmount(input.value)
         }
         return operations
@@ -44,7 +44,7 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
         
         for (output, address) in context.mappedOutputs where address.path.isInternal == !external {
             let operation = operations[address.path.accountIndex] ??
-                WalletOperation(accountIndex: address.path.accountIndex, transactionHash: context.transaction.hash, kind: .Receive, amount: 0)
+                WalletOperation(accountIndex: address.path.accountIndex, transactionHash: context.remoteTransaction.transaction.hash, kind: .Receive, amount: 0)
             operations[address.path.accountIndex] = operation.increaseAmount(output.value)
         }
         return operations
