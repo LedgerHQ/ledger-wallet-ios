@@ -20,16 +20,16 @@ final class WalletStoreProxy {
         executeModelCollectionFetch({ WalletStoreExecutor.fetchAllAccounts($0) }, completion: completion)
     }
     
-    func fetchAllVisibleAccounts(completion: ([WalletAccount]?) -> Void) {
-        
-    }
-    
     func fetchAccountAtIndex(index: Int, completion: (WalletAccount?) -> Void) {
         executeModelFetch({ WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, completion: completion)
     }
     
     func fetchAccountsAtIndexes(indexes: [Int], completion: ([WalletAccount]?) -> Void) {
         executeModelCollectionFetch({ WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, completion: completion)
+    }
+    
+    func fetchAllVisibleAccounts(completion: ([WalletAccount]?) -> Void) {
+        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllVisibleAccounts($0) }, completion: completion)
     }
 
     func addAccount(account: WalletAccount) {

@@ -17,5 +17,7 @@ struct WalletAccountEntity: SQLiteEntityType {
     static let extendedPublicKeyKey = "extended_public_key"
     static let nextExternalIndexKey = "next_external_index"
     static let nextInternalIndexKey = "next_internal_index"
+    static let balanceKey = "balance"
+    static let hiddenKey = "hidden"
     
 }

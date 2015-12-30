@@ -42,6 +42,7 @@ final class WalletStoreSchemas {
         accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.nextExternalIndexKey, type: .Integer, notNull: true, unique: false))
         accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.nextInternalIndexKey, type: .Integer, notNull: true, unique: false))
         accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.extendedPublicKeyKey, type: .Text, notNull: true, unique: true))
+        accountsTable.addField(SQLiteTableField(name: WalletAccountEntity.hiddenKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(accountsTable)
         
         let addressesTable = WalletAddressEntity.eponymTable

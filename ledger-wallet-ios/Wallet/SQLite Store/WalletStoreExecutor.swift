@@ -15,9 +15,8 @@ final class WalletStoreExecutor {
     // MARK: Accounts management
 
     class func fetchAllAccounts(context: SQLiteStoreContext) -> [WalletAccount]? {
-        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountEntity.tableName)\" ORDER BY \"\(WalletAccountEntity.indexKey)\" ASC"
-        return fetchModelCollection(statement, context: context)
+        let orderStatement = "\"\(WalletAccountEntity.indexKey)\" ASC"
+        return fetchAccounts(orderStatement: orderStatement, context: context)
     }
     
     class func fetchAccountAtIndex(index: Int, context: SQLiteStoreContext) -> WalletAccount? {
@@ -29,15 +28,35 @@ final class WalletStoreExecutor {
         guard indexes.count > 0 else { return [] }
         
         let inStatement = indexes.map({ return "\($0)" }).joinWithSeparator(", ")
-        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountEntity.tableName)\" WHERE \"\(WalletAccountEntity.indexKey)\" IN (\(inStatement))"
+        let whereStatement = "\"\(WalletAccountEntity.indexKey)\" IN (\(inStatement))"
+        return fetchAccounts(whereStatement: whereStatement, context: context)
+    }
+    
+    class func fetchAllVisibleAccounts(context: SQLiteStoreContext) -> [WalletAccount]? {
+        let whereStatement = "(\"\(WalletAccountEntity.nextInternalIndexKey)\" > 0 OR \"\(WalletAccountEntity.nextExternalIndexKey)\" > 0) AND \"\(WalletAccountEntity.hiddenKey)\" = 0"
+        let orderStatement = "\"\(WalletAccountEntity.indexKey)\" ASC"
+        return fetchAccounts(whereStatement: whereStatement, orderStatement: orderStatement, context: context)
+    }
+    
+    private class func fetchAccounts(whereStatement whereStatement: String? = nil, orderStatement: String? = nil, context: SQLiteStoreContext) -> [WalletAccount]? {
+        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.hiddenKey)\""
+        var statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountEntity.tableName)\""
+        if let whereStatement = whereStatement { statement += "WHERE \(whereStatement)" }
+        if let orderStatement = orderStatement { statement += "ORDER BY \(orderStatement)" }
         return fetchModelCollection(statement, context: context)
     }
 
     class func addAccount(account: WalletAccount, context: SQLiteStoreContext) -> Bool {
-        let fieldsStatement = "(\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\")"
-        let statement = "INSERT INTO \"\(WalletAccountEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?)"
-        let values = [account.index, account.name ?? NSNull(), account.extendedPublicKey, account.nextExternalIndex, account.nextInternalIndex]
+        let fieldsStatement = "(\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.hiddenKey)\")"
+        let statement = "INSERT INTO \"\(WalletAccountEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?, ?)"
+        let values = [
+            account.index,
+            account.name ?? NSNull(),
+            account.extendedPublicKey,
+            account.nextExternalIndex,
+            account.nextInternalIndex,
+            account.hidden
+        ]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
             logger.error("Unable to insert account: \(context.lastErrorMessage())")
             return false
@@ -76,18 +95,23 @@ final class WalletStoreExecutor {
         guard paths.count > 0 else { return [] }
         
         let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
-        let concatStatement = "('/' || \"\(WalletAddressEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressEntity.chainIndexKey)\" || '/' || \"\(WalletAddressEntity.keyIndexKey)\") AS path"
-        let fieldsStatement = "\"\(WalletAddressEntity.addressKey)\", \"\(WalletAddressEntity.accountIndexKey)\", \"\(WalletAddressEntity.chainIndexKey)\", \"\(WalletAddressEntity.keyIndexKey)\""
-        let statement = "SELECT \(fieldsStatement), \(concatStatement) FROM \"\(WalletAddressEntity.tableName)\" WHERE path IN (\(inStatement))"
-        return fetchModelCollection(statement, context: context)
+        let concatStatement = "('/' || \"\(WalletAddressEntity.accountIndexKey)\" || '''/' || \"\(WalletAddressEntity.chainIndexKey)\" || '/' || \"\(WalletAddressEntity.keyIndexKey)\")"
+        let whereStatement = "\(concatStatement) IN (\(inStatement))"
+        return fetchAddresses(whereStatement: whereStatement, context: context)
     }
     
     class func fetchAddressesWithAddresses(addresses: [String], context: SQLiteStoreContext) -> [WalletAddress]? {
         guard addresses.count > 0 else { return [] }
 
         let inStatement = addresses.map({ return "\"\($0)\"" }).joinWithSeparator(", ")
+        let whereStatement = "\"\(WalletAddressEntity.addressKey)\" IN (\(inStatement))"
+        return fetchAddresses(whereStatement: whereStatement, context: context)
+    }
+    
+    private class func fetchAddresses(whereStatement whereStatement: String? = nil, context: SQLiteStoreContext) -> [WalletAddress]? {
         let fieldsStatement = "\"\(WalletAddressEntity.addressKey)\", \"\(WalletAddressEntity.accountIndexKey)\", \"\(WalletAddressEntity.chainIndexKey)\", \"\(WalletAddressEntity.keyIndexKey)\""
-        let statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressEntity.tableName)\" WHERE \"\(WalletAddressEntity.addressKey)\" IN (\(inStatement))"
+        var statement = "SELECT \(fieldsStatement) FROM \"\(WalletAddressEntity.tableName)\""
+        if let whereStatement = whereStatement { statement += "WHERE \(whereStatement)" }
         return fetchModelCollection(statement, context: context)
     }
     
@@ -97,7 +121,12 @@ final class WalletStoreExecutor {
         
         let fieldsStatement = "(\"\(WalletAddressEntity.accountIndexKey)\", \"\(WalletAddressEntity.chainIndexKey)\", \"\(WalletAddressEntity.keyIndexKey)\", \"\(WalletAddressEntity.addressKey)\")"
         let statement = "INSERT INTO \"\(WalletAddressEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?)"
-        let values: [AnyObject] = [address.path.accountIndex, address.path.chainIndex, address.path.keyIndex, address.address]
+        let values: [AnyObject] = [
+            address.path.accountIndex,
+            address.path.chainIndex,
+            address.path.keyIndex,
+            address.address
+        ]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
             logger.error("Unable to insert address: \(context.lastErrorMessage())")
             return false
