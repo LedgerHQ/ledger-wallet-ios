@@ -11,7 +11,7 @@ import Foundation
 protocol WalletTransactionsStreamSaveFunnelDelegate: class {
     
     func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel)
-    func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel)
+    func saveFunnelDidUpdateAccountOperations(saveFunnel: WalletTransactionsStreamSaveFunnel)
     func saveFunnerDidUpdateAccountBalances(saveFunnel: WalletTransactionsStreamSaveFunnel)
     
 }
@@ -96,7 +96,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         
         logger.info("Writing batch of \(operations.count) operation(s) to store")
         storeProxy.storeOperations(operations)
-        delegate?.saveFunnelDidUpdateOperations(self)
+        delegate?.saveFunnelDidUpdateAccountOperations(self)
     }
     
     // MARK: Initialization
