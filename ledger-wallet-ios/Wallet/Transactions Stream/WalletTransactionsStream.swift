@@ -127,7 +127,7 @@ final class WalletTransactionsStream {
 
 extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
     
-    func layoutFunnelDidUpdateLayout(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
+    func layoutFunnelDidUpdateAccountLayouts(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
         
     }
     

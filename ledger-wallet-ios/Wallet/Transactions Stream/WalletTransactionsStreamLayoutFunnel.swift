@@ -10,7 +10,7 @@ import Foundation
 
 protocol WalletTransactionsStreamLayoutFunnelDelegate: class {
     
-    func layoutFunnelDidUpdateLayout(layoutfunnel: WalletTransactionsStreamLayoutFunnel)
+    func layoutFunnelDidUpdateAccountLayouts(layoutfunnel: WalletTransactionsStreamLayoutFunnel)
     func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void)
     
 }
@@ -39,10 +39,13 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     
     private func updateAccountIndexes(context: WalletTransactionsStreamContext) {
         for (_, address) in context.mappedOutputs {
+            var updatedLayouts = false
+            
             if address.path.isExternal {
                 if layoutHolder.externalIndex(address.path.keyIndex, isInsideObservableRangeForAccountAtIndex: address.path.accountIndex) {
                     // bump external index
                     layoutHolder.setNextExternalIndex(address.path.keyIndex + 1, forAccountAtIndex: address.path.accountIndex)
+                    updatedLayouts = true
                     
                     // cache new addresses
                     if let range = layoutHolder.observableExternalRangeForAccountAtIndex(address.path.accountIndex) {
@@ -52,14 +55,13 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
                             addressCache.fetchOrDeriveAddressesAtPaths(paths, queue: callingQueue, completion: { _ in })
                         }
                     }
-                    
-                    delegate?.layoutFunnelDidUpdateLayout(self)
                 }
             }
             else {
                 if layoutHolder.internalIndex(address.path.keyIndex, isInsideObservableRangeForAccountAtIndex: address.path.accountIndex) {
                     // bump internal index
                     layoutHolder.setNextInternalIndex(address.path.keyIndex + 1, forAccountAtIndex: address.path.accountIndex)
+                    updatedLayouts = true
                     
                     // cache new addresses
                     if let range = layoutHolder.observableInternalRangeForAccountAtIndex(address.path.accountIndex) {
@@ -69,9 +71,11 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
                             addressCache.fetchOrDeriveAddressesAtPaths(paths, queue: callingQueue, completion: { _ in })
                         }
                     }
-                    
-                    delegate?.layoutFunnelDidUpdateLayout(self)
                 }
+            }
+            
+            if updatedLayouts {
+                delegate?.layoutFunnelDidUpdateAccountLayouts(self)
             }
         }
     }
