@@ -16,7 +16,7 @@ final class WalletAddressCache {
     
     // MARK: Addresses management
 
-    func addressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+    func fetchOrDeriveAddressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
         
@@ -42,7 +42,7 @@ final class WalletAddressCache {
         }
     }
     
-    func addressesWithAddresses(addresses: [String], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+    func fetchAddressesWithAddresses(addresses: [String], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 

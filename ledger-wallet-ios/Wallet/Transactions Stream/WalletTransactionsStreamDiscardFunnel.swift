@@ -23,7 +23,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
         }
         
         // fetch addresses from cache
-        addressCache.addressesWithAddresses(allAddresses, queue: callingQueue) { [weak self] addresses in
+        addressCache.fetchAddressesWithAddresses(allAddresses, queue: callingQueue) { [weak self] addresses in
             guard let strongSelf = self else { return }
             
             guard let addresses = addresses else {

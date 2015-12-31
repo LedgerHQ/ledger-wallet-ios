@@ -53,10 +53,6 @@ struct WalletAddressPath {
         return WalletAddressPath(accountIndex: accountIndex, chainIndex: index, keyIndex: 0)
     }
     
-    func pathWithNewKeyIndex(index: Int) -> WalletAddressPath {
-        return WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: index)
-    }
-
     // MARK: Initialization
 
     init(accountIndex: Int, chainIndex: Int, keyIndex: Int) {

@@ -66,9 +66,9 @@ final class WalletAPIManager: WalletManagerType {
         layoutHolder.reload()
         
         // cache 20 first internal + external addresses
-        let internalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
-        let externalPaths = (0..<20).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
-        addressCache.addressesAtPaths(internalPaths + externalPaths, queue: NSOperationQueue.mainQueue(), completion: { _ in })
+        let internalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
+        let externalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
+        addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: NSOperationQueue.mainQueue(), completion: { _ in })
     }
     
     // MARK: Initialization

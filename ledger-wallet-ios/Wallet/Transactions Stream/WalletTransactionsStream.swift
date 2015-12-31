@@ -127,6 +127,10 @@ final class WalletTransactionsStream {
 
 extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
     
+    func layoutFunnelDidUpdateLayout(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
+        
+    }
+    
     func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
         
     }

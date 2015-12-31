@@ -23,6 +23,7 @@ final class WalletLayoutHolder {
         var value: Int? = nil
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
             strongSelf.accounts.forEach() { account in
                 if account.nextExternalIndex == 0 && account.nextInternalIndex == 0 {
                     value = account.index
