@@ -16,28 +16,30 @@ struct WalletAccount {
     let nextExternalIndex: Int
     let name: String?
     let hidden: Bool
+    let balance: Int64
     
     func withNextInternalIndex(index: Int) -> WalletAccount {
-        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name, hidden: hidden)
+        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name, hidden: hidden, balance: balance)
     }
     
     func withNextExternalIndex(index: Int) -> WalletAccount {
-        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name, hidden: hidden)
+        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name, hidden: hidden, balance: balance)
     }
     
     // MARK: Initialization
     
     init(index: Int, extendedPublicKey: String, name: String?) {
-        self.init(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: 0, nextExternalIndex: 0, name: name, hidden: false)
+        self.init(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: 0, nextExternalIndex: 0, name: name, hidden: false, balance: 0)
     }
     
-    init(index: Int, extendedPublicKey: String, nextInternalIndex: Int, nextExternalIndex: Int, name: String?, hidden: Bool) {
+    init(index: Int, extendedPublicKey: String, nextInternalIndex: Int, nextExternalIndex: Int, name: String?, hidden: Bool, balance: Int64) {
         self.index = index
         self.extendedPublicKey = extendedPublicKey
         self.name = name
         self.nextExternalIndex = nextExternalIndex
         self.nextInternalIndex = nextInternalIndex
         self.hidden = hidden
+        self.balance = balance
     }
     
 }
@@ -52,7 +54,8 @@ extension WalletAccount: SQLiteFetchableModel {
             extendedPublicKey = self.dynamicType.optionalStringForKey(WalletAccountEntity.extendedPublicKeyKey, resultSet: resultSet),
             nextInternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountEntity.nextInternalIndexKey, resultSet: resultSet),
             nextExternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountEntity.nextExternalIndexKey, resultSet: resultSet),
-            hidden = self.dynamicType.optionalBoolForKey(WalletAccountEntity.hiddenKey, resultSet: resultSet)
+            hidden = self.dynamicType.optionalBoolForKey(WalletAccountEntity.hiddenKey, resultSet: resultSet),
+            balance = self.dynamicType.optionalInteger64ForKey(WalletAccountEntity.balanceKey, resultSet: resultSet)
         else {
             return nil
         }
@@ -63,6 +66,7 @@ extension WalletAccount: SQLiteFetchableModel {
         self.nextExternalIndex = nextExternalIndex
         self.name = self.dynamicType.optionalStringForKey(WalletAccountEntity.nameKey, resultSet: resultSet)
         self.hidden = hidden
+        self.balance = balance
     }
     
 }

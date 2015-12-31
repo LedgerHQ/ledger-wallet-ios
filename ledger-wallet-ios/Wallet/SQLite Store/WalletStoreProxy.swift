@@ -43,6 +43,10 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: false, context: $0) })
     }
     
+    func updateAllAccountBalances() {
+        executeTransaction({ return WalletStoreExecutor.updateAllAccountBalances($0) })
+    }
+    
     // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {

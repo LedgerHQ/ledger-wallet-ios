@@ -10,14 +10,16 @@ import Foundation
 
 protocol WalletTransactionsStreamSaveFunnelDelegate: class {
     
+    func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel)
     func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel)
+    func saveFunnerDidUpdateAccountBalances(saveFunnel: WalletTransactionsStreamSaveFunnel)
     
 }
 
 final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelType {
     
     weak var delegate: WalletTransactionsStreamSaveFunnelDelegate?
-    private static let writeBatchSize = 100
+    private static let writeBatchSize = 200
     private let storeProxy: WalletStoreProxy
     private var pendingTransactions: [WalletRemoteTransaction] = []
     private var pendingOperations: [WalletOperation] = []
@@ -69,6 +71,11 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
 
         logger.info("Writing batch of \(transactions.count) transaction(s) to store")
         storeProxy.storeTransactions(transactions)
+        delegate?.saveFunnelDidUpdateTransactions(self)
+        
+        logger.info("Updating balance of all accounts")
+        storeProxy.updateAllAccountBalances()
+        delegate?.saveFunnerDidUpdateAccountBalances(self)
     }
     
     // MARK: Operations management

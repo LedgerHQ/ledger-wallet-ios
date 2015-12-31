@@ -39,7 +39,7 @@ final class WalletStoreExecutor {
     }
     
     private class func fetchAccounts(whereStatement whereStatement: String? = nil, orderStatement: String? = nil, context: SQLiteStoreContext) -> [WalletAccount]? {
-        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.hiddenKey)\""
+        let fieldsStatement = "\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.hiddenKey)\", \"\(WalletAccountEntity.balanceKey)\""
         var statement = "SELECT \(fieldsStatement) FROM \"\(WalletAccountEntity.tableName)\""
         if let whereStatement = whereStatement { statement += "WHERE \(whereStatement)" }
         if let orderStatement = orderStatement { statement += "ORDER BY \(orderStatement)" }
@@ -47,15 +47,16 @@ final class WalletStoreExecutor {
     }
 
     class func addAccount(account: WalletAccount, context: SQLiteStoreContext) -> Bool {
-        let fieldsStatement = "(\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.hiddenKey)\")"
-        let statement = "INSERT INTO \"\(WalletAccountEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?, ?)"
+        let fieldsStatement = "(\"\(WalletAccountEntity.indexKey)\", \"\(WalletAccountEntity.nameKey)\", \"\(WalletAccountEntity.extendedPublicKeyKey)\", \"\(WalletAccountEntity.nextExternalIndexKey)\", \"\(WalletAccountEntity.nextInternalIndexKey)\", \"\(WalletAccountEntity.hiddenKey)\", \"\(WalletAccountEntity.balanceKey)\")"
+        let statement = "INSERT INTO \"\(WalletAccountEntity.tableName)\" \(fieldsStatement) VALUES (?, ?, ?, ?, ?, ?, ?)"
         let values = [
             account.index,
             account.name ?? NSNull(),
             account.extendedPublicKey,
             account.nextExternalIndex,
             account.nextInternalIndex,
-            account.hidden
+            account.hidden,
+            NSNumber(longLong: account.balance)
         ]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
             logger.error("Unable to insert account: \(context.lastErrorMessage())")
@@ -87,6 +88,49 @@ final class WalletStoreExecutor {
             return account.nextExternalIndex
         }
         return account.nextInternalIndex
+    }
+    
+    class func updateAllAccountBalances(context: SQLiteStoreContext) -> Bool {
+        guard let accounts = fetchAllAccounts(context) else {
+            logger.error("Unable to fetch all accounts to update balances")
+            return false
+        }
+        guard accounts.count > 0 else { return true }
+        
+        // loop through all accounts to update balance
+        return accounts.reduce(true) { $0 && updateAccountBalanceAtIndex($1.index, context: context) }
+    }
+    
+    private class func updateAccountBalanceAtIndex(index: Int, context: SQLiteStoreContext) -> Bool {
+        guard let balance = computeBalanceForAccountAtIndex(index, context: context) else {
+            return false
+        }
+        
+        let statement = "UPDATE \"\(WalletAccountEntity.tableName)\" SET \"\(WalletAccountEntity.balanceKey)\" = ? WHERE \"\(WalletAccountEntity.indexKey)\" = ?"
+        guard context.executeUpdate(statement, withArgumentsInArray: [NSNumber(longLong: balance), index]) else {
+            logger.error("Unable to update balance for account at index \(index): \(context.lastErrorMessage())")
+            return false
+        }
+        return true
+    }
+    
+    private class func computeBalanceForAccountAtIndex(index: Int, context: SQLiteStoreContext) -> Int64? {
+        let statement = "SELECT (SELECT SUM(\"\(WalletTransactionOutputEntity.valueKey)\") FROM \"\(WalletTransactionOutputEntity.tableName)\" AS \"to\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"to\".\"\(WalletTransactionOutputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?) - (SELECT SUM(\"\(WalletTransactionInputEntity.valueKey)\") FROM \"\(WalletTransactionInputEntity.tableName)\" AS \"ti\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"ti\".\"\(WalletTransactionInputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?) AS \"\(WalletAccountEntity.balanceKey)\""
+        guard let results = context.executeQuery(statement, withArgumentsInArray: [index, index]) else {
+            logger.error("Unable to compute balance for account at index \(index): \(context.lastErrorMessage())")
+            return nil
+        }
+        defer { results.close() }
+        guard results.next() else {
+            logger.error("Unable to fetch computed balance for account at index \(index): no row")
+            return nil
+        }
+        if !results.columnIsNull(WalletAccountEntity.balanceKey) {
+            return results.longLongIntForColumn(WalletAccountEntity.balanceKey)
+        }
+        else {
+            return 0
+        }
     }
     
     // MARK: Addresses management
@@ -286,11 +330,11 @@ final class WalletStoreExecutor {
     
     class func schemaVersion(context: SQLiteStoreContext) -> Int? {
         guard let results = context.executeQuery("SELECT \(WalletMetadataEntity.schemaVersionKey) FROM \(WalletMetadataEntity.tableName)", withArgumentsInArray: nil) else {
-            logger.warn("Unable to fetch schema version: \(context.lastErrorMessage())")
+            logger.error("Unable to fetch schema version: \(context.lastErrorMessage())")
             return nil
         }
         guard results.next() && !results.columnIsNull(WalletMetadataEntity.schemaVersionKey) else {
-            logger.warn("Unable to fetch schema version: no row")
+            logger.error("Unable to fetch schema version: no row")
             return nil
         }
         let version = results.longForColumn(WalletMetadataEntity.schemaVersionKey)

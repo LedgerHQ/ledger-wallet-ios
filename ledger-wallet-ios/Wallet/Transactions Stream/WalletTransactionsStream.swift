@@ -145,4 +145,12 @@ extension WalletTransactionsStream: WalletTransactionsStreamSaveFunnelDelegate {
         
     }
     
+    func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel) {
+        
+    }
+    
+    func saveFunnerDidUpdateAccountBalances(saveFunnel: WalletTransactionsStreamSaveFunnel) {
+        
+    }
+    
 }

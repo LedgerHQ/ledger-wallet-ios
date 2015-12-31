@@ -36,12 +36,12 @@ final class SQLiteStore {
         queue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            guard let database = strongSelf.database where database.goodConnection() else {
-                strongSelf.logger.warn("Unable to perform block: not opened")
+            guard let database = strongSelf.database else {
+                strongSelf.logger.error("Unable to perform block: not opened")
                 return
             }
 
-            block(strongSelf.database)
+            block(database)
         }
     }
 
@@ -49,17 +49,17 @@ final class SQLiteStore {
         queue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            guard let database = strongSelf.database where database.goodConnection() else {
-                strongSelf.logger.warn("Unable to perform transaction: no opened")
+            guard let database = strongSelf.database else {
+                strongSelf.logger.error("Unable to perform transaction: no opened")
                 return
             }
             
-            strongSelf.database.beginTransaction()
-            if block(strongSelf.database) {
-                strongSelf.database.commit()
+            database.beginTransaction()
+            if block(database) {
+                database.commit()
             }
             else {
-                strongSelf.database.rollback()
+                database.rollback()
             }
         }
     }
