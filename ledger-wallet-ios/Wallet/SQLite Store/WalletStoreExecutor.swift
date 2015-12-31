@@ -115,22 +115,17 @@ final class WalletStoreExecutor {
     }
     
     private class func computeBalanceForAccountAtIndex(index: Int, context: SQLiteStoreContext) -> Int64? {
-        let statement = "SELECT (SELECT SUM(\"\(WalletTransactionOutputEntity.valueKey)\") FROM \"\(WalletTransactionOutputEntity.tableName)\" AS \"to\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"to\".\"\(WalletTransactionOutputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?) - (SELECT SUM(\"\(WalletTransactionInputEntity.valueKey)\") FROM \"\(WalletTransactionInputEntity.tableName)\" AS \"ti\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"ti\".\"\(WalletTransactionInputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?) AS \"\(WalletAccountEntity.balanceKey)\""
+        let statement = "SELECT IFNULL((SELECT SUM(\"\(WalletTransactionOutputEntity.valueKey)\") FROM \"\(WalletTransactionOutputEntity.tableName)\" AS \"to\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"to\".\"\(WalletTransactionOutputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?), 0) - IFNULL((SELECT SUM(\"\(WalletTransactionInputEntity.valueKey)\") FROM \"\(WalletTransactionInputEntity.tableName)\" AS \"ti\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"ti\".\"\(WalletTransactionInputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?), 0) AS \"\(WalletAccountEntity.balanceKey)\""
         guard let results = context.executeQuery(statement, withArgumentsInArray: [index, index]) else {
             logger.error("Unable to compute balance for account at index \(index): \(context.lastErrorMessage())")
             return nil
         }
         defer { results.close() }
-        guard results.next() else {
+        guard results.next() && !results.columnIsNull(WalletAccountEntity.balanceKey) else {
             logger.error("Unable to fetch computed balance for account at index \(index): no row")
             return nil
         }
-        if !results.columnIsNull(WalletAccountEntity.balanceKey) {
-            return results.longLongIntForColumn(WalletAccountEntity.balanceKey)
-        }
-        else {
-            return 0
-        }
+        return results.longLongIntForColumn(WalletAccountEntity.balanceKey)
     }
     
     // MARK: Addresses management
