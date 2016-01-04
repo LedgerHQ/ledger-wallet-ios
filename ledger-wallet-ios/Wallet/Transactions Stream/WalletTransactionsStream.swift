@@ -10,8 +10,11 @@ import Foundation
 
 protocol WalletTransactionsStreamDelegate: class {
     
-    func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream)
-    func transactionsStreamDidUpdateLayout(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidUpdateAccountLayout(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidUpdateAccountOperations(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidStartDequeingTransactions(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidFinishDequeingTransactions(transactionsStream: WalletTransactionsStream)
+    func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void)
     
 }
 
@@ -132,7 +135,16 @@ extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate
     }
     
     func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
-        
+        // ask delegate
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.delegate?.transactionsStream(strongSelf, didMissAccountAtIndex: index) { [weak self] shouldContinue in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.workingQueue.addOperationWithBlock() { continueBlock(shouldContinue) }
+            }
+        }
     }
     
 }

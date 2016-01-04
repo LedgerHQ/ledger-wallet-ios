@@ -138,9 +138,12 @@ final class WalletTransactionsConsumer {
         }
         
         // ask delegate
-        delegateQueue.addOperationWithBlock() {
-            self.delegate?.transactionsConsumer(self, didMissAccountAtIndex: accountIndex) { [weak self] shouldContinue in
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.delegate?.transactionsConsumer(strongSelf, didMissAccountAtIndex: accountIndex) { [weak self] shouldContinue in
                 guard let strongSelf = self else { return }
+                
                 strongSelf.workingQueue.addOperationWithBlock() { continueBlock(shouldContinue) }
             }
         }

@@ -29,7 +29,6 @@ final class WalletAPIManager: WalletManagerType {
     // MARK: Wallet management
     
     func startRefreshingTransactions() {
-        transactionsConsumer.delegate = self
         transactionsConsumer.startRefreshing()
     }
     
@@ -38,7 +37,6 @@ final class WalletAPIManager: WalletManagerType {
     }
     
     func startListeningTransactions() {
-        transactionsListener.delegate = self
         transactionsListener.startListening()
     }
     
@@ -71,6 +69,25 @@ final class WalletAPIManager: WalletManagerType {
         addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: NSOperationQueue.mainQueue(), completion: { _ in })
     }
     
+    private func handleMissingAccountAtIndex(index: Int, continueBlock: (Bool) -> Void) {
+        let accounts = [
+            WalletAccount(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
+            WalletAccount(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
+            WalletAccount(index: 2, extendedPublicKey: "xpub6Cec5KTvWeSNJtrFK6PqoCoP369xG8HYEDswqmTsQq63frkqF6dqYV56qRjJ7VQn1TEaejBPowG9vMGxVhsfRinhTgH5fTcAvMedABC8w6P", name: nil),
+            WalletAccount(index: 3, extendedPublicKey: "xpub6Cec5KTvWeSNLwb2fMVRYVJn4w49WebLyg7cJM2QsbQotPggFX49H8jKvieYCMHaGCsKrW9VVknSt7KRxRuacasuGyJm74hZ4JeNRdsRB6Y", name: nil),
+            WalletAccount(index: 4, extendedPublicKey: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb", name: nil)
+        ]
+        //        let accounts = [
+        //            WalletAccountModel(index: 0, extendedPublicKey: "xpub6C47CZq7qLLXHgpoSdpBfjvxBz4YcnY4qXcgbbeeZGiSdyUDugFN3XMLavrUmdedGgaQaQRgVau69dUtoLQvgE1kSXHKWAQfiZHU7hGR2TX", name: nil)
+        //        ]
+        guard let account = accounts.filter({ $0.index == index }).first else {
+            continueBlock(false)
+            return
+        }
+        registerAccount(account)
+        continueBlock(true)
+    }
+    
     // MARK: Initialization
 
     init(uniqueIdentifier: String) {
@@ -87,6 +104,11 @@ final class WalletAPIManager: WalletManagerType {
         self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, delegateQueue: NSOperationQueue.mainQueue())
         self.transactionsListener = WalletTransactionsListener(delegateQueue: NSOperationQueue.mainQueue())
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: NSOperationQueue.mainQueue())
+        
+        // plug delegates
+        self.transactionsConsumer.delegate = self
+        self.transactionsListener.delegate = self
+        self.transactionsStream.delegate = self
         
         // start services
         startAllServices()
@@ -124,22 +146,7 @@ extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     }
     
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
-        let accounts = [
-            WalletAccount(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
-            WalletAccount(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
-            WalletAccount(index: 2, extendedPublicKey: "xpub6Cec5KTvWeSNJtrFK6PqoCoP369xG8HYEDswqmTsQq63frkqF6dqYV56qRjJ7VQn1TEaejBPowG9vMGxVhsfRinhTgH5fTcAvMedABC8w6P", name: nil),
-            WalletAccount(index: 3, extendedPublicKey: "xpub6Cec5KTvWeSNLwb2fMVRYVJn4w49WebLyg7cJM2QsbQotPggFX49H8jKvieYCMHaGCsKrW9VVknSt7KRxRuacasuGyJm74hZ4JeNRdsRB6Y", name: nil),
-            WalletAccount(index: 4, extendedPublicKey: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb", name: nil)
-        ]
-//        let accounts = [
-//            WalletAccountModel(index: 0, extendedPublicKey: "xpub6C47CZq7qLLXHgpoSdpBfjvxBz4YcnY4qXcgbbeeZGiSdyUDugFN3XMLavrUmdedGgaQaQRgVau69dUtoLQvgE1kSXHKWAQfiZHU7hGR2TX", name: nil)
-//        ]
-        guard index < accounts.count else {
-            continueBlock(false)
-            return
-        }
-        registerAccount(accounts[index])
-        continueBlock(true)
+        handleMissingAccountAtIndex(index, continueBlock: continueBlock)
     }
 
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
@@ -162,6 +169,32 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
     
     func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
         transactionsStream.enqueueTransactions([transaction])
+    }
+    
+}
+
+// MARK: - WalletTransactionsStreamDelegate
+
+extension WalletAPIManager: WalletTransactionsStreamDelegate {
+    
+    func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
+        handleMissingAccountAtIndex(index, continueBlock: continueBlock)
+    }
+    
+    func transactionsStreamDidStartDequeingTransactions(transactionsStream: WalletTransactionsStream) {
+        
+    }
+    
+    func transactionsStreamDidFinishDequeingTransactions(transactionsStream: WalletTransactionsStream) {
+        
+    }
+    
+    func transactionsStreamDidUpdateAccountLayout(transactionsStream: WalletTransactionsStream) {
+        
+    }
+    
+    func transactionsStreamDidUpdateAccountOperations(transactionsStream: WalletTransactionsStream) {
+        
     }
     
 }

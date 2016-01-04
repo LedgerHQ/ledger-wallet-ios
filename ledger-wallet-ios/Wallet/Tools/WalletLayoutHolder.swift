@@ -24,11 +24,9 @@ final class WalletLayoutHolder {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            strongSelf.accounts.forEach() { account in
-                if account.nextExternalIndex == 0 && account.nextInternalIndex == 0 {
-                    value = account.index
-                    return
-                }
+            for account in strongSelf.accounts where account.nextExternalIndex == 0 && account.nextInternalIndex == 0 {
+                value = account.index
+                return
             }
         }
         workingQueue.waitUntilAllOperationsAreFinished()
