@@ -71,13 +71,13 @@ final class WalletLayoutHolder {
         var value: Int? = nil
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            guard strongSelf.accounts.count > index else {
+            
+            guard let account = strongSelf.accountAtIndex(index) else {
                 strongSelf.logger.error("Unable to fetch account \(index) to get next index")
                 return
             }
             
             // fetch index
-            let account = strongSelf.accounts[index]
             value = external ? account.nextExternalIndex : account.nextInternalIndex
         }
         workingQueue.waitUntilAllOperationsAreFinished()
@@ -87,13 +87,13 @@ final class WalletLayoutHolder {
     private func setNextIndex(index: Int, forAccountAtIndex accountIndex: Int, external: Bool) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            guard strongSelf.accounts.count > accountIndex else {
+            
+            guard let account = strongSelf.accountAtIndex(accountIndex) else {
                 strongSelf.logger.error("Unable to fetch account \(accountIndex) to set next index")
                 return
             }
             
             // make sure we do not override a current index
-            let account = strongSelf.accounts[accountIndex]
             if external {
                 guard index > account.nextExternalIndex else {
                     strongSelf.logger.warn("Setting next external index \(index) <= than current index \(account.nextExternalIndex) for account at index \(accountIndex), ignoring")
@@ -125,6 +125,10 @@ final class WalletLayoutHolder {
         return index...index + self.dynamicType.BIP44AddressesGap - 1
     }
     
+    private func accountAtIndex(index: Int) -> WalletAccount? {
+        return accounts.filter({ $0.index == index }).first
+    }
+    
     // MARK: Restoration
     
     func reload() {
@@ -136,12 +140,13 @@ final class WalletLayoutHolder {
                 
                 // ensure we fetched accounts
                 guard let accounts = accounts else {
+                    strongSelf.accounts = []
                     strongSelf.logger.error("Unable to reload all accounts from store")
                     return
                 }
                 
                 strongSelf.accounts = accounts
-                strongSelf.logger.info("Successfully reloaded \(accounts.count) accounts from store")
+                strongSelf.logger.info("Successfully reloaded \(accounts.count) account(s) from store")
             }
         }
     }
