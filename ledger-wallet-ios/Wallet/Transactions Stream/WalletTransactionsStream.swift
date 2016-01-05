@@ -22,7 +22,7 @@ final class WalletTransactionsStream {
     
     weak var delegate: WalletTransactionsStreamDelegate?
     private var busy = false
-    private var pendingTransactions: [WalletRemoteTransaction] = []
+    private var pendingTransactions: [WalletTransactionContainer] = []
     private var funnels: [WalletTransactionsStreamFunnelType] = []
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "WalletTransactionsStream", maxConcurrentOperationCount: 1)
@@ -30,7 +30,7 @@ final class WalletTransactionsStream {
     
     // MARK: Transactions management
     
-    func enqueueTransactions(transactions: [WalletRemoteTransaction]) {
+    func enqueueTransactions(transactions: [WalletTransactionContainer]) {
         guard transactions.count > 0 else { return }
         
         workingQueue.addOperationWithBlock() { [weak self] in

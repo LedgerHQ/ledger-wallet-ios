@@ -21,7 +21,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     weak var delegate: WalletTransactionsStreamSaveFunnelDelegate?
     private static let writeBatchSize = 200
     private let storeProxy: WalletStoreProxy
-    private var pendingTransactions: [WalletRemoteTransaction] = []
+    private var pendingTransactions: [WalletTransactionContainer] = []
     private var pendingOperations: [WalletOperation] = []
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamSaveFunnel")
     
@@ -66,7 +66,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         return true
     }
     
-    private func writeTransactions(transactions: [WalletRemoteTransaction]) {
+    private func writeTransactions(transactions: [WalletTransactionContainer]) {
         guard transactions.count > 0 else { return }
 
         logger.info("Writing batch of \(transactions.count) transaction(s) to store")

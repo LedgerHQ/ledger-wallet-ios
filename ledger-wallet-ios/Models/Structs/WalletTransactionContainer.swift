@@ -1,5 +1,5 @@
 //
-//  WalletRemoteTransaction.swift
+//  WalletTransactionContainer.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 14/12/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WalletRemoteTransaction {
+struct WalletTransactionContainer {
     
     let transaction: WalletTransaction
     let inputs: [WalletTransactionInputType]
@@ -34,7 +34,7 @@ struct WalletRemoteTransaction {
 
 // MARK: JSONInitializableModel
 
-extension WalletRemoteTransaction: JSONInitializableModel {
+extension WalletTransactionContainer: JSONInitializableModel {
     
     init?(JSONObject: [String : AnyObject]) {
         guard let

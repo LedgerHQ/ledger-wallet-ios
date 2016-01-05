@@ -19,7 +19,7 @@ protocol WalletTransactionsConsumerDelegate: class {
     
     func transactionsConsumerDidStart(transactionsConsumer: WalletTransactionsConsumer)
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didStopWithError error: WalletTransactionsConsumerError?)
-    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletRemoteTransaction])
+    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletTransactionContainer])
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void)
     
 }
@@ -167,7 +167,7 @@ final class WalletTransactionsConsumer {
         }
     }
     
-    private func continueDiscoveryWithFetchedTransactions(transactions: [WalletRemoteTransaction], startingPath: WalletAddressPath, toKeyIndex keyIndex: Int) {
+    private func continueDiscoveryWithFetchedTransactions(transactions: [WalletTransactionContainer], startingPath: WalletAddressPath, toKeyIndex keyIndex: Int) {
         // check it is is the end of discovery
         if transactions.count == 0 {
             // if we are already on the last chain index

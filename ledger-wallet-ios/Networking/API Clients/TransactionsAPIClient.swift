@@ -14,7 +14,7 @@ final class TransactionsAPIClient: LedgerAPIClient {
     
     // MARK: Transactions mangement
     
-    func fetchTransactionsForAddresses(addresses: [String], completion: ([WalletRemoteTransaction]?) -> Void) {
+    func fetchTransactionsForAddresses(addresses: [String], completion: ([WalletTransactionContainer]?) -> Void) {
         guard addresses.count > 0 else {
             delegateQueue.addOperationWithBlock() { [weak self] in
                 guard self != nil else { return }
@@ -33,7 +33,7 @@ final class TransactionsAPIClient: LedgerAPIClient {
                 return
             }
             
-            let transactions = WalletRemoteTransaction.collectionFromJSONArray(JSON)
+            let transactions = WalletTransactionContainer.collectionFromJSONArray(JSON)
             if transactions.count != JSON.count {
                 strongSelf.logger.error("Received \(JSON.count) transactions but only built \(transactions.count) models")
             }

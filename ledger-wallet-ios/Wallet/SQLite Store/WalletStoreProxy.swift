@@ -63,7 +63,7 @@ final class WalletStoreProxy {
     
     // MARK: Transactions management
     
-    func storeTransactions(transactions: [WalletRemoteTransaction]) {
+    func storeTransactions(transactions: [WalletTransactionContainer]) {
         executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) })
     }
     

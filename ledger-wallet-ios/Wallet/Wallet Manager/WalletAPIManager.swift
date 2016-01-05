@@ -149,7 +149,7 @@ extension WalletAPIManager: WalletTransactionsConsumerDelegate {
         handleMissingAccountAtIndex(index, continueBlock: continueBlock)
     }
 
-    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletRemoteTransaction]) {
+    func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletTransactionContainer]) {
         transactionsStream.enqueueTransactions(transactions)
     }
     
@@ -167,7 +167,7 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
         notifyObservers(WalletManagerDidStopListeningTransactionsNotification)
     }
     
-    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletRemoteTransaction) {
+    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletTransactionContainer) {
         transactionsStream.enqueueTransactions([transaction])
     }
     

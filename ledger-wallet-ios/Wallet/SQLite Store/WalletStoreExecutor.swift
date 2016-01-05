@@ -190,12 +190,12 @@ final class WalletStoreExecutor {
     
     // MARK: Transactions management
     
-    class func storeTransactions(transactions: [WalletRemoteTransaction], context: SQLiteStoreContext) -> Bool {
+    class func storeTransactions(transactions: [WalletTransactionContainer], context: SQLiteStoreContext) -> Bool {
         guard transactions.count > 0 else { return true }
         return transactions.reduce(true) { $0 && storeTransaction($1, context: context) }
     }
     
-    class func storeTransaction(transaction: WalletRemoteTransaction, context: SQLiteStoreContext) -> Bool {
+    class func storeTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> Bool {
         let updateFieldsStatement = "\"\(WalletTransactionEntity.blockHashKey)\" = ?, \"\(WalletTransactionEntity.blockHeightKey)\" = ?, \"\(WalletTransactionEntity.blockTimeKey)\" = ?"
         let updateStatement = "UPDATE \"\(WalletTransactionEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletTransactionEntity.hashKey)\" = ?"
         let updateValues = [
@@ -230,7 +230,7 @@ final class WalletStoreExecutor {
         return true
     }
     
-    private class func addTransactionInputs(transaction: WalletRemoteTransaction, context: SQLiteStoreContext) -> Bool {
+    private class func addTransactionInputs(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> Bool {
         guard transaction.inputs.count > 0 else { return true }
         
         for input in transaction.inputs {
@@ -267,7 +267,7 @@ final class WalletStoreExecutor {
         return true
     }
     
-    private class func addTransactionOutputs(transaction: WalletRemoteTransaction, context: SQLiteStoreContext) -> Bool {
+    private class func addTransactionOutputs(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> Bool {
         guard transaction.outputs.count > 0 else { return true }
 
         for output in transaction.outputs {

@@ -12,7 +12,7 @@ protocol WalletTransactionsListenerDelegate: class {
     
     func transactionsListenerDidStart(transactionsListener: WalletTransactionsListener)
     func transactionsListenerDidStop(transactionsListener: WalletTransactionsListener)
-    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletRemoteTransaction)
+    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletTransactionContainer)
     
 }
 
@@ -112,7 +112,7 @@ extension WalletTransactionsListener: WebSocketDelegate {
             logger.error("Unable to get or parse data from message")
             return
         }
-        guard let transaction = WalletRemoteTransaction(JSONObject: JSON) else {
+        guard let transaction = WalletTransactionContainer(JSONObject: JSON) else {
             logger.error("Received transaction but was unable to build model")
             return
         }

@@ -193,7 +193,7 @@
 		37E37F321C32E76300731747 /* WalletAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F2B1C32E76300731747 /* WalletAddress.swift */; };
 		37E37F331C32E76300731747 /* WalletAddressPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F2C1C32E76300731747 /* WalletAddressPath.swift */; };
 		37E37F341C32E76300731747 /* WalletOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F2D1C32E76300731747 /* WalletOperation.swift */; };
-		37E37F351C32E76300731747 /* WalletRemoteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F2E1C32E76300731747 /* WalletRemoteTransaction.swift */; };
+		37E37F351C32E76300731747 /* WalletTransactionContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F2E1C32E76300731747 /* WalletTransactionContainer.swift */; };
 		37E37F3B1C33D39400731747 /* WalletTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F3A1C33D39400731747 /* WalletTransaction.swift */; };
 		37E37F3F1C33E0B100731747 /* WalletTransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F3E1C33E0B100731747 /* WalletTransactionOutput.swift */; };
 		37E37F411C33E3AF00731747 /* WalletTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F401C33E3AF00731747 /* WalletTransactionInput.swift */; };
@@ -495,7 +495,7 @@
 		37E37F2B1C32E76300731747 /* WalletAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAddress.swift; sourceTree = "<group>"; };
 		37E37F2C1C32E76300731747 /* WalletAddressPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAddressPath.swift; sourceTree = "<group>"; };
 		37E37F2D1C32E76300731747 /* WalletOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletOperation.swift; sourceTree = "<group>"; };
-		37E37F2E1C32E76300731747 /* WalletRemoteTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WalletRemoteTransaction.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		37E37F2E1C32E76300731747 /* WalletTransactionContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WalletTransactionContainer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37E37F3A1C33D39400731747 /* WalletTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransaction.swift; sourceTree = "<group>"; };
 		37E37F3E1C33E0B100731747 /* WalletTransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionOutput.swift; sourceTree = "<group>"; };
 		37E37F401C33E3AF00731747 /* WalletTransactionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionInput.swift; sourceTree = "<group>"; };
@@ -1115,7 +1115,7 @@
 				37E37F3A1C33D39400731747 /* WalletTransaction.swift */,
 				37E37F3E1C33E0B100731747 /* WalletTransactionOutput.swift */,
 				37E37F401C33E3AF00731747 /* WalletTransactionInput.swift */,
-				37E37F2E1C32E76300731747 /* WalletRemoteTransaction.swift */,
+				37E37F2E1C32E76300731747 /* WalletTransactionContainer.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1376,7 +1376,7 @@
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				373B63711C1EF87C004E3298 /* WalletTransactionsListener.swift in Sources */,
 				37E37F3B1C33D39400731747 /* WalletTransaction.swift in Sources */,
-				37E37F351C32E76300731747 /* WalletRemoteTransaction.swift in Sources */,
+				37E37F351C32E76300731747 /* WalletTransactionContainer.swift in Sources */,
 				3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */,
 				376F51121A82190E001C6684 /* BTCScript.m in Sources */,
 				376F51151A82190E001C6684 /* BTCTransactionBuilder.m in Sources */,
