@@ -12,8 +12,6 @@ protocol WalletTransactionsStreamDelegate: class {
     
     func transactionsStreamDidUpdateAccountLayout(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateAccountOperations(transactionsStream: WalletTransactionsStream)
-    func transactionsStreamDidStartDequeingTransactions(transactionsStream: WalletTransactionsStream)
-    func transactionsStreamDidFinishDequeingTransactions(transactionsStream: WalletTransactionsStream)
     func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void)
     
 }

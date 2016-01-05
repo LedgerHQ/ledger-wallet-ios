@@ -181,14 +181,6 @@ extension WalletAPIManager: WalletTransactionsStreamDelegate {
         handleMissingAccountAtIndex(index, continueBlock: continueBlock)
     }
     
-    func transactionsStreamDidStartDequeingTransactions(transactionsStream: WalletTransactionsStream) {
-        
-    }
-    
-    func transactionsStreamDidFinishDequeingTransactions(transactionsStream: WalletTransactionsStream) {
-        
-    }
-    
     func transactionsStreamDidUpdateAccountLayout(transactionsStream: WalletTransactionsStream) {
         
     }
