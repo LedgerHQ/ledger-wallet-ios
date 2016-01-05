@@ -9,7 +9,6 @@
 import Foundation
 
 typealias SQLiteStoreContext = FMDatabase
-typealias SQLiteStoreResultSet = FMResultSet
 
 final class SQLiteStore {
 

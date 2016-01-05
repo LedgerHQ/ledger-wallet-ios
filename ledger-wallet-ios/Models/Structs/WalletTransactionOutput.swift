@@ -18,7 +18,7 @@ struct WalletTransactionOutput {
     
 }
 
-// MARK: JSONInitializableModel
+// MARK: - JSONInitializableModel
 
 extension WalletTransactionOutput: JSONInitializableModel {
     
@@ -41,7 +41,7 @@ extension WalletTransactionOutput: JSONInitializableModel {
     
 }
 
-// MARK: Equatable
+// MARK: - Equatable
 
 extension WalletTransactionOutput: Equatable {}
 
@@ -49,7 +49,7 @@ func ==(lhs: WalletTransactionOutput, rhs: WalletTransactionOutput) -> Bool {
     return lhs.value == rhs.value && lhs.scriptHex == rhs.scriptHex && lhs.index == rhs.index && lhs.transactionHash == rhs.transactionHash && lhs.address == rhs.address
 }
 
-// MARK: Hashable
+// MARK: - Hashable
 
 extension WalletTransactionOutput: Hashable {
     

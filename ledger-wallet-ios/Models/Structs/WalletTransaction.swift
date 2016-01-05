@@ -18,9 +18,11 @@ struct WalletTransaction {
     let blockTime: String?
     let blockHeight: Int?
     
+    var isConfirmed: Bool { return blockHash != nil && blockHeight != nil && blockTime != nil }
+    
 }
 
-// MARK: JSONInitializableModel
+// MARK: - JSONInitializableModel
 
 extension WalletTransaction: JSONInitializableModel {
     
@@ -41,6 +43,31 @@ extension WalletTransaction: JSONInitializableModel {
         self.blockHash = JSONObject["block_hash"] as? String
         self.blockTime = JSONObject["block_time"] as? String
         self.blockHeight = JSONObject["block_height"] as? Int
+    }
+    
+}
+
+// MARK: - SQLiteFetchableModel
+
+extension WalletTransaction: SQLiteFetchableModel {
+    
+    init?(resultSet: SQLiteStoreResultSet) {
+        guard let
+            hash = resultSet.stringForKey(WalletTransactionEntity.hashKey),
+            receiveAt = resultSet.stringForKey(WalletTransactionEntity.receptionDateKey),
+            lockTime = resultSet.integerForKey(WalletTransactionEntity.lockTimeKey),
+            fees = resultSet.integer64ForKey(WalletTransactionEntity.feesKey)
+        else {
+            return nil
+        }
+        
+        self.hash = hash
+        self.receiveAt = receiveAt
+        self.lockTime = lockTime
+        self.fees = fees
+        self.blockHash = resultSet.stringForKey(WalletTransactionEntity.blockHashKey)
+        self.blockTime = resultSet.stringForKey(WalletTransactionEntity.blockTimeKey)
+        self.blockHeight = resultSet.integerForKey(WalletTransactionEntity.blockHeightKey)
     }
     
 }

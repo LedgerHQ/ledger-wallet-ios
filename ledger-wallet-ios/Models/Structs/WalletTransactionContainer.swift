@@ -29,10 +29,14 @@ struct WalletTransactionContainer {
         }
         return addresses
     }
+    
+    var regularInputs: [WalletTransactionRegularInput] {
+        return inputs.flatMap({ $0 as? WalletTransactionRegularInput })
+    }
 
 }
 
-// MARK: JSONInitializableModel
+// MARK: - JSONInitializableModel
 
 extension WalletTransactionContainer: JSONInitializableModel {
     

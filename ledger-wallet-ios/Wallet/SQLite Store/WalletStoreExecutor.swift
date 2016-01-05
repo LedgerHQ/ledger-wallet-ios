@@ -154,7 +154,12 @@ final class WalletStoreExecutor {
         return fetchModelCollection(statement, context: context)
     }
     
-    class func addAddress(address: WalletAddress, context: SQLiteStoreContext) -> Bool {
+    class func addAddresses(addresses: [WalletAddress], context: SQLiteStoreContext) -> Bool {
+        guard addresses.count > 0 else { return true }
+        return addresses.reduce(true) { $0 && addAddress($1, context: context) }
+    }
+    
+    private class func addAddress(address: WalletAddress, context: SQLiteStoreContext) -> Bool {
         guard fetchAddressWithAddress(address.address, context: context) == nil else { return true }
         guard fetchAddressAtPath(address.path, context: context) == nil else { return true }
         
@@ -171,11 +176,6 @@ final class WalletStoreExecutor {
             return false
         }
         return true
-    }
-    
-    class func addAddresses(addresses: [WalletAddress], context: SQLiteStoreContext) -> Bool {
-        guard addresses.count > 0 else { return true }
-        return addresses.reduce(true) { $0 && addAddress($1, context: context) }
     }
     
     private class func fetchAddressAtPath(path: WalletAddressPath, context: SQLiteStoreContext) -> WalletAddress? {
@@ -195,7 +195,7 @@ final class WalletStoreExecutor {
         return transactions.reduce(true) { $0 && storeTransaction($1, context: context) }
     }
     
-    class func storeTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> Bool {
+    private class func storeTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> Bool {
         let updateFieldsStatement = "\"\(WalletTransactionEntity.blockHashKey)\" = ?, \"\(WalletTransactionEntity.blockHeightKey)\" = ?, \"\(WalletTransactionEntity.blockTimeKey)\" = ?"
         let updateStatement = "UPDATE \"\(WalletTransactionEntity.tableName)\" SET \(updateFieldsStatement) WHERE \"\(WalletTransactionEntity.hashKey)\" = ?"
         let updateValues = [
@@ -286,6 +286,16 @@ final class WalletStoreExecutor {
             }
         }
         return true
+    }
+    
+    class func fetchDoubleSpendTransactionsFromTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> [WalletTransaction]? {
+        guard transaction.regularInputs.count > 0 else {
+            return []
+        }
+        
+        let inStatement = transaction.regularInputs.map({ "\"\($0.uid)\"" }).joinWithSeparator(", ")
+        let statement = "SELECT DISTINCT t.* FROM \"\(WalletTransactionInputEntity.tableName)\" AS ti INNER JOIN \"\(WalletTransactionEntity.tableName)\" AS t ON ti.\"\(WalletTransactionInputEntity.transactionHashKey)\" = t.\"\(WalletTransactionEntity.hashKey)\" WHERE ti.\"\(WalletTransactionInputEntity.outputHashKey)\" || '-' || ti.\"\(WalletTransactionInputEntity.outputIndexKey)\" IN (\(inStatement)) AND t.\"\(WalletTransactionEntity.hashKey)\" IS NOT ?"
+        return fetchModelCollection(statement, values: [transaction.transaction.hash], context: context)
     }
     
     // MARK: Operations management

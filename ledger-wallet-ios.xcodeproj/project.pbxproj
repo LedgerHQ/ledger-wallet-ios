@@ -199,6 +199,8 @@
 		37E37F411C33E3AF00731747 /* WalletTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F401C33E3AF00731747 /* WalletTransactionInput.swift */; };
 		37E37F451C3ACB0300731747 /* WalletAddressCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F431C3ACB0300731747 /* WalletAddressCache.swift */; };
 		37E37F461C3ACB0300731747 /* WalletLayoutHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F441C3ACB0300731747 /* WalletLayoutHolder.swift */; };
+		37E37F481C3BC6B300731747 /* SQLiteStoreResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F471C3BC6B300731747 /* SQLiteStoreResultSet.swift */; };
+		37E37F4A1C3C047600731747 /* WalletDoubleSpendConflictEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F491C3C047600731747 /* WalletDoubleSpendConflictEntity.swift */; };
 		37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37E962341B441B890092946B /* fontawesome-webfont.ttf */; };
 		37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
@@ -501,6 +503,8 @@
 		37E37F401C33E3AF00731747 /* WalletTransactionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionInput.swift; sourceTree = "<group>"; };
 		37E37F431C3ACB0300731747 /* WalletAddressCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAddressCache.swift; sourceTree = "<group>"; };
 		37E37F441C3ACB0300731747 /* WalletLayoutHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLayoutHolder.swift; sourceTree = "<group>"; };
+		37E37F471C3BC6B300731747 /* SQLiteStoreResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteStoreResultSet.swift; sourceTree = "<group>"; };
+		37E37F491C3C047600731747 /* WalletDoubleSpendConflictEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoubleSpendConflictEntity.swift; sourceTree = "<group>"; };
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -700,6 +704,7 @@
 				373B63D71C1F0DDA004E3298 /* SQLiteStore.swift */,
 				373B63D81C1F0DDA004E3298 /* SQLiteTable.swift */,
 				373B63DA1C1F0DDA004E3298 /* SQLiteTableField.swift */,
+				37E37F471C3BC6B300731747 /* SQLiteStoreResultSet.swift */,
 			);
 			path = SQLite;
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				3718F4951C2046BE00B907AC /* WalletTransactionInputEntity.swift */,
 				3718F4991C204D8F00B907AC /* WalletTransactionOutputEntity.swift */,
 				373B63EB1C1F0E0D004E3298 /* WalletOperationEntity.swift */,
+				37E37F491C3C047600731747 /* WalletDoubleSpendConflictEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1431,6 +1437,7 @@
 				377822481C05D6AB009FD634 /* HTTPClient.swift in Sources */,
 				373B63B41C1F0DAF004E3298 /* DialogViewController.swift in Sources */,
 				37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */,
+				37E37F481C3BC6B300731747 /* SQLiteStoreResultSet.swift in Sources */,
 				37B485901C22D34C00C8419E /* WalletTransactionsStreamOperationsFunnel.swift in Sources */,
 				37D29D9E1C217E720082CAA6 /* WalletTransactionsStreamFunnelType.swift in Sources */,
 				376F50F91A82190D001C6684 /* BTCBase58.m in Sources */,
@@ -1493,6 +1500,7 @@
 				37B2F0821C05D3E0004C9AB1 /* PairingProtocolManager.swift in Sources */,
 				37A88F741A6E550F0036CF2A /* TextField.swift in Sources */,
 				37D5124A1C159958003B597D /* LedgerAPIClient.swift in Sources */,
+				37E37F4A1C3C047600731747 /* WalletDoubleSpendConflictEntity.swift in Sources */,
 				3730736B1B2ECD6200DDFE5A /* BTCFancyEncryptedMessage.m in Sources */,
 				37B4858E1C22AC2000C8419E /* WalletTransactionsStreamSaveFunnel.swift in Sources */,
 				373B63DE1C1F0DDA004E3298 /* SQLiteForeignKey.swift in Sources */,

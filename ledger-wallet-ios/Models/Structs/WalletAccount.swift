@@ -50,12 +50,12 @@ extension WalletAccount: SQLiteFetchableModel {
         
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
-            index = self.dynamicType.optionalIntegerForKey(WalletAccountEntity.indexKey, resultSet: resultSet),
-            extendedPublicKey = self.dynamicType.optionalStringForKey(WalletAccountEntity.extendedPublicKeyKey, resultSet: resultSet),
-            nextInternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountEntity.nextInternalIndexKey, resultSet: resultSet),
-            nextExternalIndex = self.dynamicType.optionalIntegerForKey(WalletAccountEntity.nextExternalIndexKey, resultSet: resultSet),
-            hidden = self.dynamicType.optionalBoolForKey(WalletAccountEntity.hiddenKey, resultSet: resultSet),
-            balance = self.dynamicType.optionalInteger64ForKey(WalletAccountEntity.balanceKey, resultSet: resultSet)
+            index = resultSet.integerForKey(WalletAccountEntity.indexKey),
+            extendedPublicKey = resultSet.stringForKey(WalletAccountEntity.extendedPublicKeyKey),
+            nextInternalIndex = resultSet.integerForKey(WalletAccountEntity.nextInternalIndexKey),
+            nextExternalIndex = resultSet.integerForKey(WalletAccountEntity.nextExternalIndexKey),
+            hidden = resultSet.boolForKey(WalletAccountEntity.hiddenKey),
+            balance = resultSet.integer64ForKey(WalletAccountEntity.balanceKey)
         else {
             return nil
         }
@@ -64,7 +64,7 @@ extension WalletAccount: SQLiteFetchableModel {
         self.extendedPublicKey = extendedPublicKey
         self.nextInternalIndex = nextInternalIndex
         self.nextExternalIndex = nextExternalIndex
-        self.name = self.dynamicType.optionalStringForKey(WalletAccountEntity.nameKey, resultSet: resultSet)
+        self.name = resultSet.stringForKey(WalletAccountEntity.nameKey)
         self.hidden = hidden
         self.balance = balance
     }

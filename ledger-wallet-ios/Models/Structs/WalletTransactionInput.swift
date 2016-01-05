@@ -12,6 +12,7 @@ protocol WalletTransactionInputType { }
 
 struct WalletTransactionRegularInput: WalletTransactionInputType {
     
+    var uid: String { return "\(outputHash)-\(outputIndex)" }
     let outputHash: String
     let outputIndex: Int
     let value: Int64
@@ -28,7 +29,7 @@ struct WalletTransactionCoinbaseInput: WalletTransactionInputType {
     
 }
 
-// MARK: JSONInitializableModel
+// MARK: - JSONInitializableModel
 
 extension WalletTransactionRegularInput: JSONInitializableModel {
     
@@ -67,7 +68,7 @@ extension WalletTransactionCoinbaseInput: JSONInitializableModel {
     
 }
 
-// MARK: Equatable
+// MARK: - Equatable
 
 extension WalletTransactionRegularInput: Equatable {}
 
@@ -76,7 +77,7 @@ func ==(lhs: WalletTransactionRegularInput, rhs: WalletTransactionRegularInput) 
         lhs.scriptSignature == rhs.scriptSignature && lhs.address == rhs.address && lhs.transactionHash == rhs.transactionHash
 }
 
-// MARK: Hashable
+// MARK: - Hashable
 
 extension WalletTransactionRegularInput: Hashable {
     

@@ -93,7 +93,13 @@ final class WalletStoreSchemas {
         operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
         operationsTable.addField(SQLiteTableField(name: WalletOperationEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(operationsTable)
-
+        
+        let doubleSpendConflictsTable = WalletDoubleSpendConflictEntity.eponymTable
+        doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.leftTransactionHashKey, type: .Text, notNull: true, unique: false))
+        doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.rightTransactionHashKey, type: .Text, notNull: true, unique: false))
+        doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.leftScoreKey, type: .Integer, notNull: true, unique: false))
+        schema.addTable(doubleSpendConflictsTable)
+        
         // foreign keys
         let addressAccountForeignKey = SQLiteForeignKey(
             parentField: accountsTable.fieldWithName(WalletAccountEntity.indexKey)!,
@@ -124,6 +130,18 @@ final class WalletStoreSchemas {
             childField: operationsTable.fieldWithName(WalletOperationEntity.transactionHashKey)!,
             updateAction: .Cascade, deleteAction: .Cascade)
         operationsTable.addForeignKey(operationTransactionForeignKey)
+        
+        let doubleSpendConflictLeftTransactionForeignKey = SQLiteForeignKey(
+            parentField: transactionsTable.fieldWithName(WalletTransactionEntity.hashKey)!,
+            childField: doubleSpendConflictsTable.fieldWithName(WalletDoubleSpendConflictEntity.leftTransactionHashKey)!,
+            updateAction: .Cascade, deleteAction: .Cascade)
+        doubleSpendConflictsTable.addForeignKey(doubleSpendConflictLeftTransactionForeignKey)
+        
+        let doubleSpendConflictRightTransactionForeignKey = SQLiteForeignKey(
+            parentField: transactionsTable.fieldWithName(WalletTransactionEntity.hashKey)!,
+            childField: doubleSpendConflictsTable.fieldWithName(WalletDoubleSpendConflictEntity.rightTransactionHashKey)!,
+            updateAction: .Cascade, deleteAction: .Cascade)
+        doubleSpendConflictsTable.addForeignKey(doubleSpendConflictRightTransactionForeignKey)
         
         return schema
     }

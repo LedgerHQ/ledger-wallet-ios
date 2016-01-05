@@ -16,19 +16,19 @@ final class WalletStoreProxy {
     // MARK: Accounts management
     
     func fetchAllAccounts(queue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllAccounts($0) }, queue: queue, completion: completion)
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllAccounts($0) }, queue: queue, completion: completion)
     }
     
     func fetchAccountAtIndex(index: Int, queue: NSOperationQueue, completion: (WalletAccount?) -> Void) {
-        executeModelFetch({ WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, queue: queue, completion: completion)
+        executeModelFetch({ return WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, queue: queue, completion: completion)
     }
     
     func fetchAccountsAtIndexes(indexes: [Int], queue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, queue: queue, completion: completion)
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, queue: queue, completion: completion)
     }
     
     func fetchAllVisibleAccounts(queue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAllVisibleAccounts($0) }, queue: queue, completion: completion)
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllVisibleAccounts($0) }, queue: queue, completion: completion)
     }
 
     func addAccount(account: WalletAccount) {
@@ -50,11 +50,11 @@ final class WalletStoreProxy {
     // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, queue: queue, completion: completion)
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, queue: queue, completion: completion)
     }
     
     func fetchAddressesWithAddresses(addresses: [String], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
-        executeModelCollectionFetch({ WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, queue: queue, completion: completion)
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, queue: queue, completion: completion)
     }
     
     func addAddresses(addresses: [WalletAddress]) {
@@ -65,6 +65,10 @@ final class WalletStoreProxy {
     
     func storeTransactions(transactions: [WalletTransactionContainer]) {
         executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) })
+    }
+    
+    func fetchDoubleSpendTransactionsFromTransaction(transaction: WalletTransactionContainer, queue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchDoubleSpendTransactionsFromTransaction(transaction, context: $0) }, queue: queue, completion: completion)
     }
     
     // MARK: Operations management
