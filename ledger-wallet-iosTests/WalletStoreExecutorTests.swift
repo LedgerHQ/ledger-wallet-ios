@@ -38,8 +38,8 @@ class WalletStoreExecutorTests: XCTestCase {
     }
     
     func testAllAccountsWithResults() {
-        let account1 = WalletAccount(index: 0, extendedPublicKey: "xpub1", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
-        let account2 = WalletAccount(index: 1, extendedPublicKey: "xpub2", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account1 = WalletAccount(index: 0, extendedPublicKey: "xpub1", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
+        let account2 = WalletAccount(index: 1, extendedPublicKey: "xpub2", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account1, context: context), "It should be possible to add an account")
@@ -55,7 +55,7 @@ class WalletStoreExecutorTests: XCTestCase {
     }
     
     func testAccountAtIndexReal() {
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -89,8 +89,8 @@ class WalletStoreExecutorTests: XCTestCase {
     }
     
     func testAccountsAtRealIndexes() {
-        let account1 = WalletAccount(index: 0, extendedPublicKey: "xpub1", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
-        let account2 = WalletAccount(index: 1, extendedPublicKey: "xpub2", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account1 = WalletAccount(index: 0, extendedPublicKey: "xpub1", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
+        let account2 = WalletAccount(index: 1, extendedPublicKey: "xpub2", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
 
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
@@ -118,7 +118,7 @@ class WalletStoreExecutorTests: XCTestCase {
     }
     
     func testAddSingleAccount() {
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -128,7 +128,7 @@ class WalletStoreExecutorTests: XCTestCase {
     }
     
     func testAddAccountTwice() {
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -168,7 +168,7 @@ class WalletStoreExecutorTests: XCTestCase {
     func testAddressesAtKnownPaths() {
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
         let addresses = paths.map({ return WalletAddress(address: NSUUID().UUIDString, path: $0)})
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -193,7 +193,7 @@ class WalletStoreExecutorTests: XCTestCase {
     func testAddDifferentAddresses() {
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
         let addresses = paths.map({ return WalletAddress(address: NSUUID().UUIDString, path: $0)})
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -206,7 +206,7 @@ class WalletStoreExecutorTests: XCTestCase {
     func testAddSameAddresses() {
         let paths = Array(0..<10).map({ return WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: $0) })
         let addresses = paths.map({ return WalletAddress(address: NSUUID().UUIDString, path: $0)})
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -221,7 +221,7 @@ class WalletStoreExecutorTests: XCTestCase {
         let addressString = NSUUID().UUIDString
         let path = WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: 0)
         let address = WalletAddress(address: addressString, path: path)
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
@@ -235,7 +235,7 @@ class WalletStoreExecutorTests: XCTestCase {
         let addressString = NSUUID().UUIDString
         let path = WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: 0)
         let address = WalletAddress(address: addressString, path: path)
-        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil)
+        let account = WalletAccount(index: 0, extendedPublicKey: "xpub", nextInternalIndex: 0, nextExternalIndex: 0, name: nil, hidden: false, balance: 0)
         let expectation = expectationWithDescription("Waiting for executor to perform")
         store.performBlock() { context in
             XCTAssertTrue(WalletStoreExecutor.addAccount(account, context: context), "It should be possible to add an account")
