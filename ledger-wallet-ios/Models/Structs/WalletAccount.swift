@@ -19,11 +19,11 @@ struct WalletAccount {
     let balance: Int64
     
     func withNextInternalIndex(index: Int) -> WalletAccount {
-        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name, hidden: hidden, balance: balance)
+        return WalletAccount(index: self.index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name, hidden: hidden, balance: balance)
     }
     
     func withNextExternalIndex(index: Int) -> WalletAccount {
-        return WalletAccount(index: index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name, hidden: hidden, balance: balance)
+        return WalletAccount(index: self.index, extendedPublicKey: extendedPublicKey, nextInternalIndex: nextInternalIndex, nextExternalIndex: index, name: name, hidden: hidden, balance: balance)
     }
     
     // MARK: Initialization
