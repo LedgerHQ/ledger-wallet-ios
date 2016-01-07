@@ -31,20 +31,20 @@ final class WalletStoreProxy {
         executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllVisibleAccounts($0) }, queue: queue, completion: completion)
     }
 
-    func addAccount(account: WalletAccount) {
-        executeTransaction({ return WalletStoreExecutor.addAccount(account, context: $0) })
+    func addAccount(account: WalletAccount, queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.addAccount(account, context: $0) }, queue: queue, completion: completion)
     }
     
-    func setNextExternalIndex(index: Int, forAccountAtIndex accountIndex: Int) {
-        executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: true, context: $0) })
+    func setNextExternalIndex(index: Int, forAccountAtIndex accountIndex: Int, queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: true, context: $0) }, queue: queue, completion: completion)
     }
     
-    func setNextInternalIndex(index: Int, forAccountAtIndex accountIndex: Int) {
-        executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: false, context: $0) })
+    func setNextInternalIndex(index: Int, forAccountAtIndex accountIndex: Int, queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: false, context: $0) }, queue: queue, completion: completion)
     }
     
-    func updateAllAccountBalances() {
-        executeTransaction({ return WalletStoreExecutor.updateAllAccountBalances($0) })
+    func updateAllAccountBalances(queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.updateAllAccountBalances($0) }, queue: queue, completion: completion)
     }
     
     // MARK: Addresses management
@@ -57,30 +57,34 @@ final class WalletStoreProxy {
         executeModelCollectionFetch({ return WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, queue: queue, completion: completion)
     }
     
-    func addAddresses(addresses: [WalletAddress]) {
-        executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) })
+    func addAddresses(addresses: [WalletAddress], queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) }, queue: queue, completion: completion)
     }
     
     // MARK: Transactions management
     
-    func storeTransactions(transactions: [WalletTransactionContainer]) {
-        executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) })
+    func storeTransactions(transactions: [WalletTransactionContainer], queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) }, queue: queue, completion: completion)
     }
     
     func fetchDoubleSpendTransactionsFromTransaction(transaction: WalletTransactionContainer, queue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
         executeModelCollectionFetch({ return WalletStoreExecutor.fetchDoubleSpendTransactionsFromTransaction(transaction, context: $0) }, queue: queue, completion: completion)
     }
+
+    func removeTransactions(transactions: [WalletTransaction], queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.removeTransactions(transactions, context: $0) }, queue: queue, completion: completion)
+    }
     
     // MARK: Operations management
     
-    func storeOperations(operations: [WalletOperation]) {
-        executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) })
+    func storeOperations(operations: [WalletOperation], queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) }, queue: queue, completion: completion)
     }
     
     // MARK: Double spend conflicts management
     
-    func addDoubleSpendConflicts(conflicts: [WalletDoubleSpendConflict]) {
-        executeTransaction({ return WalletStoreExecutor.addDoubleSpendConflicts(conflicts, context: $0) })
+    func addDoubleSpendConflicts(conflicts: [WalletDoubleSpendConflict], queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.addDoubleSpendConflicts(conflicts, context: $0) }, queue: queue, completion: completion)
     }
     
     func fetchDoubleSpendConflictsForTransaction(transaction: WalletTransaction, queue: NSOperationQueue, completion: ([WalletDoubleSpendConflict]?) -> Void) {
@@ -105,10 +109,12 @@ final class WalletStoreProxy {
         }
     }
     
-    private func executeTransaction(block: (SQLiteStoreContext) -> Bool) {
+    private func executeTransaction(block: (SQLiteStoreContext) -> Bool, queue: NSOperationQueue, completion: (Bool) -> Void) {
         store.performTransaction() { [weak self] context in
             guard let _ = self else { return false }
-            return block(context)
+            let success = block(context)
+            queue.addOperationWithBlock() { completion(success) }
+            return success
         }
     }
     

@@ -141,9 +141,21 @@ final class WalletAddressCache {
         }
         
         // save addresses
-        storeProxy.addAddresses(addressesCache)
-
-        queue.addOperationWithBlock() { completion(existingAddresses + addressesCache) }
+        writeAddresses(addressesCache, existingAddresses: existingAddresses, queue: queue, completion: completion)
+    }
+    
+    private func writeAddresses(addresses: [WalletAddress], existingAddresses: [WalletAddress], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
+        // store newly created adresses
+        storeProxy.addAddresses(addresses, queue: workingQueue) { success in
+            queue.addOperationWithBlock() {
+                if success {
+                    completion(existingAddresses + addresses)
+                }
+                else {
+                    completion(nil)
+                }
+            }
+        }
     }
     
     private func uniqueAccountsForPaths(paths: [WalletAddressPath]) -> [Int] {

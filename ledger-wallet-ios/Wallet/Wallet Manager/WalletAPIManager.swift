@@ -25,6 +25,7 @@ final class WalletAPIManager: WalletManagerType {
     
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
+    private let workingQueue = NSOperationQueue.mainQueue()
     
     // MARK: Wallet management
     
@@ -58,7 +59,7 @@ final class WalletAPIManager: WalletManagerType {
     
     private func registerAccount(account: WalletAccount) {
         // add account
-        storeProxy.addAccount(account)
+        storeProxy.addAccount(account, queue: workingQueue, completion: { _ in })
         
         // reload layout
         layoutHolder.reload()
@@ -66,7 +67,7 @@ final class WalletAPIManager: WalletManagerType {
         // cache 20 first internal + external addresses
         let internalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
         let externalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
-        addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: NSOperationQueue.mainQueue(), completion: { _ in })
+        addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: workingQueue, completion: { _ in })
     }
     
     private func handleMissingAccountAtIndex(index: Int, continueBlock: (Bool) -> Void) {
@@ -101,9 +102,9 @@ final class WalletAPIManager: WalletManagerType {
         self.storeProxy = WalletStoreProxy(store: store)
         self.addressCache = WalletAddressCache(storeProxy: storeProxy)
         self.layoutHolder = WalletLayoutHolder(storeProxy: storeProxy)
-        self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, delegateQueue: NSOperationQueue.mainQueue())
-        self.transactionsListener = WalletTransactionsListener(delegateQueue: NSOperationQueue.mainQueue())
-        self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: NSOperationQueue.mainQueue())
+        self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, delegateQueue: workingQueue)
+        self.transactionsListener = WalletTransactionsListener(delegateQueue: workingQueue)
+        self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: workingQueue)
         
         // plug delegates
         self.transactionsConsumer.delegate = self

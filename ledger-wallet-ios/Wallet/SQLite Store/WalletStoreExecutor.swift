@@ -300,6 +300,10 @@ final class WalletStoreExecutor {
         return fetchModelCollection(statement, values: [transaction.transaction.hash], context: context)
     }
     
+    class func removeTransactions(transactions: [WalletTransaction], context: SQLiteStoreContext) -> Bool {
+        return false
+    }
+    
     // MARK: Operations management
     
     class func storeOperations(operations: [WalletOperation], context: SQLiteStoreContext) -> Bool {
