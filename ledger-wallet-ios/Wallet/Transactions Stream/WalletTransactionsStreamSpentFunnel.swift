@@ -17,7 +17,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
         if context.remoteTransaction.transaction.isConfirmed {
             // resolve conflicting transactions
-            resolveConflictingTransactions(context, completion: completion)
+            checkForConflictsToResolve(context, completion: completion)
         }
         else {
             // look for conflicting transactions
@@ -28,18 +28,18 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     // MARK: Conflict creation
     
     private func checkIfConflictsCreationIsNecessary(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        storeProxy.fetchDoubleSpendConflictsForTransaction(context.remoteTransaction.transaction, queue: callingQueue) { [weak self] conflicts in
+        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: callingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
 
-            // if we got conflicts
-            guard let conflicts = conflicts else {
-                strongSelf.logger.error("Unable to fetch double spend conflicts for transaction \(context.remoteTransaction.transaction.hash), continuing")
+            // if we got conflicting transactions
+            guard let transactions = transactions else {
+                strongSelf.logger.error("Unable to determine if double spend conflict already exist for transaction \(context.remoteTransaction.transaction.hash), continuing")
                 completion(true)
                 return
             }
 
-            // check if we have existing conflicts
-            guard conflicts.count == 0 else {
+            // check if we have existing conflicting transactions
+            guard transactions.count == 0 else {
                 strongSelf.logger.info("Double spend conflicts already exist for transaction \(context.remoteTransaction.transaction.hash), continuing")
                 completion(true)
                 return
@@ -51,12 +51,12 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     }
     
     private func checkForConflictingTransactions(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        storeProxy.fetchDoubleSpendTransactionsFromTransaction(context.remoteTransaction, queue: callingQueue) { [weak self] transactions in
+        storeProxy.fetchTransactionsConflictingWithTransaction(context.remoteTransaction, queue: callingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
             
             // if we managed to fetch transactions
             guard let transactions = transactions else {
-                strongSelf.logger.error("Unable to fetch double spent transactions for transaction \(context.remoteTransaction.transaction.hash), continuing")
+                strongSelf.logger.error("Unable to fetch transactions that conflict with transaction \(context.remoteTransaction.transaction.hash), continuing")
                 completion(true)
                 return
             }
@@ -75,7 +75,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
         
         guard !oneTransactionIsAtLeastConfirmed(transactions) else {
             // if at least one transaction is confirmed, discard transaction
-            logger.warn("Transaction \(context.remoteTransaction.transaction.hash) conflicts with \(transactions.count) transaction(s) but one is already confirmed, discarding")
+            logger.warn("Transaction \(context.remoteTransaction.transaction.hash) conflicts with \(transactions.count) transaction(s) but one of them is already confirmed, discarding")
             completion(false)
             return
         }
@@ -93,11 +93,9 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
             doubleSpendConflicts.append(WalletDoubleSpendConflict(leftTransactionHash: transaction.hash, rightTransactionHash: context.remoteTransaction.transaction.hash))
         }
         
-        // add to context
-        context.doubleSpendConflicts.appendContentsOf(doubleSpendConflicts)
-        
         // continue
         logger.info("Storing \(doubleSpendConflicts.count) conflict(s) for transaction \(context.remoteTransaction.transaction.hash)")
+        context.doubleSpendConflicts.appendContentsOf(doubleSpendConflicts)
         completion(true)
     }
     
@@ -107,7 +105,31 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     
     // MARK: Conflict resolution
     
-    private func resolveConflictingTransactions(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+    private func checkForConflictsToResolve(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: callingQueue) { [weak self] transactions in
+            guard let strongSelf = self else { return }
+            
+            // if we got conflicting transactions
+            guard let transactions = transactions else {
+                strongSelf.logger.error("Unable to fetch transactions to resolve from double spend conflicts of transaction \(context.remoteTransaction.transaction.hash), continuing")
+                completion(true)
+                return
+            }
+            
+            // check if we have existing conflicts
+            guard transactions.count > 0 else {
+                completion(true)
+                return
+            }
+            
+            // resolve conflicts
+            strongSelf.resolveConflictsFromTransactions(transactions, context: context, completion: completion)
+        }
+    }
+    
+    private func resolveConflictsFromTransactions(transactions: [WalletTransaction], context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+        logger.info("Resolving \(transactions.count) conflict(s) from transaction \(context.remoteTransaction.transaction.hash)")
+        context.transactionsToRemove.appendContentsOf(transactions)
         completion(true)
     }
     

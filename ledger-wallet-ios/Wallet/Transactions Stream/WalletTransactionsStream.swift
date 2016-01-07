@@ -36,20 +36,21 @@ final class WalletTransactionsStream {
             
             // enqueue transactions
             strongSelf.logger.info("Got \(transactions.count) enqueued transaction(s) to process")
-            
-            //FIXME: enqueue double spend
-            var fakeTransactions = transactions
-            let lastTx = fakeTransactions.popLast()!
-            
-            let fakeTx = WalletTransaction(hash: lastTx.transaction.hash, receiveAt: lastTx.transaction.receiveAt, lockTime: lastTx.transaction.lockTime, fees: lastTx.transaction.fees, blockHash: nil, blockTime: nil, blockHeight: nil)
-            let fakeTxContainer = WalletTransactionContainer(transaction: fakeTx, inputs: lastTx.inputs, outputs: lastTx.outputs)
-            
-            let doubleSpendTx = WalletTransaction(hash: lastTx.transaction.hash + "-hello", receiveAt: fakeTx.receiveAt, lockTime: fakeTx.lockTime, fees: fakeTx.fees, blockHash: nil, blockTime: nil, blockHeight: nil)
-            let doubleSpendTxContainer = WalletTransactionContainer(transaction: doubleSpendTx, inputs: lastTx.inputs, outputs: lastTx.outputs)
+            strongSelf.pendingTransactions.appendContentsOf(transactions)
 
-            strongSelf.pendingTransactions.appendContentsOf(fakeTransactions)
-            strongSelf.pendingTransactions.append(fakeTxContainer)
-            strongSelf.pendingTransactions.append(doubleSpendTxContainer)
+//            //FIXME: enqueue double spend
+//            var fakeTransactions = transactions
+//            let lastTx = fakeTransactions.popLast()!
+//            
+//            let fakeTx = WalletTransaction(hash: lastTx.transaction.hash, receiveAt: lastTx.transaction.receiveAt, lockTime: lastTx.transaction.lockTime, fees: lastTx.transaction.fees, blockHash: nil, blockTime: nil, blockHeight: nil)
+//            let fakeTxContainer = WalletTransactionContainer(transaction: fakeTx, inputs: lastTx.inputs, outputs: lastTx.outputs)
+//            
+//            let doubleSpendTx = WalletTransaction(hash: lastTx.transaction.hash + "-hello", receiveAt: fakeTx.receiveAt, lockTime: fakeTx.lockTime, fees: fakeTx.fees, blockHash: nil, blockTime: nil, blockHeight: nil)
+//            let doubleSpendTxContainer = WalletTransactionContainer(transaction: doubleSpendTx, inputs: lastTx.inputs, outputs: lastTx.outputs)
+//
+//            strongSelf.pendingTransactions.appendContentsOf(fakeTransactions)
+//            strongSelf.pendingTransactions.append(fakeTxContainer)
+//            strongSelf.pendingTransactions.append(doubleSpendTxContainer)
 
             
             // process next pending transaction if not busy

@@ -67,8 +67,12 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.storeTransactions(transactions, context: $0) }, queue: queue, completion: completion)
     }
     
-    func fetchDoubleSpendTransactionsFromTransaction(transaction: WalletTransactionContainer, queue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchDoubleSpendTransactionsFromTransaction(transaction, context: $0) }, queue: queue, completion: completion)
+    func fetchTransactionsConflictingWithTransaction(transaction: WalletTransactionContainer, queue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchTransactionsDoubleSpendingWithTransaction(transaction, context: $0) }, queue: queue, completion: completion)
+    }
+    
+    func fetchTransactionsToResolveFromConflictsOfTransaction(transaction: WalletTransaction, queue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchTransactionsToResolveFromConflictsOfTransaction(transaction, context: $0) }, queue: queue, completion: completion)
     }
 
     func removeTransactions(transactions: [WalletTransaction], queue: NSOperationQueue, completion: (Bool) -> Void) {
@@ -85,10 +89,6 @@ final class WalletStoreProxy {
     
     func addDoubleSpendConflicts(conflicts: [WalletDoubleSpendConflict], queue: NSOperationQueue, completion: (Bool) -> Void) {
         executeTransaction({ return WalletStoreExecutor.addDoubleSpendConflicts(conflicts, context: $0) }, queue: queue, completion: completion)
-    }
-    
-    func fetchDoubleSpendConflictsForTransaction(transaction: WalletTransaction, queue: NSOperationQueue, completion: ([WalletDoubleSpendConflict]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchDoubleSpendConflictsForTransaction(transaction, context: $0) }, queue: queue, completion: completion)
     }
     
     // MARK: Internal methods

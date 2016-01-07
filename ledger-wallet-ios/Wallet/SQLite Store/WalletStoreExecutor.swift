@@ -292,16 +292,27 @@ final class WalletStoreExecutor {
         return true
     }
     
-    class func fetchDoubleSpendTransactionsFromTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> [WalletTransaction]? {
+    class func fetchTransactionsDoubleSpendingWithTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> [WalletTransaction]? {
         guard transaction.regularInputs.count > 0 else { return [] }
         
         let inStatement = transaction.regularInputs.map({ "\"\($0.uid)\"" }).joinWithSeparator(", ")
         let statement = "SELECT DISTINCT t.* FROM \"\(WalletTransactionInputEntity.tableName)\" AS ti INNER JOIN \"\(WalletTransactionEntity.tableName)\" AS t ON ti.\"\(WalletTransactionInputEntity.transactionHashKey)\" = t.\"\(WalletTransactionEntity.hashKey)\" WHERE ti.\"\(WalletTransactionInputEntity.outputHashKey)\" || '-' || ti.\"\(WalletTransactionInputEntity.outputIndexKey)\" IN (\(inStatement)) AND t.\"\(WalletTransactionEntity.hashKey)\" IS NOT ?"
         return fetchModelCollection(statement, values: [transaction.transaction.hash], context: context)
     }
+
+    class func fetchTransactionsToResolveFromConflictsOfTransaction(transaction: WalletTransaction, context: SQLiteStoreContext) -> [WalletTransaction]? {
+        let statement = "SELECT t.* FROM \"\(WalletDoubleSpendConflictEntity.tableName)\" AS dsc INNER JOIN \"\(WalletTransactionEntity.tableName)\" AS t ON dsc.\"\(WalletDoubleSpendConflictEntity.rightTransactionHashKey)\" = t.\"\(WalletTransactionEntity.hashKey)\" WHERE dsc.\"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\" = ?"
+        return fetchModelCollection(statement, values: [transaction.hash], context: context)
+    }
     
     class func removeTransactions(transactions: [WalletTransaction], context: SQLiteStoreContext) -> Bool {
-        return false
+        let inStatement = transactions.map({ return "\"\($0.hash)\"" }).joinWithSeparator(", ")
+        let statement = "DELETE FROM \"\(WalletTransactionEntity.tableName)\" WHERE \"\(WalletTransactionEntity.hashKey)\" IN (\(inStatement))"
+        guard context.executeUpdate(statement, withArgumentsInArray: nil) else {
+            logger.error("Unable to remove transactions: \(context.lastErrorMessage())")
+            return false
+        }
+        return true
     }
     
     // MARK: Operations management
@@ -356,11 +367,6 @@ final class WalletStoreExecutor {
             return false
         }
         return true
-    }
-    
-    class func fetchDoubleSpendConflictsForTransaction(transaction: WalletTransaction, context: SQLiteStoreContext) -> [WalletDoubleSpendConflict]? {
-        let whereStatement = "\"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\" = ?"
-        return fetchDoubleSpendConflicts(whereStatement, values: [transaction.hash], context: context)
     }
     
     private class func fetchDoubleSpendConflict(conflict: WalletDoubleSpendConflict, context: SQLiteStoreContext) -> WalletDoubleSpendConflict? {

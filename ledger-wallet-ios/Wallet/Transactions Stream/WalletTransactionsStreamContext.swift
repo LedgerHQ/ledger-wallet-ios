@@ -14,10 +14,9 @@ final class WalletTransactionsStreamContext {
     
     var mappedInputs: [WalletTransactionRegularInput: WalletAddress] = [:]
     var mappedOutputs: [WalletTransactionOutput: WalletAddress] = [:]
-    
+
     var sendOperations: [WalletOperation] = []
     var receiveOperations: [WalletOperation] = []
-    
     var doubleSpendConflicts: [WalletDoubleSpendConflict] = []
     var transactionsToRemove: [WalletTransaction] = []
     

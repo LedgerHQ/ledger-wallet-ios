@@ -12,23 +12,26 @@ import Foundation
 
 private enum WalletTransactionsStreamSaveFunnelOperationType: Hashable, Equatable {
     
-    case WroteTransaction(success: Bool)
-    case WroteOperations(success: Bool)
-    case WroteDoubleSpendConflicts(success: Bool)
+    case UpdateTransaction(success: Bool)
+    case UpdateOperations(success: Bool)
+    case AddDoubleSpendConflicts(success: Bool)
+    case RemoveTransactions(success: Bool)
     
     var hashValue: Int {
         switch self {
-        case .WroteTransaction: return 0
-        case .WroteOperations: return 1
-        case .WroteDoubleSpendConflicts: return 2
+        case .UpdateTransaction: return 0
+        case .UpdateOperations: return 1
+        case .AddDoubleSpendConflicts: return 2
+        case .RemoveTransactions: return 3
         }
     }
     
     var isSuccessful: Bool {
         switch self {
-        case .WroteTransaction(let success): return success
-        case .WroteOperations(let success): return success
-        case .WroteDoubleSpendConflicts(let success): return success
+        case .UpdateTransaction(let success): return success
+        case .UpdateOperations(let success): return success
+        case .AddDoubleSpendConflicts(let success): return success
+        case .RemoveTransactions(let success): return success
         }
     }
     
@@ -62,25 +65,33 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     
     func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
         // write transactions
-        expectedOperations.insert(.WroteTransaction(success: true))
+        expectedOperations.insert(.UpdateTransaction(success: true))
         storeProxy.storeTransactions([context.remoteTransaction], queue: callingQueue) { [weak self] success in
-            self?.writeCompletionHandler(.WroteTransaction(success: success), completion: completion)
+            self?.writeCompletionHandler(.UpdateTransaction(success: success), completion: completion)
         }
         
         // write operations
         let operations = context.sendOperations + context.receiveOperations
         if operations.count > 0 {
-            expectedOperations.insert(.WroteOperations(success: true))
+            expectedOperations.insert(.UpdateOperations(success: true))
             storeProxy.storeOperations(operations, queue: callingQueue) { [weak self] success in
-                self?.writeCompletionHandler(.WroteOperations(success: success), completion: completion)
+                self?.writeCompletionHandler(.UpdateOperations(success: success), completion: completion)
             }
         }
         
         // write double spend conflicts
         if context.doubleSpendConflicts.count > 0 {
-            expectedOperations.insert(.WroteDoubleSpendConflicts(success: true))
+            expectedOperations.insert(.AddDoubleSpendConflicts(success: true))
             storeProxy.addDoubleSpendConflicts(context.doubleSpendConflicts, queue: callingQueue) { [weak self] success in
-                self?.writeCompletionHandler(.WroteDoubleSpendConflicts(success: success), completion: completion)
+                self?.writeCompletionHandler(.AddDoubleSpendConflicts(success: success), completion: completion)
+            }
+        }
+        
+        // remove transactions
+        if context.transactionsToRemove.count > 0 {
+            expectedOperations.insert(.RemoveTransactions(success: true))
+            storeProxy.removeTransactions(context.transactionsToRemove, queue: callingQueue) { [weak self] success in
+                self?.writeCompletionHandler(.RemoveTransactions(success: success), completion: completion)
             }
         }
     }
@@ -111,9 +122,10 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         
         // mark finished operation to perform proper flush
         switch finishedOperation {
-        case .WroteTransaction(let success) where success: wroteTransactionsSinceLastFlush = true
-        case .WroteOperations(let success) where success: wroteOperationsSinceLastFlush = true
-        case .WroteDoubleSpendConflicts(let success) where success: wroteDoubleSpendConflictsSinceLastFlush = true
+        case .UpdateTransaction(let success) where success: wroteTransactionsSinceLastFlush = true
+        case .UpdateOperations(let success) where success: wroteOperationsSinceLastFlush = true
+        case .AddDoubleSpendConflicts(let success) where success: wroteDoubleSpendConflictsSinceLastFlush = true
+        case .RemoveTransactions(let success) where success: wroteTransactionsSinceLastFlush = true; wroteDoubleSpendConflictsSinceLastFlush = true
         default: break
         }
         
