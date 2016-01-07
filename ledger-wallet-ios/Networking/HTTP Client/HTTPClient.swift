@@ -78,7 +78,7 @@ final class HTTPClient {
                 return
             }
             let statusCode = httpResponse.statusCode
-            guard statusCode >= 200 && statusCode <= 299 else {
+            guard statusCode < 400 else {
                 strongSelf.postprocessResponse(httpResponse, request: request, error: error)
                 completionHandler(nil, request, httpResponse, error)
                 return
