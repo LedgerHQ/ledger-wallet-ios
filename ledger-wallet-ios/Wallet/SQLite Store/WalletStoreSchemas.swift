@@ -97,7 +97,6 @@ final class WalletStoreSchemas {
         let doubleSpendConflictsTable = WalletDoubleSpendConflictEntity.eponymTable
         doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.leftTransactionHashKey, type: .Text, notNull: true, unique: false))
         doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.rightTransactionHashKey, type: .Text, notNull: true, unique: false))
-        doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.leftScoreKey, type: .Integer, notNull: true, unique: false))
         schema.addTable(doubleSpendConflictsTable)
         
         // foreign keys

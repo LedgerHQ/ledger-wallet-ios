@@ -77,6 +77,16 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) })
     }
     
+    // MARK: Double spend conflicts management
+    
+    func addDoubleSpendConflicts(conflicts: [WalletDoubleSpendConflict]) {
+        executeTransaction({ return WalletStoreExecutor.addDoubleSpendConflicts(conflicts, context: $0) })
+    }
+    
+    func fetchDoubleSpendConflictsForTransaction(transaction: WalletTransaction, queue: NSOperationQueue, completion: ([WalletDoubleSpendConflict]?) -> Void) {
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchDoubleSpendConflictsForTransaction(transaction, context: $0) }, queue: queue, completion: completion)
+    }
+    
     // MARK: Internal methods
     
     private func executeModelFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> T?, queue: NSOperationQueue, completion: (T?) -> Void) {

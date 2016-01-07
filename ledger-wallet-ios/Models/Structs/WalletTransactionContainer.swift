@@ -33,6 +33,14 @@ struct WalletTransactionContainer {
     var regularInputs: [WalletTransactionRegularInput] {
         return inputs.flatMap({ $0 as? WalletTransactionRegularInput })
     }
+    
+    // MARK: Initialization
+    
+    init(transaction: WalletTransaction, inputs: [WalletTransactionInputType], outputs: [WalletTransactionOutput]) {
+        self.transaction = transaction
+        self.inputs = inputs
+        self.outputs = outputs
+    }
 
 }
 

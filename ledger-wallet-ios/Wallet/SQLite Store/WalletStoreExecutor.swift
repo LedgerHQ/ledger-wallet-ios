@@ -65,6 +65,8 @@ final class WalletStoreExecutor {
         return true
     }
     
+    // MARK: Layout management
+    
     class func setNextIndex(index: Int, forAccountAtIndex accountIndex: Int, external: Bool, context: SQLiteStoreContext) -> Bool {
         guard let currentIndex = fetchNextIndexForAccountAtIndex(accountIndex, external: external, context: context) else { return false }
         guard index > currentIndex else { return true }
@@ -89,6 +91,8 @@ final class WalletStoreExecutor {
         }
         return account.nextInternalIndex
     }
+    
+    // MARK: Balances management
     
     class func updateAllAccountBalances(context: SQLiteStoreContext) -> Bool {
         guard let accounts = fetchAllAccounts(context) else {
@@ -289,9 +293,7 @@ final class WalletStoreExecutor {
     }
     
     class func fetchDoubleSpendTransactionsFromTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> [WalletTransaction]? {
-        guard transaction.regularInputs.count > 0 else {
-            return []
-        }
+        guard transaction.regularInputs.count > 0 else { return [] }
         
         let inStatement = transaction.regularInputs.map({ "\"\($0.uid)\"" }).joinWithSeparator(", ")
         let statement = "SELECT DISTINCT t.* FROM \"\(WalletTransactionInputEntity.tableName)\" AS ti INNER JOIN \"\(WalletTransactionEntity.tableName)\" AS t ON ti.\"\(WalletTransactionInputEntity.transactionHashKey)\" = t.\"\(WalletTransactionEntity.hashKey)\" WHERE ti.\"\(WalletTransactionInputEntity.outputHashKey)\" || '-' || ti.\"\(WalletTransactionInputEntity.outputIndexKey)\" IN (\(inStatement)) AND t.\"\(WalletTransactionEntity.hashKey)\" IS NOT ?"
@@ -302,6 +304,7 @@ final class WalletStoreExecutor {
     
     class func storeOperations(operations: [WalletOperation], context: SQLiteStoreContext) -> Bool {
         guard operations.count > 0 else { return true }
+        
         return operations.reduce(true) { $0 && storeOperation($1, context: context) }
     }
     
@@ -329,6 +332,46 @@ final class WalletStoreExecutor {
             }
         }
         return true
+    }
+
+    // MARK: Double spend conflicts management
+    
+    class func addDoubleSpendConflicts(conflicts: [WalletDoubleSpendConflict], context: SQLiteStoreContext) -> Bool {
+        guard conflicts.count > 0 else { return true }
+        return conflicts.reduce(true, combine: { $0 && addDoubleSpendConflict($1, context: context) })
+    }
+    
+    private class func addDoubleSpendConflict(conflict: WalletDoubleSpendConflict, context: SQLiteStoreContext) -> Bool {
+        guard fetchDoubleSpendConflict(conflict, context: context) == nil else { return true }
+        
+        let fieldsStatement = "\"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\", \"\(WalletDoubleSpendConflictEntity.rightTransactionHashKey)\""
+        let statement = "INSERT INTO \"\(WalletDoubleSpendConflictEntity.tableName)\" (\(fieldsStatement)) VALUES (?, ?)"
+        let values = [conflict.leftTransactionHash, conflict.rightTransactionHash]
+        guard context.executeUpdate(statement, withArgumentsInArray: values) else {
+            logger.error("Unable to insert double spend conflict \(conflict.leftTransactionHash) <-> \(conflict.rightTransactionHash): \(context.lastErrorMessage())")
+            return false
+        }
+        return true
+    }
+    
+    class func fetchDoubleSpendConflictsForTransaction(transaction: WalletTransaction, context: SQLiteStoreContext) -> [WalletDoubleSpendConflict]? {
+        let whereStatement = "\"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\" = ?"
+        return fetchDoubleSpendConflicts(whereStatement, values: [transaction.hash], context: context)
+    }
+    
+    private class func fetchDoubleSpendConflict(conflict: WalletDoubleSpendConflict, context: SQLiteStoreContext) -> WalletDoubleSpendConflict? {
+        let whereStatement = "\"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\" = ? AND \"\(WalletDoubleSpendConflictEntity.rightTransactionHashKey)\" = ?"
+        guard let results = fetchDoubleSpendConflicts(whereStatement, values: [conflict.leftTransactionHash, conflict.rightTransactionHash], context: context) where results.count > 0 else {
+            return nil
+        }
+        return results[0]
+    }
+    
+    private class func fetchDoubleSpendConflicts(whereStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [WalletDoubleSpendConflict]? {
+        let fieldsStatement = "\"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\", \"\(WalletDoubleSpendConflictEntity.rightTransactionHashKey)\""
+        var statement = "SELECT \(fieldsStatement) FROM \"\(WalletDoubleSpendConflictEntity.tableName)\""
+        if let whereStatement = whereStatement { statement += "WHERE \(whereStatement)" }
+        return fetchModelCollection(statement, values: values, context: context)
     }
     
     // MARK: Schema management

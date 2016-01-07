@@ -20,6 +20,18 @@ struct WalletTransaction {
     
     var isConfirmed: Bool { return blockHash != nil && blockHeight != nil && blockTime != nil }
     
+    // MARK: Inititialization
+    
+    init(hash: String, receiveAt: String, lockTime: Int, fees: Int64, blockHash: String?, blockTime: String?, blockHeight: Int?) {
+        self.hash = hash
+        self.receiveAt = receiveAt
+        self.lockTime = lockTime
+        self.fees = fees
+        self.blockHash = blockHash
+        self.blockTime = blockTime
+        self.blockHeight = blockHeight
+    }
+    
 }
 
 // MARK: - JSONInitializableModel

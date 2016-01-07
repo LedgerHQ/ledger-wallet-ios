@@ -11,10 +11,15 @@ import Foundation
 final class WalletTransactionsStreamContext {
     
     let remoteTransaction: WalletTransactionContainer
-    var sendOperations: [WalletOperation] = []
-    var receiveOperations: [WalletOperation] = []
+    
     var mappedInputs: [WalletTransactionRegularInput: WalletAddress] = [:]
     var mappedOutputs: [WalletTransactionOutput: WalletAddress] = [:]
+    
+    var sendOperations: [WalletOperation] = []
+    var receiveOperations: [WalletOperation] = []
+    
+    var doubleSpendConflicts: [WalletDoubleSpendConflict] = []
+    var transactionsToRemove: [WalletTransaction] = []
     
     init(remoteTransaction: WalletTransactionContainer) {
         self.remoteTransaction = remoteTransaction

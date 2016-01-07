@@ -201,6 +201,7 @@
 		37E37F461C3ACB0300731747 /* WalletLayoutHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F441C3ACB0300731747 /* WalletLayoutHolder.swift */; };
 		37E37F481C3BC6B300731747 /* SQLiteStoreResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F471C3BC6B300731747 /* SQLiteStoreResultSet.swift */; };
 		37E37F4A1C3C047600731747 /* WalletDoubleSpendConflictEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F491C3C047600731747 /* WalletDoubleSpendConflictEntity.swift */; };
+		37E37F4E1C3C1B6400731747 /* WalletDoubleSpendConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F4D1C3C1B6400731747 /* WalletDoubleSpendConflict.swift */; };
 		37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37E962341B441B890092946B /* fontawesome-webfont.ttf */; };
 		37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
@@ -505,6 +506,7 @@
 		37E37F441C3ACB0300731747 /* WalletLayoutHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLayoutHolder.swift; sourceTree = "<group>"; };
 		37E37F471C3BC6B300731747 /* SQLiteStoreResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteStoreResultSet.swift; sourceTree = "<group>"; };
 		37E37F491C3C047600731747 /* WalletDoubleSpendConflictEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoubleSpendConflictEntity.swift; sourceTree = "<group>"; };
+		37E37F4D1C3C1B6400731747 /* WalletDoubleSpendConflict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoubleSpendConflict.swift; sourceTree = "<group>"; };
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1122,6 +1124,7 @@
 				37E37F3E1C33E0B100731747 /* WalletTransactionOutput.swift */,
 				37E37F401C33E3AF00731747 /* WalletTransactionInput.swift */,
 				37E37F2E1C32E76300731747 /* WalletTransactionContainer.swift */,
+				37E37F4D1C3C1B6400731747 /* WalletDoubleSpendConflict.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1404,6 +1407,7 @@
 				3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */,
 				373B63BF1C1F0DAF004E3298 /* PairingAddScanStepViewController.swift in Sources */,
 				373E22CC1A71517C00BAF63F /* Blocks.swift in Sources */,
+				37E37F4E1C3C1B6400731747 /* WalletDoubleSpendConflict.swift in Sources */,
 				376F50FA1A82190D001C6684 /* BTCBigNumber.m in Sources */,
 				37B2F07F1C05D3E0004C9AB1 /* BaseM2FAManager.swift in Sources */,
 				37EF91C31A6D3C47007DBBAF /* TableView.swift in Sources */,
