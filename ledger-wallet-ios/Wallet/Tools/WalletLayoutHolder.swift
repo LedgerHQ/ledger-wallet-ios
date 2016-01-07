@@ -72,7 +72,7 @@ final class WalletLayoutHolder {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            guard let account = strongSelf.accountAtIndex(index) else {
+            guard let (account, _) = strongSelf.accountWithIndex(index) else {
                 strongSelf.logger.error("Unable to fetch account \(index) to get next index")
                 return
             }
@@ -88,7 +88,7 @@ final class WalletLayoutHolder {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            guard let account = strongSelf.accountAtIndex(accountIndex) else {
+            guard let (account, position) = strongSelf.accountWithIndex(accountIndex) else {
                 strongSelf.logger.error("Unable to fetch account \(accountIndex) to set next index")
                 return
             }
@@ -110,11 +110,11 @@ final class WalletLayoutHolder {
             // store new index
             strongSelf.logger.info("Setting next \(external ? "external" : "internal") index \(index) for account at index \(accountIndex)")
             if external {
-                strongSelf.accounts[accountIndex] = strongSelf.accounts[accountIndex].withNextExternalIndex(index)
+                strongSelf.accounts[position] = account.withNextExternalIndex(index)
                 strongSelf.storeProxy.setNextExternalIndex(index, forAccountAtIndex: accountIndex)
             }
             else {
-                strongSelf.accounts[accountIndex] = strongSelf.accounts[accountIndex].withNextInternalIndex(index)
+                strongSelf.accounts[position] = account.withNextInternalIndex(index)
                 strongSelf.storeProxy.setNextInternalIndex(index, forAccountAtIndex: accountIndex)
             }
         }
@@ -125,8 +125,13 @@ final class WalletLayoutHolder {
         return index...index + self.dynamicType.BIP44AddressesGap - 1
     }
     
-    private func accountAtIndex(index: Int) -> WalletAccount? {
-        return accounts.filter({ $0.index == index }).first
+    private func accountWithIndex(index: Int) -> (WalletAccount, Int)? {
+        for (position, account) in accounts.enumerate() {
+            if account.index == index {
+                return (account, position)
+            }
+        }
+        return nil
     }
     
     // MARK: Restoration
