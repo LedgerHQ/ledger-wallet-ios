@@ -24,7 +24,7 @@ final class WalletLayoutHolder {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            for account in strongSelf.accounts where account.nextExternalIndex == 0 && account.nextInternalIndex == 0 {
+            for account in strongSelf.accounts where !account.isUsed {
                 value = account.index
                 return
             }
