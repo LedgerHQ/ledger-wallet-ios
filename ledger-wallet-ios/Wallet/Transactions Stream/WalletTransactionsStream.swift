@@ -10,8 +10,11 @@ import Foundation
 
 protocol WalletTransactionsStreamDelegate: class {
     
-    func transactionsStreamDidUpdateAccountLayout(transactionsStream: WalletTransactionsStream)
-    func transactionsStreamDidUpdateAccountOperations(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidStartDequeuingTransactions(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidUpdateAccountLayouts(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidUpdateDoubleSpendConflicts(transactionsStream: WalletTransactionsStream)
     func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void)
     
 }
@@ -55,10 +58,23 @@ final class WalletTransactionsStream {
             
             // process next pending transaction if not busy
             if !strongSelf.busy {
-                strongSelf.busy = true
-                strongSelf.processNextPendingTransaction()
+                strongSelf.initiateDequeueProcess()
             }
         }
+    }
+    
+    // MARK: Dequeue lifecycle
+    
+    private func initiateDequeueProcess() {
+        busy = true
+        notifyStartOfDequeuingTransactions()
+        processNextPendingTransaction()
+    }
+    
+    private func terminateDequeueProcess() {
+        busy = false
+        funnels.forEach({ $0.flush() })
+        notifyStopOfDequeuingTransactions()
     }
 
     // MARK: Internal methods
@@ -69,8 +85,7 @@ final class WalletTransactionsStream {
             
             // pop first transaction
             guard let transaction = strongSelf.pendingTransactions.first else {
-                strongSelf.busy = false
-                strongSelf.funnels.forEach({ $0.flush() })
+                strongSelf.terminateDequeueProcess()
                 return
             }
             strongSelf.pendingTransactions.removeFirst()
@@ -139,22 +154,50 @@ final class WalletTransactionsStream {
     
 }
 
-// MARK: - WalletTransactionsStreamLayoutFunnelDelegate
+// MARK: - Delegate management
 
-extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
+private extension WalletTransactionsStream {
     
-    func layoutFunnelDidUpdateAccountLayouts(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
-        
-    }
-    
-    func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
-        // ask delegate
+    private func notifyStartOfDequeuingTransactions() {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            
+            strongSelf.delegate?.transactionsStreamDidStartDequeuingTransactions(strongSelf)
+        }
+    }
+    
+    private func notifyStopOfDequeuingTransactions() {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsStreamDidStopDequeuingTransactions(strongSelf)
+        }
+    }
+    
+    private func notifyUpdateAccountLayouts() {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsStreamDidUpdateAccountLayouts(strongSelf)
+        }
+    }
+    
+    private func notifyUpdateOperations() {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsStreamDidUpdateOperations(strongSelf)
+        }
+    }
+    
+    private func notifyUpdateDoubleSpendConflicts() {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsStreamDidUpdateDoubleSpendConflicts(strongSelf)
+        }
+    }
+    
+    private func notifyMissingAccountAtIndex(index: Int, continueBlock: (Bool) -> Void) {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
             strongSelf.delegate?.transactionsStream(strongSelf, didMissAccountAtIndex: index) { [weak self] shouldContinue in
                 guard let strongSelf = self else { return }
-                
                 strongSelf.workingQueue.addOperationWithBlock() { continueBlock(shouldContinue) }
             }
         }
@@ -162,24 +205,34 @@ extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate
     
 }
 
+// MARK: - WalletTransactionsStreamLayoutFunnelDelegate
+
+extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
+    
+    func layoutFunnelDidUpdateAccountLayouts(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
+        notifyUpdateAccountLayouts()
+    }
+    
+    func layoutFunnel(layoutfunnel: WalletTransactionsStreamLayoutFunnel, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
+        notifyMissingAccountAtIndex(index, continueBlock: continueBlock)
+    }
+    
+}
+
 // MARK: - WalletTransactionsStreamSaveFunnelDelegate
 
 extension WalletTransactionsStream: WalletTransactionsStreamSaveFunnelDelegate {
-    
-    func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        
-    }
-    
+
     func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel) {
         
     }
-    
-    func saveFunnerDidUpdateAccountBalances(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        
+
+    func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel) {
+        notifyUpdateOperations()
     }
     
     func saveFunnelDidUpdateDoubleSpendConflicts(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        
+        notifyUpdateDoubleSpendConflicts()
     }
     
 }

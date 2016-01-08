@@ -17,7 +17,7 @@ final class WalletTransactionsStreamContext {
 
     var sendOperations: [WalletOperation] = []
     var receiveOperations: [WalletOperation] = []
-    var doubleSpendConflicts: [WalletDoubleSpendConflict] = []
+    var conflictsToAdd: [WalletDoubleSpendConflict] = []
     var transactionsToRemove: [WalletTransaction] = []
     
     init(remoteTransaction: WalletTransactionContainer) {

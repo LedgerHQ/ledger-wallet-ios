@@ -93,45 +93,44 @@ final class WalletStoreExecutor {
     }
     
     // MARK: Balances management
-    
-    class func updateAllAccountBalances(context: SQLiteStoreContext) -> Bool {
-        guard let accounts = fetchAllAccounts(context) else {
-            logger.error("Unable to fetch all accounts to update balances")
-            return false
-        }
+
+    class func updateBalanceOfAccounts(accounts: [WalletAccount], context: SQLiteStoreContext) -> Bool {
         guard accounts.count > 0 else { return true }
         
-        // loop through all accounts to update balance
-        return accounts.reduce(true) { $0 && updateAccountBalanceAtIndex($1.index, context: context) }
+        return accounts.reduce(true) { current, account in
+            guard let receivedAmount = fetchTotalReceivedAmountOfAccountAtIndex(account.index, context: context) else { return false }
+            guard let sentAmount = fetchTotalSentAmountOfAccountAtIndex(account.index, context: context) else { return false }
+            return current && setBalance(receivedAmount - sentAmount, ofAccountAtIndex: account.index, context: context)
+        }
     }
     
-    private class func updateAccountBalanceAtIndex(index: Int, context: SQLiteStoreContext) -> Bool {
-        guard let balance = computeBalanceForAccountAtIndex(index, context: context) else {
-            return false
-        }
-        
+    private class func setBalance(balance: Int64, ofAccountAtIndex index: Int, context: SQLiteStoreContext) -> Bool {
         let statement = "UPDATE \"\(WalletAccountEntity.tableName)\" SET \"\(WalletAccountEntity.balanceKey)\" = ? WHERE \"\(WalletAccountEntity.indexKey)\" = ?"
         guard context.executeUpdate(statement, withArgumentsInArray: [NSNumber(longLong: balance), index]) else {
-            logger.error("Unable to update balance for account at index \(index): \(context.lastErrorMessage())")
+            logger.error("Unable to set balance for account at index \(index): \(context.lastErrorMessage())")
             return false
         }
         return true
     }
     
-    private class func computeBalanceForAccountAtIndex(index: Int, context: SQLiteStoreContext) -> Int64? {
-        let statement = "SELECT IFNULL((SELECT SUM(\"\(WalletTransactionOutputEntity.valueKey)\") FROM \"\(WalletTransactionOutputEntity.tableName)\" AS \"to\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"to\".\"\(WalletTransactionOutputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?), 0) - IFNULL((SELECT SUM(\"\(WalletTransactionInputEntity.valueKey)\") FROM \"\(WalletTransactionInputEntity.tableName)\" AS \"ti\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"ti\".\"\(WalletTransactionInputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ?), 0) AS \"\(WalletAccountEntity.balanceKey)\""
-        guard let results = context.executeQuery(statement, withArgumentsInArray: [index, index]) else {
-            logger.error("Unable to compute balance for account at index \(index): \(context.lastErrorMessage())")
-            return nil
-        }
-        defer { results.close() }
-        guard results.next() && !results.columnIsNull(WalletAccountEntity.balanceKey) else {
-            logger.error("Unable to fetch computed balance for account at index \(index): no row")
+    private class func fetchTotalReceivedAmountOfAccountAtIndex(index: Int, context: SQLiteStoreContext) -> Int64? {
+        let statement = "SELECT IFNULL((SELECT SUM(\"to\".\"\(WalletTransactionOutputEntity.valueKey)\") FROM \"\(WalletTransactionOutputEntity.tableName)\" AS \"to\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"to\".\"\(WalletTransactionOutputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ? AND \"to\".\"\(WalletTransactionOutputEntity.transactionHashKey)\" NOT IN (SELECT DISTINCT \"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\" FROM \"\(WalletDoubleSpendConflictEntity.tableName)\")), 0) AS \"\(WalletAccountEntity.balanceKey)\""
+        guard let results = context.executeQuery(statement, withArgumentsInArray: [index]) where results.next() && !results.columnIsNull(WalletAccountEntity.balanceKey) else {
+            logger.error("Unable to compute total received amount of account at index \(index): \(context.lastErrorMessage())")
             return nil
         }
         return results.longLongIntForColumn(WalletAccountEntity.balanceKey)
     }
-    
+
+    private class func fetchTotalSentAmountOfAccountAtIndex(index: Int, context: SQLiteStoreContext) -> Int64? {
+        let statement = "SELECT IFNULL((SELECT SUM(\"ti\".\"\(WalletTransactionInputEntity.valueKey)\") FROM \"\(WalletTransactionInputEntity.tableName)\" AS \"ti\" INNER JOIN \"\(WalletAddressEntity.tableName)\" AS a ON \"ti\".\"\(WalletTransactionInputEntity.addressKey)\" = a.\"\(WalletAddressEntity.addressKey)\" WHERE a.\"\(WalletAddressEntity.accountIndexKey)\" = ? AND \"ti\".\"\(WalletTransactionInputEntity.transactionHashKey)\" NOT IN (SELECT DISTINCT \"\(WalletDoubleSpendConflictEntity.leftTransactionHashKey)\" FROM \"\(WalletDoubleSpendConflictEntity.tableName)\")), 0) AS \"\(WalletAccountEntity.balanceKey)\""
+        guard let results = context.executeQuery(statement, withArgumentsInArray: [index]) where results.next() && !results.columnIsNull(WalletAccountEntity.balanceKey) else {
+            logger.error("Unable to compute total sent amount of account at index \(index): \(context.lastErrorMessage())")
+            return nil
+        }
+        return results.longLongIntForColumn(WalletAccountEntity.balanceKey)
+    }
+
     // MARK: Addresses management
     
     class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddress]? {

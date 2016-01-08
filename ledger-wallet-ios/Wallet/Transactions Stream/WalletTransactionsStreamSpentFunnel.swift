@@ -95,7 +95,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
         
         // continue
         logger.info("Storing \(doubleSpendConflicts.count) conflict(s) for transaction \(context.remoteTransaction.transaction.hash)")
-        context.doubleSpendConflicts.appendContentsOf(doubleSpendConflicts)
+        context.conflictsToAdd.appendContentsOf(doubleSpendConflicts)
         completion(true)
     }
     

@@ -48,7 +48,6 @@ protocol WalletTransactionsStreamSaveFunnelDelegate: class {
     func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel)
     func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel)
     func saveFunnelDidUpdateDoubleSpendConflicts(saveFunnel: WalletTransactionsStreamSaveFunnel)
-    func saveFunnerDidUpdateAccountBalances(saveFunnel: WalletTransactionsStreamSaveFunnel)
     
 }
 
@@ -80,9 +79,9 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         }
         
         // write double spend conflicts
-        if context.doubleSpendConflicts.count > 0 {
+        if context.conflictsToAdd.count > 0 {
             expectedOperations.insert(.AddDoubleSpendConflicts(success: true))
-            storeProxy.addDoubleSpendConflicts(context.doubleSpendConflicts, queue: callingQueue) { [weak self] success in
+            storeProxy.addDoubleSpendConflicts(context.conflictsToAdd, queue: callingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.AddDoubleSpendConflicts(success: success), completion: completion)
             }
         }
@@ -106,10 +105,6 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         if wroteDoubleSpendConflictsSinceLastFlush {
             delegate?.saveFunnelDidUpdateDoubleSpendConflicts(self)
         }
-        if wroteTransactionsSinceLastFlush || wroteDoubleSpendConflictsSinceLastFlush {
-            storeProxy.updateAllAccountBalances(callingQueue, completion: { _ in })
-            delegate?.saveFunnerDidUpdateAccountBalances(self)
-        }
         wroteTransactionsSinceLastFlush = false
         wroteOperationsSinceLastFlush = false
         wroteDoubleSpendConflictsSinceLastFlush = false
@@ -122,10 +117,16 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         
         // mark finished operation to perform proper flush
         switch finishedOperation {
-        case .UpdateTransaction(let success) where success: wroteTransactionsSinceLastFlush = true
-        case .UpdateOperations(let success) where success: wroteOperationsSinceLastFlush = true
-        case .AddDoubleSpendConflicts(let success) where success: wroteDoubleSpendConflictsSinceLastFlush = true
-        case .RemoveTransactions(let success) where success: wroteTransactionsSinceLastFlush = true; wroteDoubleSpendConflictsSinceLastFlush = true
+        case .UpdateTransaction(let success) where success:
+            wroteTransactionsSinceLastFlush = true
+        case .UpdateOperations(let success) where success:
+            wroteOperationsSinceLastFlush = true
+        case .AddDoubleSpendConflicts(let success) where success:
+            wroteDoubleSpendConflictsSinceLastFlush = true
+        case .RemoveTransactions(let success) where success:
+            wroteTransactionsSinceLastFlush = true
+            wroteDoubleSpendConflictsSinceLastFlush = true
+            wroteOperationsSinceLastFlush = true
         default: break
         }
         

@@ -179,6 +179,7 @@
 		37B604CE1A9226FA00E6AD78 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B604CD1A9226FA00E6AD78 /* AlertController.swift */; };
 		37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */; };
 		37C851291BDFB47E0042834D /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C851271BDFB47E0042834D /* OpenSSL.framework */; };
+		37D0F46F1C3EB7CE00984743 /* WalletBalanceUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */; };
 		37D29D9E1C217E720082CAA6 /* WalletTransactionsStreamFunnelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D29D9D1C217E720082CAA6 /* WalletTransactionsStreamFunnelType.swift */; };
 		37D29DA01C2192BC0082CAA6 /* WalletTransactionsStreamDiscardFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D29D9F1C2192BC0082CAA6 /* WalletTransactionsStreamDiscardFunnel.swift */; };
 		37D29DA21C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D29DA11C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift */; };
@@ -483,6 +484,7 @@
 		37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
 		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37C851271BDFB47E0042834D /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = Vendor/OpenSSL.framework; sourceTree = "<group>"; };
+		37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBalanceUpdater.swift; sourceTree = "<group>"; };
 		37D29D9D1C217E720082CAA6 /* WalletTransactionsStreamFunnelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStreamFunnelType.swift; sourceTree = "<group>"; };
 		37D29D9F1C2192BC0082CAA6 /* WalletTransactionsStreamDiscardFunnel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStreamDiscardFunnel.swift; sourceTree = "<group>"; };
 		37D29DA11C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStreamContext.swift; sourceTree = "<group>"; };
@@ -1134,6 +1136,7 @@
 			children = (
 				37E37F431C3ACB0300731747 /* WalletAddressCache.swift */,
 				37E37F441C3ACB0300731747 /* WalletLayoutHolder.swift */,
+				37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1499,6 +1502,7 @@
 				3750704A1C088C0600214B83 /* FMDatabase.m in Sources */,
 				37E37F411C33E3AF00731747 /* WalletTransactionInput.swift in Sources */,
 				373B63B11C1F0DAF004E3298 /* BaseNavigationController.swift in Sources */,
+				37D0F46F1C3EB7CE00984743 /* WalletBalanceUpdater.swift in Sources */,
 				377822501C05EDBE009FD634 /* WalletTestViewController.swift in Sources */,
 				37AABB761A6FE483007B4E16 /* NSCharacterSet+Utils.swift in Sources */,
 				37B2F0821C05D3E0004C9AB1 /* PairingProtocolManager.swift in Sources */,

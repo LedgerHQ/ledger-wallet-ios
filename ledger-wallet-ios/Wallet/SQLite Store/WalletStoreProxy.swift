@@ -43,10 +43,6 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: false, context: $0) }, queue: queue, completion: completion)
     }
     
-    func updateAllAccountBalances(queue: NSOperationQueue, completion: (Bool) -> Void) {
-        executeTransaction({ return WalletStoreExecutor.updateAllAccountBalances($0) }, queue: queue, completion: completion)
-    }
-    
     // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
@@ -83,6 +79,12 @@ final class WalletStoreProxy {
     
     func storeOperations(operations: [WalletOperation], queue: NSOperationQueue, completion: (Bool) -> Void) {
         executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) }, queue: queue, completion: completion)
+    }
+    
+    // MARK: Balances management
+    
+    func updateBalanceOfAccounts(accounts: [WalletAccount], queue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.updateBalanceOfAccounts(accounts, context: $0) }, queue: queue, completion: completion)
     }
     
     // MARK: Double spend conflicts management

@@ -17,6 +17,7 @@ struct WalletAccount {
     let name: String?
     let hidden: Bool
     let balance: Int64
+    var isUsed: Bool { return nextExternalIndex > 0 || nextInternalIndex > 0 }
     
     func withNextInternalIndex(index: Int) -> WalletAccount {
         return WalletAccount(index: self.index, extendedPublicKey: extendedPublicKey, nextInternalIndex: index, nextExternalIndex: nextExternalIndex, name: name, hidden: hidden, balance: balance)
