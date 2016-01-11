@@ -18,7 +18,8 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
         
         // normalize operations
         decreaseSendOperationAmounts(&sendOperations, internalOperations: receiveInternalOperations)
-        convertInternalOperationsToExternal(sendOperations, internalOperations: &receiveInternalOperations, externalOperations: &receiveExternalOperations)
+        checkForExternalSendToInternalAddresses(sendOperations, internalOperations: &receiveInternalOperations, externalOperations: &receiveExternalOperations)
+        checkForInternalSendToInternalAddresses(context, sendOperations: sendOperations, internalOperations: &receiveInternalOperations, externalOperations: &receiveExternalOperations)
         
         // update context
         context.sendOperations.appendContentsOf(sendOperations.values)
@@ -58,11 +59,26 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
         }
     }
     
-    private func convertInternalOperationsToExternal(sendOperations: [Int: WalletOperation], inout internalOperations: [Int: WalletOperation], inout externalOperations: [Int: WalletOperation]) {
-        guard internalOperations.count == 0 && internalOperations.count > 0 && externalOperations.count == 0 else {
+    private func checkForExternalSendToInternalAddresses(sendOperations: [Int: WalletOperation],
+        inout internalOperations: [Int: WalletOperation], inout externalOperations: [Int: WalletOperation]) {
+        guard sendOperations.count == 0 && internalOperations.count > 0 && externalOperations.count == 0 else {
             return
         }
         
+        externalOperations = internalOperations
+        internalOperations.removeAll()
+    }
+    
+    private func checkForInternalSendToInternalAddresses(context: WalletTransactionsStreamContext, sendOperations: [Int: WalletOperation],
+        inout internalOperations: [Int: WalletOperation], inout externalOperations: [Int: WalletOperation]) {
+        guard sendOperations.count > 0 && internalOperations.count == context.remoteTransaction.outputs.count && externalOperations.count == 0 else {
+            return
+        }
+
+        guard let firstInputAccountIndex = sendOperations.first?.0 else {
+            return
+        }
+        internalOperations.removeValueForKey(firstInputAccountIndex)
         externalOperations = internalOperations
         internalOperations.removeAll()
     }
