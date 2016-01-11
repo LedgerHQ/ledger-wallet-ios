@@ -1,5 +1,5 @@
 //
-//  TransactionsAPIClient.swift
+//  WalletTransactionsAPIClient.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 03/12/2015.
@@ -8,9 +8,13 @@
 
 import Foundation
 
-final class TransactionsAPIClient: LedgerAPIClient {
+final class WalletTransactionsAPIClient: APIClientType {
     
-    private let logger = Logger.sharedInstance(name: "TransactionsAPIClient")
+    let httpClient: HTTPClient
+    private let logger = Logger.sharedInstance(name: "WalletTransactionsAPIClient")
+    private let workingQueue = NSOperationQueue(name: dispatchQueueNameForIdentifier("WalletTransactionsAPIClient"), maxConcurrentOperationCount: NSOperationQueueDefaultMaxConcurrentOperationCount)
+    private let servicesProvider: ServicesProviderType
+    private let delegateQueue: NSOperationQueue
     
     // MARK: Transactions mangement
     
@@ -36,6 +40,15 @@ final class TransactionsAPIClient: LedgerAPIClient {
             let transactions = WalletTransactionContainer.collectionFromJSONArray(JSON)
             strongSelf.delegateQueue.addOperationWithBlock() { completion(transactions) }
         }
+    }
+    
+    // MARK: Initialization
+    
+    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
+        self.servicesProvider = servicesProvider
+        self.delegateQueue = delegateQueue
+        self.httpClient = HTTPClient(delegateQueue: workingQueue)
+        self.httpClient.additionalHeaders = servicesProvider.httpHeaders
     }
     
 }

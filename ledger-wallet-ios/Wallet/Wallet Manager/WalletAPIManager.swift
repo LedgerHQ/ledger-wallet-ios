@@ -100,6 +100,7 @@ final class WalletAPIManager: WalletManagerType {
 
     init(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
         self.uniqueIdentifier = uniqueIdentifier
+        logger.info("Using services provider \"\(servicesProvider.name)\" with coin network \"\(servicesProvider.coinNetwork.name)\"")
     
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))

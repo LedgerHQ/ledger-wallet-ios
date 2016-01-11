@@ -31,7 +31,7 @@ final class WalletTransactionsConsumer {
     weak var delegate: WalletTransactionsConsumerDelegate?
     private var refreshing = false
     private var foundTransactionsInCurrentAccount = false
-    private let apiClient: TransactionsAPIClient
+    private let apiClient: WalletTransactionsAPIClient
     private let addressCache: WalletAddressCache
     private let delegateQueue: NSOperationQueue
     private var workingQueue = NSOperationQueue(name: "WalletTransactionsConsumer", maxConcurrentOperationCount: 1)
@@ -215,7 +215,7 @@ final class WalletTransactionsConsumer {
     init(addressCache: WalletAddressCache, servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
         self.addressCache = addressCache
-        self.apiClient = TransactionsAPIClient(servicesProvider: servicesProvider, delegateQueue: self.workingQueue)
+        self.apiClient = WalletTransactionsAPIClient(servicesProvider: servicesProvider, delegateQueue: self.workingQueue)
     }
     
     deinit {
