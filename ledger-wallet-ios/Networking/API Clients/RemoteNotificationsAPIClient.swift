@@ -20,7 +20,9 @@ final class RemoteNotificationsAPIClient: LedgerAPIClient {
             return
         }
         
-        restClient.post("/2fa/pairings/\(pairingId)/push_token", parameters: ["push_token": tokenBase16String]) { [weak self] data, request, response, error in
+        let URL = servicesProvider.M2FAPushTokensURLForPairingId(pairingId)
+        
+        httpClient.post(URL, parameters: ["push_token": tokenBase16String]) { [weak self] data, request, response, error in
             guard let strongSelf = self else { return }
             
             let success = error == nil && response != nil
@@ -32,7 +34,9 @@ final class RemoteNotificationsAPIClient: LedgerAPIClient {
     }
     
     func unregisterDeviceTokenFromPairingId(pairingId: String, completion: (Bool) -> Void) {
-        restClient.delete("/2fa/pairings/\(pairingId)/push_token") { [weak self] data, request, response, error in
+        let URL = servicesProvider.M2FAPushTokensURLForPairingId(pairingId)
+        
+        httpClient.delete(URL) { [weak self] data, request, response, error in
             guard let strongSelf = self else { return }
             
             let success = error == nil && response != nil

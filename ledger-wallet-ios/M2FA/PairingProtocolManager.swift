@@ -38,7 +38,7 @@ final class PairingProtocolManager: BaseM2FAManager {
     
     // MARK: Initialization
     
-    override init() {
+    init(servicesProvider: ServiceProviderType) {
         super.init()
         ignoresTimeout = false
     }
@@ -61,7 +61,7 @@ extension PairingProtocolManager {
         
         // create websocket
         logger.info("Connecting websocket with room id \(pairingId)")
-        webSocket = WebSocket(url: NSURL(string: LedgerWebSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
+        webSocket = WebSocket(url: NSURL(string: LedgerWebsocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
         webSocket.delegate = self
         webSocket.connect()
         
@@ -151,6 +151,21 @@ extension PairingProtocolManager {
     
 }
 
+// MARK: - Attestation keys management
+
+extension PairingProtocolManager {
+    
+    private func fetchLedgerAttestationKeyFromIDs(batchID batchID: UInt32, derivationID: UInt32) -> AttestationKey? {
+        for attestationKey in LedgerDeviceAttestationKeys {
+            if attestationKey.batchID == batchID && attestationKey.derivationID == derivationID {
+                return attestationKey
+            }
+        }
+        return nil
+    }
+    
+}
+
 // MARK: - Messages management
 
 extension PairingProtocolManager {
@@ -169,11 +184,11 @@ extension PairingProtocolManager {
         let finalAttestationKey: AttestationKey
         if let attestationString = message["attestation"] as? String, attestationData = BTCDataFromHex(attestationString),
             attestationKeyIDs = cryptor.attestationKeyIDsWithData(attestationData),
-            attestationKey = AttestationKey.fetchFromIDs(batchID: attestationKeyIDs.batchID, derivationID: attestationKeyIDs.derivationID) {
+            attestationKey = fetchLedgerAttestationKeyFromIDs(batchID: attestationKeyIDs.batchID, derivationID: attestationKeyIDs.derivationID) {
             finalAttestationKey = attestationKey
         }
         else {
-            finalAttestationKey = AttestationKey.fetchFromIDs(batchID: 0x02, derivationID: 0x01)!
+            finalAttestationKey = fetchLedgerAttestationKeyFromIDs(batchID: 0x02, derivationID: 0x01)!
         }
         
         // compute session + external key

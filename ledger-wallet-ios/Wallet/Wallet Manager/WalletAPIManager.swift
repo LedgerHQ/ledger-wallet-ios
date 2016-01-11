@@ -11,6 +11,7 @@ import Foundation
 final class WalletAPIManager: WalletManagerType {
     
     let uniqueIdentifier: String
+    
     var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
     var isListeningTransactions: Bool { return transactionsListener.isListening }
     
@@ -97,7 +98,7 @@ final class WalletAPIManager: WalletManagerType {
     
     // MARK: Initialization
 
-    init(uniqueIdentifier: String) {
+    init(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
         self.uniqueIdentifier = uniqueIdentifier
     
         // open store
@@ -109,7 +110,7 @@ final class WalletAPIManager: WalletManagerType {
         self.addressCache = WalletAddressCache(storeProxy: storeProxy)
         self.layoutHolder = WalletLayoutHolder(storeProxy: storeProxy)
         self.balanceUpdater = WalletBalanceUpdater(storeProxy: storeProxy, delegateQueue: workingQueue)
-        self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, delegateQueue: workingQueue)
+        self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, servicesProvider: servicesProvider, delegateQueue: workingQueue)
         self.transactionsListener = WalletTransactionsListener(delegateQueue: workingQueue)
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: workingQueue)
         

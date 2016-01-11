@@ -96,7 +96,7 @@ extension PairingTransactionsManager {
         let exemptedPairingItem = exceptions ?? []
         let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for pairingItem in pairingItems where !exemptedPairingItem.contains(pairingItem) {
-            let webSocket = WebSocket(url: NSURL(string: LedgerWebSocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
+            let webSocket = WebSocket(url: NSURL(string: LedgerWebsocketBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
             webSocket.delegate = self
             webSocket.connect()
             webSocketsPairingKeychainItems[webSocket] = pairingItem

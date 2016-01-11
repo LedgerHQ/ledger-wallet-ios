@@ -17,31 +17,33 @@ private enum LedgerAPIClientHeaderFields: String {
 }
 
 class LedgerAPIClient: NSObject {
-
-    let restClient: RESTClient
+    
     let delegateQueue: NSOperationQueue
+    let httpClient: HTTPClient
+    let servicesProvider: ServicesProviderType
     
     // MARK: Public methods
     
     func cancelAllTasks() {
-        restClient.cancelAllTasks()
+        httpClient.cancelAllTasks()
     }
     
     // MARK: Initialization
     
-    init(delegateQueue: NSOperationQueue) {
+    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
+        self.servicesProvider = servicesProvider
         
         let workingQueue = NSOperationQueue(name: self.dynamicType.className(), maxConcurrentOperationCount: NSOperationQueueDefaultMaxConcurrentOperationCount)
-        self.restClient = RESTClient(baseURL: LedgerAPIBaseURL, delegateQueue: workingQueue)
-        self.restClient.httpClient.additionalHeaders = [
+        self.httpClient = HTTPClient(delegateQueue: workingQueue)
+        self.httpClient.additionalHeaders = [
             LedgerAPIClientHeaderFields.Platform.rawValue: "ios",
             LedgerAPIClientHeaderFields.Locale.rawValue: NSLocale.currentLocale().localeIdentifier
         ]
         #if DEBUG
-            self.restClient.httpClient.additionalHeaders![LedgerAPIClientHeaderFields.Environment.rawValue] = "dev"
+            self.httpClient.additionalHeaders![LedgerAPIClientHeaderFields.Environment.rawValue] = "dev"
         #else
-            self.restClient.httpClient.additionalHeaders![LedgerAPIClientHeaderFields.Environment.rawValue] = "prod"
+            self.httpClient.additionalHeaders![LedgerAPIClientHeaderFields.Environment.rawValue] = "prod"
         #endif
     }
     

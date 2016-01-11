@@ -26,6 +26,6 @@ protocol WalletManagerType: class {
     func startAllServices()
     func stopAllServices()
     
-    init(uniqueIdentifier: String)
+    init(uniqueIdentifier: String, servicesProvider: ServicesProviderType)
     
 }

@@ -23,8 +23,8 @@ final class TransactionsAPIClient: LedgerAPIClient {
             return
         }
         
-        let adressesString = addresses.joinWithSeparator(",")
-        restClient.get("/blockchain/btc/addresses/\(adressesString)/transactions") { [weak self] data, request, response, error in
+        let URL = servicesProvider.walletTransactionsURLForAddresses(addresses)
+        httpClient.get(URL) { [weak self] data, request, response, error in
             guard let strongSelf = self else { return }
             
             guard error == nil, let data = data, JSON = JSON.JSONObjectFromData(data) as? [[String: AnyObject]] else {
@@ -34,9 +34,6 @@ final class TransactionsAPIClient: LedgerAPIClient {
             }
             
             let transactions = WalletTransactionContainer.collectionFromJSONArray(JSON)
-            if transactions.count != JSON.count {
-                strongSelf.logger.error("Received \(JSON.count) transactions but only built \(transactions.count) models")
-            }
             strongSelf.delegateQueue.addOperationWithBlock() { completion(transactions) }
         }
     }

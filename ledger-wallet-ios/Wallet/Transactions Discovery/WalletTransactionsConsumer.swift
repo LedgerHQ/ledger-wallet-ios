@@ -212,10 +212,10 @@ final class WalletTransactionsConsumer {
     
     // MARK: Initialization
     
-    init(addressCache: WalletAddressCache, delegateQueue: NSOperationQueue) {
+    init(addressCache: WalletAddressCache, servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
         self.addressCache = addressCache
-        self.apiClient = TransactionsAPIClient(delegateQueue: self.workingQueue)
+        self.apiClient = TransactionsAPIClient(servicesProvider: servicesProvider, delegateQueue: self.workingQueue)
     }
     
     deinit {

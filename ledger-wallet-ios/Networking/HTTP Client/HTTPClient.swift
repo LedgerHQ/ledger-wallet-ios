@@ -23,23 +23,23 @@ final class HTTPClient {
     
     // MARK: Tasks management
     
-    func get(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func get(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         return performDataRequest(.GET, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func post(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func post(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .JSON, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         return performDataRequest(.POST, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func delete(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func delete(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         return performDataRequest(.DELETE, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func head(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func head(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         return performDataRequest(.HEAD, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func put(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func put(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .JSON, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         return performDataRequest(.PUT, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
@@ -51,7 +51,7 @@ final class HTTPClient {
         }
     }
     
-    private func performDataRequest(method: Task.Method, URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    private func performDataRequest(method: Task.Method, URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
         // create request
         let request = defaultRequest(method, URL: URL)
         
@@ -101,24 +101,24 @@ final class HTTPClient {
     // MARK: Utilities
     
     private func preprocessRequest(request: NSURLRequest) {
-        logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
+        logger.info("-> \(request.HTTPMethod!) \(request.URL!.absoluteString)")
     }
     
     private func postprocessResponse(response: NSHTTPURLResponse?, request: NSURLRequest, error: NSError?) {
         let statusCode = response?.statusCode ?? 0
         if let error = error {
-            logger.error("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!) | \(error.localizedDescription)")
+            logger.error("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!.absoluteString) | \(error.localizedDescription)")
         }
         else {
-            logger.info("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!)")
+            logger.info("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!.absoluteString)")
         }
     }
     
     // MARK: Requests
     
-    private func defaultRequest(method: Task.Method, URL: String) -> NSMutableURLRequest {
+    private func defaultRequest(method: Task.Method, URL: NSURL) -> NSMutableURLRequest {
         let request = NSMutableURLRequest()
-        request.URL = NSURL(string: URL)
+        request.URL = URL
         request.HTTPMethod = method.rawValue
         request.timeoutInterval = session.configuration.timeoutIntervalForRequest
         if let additionalHeaders = additionalHeaders {
