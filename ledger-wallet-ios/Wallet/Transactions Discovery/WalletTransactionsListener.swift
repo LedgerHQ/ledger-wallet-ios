@@ -20,6 +20,7 @@ final class WalletTransactionsListener {
     
     weak var delegate: WalletTransactionsListenerDelegate?
     private var websocket: WebSocket!
+    private let servicesProvider: ServicesProviderType
     private var listening = false
     private let delegateQueue: NSOperationQueue
     private let workingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("WalletTransactionsListener"))
@@ -40,7 +41,7 @@ final class WalletTransactionsListener {
             
             strongSelf.logger.info("Start listening transactions")
             strongSelf.listening = true
-            strongSelf.websocket = WebSocket(url: NSURL(string: "wss://socket.blockcypher.com/v1/btc/main")!)
+            strongSelf.websocket = WebSocket(url: strongSelf.servicesProvider.walletEventsWebsocketURL)
             strongSelf.websocket.delegate = self
             strongSelf.websocket.queue = strongSelf.workingQueue
             strongSelf.websocket.connect()
@@ -72,8 +73,9 @@ final class WalletTransactionsListener {
     
     // MARK: Initialization
     
-    init(delegateQueue: NSOperationQueue) {
+    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
+        self.servicesProvider = servicesProvider
     }
     
     deinit {
@@ -90,7 +92,6 @@ extension WalletTransactionsListener: WebSocketDelegate {
     func websocketDidConnect(socket: WebSocket) {
         guard listening else { return }
         
-        socket.writeString("{\"id\": \"\(NSUUID().UUIDString)\", \"event\": \"unconfirmed-tx\"}")
     }
     
     func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
@@ -112,15 +113,15 @@ extension WalletTransactionsListener: WebSocketDelegate {
             logger.error("Unable to get or parse data from message")
             return
         }
-        guard let transaction = WalletTransactionContainer(JSONObject: JSON) else {
-            logger.error("Received transaction but was unable to build model")
-            return
-        }
-        
-        delegateQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self where strongSelf.listening else { return }
-            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: transaction)
-        }
+//        guard let transaction = WalletTransactionContainer(JSONObject: JSON) else {
+//            logger.error("Received transaction but was unable to build model")
+//            return
+//        }
+//        
+//        delegateQueue.addOperationWithBlock() { [weak self] in
+//            guard let strongSelf = self where strongSelf.listening else { return }
+//            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: transaction)
+//        }
     }
     
     func websocketDidReceiveData(socket: WebSocket, data: NSData) {

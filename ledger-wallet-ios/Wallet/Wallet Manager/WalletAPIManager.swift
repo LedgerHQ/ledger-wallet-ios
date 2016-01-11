@@ -48,7 +48,7 @@ final class WalletAPIManager: WalletManagerType {
     func startAllServices() {
         balanceUpdater.updateAccountBalances()
         startRefreshingTransactions()
-        //startListeningTransactions()
+        startListeningTransactions()
     }
     
     func stopAllServices() {
@@ -112,7 +112,7 @@ final class WalletAPIManager: WalletManagerType {
         self.layoutHolder = WalletLayoutHolder(storeProxy: storeProxy)
         self.balanceUpdater = WalletBalanceUpdater(storeProxy: storeProxy, delegateQueue: workingQueue)
         self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, servicesProvider: servicesProvider, delegateQueue: workingQueue)
-        self.transactionsListener = WalletTransactionsListener(delegateQueue: workingQueue)
+        self.transactionsListener = WalletTransactionsListener(servicesProvider: servicesProvider, delegateQueue: workingQueue)
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: workingQueue)
         
         // plug delegates
