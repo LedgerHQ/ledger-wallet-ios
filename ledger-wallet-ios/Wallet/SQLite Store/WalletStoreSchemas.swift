@@ -64,8 +64,6 @@ final class WalletStoreSchemas {
         transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.lockTimeKey, type: .Integer, notNull: true, unique: false))
         transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.feesKey, type: .Integer, notNull: true, unique: false))
         transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.blockHashKey, type: .Text, notNull: false, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.blockHeightKey, type: .Integer, notNull: false, unique: false))
-        transactionsTable.addField(SQLiteTableField(name: WalletTransactionEntity.blockTimeKey, type: .Text, notNull: false, unique: false))
         schema.addTable(transactionsTable)
 
         let transactionInputsTable = WalletTransactionInputEntity.eponymTable
@@ -99,6 +97,12 @@ final class WalletStoreSchemas {
         doubleSpendConflictsTable.addField(SQLiteTableField(name: WalletDoubleSpendConflictEntity.rightTransactionHashKey, type: .Text, notNull: true, unique: false))
         schema.addTable(doubleSpendConflictsTable)
         
+        let blocksTable = WalletBlockEntity.eponymTable
+        blocksTable.addField(SQLiteTableField(name: WalletBlockEntity.hashKey, type: .Text, notNull: true, unique: true))
+        blocksTable.addField(SQLiteTableField(name: WalletBlockEntity.timeKey, type: .Text, notNull: true, unique: false))
+        blocksTable.addField(SQLiteTableField(name: WalletBlockEntity.heightKey, type: .Integer, notNull: true, unique: false))
+        schema.addTable(blocksTable)
+
         // foreign keys
         let addressAccountForeignKey = SQLiteForeignKey(
             parentField: accountsTable.fieldWithName(WalletAccountEntity.indexKey)!,
@@ -142,6 +146,12 @@ final class WalletStoreSchemas {
             updateAction: .Cascade, deleteAction: .Cascade)
         doubleSpendConflictsTable.addForeignKey(doubleSpendConflictRightTransactionForeignKey)
         
+        let transactionBlockForeignKey = SQLiteForeignKey(
+            parentField: blocksTable.fieldWithName(WalletBlockEntity.hashKey)!,
+            childField: transactionsTable.fieldWithName(WalletTransactionEntity.blockHashKey)!,
+            updateAction: .Cascade, deleteAction: .Cascade)
+        transactionsTable.addForeignKey(transactionBlockForeignKey)
+
         return schema
     }
     

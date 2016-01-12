@@ -37,7 +37,7 @@ final class WalletTransactionsAPIClient: APIClientType {
                 return
             }
             
-            let transactions = WalletTransactionContainer.collectionFromJSONArray(JSON)
+            let transactions = WalletTransactionContainer.collectionFromJSONArray(JSON, parentObject: nil)
             strongSelf.delegateQueue.addOperationWithBlock() { completion(transactions) }
         }
     }

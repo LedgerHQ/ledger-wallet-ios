@@ -15,22 +15,8 @@ struct WalletTransaction {
     let lockTime: Int
     let fees: Int64
     let blockHash: String?
-    let blockTime: String?
-    let blockHeight: Int?
     
-    var isConfirmed: Bool { return blockHash != nil && blockHeight != nil && blockTime != nil }
-    
-    // MARK: Inititialization
-    
-    init(hash: String, receiveAt: String, lockTime: Int, fees: Int64, blockHash: String?, blockTime: String?, blockHeight: Int?) {
-        self.hash = hash
-        self.receiveAt = receiveAt
-        self.lockTime = lockTime
-        self.fees = fees
-        self.blockHash = blockHash
-        self.blockTime = blockTime
-        self.blockHeight = blockHeight
-    }
+    var isConfirmed: Bool { return blockHash != nil }
     
 }
 
@@ -38,7 +24,7 @@ struct WalletTransaction {
 
 extension WalletTransaction: JSONInitializableModel {
     
-    init?(JSONObject: [String : AnyObject]) {
+    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
             hash = JSONObject["hash"] as? String,
             receiveAt = JSONObject["chain_received_at"] as? String,
@@ -47,14 +33,12 @@ extension WalletTransaction: JSONInitializableModel {
         else {
             return nil
         }
-        
+                
         self.hash = hash
         self.receiveAt = receiveAt
         self.lockTime = lockTime
         self.fees = fees.longLongValue
-        self.blockHash = JSONObject["block_hash"] as? String
-        self.blockTime = JSONObject["block_time"] as? String
-        self.blockHeight = JSONObject["block_height"] as? Int
+        self.blockHash = (parentObject as? WalletBlock)?.hash
     }
     
 }
@@ -78,8 +62,6 @@ extension WalletTransaction: SQLiteFetchableModel {
         self.lockTime = lockTime
         self.fees = fees
         self.blockHash = resultSet.stringForKey(WalletTransactionEntity.blockHashKey)
-        self.blockTime = resultSet.stringForKey(WalletTransactionEntity.blockTimeKey)
-        self.blockHeight = resultSet.integerForKey(WalletTransactionEntity.blockHeightKey)
     }
     
 }

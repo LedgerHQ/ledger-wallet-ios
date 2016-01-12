@@ -14,7 +14,7 @@ struct WalletTransactionOutput {
     let scriptHex: String
     let address: String?
     let index: Int
-    let transactionHash: String?
+    let transactionHash: String
     
 }
 
@@ -22,21 +22,21 @@ struct WalletTransactionOutput {
 
 extension WalletTransactionOutput: JSONInitializableModel {
     
-    init?(JSONObject: [String : AnyObject]) {
+    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
-            addresses = JSONObject["addresses"] as? [String],
             value = JSONObject["value"] as? NSNumber,
             scriptHex = JSONObject["script_hex"] as? String,
-            index = JSONObject["output_index"] as? Int
+            index = JSONObject["output_index"] as? Int,
+            transaction = parentObject as? WalletTransaction
         else {
             return nil
         }
         
-        self.address = addresses.first
+        self.address = (JSONObject["addresses"] as? [String])?.first
         self.scriptHex = scriptHex
         self.index = index
         self.value = value.longLongValue
-        self.transactionHash = nil
+        self.transactionHash = transaction.hash
     }
     
 }

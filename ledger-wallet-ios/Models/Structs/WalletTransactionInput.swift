@@ -18,14 +18,14 @@ struct WalletTransactionRegularInput: WalletTransactionInputType {
     let value: Int64
     let scriptSignature: String
     let address: String?
-    let transactionHash: String?
+    let transactionHash: String
     
 }
 
 struct WalletTransactionCoinbaseInput: WalletTransactionInputType {
     
     let coinbase: String
-    let transactionHash: String?
+    let transactionHash: String
     
 }
 
@@ -33,37 +33,38 @@ struct WalletTransactionCoinbaseInput: WalletTransactionInputType {
 
 extension WalletTransactionRegularInput: JSONInitializableModel {
     
-    init?(JSONObject: [String : AnyObject]) {
+    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
             outputHash = JSONObject["output_hash"] as? String,
             outputIndex = JSONObject["output_index"] as? Int,
             value = JSONObject["value"] as? NSNumber,
             scriptSignature = JSONObject["script_signature"] as? String,
-            addresses = JSONObject["addresses"] as? [String]
+            transaction = parentObject as? WalletTransaction
         else {
             return nil
         }
         
-        self.address = addresses.first
+        self.address = (JSONObject["addresses"] as? [String])?.first
         self.outputIndex = outputIndex
         self.outputHash = outputHash
         self.value = value.longLongValue
         self.scriptSignature = scriptSignature
-        self.transactionHash = nil
+        self.transactionHash = transaction.hash
     }
 }
 
 extension WalletTransactionCoinbaseInput: JSONInitializableModel {
     
-    init?(JSONObject: [String : AnyObject]) {
+    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
-            coinbase = JSONObject["coinbase"] as? String
+            coinbase = JSONObject["coinbase"] as? String,
+            transaction = parentObject as? WalletTransaction
         else {
             return nil
         }
         
         self.coinbase = coinbase
-        self.transactionHash = nil
+        self.transactionHash = transaction.hash
     }
     
 }

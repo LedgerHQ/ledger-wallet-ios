@@ -10,19 +10,19 @@ import Foundation
 
 protocol JSONInitializableModel {
     
-    static func collectionFromJSONArray(JSONArray: [[String: AnyObject]]) -> [Self]
+    static func collectionFromJSONArray(JSONArray: [[String: AnyObject]], parentObject: JSONInitializableModel?) -> [Self]
     
-    init?(JSONObject: [String: AnyObject])
+    init?(JSONObject: [String: AnyObject], parentObject: JSONInitializableModel?)
     
 }
 
 extension JSONInitializableModel {
     
-    static func collectionFromJSONArray(JSONArray: [[String: AnyObject]]) -> [Self] {
+    static func collectionFromJSONArray(JSONArray: [[String: AnyObject]], parentObject: JSONInitializableModel?) -> [Self] {
         var models: [Self] = []
         
         for JSONObject in JSONArray {
-            if let model = self.init(JSONObject: JSONObject) {
+            if let model = self.init(JSONObject: JSONObject, parentObject: parentObject) {
                 models.append(model)
             }
         }

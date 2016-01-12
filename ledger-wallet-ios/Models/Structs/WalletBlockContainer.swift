@@ -19,10 +19,10 @@ struct WalletBlockContainer {
 
 extension WalletBlockContainer: JSONInitializableModel {
     
-    init?(JSONObject: [String : AnyObject]) {
+    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
             transactionHashes = JSONObject["transaction_hashes"] as? [String],
-            block = WalletBlock(JSONObject: JSONObject)
+            block = WalletBlock(JSONObject: JSONObject, parentObject: nil)
         where
             transactionHashes.count > 0
         else {

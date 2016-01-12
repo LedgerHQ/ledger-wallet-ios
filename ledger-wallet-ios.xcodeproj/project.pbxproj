@@ -143,6 +143,7 @@
 		37CEAD391C43C11D00085222 /* APIClientType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD381C43C11D00085222 /* APIClientType.swift */; };
 		37CEAD3B1C4501D200085222 /* WalletBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD3A1C4501D200085222 /* WalletBlock.swift */; };
 		37CEAD3D1C4504F100085222 /* WalletBlockContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD3C1C4504F100085222 /* WalletBlockContainer.swift */; };
+		37CEAD3F1C4509D400085222 /* WalletBlockEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD3E1C4509D400085222 /* WalletBlockEntity.swift */; };
 		37D0F46F1C3EB7CE00984743 /* WalletBalanceUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */; };
 		37D0F4941C3FEED400984743 /* AttestationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D0F48B1C3FEED400984743 /* AttestationKey.swift */; };
 		37D0F4951C3FEED400984743 /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D0F48C1C3FEED400984743 /* Blocks.swift */; };
@@ -420,6 +421,7 @@
 		37CEAD381C43C11D00085222 /* APIClientType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientType.swift; sourceTree = "<group>"; };
 		37CEAD3A1C4501D200085222 /* WalletBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBlock.swift; sourceTree = "<group>"; };
 		37CEAD3C1C4504F100085222 /* WalletBlockContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBlockContainer.swift; sourceTree = "<group>"; };
+		37CEAD3E1C4509D400085222 /* WalletBlockEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBlockEntity.swift; sourceTree = "<group>"; };
 		37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBalanceUpdater.swift; sourceTree = "<group>"; };
 		37D0F48B1C3FEED400984743 /* AttestationKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttestationKey.swift; sourceTree = "<group>"; };
 		37D0F48C1C3FEED400984743 /* Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				3718F4991C204D8F00B907AC /* WalletTransactionOutputEntity.swift */,
 				373B63EB1C1F0E0D004E3298 /* WalletOperationEntity.swift */,
 				37E37F491C3C047600731747 /* WalletDoubleSpendConflictEntity.swift */,
+				37CEAD3E1C4509D400085222 /* WalletBlockEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1308,6 +1311,7 @@
 				37D0F49B1C3FEED400984743 /* StoryboardFactory.swift in Sources */,
 				373B63E11C1F0DDA004E3298 /* SQLiteSchema.swift in Sources */,
 				37A115D51C15D7DD00322437 /* WalletStoreProxy.swift in Sources */,
+				37CEAD3F1C4509D400085222 /* WalletBlockEntity.swift in Sources */,
 				37CEAD3D1C4504F100085222 /* WalletBlockContainer.swift in Sources */,
 				373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */,
 				37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */,

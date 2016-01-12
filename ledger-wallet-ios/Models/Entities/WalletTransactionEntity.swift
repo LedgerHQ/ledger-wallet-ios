@@ -17,7 +17,5 @@ struct WalletTransactionEntity: SQLiteEntityType {
     static let lockTimeKey = "lock_time"
     static let feesKey = "fees"
     static let blockHashKey = "block_hash"
-    static let blockHeightKey = "block_height"
-    static let blockTimeKey = "block_time"
     
 }

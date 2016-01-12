@@ -142,7 +142,7 @@ private extension WalletTransactionsListener {
             return
         }
         
-        guard let transaction = WalletTransactionContainer(JSONObject: transactionJSON) else {
+        guard let transaction = WalletTransactionContainer(JSONObject: transactionJSON, parentObject: nil) else {
             logger.error("Unable to create transaction object from JSON")
             return
         }
@@ -159,7 +159,7 @@ private extension WalletTransactionsListener {
             return
         }
         
-        guard let block = WalletBlockContainer(JSONObject: blockJSON) else {
+        guard let block = WalletBlockContainer(JSONObject: blockJSON, parentObject: nil) else {
             logger.error("Unable to create block object from JSON")
             return
         }
