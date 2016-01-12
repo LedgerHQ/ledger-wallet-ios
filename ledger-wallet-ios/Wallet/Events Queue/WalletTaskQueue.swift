@@ -39,7 +39,6 @@ final class WalletTaskQueue {
                 strongSelf.initiateDequeueProcess()
             }
         }
-
     }
     
     private func processNextPendingTask() {
