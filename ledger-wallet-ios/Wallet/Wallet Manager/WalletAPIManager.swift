@@ -182,6 +182,10 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
         transactionsStream.enqueueTransactions([transaction])
     }
     
+    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveBlock block: WalletBlockContainer) {
+        
+    }
+    
 }
 
 // MARK: - WalletTransactionsStreamDelegate
@@ -192,8 +196,10 @@ extension WalletAPIManager: WalletTransactionsStreamDelegate {
         
     }
     
-    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream) {
-        balanceUpdater.updateAccountBalances()
+    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream, updatedStore: Bool) {
+        if updatedStore {
+            balanceUpdater.updateAccountBalances()
+        }
     }
     
     func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {

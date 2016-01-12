@@ -33,7 +33,6 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
             }
             
             guard addresses.count > 0 else {
-                strongSelf.logger.info("Unknown transaction from wallet, aborting")
                 completion(false)
                 return
             }

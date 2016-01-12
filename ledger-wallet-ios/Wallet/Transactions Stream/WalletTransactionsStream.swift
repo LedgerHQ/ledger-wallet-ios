@@ -11,7 +11,7 @@ import Foundation
 protocol WalletTransactionsStreamDelegate: class {
     
     func transactionsStreamDidStartDequeuingTransactions(transactionsStream: WalletTransactionsStream)
-    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream)
+    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream, updatedStore: Bool)
     func transactionsStreamDidUpdateAccountLayouts(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateDoubleSpendConflicts(transactionsStream: WalletTransactionsStream)
@@ -23,6 +23,7 @@ final class WalletTransactionsStream {
     
     weak var delegate: WalletTransactionsStreamDelegate?
     private var busy = false
+    private var dequeuePassUpdatedStore = false
     private var pendingTransactions: [WalletTransactionContainer] = []
     private var funnels: [WalletTransactionsStreamFunnelType] = []
     private let delegateQueue: NSOperationQueue
@@ -38,7 +39,9 @@ final class WalletTransactionsStream {
             guard let strongSelf = self else { return }
             
             // enqueue transactions
-            strongSelf.logger.info("Got \(transactions.count) enqueued transaction(s) to process")
+            if transactions.count > 1 {
+                strongSelf.logger.info("Got \(transactions.count) enqueued transaction(s) to process")
+            }
             strongSelf.pendingTransactions.appendContentsOf(transactions)
 
 //            //FIXME: enqueue double spend
@@ -67,6 +70,7 @@ final class WalletTransactionsStream {
     
     private func initiateDequeueProcess() {
         busy = true
+        dequeuePassUpdatedStore = false
         notifyStartOfDequeuingTransactions()
         processNextPendingTransaction()
     }
@@ -74,7 +78,8 @@ final class WalletTransactionsStream {
     private func terminateDequeueProcess() {
         busy = false
         funnels.forEach({ $0.flush() })
-        notifyStopOfDequeuingTransactions()
+        notifyStopOfDequeuingTransactions(updatedStore: dequeuePassUpdatedStore)
+        dequeuePassUpdatedStore = false
     }
 
     // MARK: Internal methods
@@ -165,10 +170,10 @@ private extension WalletTransactionsStream {
         }
     }
     
-    private func notifyStopOfDequeuingTransactions() {
+    private func notifyStopOfDequeuingTransactions(updatedStore updatedStore: Bool) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.delegate?.transactionsStreamDidStopDequeuingTransactions(strongSelf)
+            strongSelf.delegate?.transactionsStreamDidStopDequeuingTransactions(strongSelf, updatedStore: updatedStore)
         }
     }
     
@@ -210,6 +215,7 @@ private extension WalletTransactionsStream {
 extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
     
     func layoutFunnelDidUpdateAccountLayouts(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
+        dequeuePassUpdatedStore = true
         notifyUpdateAccountLayouts()
     }
     
@@ -224,14 +230,16 @@ extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate
 extension WalletTransactionsStream: WalletTransactionsStreamSaveFunnelDelegate {
 
     func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        
+        dequeuePassUpdatedStore = true
     }
 
     func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel) {
+        dequeuePassUpdatedStore = true
         notifyUpdateOperations()
     }
     
     func saveFunnelDidUpdateDoubleSpendConflicts(saveFunnel: WalletTransactionsStreamSaveFunnel) {
+        dequeuePassUpdatedStore = true
         notifyUpdateDoubleSpendConflicts()
     }
     

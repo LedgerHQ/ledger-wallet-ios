@@ -13,6 +13,7 @@ protocol WalletTransactionsListenerDelegate: class {
     func transactionsListenerDidStart(transactionsListener: WalletTransactionsListener)
     func transactionsListenerDidStop(transactionsListener: WalletTransactionsListener)
     func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletTransactionContainer)
+    func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveBlock block: WalletBlockContainer)
     
 }
 
@@ -110,22 +111,64 @@ extension WalletTransactionsListener: WebSocketDelegate {
         guard listening else { return }
 
         guard let data = text.dataUsingEncoding(NSUTF8StringEncoding), JSON = JSON.JSONObjectFromData(data) as? [String: AnyObject] else {
-            logger.error("Unable to get or parse data from message")
+            logger.error("Unable to get or parse JSON message from data")
             return
         }
-//        guard let transaction = WalletTransactionContainer(JSONObject: JSON) else {
-//            logger.error("Received transaction but was unable to build model")
-//            return
-//        }
-//        
-//        delegateQueue.addOperationWithBlock() { [weak self] in
-//            guard let strongSelf = self where strongSelf.listening else { return }
-//            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: transaction)
-//        }
+        guard let payload = JSON["payload"] as? [String: AnyObject], type = payload["type"] as? String else {
+            logger.error("Unable to get or parse message type from JSON")
+            return
+        }
+        
+        switch type {
+        case "new-transaction": handleNewTransactionMessage(payload)
+        case "new-block": handleNewBlockMessage(payload)
+        default: return
+        }
     }
     
     func websocketDidReceiveData(socket: WebSocket, data: NSData) {
         guard listening else { return }
+    }
+    
+}
+
+// MARK: - Messages management
+
+private extension WalletTransactionsListener {
+    
+    private func handleNewTransactionMessage(payloadJSON: [String: AnyObject]) {
+        guard let transactionJSON = payloadJSON["transaction"] as? [String: AnyObject] else {
+            logger.error("Unable to get new transaction from payload")
+            return
+        }
+        
+        guard let transaction = WalletTransactionContainer(JSONObject: transactionJSON) else {
+            logger.error("Unable to create transaction object from JSON")
+            return
+        }
+        
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveTransaction: transaction)
+        }
+    }
+    
+    private func handleNewBlockMessage(payloadJSON: [String: AnyObject]) {
+        guard let blockJSON = payloadJSON["block"] as? [String: AnyObject] else {
+            logger.error("Unable to get new block from payload")
+            return
+        }
+        
+        guard let block = WalletBlockContainer(JSONObject: blockJSON) else {
+            logger.error("Unable to create block object from JSON")
+            return
+        }
+        
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsListener(strongSelf, didReceiveBlock: block)
+        }
+
     }
     
 }
