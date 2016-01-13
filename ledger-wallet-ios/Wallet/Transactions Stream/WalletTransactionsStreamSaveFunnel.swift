@@ -61,7 +61,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
         // write transactions
         expectedOperations.insert(.UpdateTransaction(success: true))
-        storeProxy.storeTransactions([context.remoteTransaction], queue: workingQueue) { [weak self] success in
+        storeProxy.storeTransactions([context.remoteTransaction], completionQueue: workingQueue) { [weak self] success in
             self?.writeCompletionHandler(.UpdateTransaction(success: success), completion: completion)
         }
         
@@ -69,7 +69,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         let operations = context.sendOperations + context.receiveOperations
         if operations.count > 0 {
             expectedOperations.insert(.UpdateOperations(success: true))
-            storeProxy.storeOperations(operations, queue: workingQueue) { [weak self] success in
+            storeProxy.storeOperations(operations, completionQueue: workingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.UpdateOperations(success: success), completion: completion)
             }
         }
@@ -77,7 +77,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         // write double spend conflicts
         if context.conflictsToAdd.count > 0 {
             expectedOperations.insert(.AddDoubleSpendConflicts(success: true))
-            storeProxy.addDoubleSpendConflicts(context.conflictsToAdd, queue: workingQueue) { [weak self] success in
+            storeProxy.addDoubleSpendConflicts(context.conflictsToAdd, completionQueue: workingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.AddDoubleSpendConflicts(success: success), completion: completion)
             }
         }
@@ -85,7 +85,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         // remove transactions
         if context.transactionsToRemove.count > 0 {
             expectedOperations.insert(.RemoveTransactions(success: true))
-            storeProxy.removeTransactions(context.transactionsToRemove, queue: workingQueue) { [weak self] success in
+            storeProxy.removeTransactions(context.transactionsToRemove, completionQueue: workingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.RemoveTransactions(success: success), completion: completion)
             }
         }

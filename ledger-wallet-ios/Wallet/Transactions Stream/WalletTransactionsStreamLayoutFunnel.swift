@@ -51,7 +51,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         // try to fetch account with observable index
         let nextAccountIndex = observableAccountIndex + 1
         logger.info("Transaction affects observable account at index \(observableAccountIndex), checking if next observable account \(nextAccountIndex) exists")
-        storeProxy.fetchAccountAtIndex(nextAccountIndex, queue: workingQueue) { [weak self] account in
+        storeProxy.fetchAccountAtIndex(nextAccountIndex, completionQueue: workingQueue) { [weak self] account in
             guard let strongSelf = self else { return }
             
             // if the account exists
@@ -92,7 +92,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     
     private func checkThatDelegateProvidedObservableAccountAtIndex(index: Int, workingQueue: NSOperationQueue, completion: () -> Void) {
         logger.info("Delegate provided account at index \(index), retrying")
-        storeProxy.fetchAccountAtIndex(index, queue: workingQueue) { [weak self] account in
+        storeProxy.fetchAccountAtIndex(index, completionQueue: workingQueue) { [weak self] account in
             guard let strongSelf = self else { return }
          
             if account != nil {

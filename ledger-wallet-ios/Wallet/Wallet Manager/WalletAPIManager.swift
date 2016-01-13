@@ -61,7 +61,7 @@ final class WalletAPIManager: WalletManagerType {
     
     private func registerAccount(account: WalletAccount) {
         // add account
-        storeProxy.addAccount(account, queue: workingQueue, completion: { _ in })
+        storeProxy.addAccount(account, completionQueue: workingQueue, completion: { _ in })
         
         // reload layout
         layoutHolder.reload()

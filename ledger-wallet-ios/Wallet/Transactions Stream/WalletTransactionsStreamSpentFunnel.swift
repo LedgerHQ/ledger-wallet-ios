@@ -27,7 +27,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     // MARK: Conflict creation
     
     private func checkIfConflictsCreationIsNecessary(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
-        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: workingQueue) { [weak self] transactions in
+        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, completionQueue: workingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
 
             // if we got conflicting transactions
@@ -50,7 +50,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     }
     
     private func checkForConflictingTransactions(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
-        storeProxy.fetchTransactionsConflictingWithTransaction(context.remoteTransaction, queue: workingQueue) { [weak self] transactions in
+        storeProxy.fetchTransactionsConflictingWithTransaction(context.remoteTransaction, completionQueue: workingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
             
             // if we managed to fetch transactions
@@ -105,7 +105,7 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     // MARK: Conflict resolution
     
     private func checkForConflictsToResolve(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
-        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: workingQueue) { [weak self] transactions in
+        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, completionQueue: workingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
             
             // if we got conflicting transactions

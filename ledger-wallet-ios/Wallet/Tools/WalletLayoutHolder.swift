@@ -111,11 +111,11 @@ final class WalletLayoutHolder {
             strongSelf.logger.info("Setting next \(external ? "external" : "internal") index \(index) for account at index \(accountIndex)")
             if external {
                 strongSelf.accounts[position] = account.withNextExternalIndex(index)
-                strongSelf.storeProxy.setNextExternalIndex(index, forAccountAtIndex: accountIndex, queue: strongSelf.workingQueue, completion: { _ in })
+                strongSelf.storeProxy.setNextExternalIndex(index, forAccountAtIndex: accountIndex, completionQueue: strongSelf.workingQueue, completion: { _ in })
             }
             else {
                 strongSelf.accounts[position] = account.withNextInternalIndex(index)
-                strongSelf.storeProxy.setNextInternalIndex(index, forAccountAtIndex: accountIndex, queue: strongSelf.workingQueue, completion: { _ in })
+                strongSelf.storeProxy.setNextInternalIndex(index, forAccountAtIndex: accountIndex, completionQueue: strongSelf.workingQueue, completion: { _ in })
             }
         }
     }

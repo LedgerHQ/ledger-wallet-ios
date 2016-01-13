@@ -61,7 +61,7 @@ final class WalletBalanceUpdater {
     }
     
     private func updateBalanceOfAccounts(accounts: [WalletAccount]) {
-        storeProxy.updateBalanceOfAccounts(accounts, queue: workingQueue) { [weak self] success in
+        storeProxy.updateBalanceOfAccounts(accounts, completionQueue: workingQueue) { [weak self] success in
             guard let strongSelf = self else { return }
 
             if success {

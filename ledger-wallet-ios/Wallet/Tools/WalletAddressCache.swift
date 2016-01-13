@@ -20,7 +20,7 @@ final class WalletAddressCache {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
         
-            strongSelf.storeProxy.fetchAddressesAtPaths(paths, queue: strongSelf.workingQueue) { [weak self] addresses in
+            strongSelf.storeProxy.fetchAddressesAtPaths(paths, completionQueue: strongSelf.workingQueue) { [weak self] addresses in
                 guard let strongSelf = self else { return }
                 
                 // check that we found some addresses
@@ -46,7 +46,7 @@ final class WalletAddressCache {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 
-            strongSelf.storeProxy.fetchAddressesWithAddresses(addresses, queue: strongSelf.workingQueue) { [weak self] addresses in
+            strongSelf.storeProxy.fetchAddressesWithAddresses(addresses, completionQueue: strongSelf.workingQueue) { [weak self] addresses in
                 guard let strongSelf = self else { return }
                 
                 // check that we found some addresses
@@ -81,7 +81,7 @@ final class WalletAddressCache {
         }
         
         // fetch accounts
-        storeProxy.fetchAccountsAtIndexes(uniqueAccounts, queue: workingQueue) { [weak self] accounts in
+        storeProxy.fetchAccountsAtIndexes(uniqueAccounts, completionQueue: workingQueue) { [weak self] accounts in
             guard let strongSelf = self else { return }
             
             guard let accounts = accounts else {
@@ -146,7 +146,7 @@ final class WalletAddressCache {
     
     private func writeAddresses(addresses: [WalletAddress], existingAddresses: [WalletAddress], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
         // store newly created adresses
-        storeProxy.addAddresses(addresses, queue: workingQueue) { success in
+        storeProxy.addAddresses(addresses, completionQueue: workingQueue) { success in
             queue.addOperationWithBlock() {
                 if success {
                     completion(existingAddresses + addresses)
