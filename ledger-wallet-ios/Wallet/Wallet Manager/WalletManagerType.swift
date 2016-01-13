@@ -12,6 +12,9 @@ let WalletManagerDidStartRefreshingTransactionsNotification = "WalletManagerDidS
 let WalletManagerDidStopRefreshingTransactionsNotification = "WalletManagerDidStopRefreshingTransactionsNotification"
 let WalletManagerDidStartListeningTransactionsNotification = "WalletManagerDidStartListeningTransactionsNotification"
 let WalletManagerDidStopListeningTransactionsNotification = "WalletManagerDidStopListeningTransactionsNotification"
+let WalletManagerDidUpdateAccountsNotification = "WalletManagerDidUpdateAccountsNotification"
+let WalletManagerDidUpdateOperationsNotification = "WalletManagerDidUpdateOperationsNotification"
+let WalletManagerDidMissAccountNotification = "WalletManagerDidMissAccountNotification"
 
 protocol WalletManagerType: class {
     
