@@ -10,22 +10,6 @@ import Foundation
 
 protocol WalletTransactionsStreamFunnelType: class {
     
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void)
-    func flush()
-    
-    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue)
-    
-}
-
-extension WalletTransactionsStreamFunnelType {
-    
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void)
-    {
-        completion(true)
-    }
-    
-    func flush() {
-        
-    }
+    func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void)
     
 }

@@ -55,17 +55,13 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
     
     weak var delegate: WalletTransactionsStreamSaveFunnelDelegate?
     private let storeProxy: WalletStoreProxy
-    private let callingQueue: NSOperationQueue
     private var finishedOperations: Set<WalletTransactionsStreamSaveFunnelOperationType> = []
     private var expectedOperations: Set<WalletTransactionsStreamSaveFunnelOperationType> = []
-    private var wroteTransactionsSinceLastFlush = false
-    private var wroteOperationsSinceLastFlush = false
-    private var wroteDoubleSpendConflictsSinceLastFlush = false
     
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+    func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
         // write transactions
         expectedOperations.insert(.UpdateTransaction(success: true))
-        storeProxy.storeTransactions([context.remoteTransaction], queue: callingQueue) { [weak self] success in
+        storeProxy.storeTransactions([context.remoteTransaction], queue: workingQueue) { [weak self] success in
             self?.writeCompletionHandler(.UpdateTransaction(success: success), completion: completion)
         }
         
@@ -73,7 +69,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         let operations = context.sendOperations + context.receiveOperations
         if operations.count > 0 {
             expectedOperations.insert(.UpdateOperations(success: true))
-            storeProxy.storeOperations(operations, queue: callingQueue) { [weak self] success in
+            storeProxy.storeOperations(operations, queue: workingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.UpdateOperations(success: success), completion: completion)
             }
         }
@@ -81,7 +77,7 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         // write double spend conflicts
         if context.conflictsToAdd.count > 0 {
             expectedOperations.insert(.AddDoubleSpendConflicts(success: true))
-            storeProxy.addDoubleSpendConflicts(context.conflictsToAdd, queue: callingQueue) { [weak self] success in
+            storeProxy.addDoubleSpendConflicts(context.conflictsToAdd, queue: workingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.AddDoubleSpendConflicts(success: success), completion: completion)
             }
         }
@@ -89,51 +85,25 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         // remove transactions
         if context.transactionsToRemove.count > 0 {
             expectedOperations.insert(.RemoveTransactions(success: true))
-            storeProxy.removeTransactions(context.transactionsToRemove, queue: callingQueue) { [weak self] success in
+            storeProxy.removeTransactions(context.transactionsToRemove, queue: workingQueue) { [weak self] success in
                 self?.writeCompletionHandler(.RemoveTransactions(success: success), completion: completion)
             }
         }
     }
 
-    func flush() {
-        if wroteTransactionsSinceLastFlush {
-            delegate?.saveFunnelDidUpdateTransactions(self)
-        }
-        if wroteOperationsSinceLastFlush {
-            delegate?.saveFunnelDidUpdateOperations(self)
-        }
-        if wroteDoubleSpendConflictsSinceLastFlush {
-            delegate?.saveFunnelDidUpdateDoubleSpendConflicts(self)
-        }
-        wroteTransactionsSinceLastFlush = false
-        wroteOperationsSinceLastFlush = false
-        wroteDoubleSpendConflictsSinceLastFlush = false
-    }
-    
     // MARK: Write management
     
     private func writeCompletionHandler(finishedOperation: WalletTransactionsStreamSaveFunnelOperationType, completion: (Bool) -> Void) {
         finishedOperations.insert(finishedOperation)
         
-        // mark finished operation to perform proper flush
-        switch finishedOperation {
-        case .UpdateTransaction(let success) where success:
-            wroteTransactionsSinceLastFlush = true
-        case .UpdateOperations(let success) where success:
-            wroteOperationsSinceLastFlush = true
-        case .AddDoubleSpendConflicts(let success) where success:
-            wroteDoubleSpendConflictsSinceLastFlush = true
-        case .RemoveTransactions(let success) where success:
-            wroteTransactionsSinceLastFlush = true
-            wroteDoubleSpendConflictsSinceLastFlush = true
-            wroteOperationsSinceLastFlush = true
-        default: break
-        }
-        
         // if all operations have completed
         if expectedOperations.isSubsetOf(finishedOperations) {
             let finishedSubset = finishedOperations.union(expectedOperations)
-            
+
+            // notify delegate
+            notifyDelegateAboutWhatHappened(finishedSubset)
+
+            // continue
             finishedOperations = []
             expectedOperations = []
             let success = finishedSubset.reduce(true, combine: { $0 && $1.isSuccessful })
@@ -141,11 +111,26 @@ final class WalletTransactionsStreamSaveFunnel: WalletTransactionsStreamFunnelTy
         }
     }
     
+    private func notifyDelegateAboutWhatHappened(finishedOperations: Set<WalletTransactionsStreamSaveFunnelOperationType>) {
+        // determine what happened
+        if finishedOperations.contains(.UpdateTransaction(success: true)) ||
+            finishedOperations.contains(.RemoveTransactions(success: true)) {
+            delegate?.saveFunnelDidUpdateTransactions(self)
+        }
+        if finishedOperations.contains(.UpdateOperations(success: true)) ||
+            finishedOperations.contains(.RemoveTransactions(success: true)) {
+            delegate?.saveFunnelDidUpdateOperations(self)
+        }
+        if finishedOperations.contains(.AddDoubleSpendConflicts(success: true)) ||
+            finishedOperations.contains(.RemoveTransactions(success: true)) {
+            delegate?.saveFunnelDidUpdateDoubleSpendConflicts(self)
+        }
+    }
+    
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy) {
         self.storeProxy = storeProxy
-        self.callingQueue = callingQueue
     }
     
 }

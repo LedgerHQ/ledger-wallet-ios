@@ -13,8 +13,8 @@ struct WalletStoreTransactionTask: WalletTaskType {
     private let transaction: WalletTransactionContainer
     private let transactionsStream: WalletTransactionsStream
     
-    func process(completion: () -> Void) {
-        
+    func process(completionQueue: NSOperationQueue, completion: () -> Void) {
+        transactionsStream.processTransaction(transaction, completionQueue: completionQueue, completion: completion)
     }
     
     // MARK: Initialization

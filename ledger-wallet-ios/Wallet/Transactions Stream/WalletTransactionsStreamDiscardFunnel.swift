@@ -10,11 +10,10 @@ import Foundation
 
 final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunnelType {
 
-    private let callingQueue: NSOperationQueue
     private let addressCache: WalletAddressCache
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamDiscardFunnel")
     
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+    func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
         let allAddresses = context.remoteTransaction.allAddresses
         guard allAddresses.count > 0 else {
             logger.warn("Got transaction with empty addresses, aborting")
@@ -23,7 +22,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
         }
         
         // fetch addresses from cache
-        addressCache.fetchAddressesWithAddresses(allAddresses, queue: callingQueue) { [weak self] addresses in
+        addressCache.fetchAddressesWithAddresses(allAddresses, queue: workingQueue) { [weak self] addresses in
             guard let strongSelf = self else { return }
             
             guard let addresses = addresses else {
@@ -64,9 +63,8 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
+    init(addressCache: WalletAddressCache) {
         self.addressCache = addressCache
-        self.callingQueue = callingQueue
     }
     
 }

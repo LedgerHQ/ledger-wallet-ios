@@ -10,8 +10,6 @@ import Foundation
 
 protocol WalletTransactionsStreamDelegate: class {
     
-    func transactionsStreamDidStartDequeuingTransactions(transactionsStream: WalletTransactionsStream)
-    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream, updatedStore: Bool)
     func transactionsStreamDidUpdateAccountLayouts(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateDoubleSpendConflicts(transactionsStream: WalletTransactionsStream)
@@ -22,88 +20,39 @@ protocol WalletTransactionsStreamDelegate: class {
 final class WalletTransactionsStream {
     
     weak var delegate: WalletTransactionsStreamDelegate?
-    private var busy = false
-    private var dequeuePassUpdatedStore = false
-    private var pendingTransactions: [WalletTransactionContainer] = []
-    private var funnels: [WalletTransactionsStreamFunnelType] = []
+    private let funnels: [WalletTransactionsStreamFunnelType]
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "WalletTransactionsStream", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStream")
     
     // MARK: Transactions management
     
-    func enqueueTransactions(transactions: [WalletTransactionContainer]) {
-        guard transactions.count > 0 else { return }
-        
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            // enqueue transactions
-            if transactions.count > 1 {
-                strongSelf.logger.info("Got \(transactions.count) enqueued transaction(s) to process")
-            }
-            strongSelf.pendingTransactions.appendContentsOf(transactions)
-            
-            // process next pending transaction if not busy
-            if !strongSelf.busy {
-                strongSelf.initiateDequeueProcess()
-            }
+    func processTransaction(transaction: WalletTransactionContainer, completionQueue: NSOperationQueue, completion: () -> Void) {
+        if funnels.count > 0 {
+            let firstFunnel = funnels[0]
+            let context = WalletTransactionsStreamContext(remoteTransaction: transaction)
+            pushContext(context, intoFunnel: firstFunnel, completionQueue: completionQueue, completion: completion)
+        }
+        else {
+            completionQueue.addOperationWithBlock() { completion() }
         }
     }
     
-    // MARK: Dequeue lifecycle
+    // MARK: Funnels management
     
-    private func initiateDequeueProcess() {
-        busy = true
-        dequeuePassUpdatedStore = false
-        notifyStartOfDequeuingTransactions()
-        processNextPendingTransaction()
-    }
-    
-    private func terminateDequeueProcess() {
-        busy = false
-        funnels.forEach({ $0.flush() })
-        notifyStopOfDequeuingTransactions(updatedStore: dequeuePassUpdatedStore)
-        dequeuePassUpdatedStore = false
-    }
-
-    // MARK: Internal methods
-    
-    private func processNextPendingTransaction() {
+    private func pushContext(context: WalletTransactionsStreamContext, intoFunnel funnel: WalletTransactionsStreamFunnelType, completionQueue: NSOperationQueue, completion: () -> Void) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            
-            // pop first transaction
-            guard let transaction = strongSelf.pendingTransactions.first else {
-                strongSelf.terminateDequeueProcess()
-                return
-            }
-            strongSelf.pendingTransactions.removeFirst()
-            
-            // build context
-            if strongSelf.funnels.count > 0 {
-                let context = WalletTransactionsStreamContext(remoteTransaction: transaction)
-                strongSelf.pushContext(context, intoFunnel: strongSelf.funnels[0])
-            }
-            else {
-                strongSelf.processNextPendingTransaction()
-            }
-        }
-    }
-    
-    private func pushContext(context: WalletTransactionsStreamContext, intoFunnel funnel: WalletTransactionsStreamFunnelType) {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let _ = self else { return }
 
             // process context in funnel
-            funnel.process(context) { [weak self] keepPushing in
+            funnel.process(context, workingQueue: strongSelf.workingQueue) { [weak self] keepPushing in
                 guard let strongSelf = self else { return }
                 
                 if keepPushing, let nextFunnel = strongSelf.funnelAfter(funnel) {
-                    strongSelf.pushContext(context, intoFunnel: nextFunnel)
+                    strongSelf.pushContext(context, intoFunnel: nextFunnel, completionQueue: completionQueue, completion: completion)
                 }
                 else {
-                    strongSelf.processNextPendingTransaction()
+                    completionQueue.addOperationWithBlock() { completion() }
                 }
             }
         }
@@ -126,16 +75,13 @@ final class WalletTransactionsStream {
         self.delegateQueue = delegateQueue
         
         // create funnels
-        let funnelTypes: [WalletTransactionsStreamFunnelType.Type] = [
-            WalletTransactionsStreamDiscardFunnel.self,
-            WalletTransactionsStreamLayoutFunnel.self,
-            WalletTransactionsStreamOperationsFunnel.self,
-            WalletTransactionsStreamSpentFunnel.self,
-            WalletTransactionsStreamSaveFunnel.self,
+        self.funnels = [
+            WalletTransactionsStreamDiscardFunnel(addressCache: addressCache),
+            WalletTransactionsStreamLayoutFunnel(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder),
+            WalletTransactionsStreamOperationsFunnel(),
+            WalletTransactionsStreamSpentFunnel(storeProxy: storeProxy),
+            WalletTransactionsStreamSaveFunnel(storeProxy: storeProxy)
         ]
-        funnelTypes.forEach() {
-            self.funnels.append($0.init(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, callingQueue: workingQueue))
-        }
         
         // plug delegates
         funnelWithType(WalletTransactionsStreamLayoutFunnel)?.delegate = self
@@ -147,20 +93,6 @@ final class WalletTransactionsStream {
 // MARK: - Delegate management
 
 private extension WalletTransactionsStream {
-    
-    private func notifyStartOfDequeuingTransactions() {
-        delegateQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.delegate?.transactionsStreamDidStartDequeuingTransactions(strongSelf)
-        }
-    }
-    
-    private func notifyStopOfDequeuingTransactions(updatedStore updatedStore: Bool) {
-        delegateQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.delegate?.transactionsStreamDidStopDequeuingTransactions(strongSelf, updatedStore: updatedStore)
-        }
-    }
     
     private func notifyUpdateAccountLayouts() {
         delegateQueue.addOperationWithBlock() { [weak self] in
@@ -200,7 +132,6 @@ private extension WalletTransactionsStream {
 extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate {
     
     func layoutFunnelDidUpdateAccountLayouts(layoutfunnel: WalletTransactionsStreamLayoutFunnel) {
-        dequeuePassUpdatedStore = true
         notifyUpdateAccountLayouts()
     }
     
@@ -215,16 +146,14 @@ extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate
 extension WalletTransactionsStream: WalletTransactionsStreamSaveFunnelDelegate {
 
     func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        dequeuePassUpdatedStore = true
+    
     }
 
     func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        dequeuePassUpdatedStore = true
         notifyUpdateOperations()
     }
     
     func saveFunnelDidUpdateDoubleSpendConflicts(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-        dequeuePassUpdatedStore = true
         notifyUpdateDoubleSpendConflicts()
     }
     

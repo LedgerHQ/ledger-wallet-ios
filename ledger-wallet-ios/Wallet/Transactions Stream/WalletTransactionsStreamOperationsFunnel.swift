@@ -10,7 +10,7 @@ import Foundation
 
 final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFunnelType {
     
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+    func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
         // flatten inputs and outputs into operations
         var sendOperations = flattenInputs(context)
         var receiveInternalOperations = flattenOutputs(context, external: false)
@@ -81,12 +81,6 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
         internalOperations.removeValueForKey(firstInputAccountIndex)
         externalOperations = internalOperations
         internalOperations.removeAll()
-    }
-
-    // MARK: Initialization
-    
-    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
-        
     }
     
 }

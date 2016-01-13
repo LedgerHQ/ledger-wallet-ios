@@ -11,24 +11,23 @@ import Foundation
 final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelType {
     
     private let storeProxy: WalletStoreProxy
-    private let callingQueue: NSOperationQueue
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamSpentFunnel")
     
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+    func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
         if context.remoteTransaction.transaction.isConfirmed {
             // resolve conflicting transactions
-            checkForConflictsToResolve(context, completion: completion)
+            checkForConflictsToResolve(context, workingQueue: workingQueue, completion: completion)
         }
         else {
             // look for conflicting transactions
-            checkIfConflictsCreationIsNecessary(context, completion: completion)
+            checkIfConflictsCreationIsNecessary(context, workingQueue: workingQueue, completion: completion)
         }
     }
 
     // MARK: Conflict creation
     
-    private func checkIfConflictsCreationIsNecessary(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: callingQueue) { [weak self] transactions in
+    private func checkIfConflictsCreationIsNecessary(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
+        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: workingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
 
             // if we got conflicting transactions
@@ -46,12 +45,12 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
             }
             
             // we need to check for potential conflicts
-            strongSelf.checkForConflictingTransactions(context, completion: completion)
+            strongSelf.checkForConflictingTransactions(context, workingQueue: workingQueue, completion: completion)
         }
     }
     
-    private func checkForConflictingTransactions(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        storeProxy.fetchTransactionsConflictingWithTransaction(context.remoteTransaction, queue: callingQueue) { [weak self] transactions in
+    private func checkForConflictingTransactions(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
+        storeProxy.fetchTransactionsConflictingWithTransaction(context.remoteTransaction, queue: workingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
             
             // if we managed to fetch transactions
@@ -105,8 +104,8 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     
     // MARK: Conflict resolution
     
-    private func checkForConflictsToResolve(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
-        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: callingQueue) { [weak self] transactions in
+    private func checkForConflictsToResolve(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
+        storeProxy.fetchTransactionsToResolveFromConflictsOfTransaction(context.remoteTransaction.transaction, queue: workingQueue) { [weak self] transactions in
             guard let strongSelf = self else { return }
             
             // if we got conflicting transactions
@@ -135,9 +134,8 @@ final class WalletTransactionsStreamSpentFunnel: WalletTransactionsStreamFunnelT
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy) {
         self.storeProxy = storeProxy
-        self.callingQueue = callingQueue
     }
     
 }

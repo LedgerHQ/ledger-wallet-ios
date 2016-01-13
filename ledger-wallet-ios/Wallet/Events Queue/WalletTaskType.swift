@@ -10,6 +10,6 @@ import Foundation
 
 protocol WalletTaskType {
     
-    func process(completion: () -> Void)
+    func process(completionQueue: NSOperationQueue, completion: () -> Void)
     
 }

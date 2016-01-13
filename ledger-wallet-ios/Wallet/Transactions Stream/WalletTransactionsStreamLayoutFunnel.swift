@@ -21,22 +21,22 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     private let layoutHolder: WalletLayoutHolder
     private let addressCache: WalletAddressCache
     private let storeProxy: WalletStoreProxy
-    private let callingQueue: NSOperationQueue
     private let logger = Logger.sharedInstance(name: "WalletTransactionsStreamLayoutFunnel")
     
-    func process(context: WalletTransactionsStreamContext, completion: (Bool) -> Void) {
+    func process(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: (Bool) -> Void) {
         // check that transaction affects observable account
-        checkObservableAccount(context) { [weak self] in
+        checkObservableAccount(context, workingQueue: workingQueue) { [weak self] in
             guard let strongSelf = self else { return }
             
             // update internal and external indexes
-            strongSelf.updateAccountIndexes(context)
+            strongSelf.updateAccountIndexes(context, workingQueue: workingQueue)
             
+            // continue
             completion(true)
         }
     }
     
-    private func checkObservableAccount(context: WalletTransactionsStreamContext, completion: () -> Void) {
+    private func checkObservableAccount(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue, completion: () -> Void) {
         guard let observableAccountIndex = layoutHolder.observableAccountIndex else {
             completion()
             return
@@ -51,7 +51,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         // try to fetch account with observable index
         let nextAccountIndex = observableAccountIndex + 1
         logger.info("Transaction affects observable account at index \(observableAccountIndex), checking if next observable account \(nextAccountIndex) exists")
-        storeProxy.fetchAccountAtIndex(nextAccountIndex, queue: callingQueue) { [weak self] account in
+        storeProxy.fetchAccountAtIndex(nextAccountIndex, queue: workingQueue) { [weak self] account in
             guard let strongSelf = self else { return }
             
             // if the account exists
@@ -62,11 +62,11 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
             }
         
             strongSelf.logger.warn("Unknown next observable account at index \(nextAccountIndex), asking delegate")
-            strongSelf.askDelegateToProvideObservableAccountAtIndex(nextAccountIndex, completion: completion)
+            strongSelf.askDelegateToProvideObservableAccountAtIndex(nextAccountIndex, workingQueue: workingQueue, completion: completion)
         }
     }
     
-    private func askDelegateToProvideObservableAccountAtIndex(index: Int, completion: () -> Void) {
+    private func askDelegateToProvideObservableAccountAtIndex(index: Int, workingQueue: NSOperationQueue, completion: () -> Void) {
         guard let delegate = delegate else {
             logger.error("Unable to ask missing observable account to missing delegate, continuing")
             completion()
@@ -78,7 +78,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
             
             if retry {
                 // try to refetch account with observable index
-                strongSelf.checkThatDelegateProvidedObservableAccountAtIndex(index, completion: completion)
+                strongSelf.checkThatDelegateProvidedObservableAccountAtIndex(index, workingQueue: workingQueue, completion: completion)
             }
             else {
                 strongSelf.logger.warn("Delegate failed to provide next observable account at index \(index), continuing")
@@ -90,9 +90,9 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         delegate.layoutFunnel(self, didMissAccountAtIndex: index, continueBlock: continueBlock)
     }
     
-    private func checkThatDelegateProvidedObservableAccountAtIndex(index: Int, completion: () -> Void) {
+    private func checkThatDelegateProvidedObservableAccountAtIndex(index: Int, workingQueue: NSOperationQueue, completion: () -> Void) {
         logger.info("Delegate provided account at index \(index), retrying")
-        storeProxy.fetchAccountAtIndex(index, queue: callingQueue) { [weak self] account in
+        storeProxy.fetchAccountAtIndex(index, queue: workingQueue) { [weak self] account in
             guard let strongSelf = self else { return }
          
             if account != nil {
@@ -112,7 +112,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         return false
     }
     
-    private func updateAccountIndexes(context: WalletTransactionsStreamContext) {
+    private func updateAccountIndexes(context: WalletTransactionsStreamContext, workingQueue: NSOperationQueue) {
         for (_, address) in context.mappedOutputs {
             var updatedLayouts = false
             
@@ -125,7 +125,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
                     // cache new addresses
                     if let range = layoutHolder.observableExternalRangeForAccountAtIndex(address.path.accountIndex) {
                         let paths = range.map({ return address.path.pathWithKeyIndex($0) })
-                        cacheAddressesAtPaths(paths, external: true)
+                        cacheAddressesAtPaths(paths, external: true, workingQueue: workingQueue)
                     }
                 }
             }
@@ -138,7 +138,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
                     // cache new addresses
                     if let range = layoutHolder.observableInternalRangeForAccountAtIndex(address.path.accountIndex) {
                         let paths = range.map({ return address.path.pathWithKeyIndex($0) })
-                        cacheAddressesAtPaths(paths, external: false)
+                        cacheAddressesAtPaths(paths, external: false, workingQueue: workingQueue)
                     }
                 }
             }
@@ -149,20 +149,19 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         }
     }
     
-    private func cacheAddressesAtPaths(paths: [WalletAddressPath], external: Bool) {
+    private func cacheAddressesAtPaths(paths: [WalletAddressPath], external: Bool, workingQueue: NSOperationQueue) {
         if let first = paths.first, last = paths.last {
             logger.info("Caching new \(external ? "external" : "internal") addresses for range \(first.rangeStringToKeyIndex(last.keyIndex))")
-            addressCache.fetchOrDeriveAddressesAtPaths(paths, queue: callingQueue, completion: { _ in })
+            addressCache.fetchOrDeriveAddressesAtPaths(paths, queue: workingQueue, completion: { _ in })
         }
     }
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder, callingQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy, addressCache: WalletAddressCache, layoutHolder: WalletLayoutHolder) {
         self.layoutHolder = layoutHolder
         self.addressCache = addressCache
         self.storeProxy = storeProxy
-        self.callingQueue = callingQueue
     }
 
 }

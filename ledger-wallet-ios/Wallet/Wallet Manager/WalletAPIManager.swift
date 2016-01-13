@@ -23,6 +23,7 @@ final class WalletAPIManager: WalletManagerType {
     private let transactionsConsumer: WalletTransactionsConsumer
     private let transactionsListener: WalletTransactionsListener
     private let transactionsStream: WalletTransactionsStream
+    private let taskQueue: WalletTaskQueue
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
     private let workingQueue = NSOperationQueue.mainQueue()
@@ -30,7 +31,7 @@ final class WalletAPIManager: WalletManagerType {
     // MARK: Wallet management
     
     func startRefreshingTransactions() {
-        transactionsConsumer.startRefreshing()
+        enqueueStartTransactionsConsumerTask()
     }
     
     func stopRefreshingTransactions() {
@@ -38,7 +39,7 @@ final class WalletAPIManager: WalletManagerType {
     }
     
     func startListeningTransactions() {
-        transactionsListener.startListening()
+        enqueueStartTransactionsListenerTask()
     }
     
     func stopListeningTransactions() {
@@ -46,7 +47,7 @@ final class WalletAPIManager: WalletManagerType {
     }
     
     func startAllServices() {
-        balanceUpdater.updateAccountBalances()
+        enqueueUpdateBalanceTask()
         startRefreshingTransactions()
         startListeningTransactions()
     }
@@ -99,8 +100,8 @@ final class WalletAPIManager: WalletManagerType {
     // MARK: Initialization
 
     init(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
-        self.uniqueIdentifier = uniqueIdentifier
         logger.info("Using services provider \"\(servicesProvider.name)\" with coin network \"\(servicesProvider.coinNetwork.name)\"")
+        self.uniqueIdentifier = uniqueIdentifier
     
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
@@ -114,12 +115,14 @@ final class WalletAPIManager: WalletManagerType {
         self.transactionsConsumer = WalletTransactionsConsumer(addressCache: addressCache, servicesProvider: servicesProvider, delegateQueue: workingQueue)
         self.transactionsListener = WalletTransactionsListener(servicesProvider: servicesProvider, delegateQueue: workingQueue)
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: workingQueue)
+        self.taskQueue = WalletTaskQueue(delegateQueue: workingQueue)
         
         // plug delegates
         self.balanceUpdater.delegate = self
         self.transactionsConsumer.delegate = self
         self.transactionsListener.delegate = self
         self.transactionsStream.delegate = self
+        self.taskQueue.delegate = self
         
         // start services
         startAllServices()
@@ -134,12 +137,38 @@ final class WalletAPIManager: WalletManagerType {
 
 // MARK: - Notifications management
 
-extension WalletAPIManager {
+private extension WalletAPIManager {
     
     private func notifyObservers(notification: String, userInfo: [String: AnyObject]? = nil) {
         delegateQueue.addOperationWithBlock() {
             NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
         }
+    }
+    
+}
+
+// MARK: - Tasks management
+
+private extension WalletAPIManager {
+
+    private func enqueueStartTransactionsConsumerTask() {
+        taskQueue.enqueueTask(WalletStartTransactionsConsumerTask(transactionsConsumer: transactionsConsumer))
+    }
+    
+    private func enqueueStartTransactionsListenerTask() {
+        taskQueue.enqueueTask(WalletStartTransactionsListenerTask(transactionsListener: transactionsListener))
+    }
+    
+    private func enqueueUpdateBalanceTask() {
+        taskQueue.enqueueTask(WalletUpdateBalanceTask(balanceUpdater: balanceUpdater))
+    }
+    
+    private func enqueueStoreTransactionTasks(transactions: [WalletTransactionContainer]) {
+        taskQueue.enqueueTasks(transactions.map({ WalletStoreTransactionTask(transaction: $0, transactionsStream: transactionsStream) }))
+    }
+    
+    private func enqueueStoreBlockTasks(blocks: [WalletBlockContainer]) {
+        taskQueue.enqueueTasks(blocks.map({ WalletStoreBlockTask(block: $0) }))
     }
     
 }
@@ -153,6 +182,7 @@ extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     }
     
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didStopWithError error: WalletTransactionsConsumerError?) {
+        enqueueUpdateBalanceTask()
         notifyObservers(WalletManagerDidStopRefreshingTransactionsNotification)
     }
     
@@ -161,7 +191,21 @@ extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     }
 
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didDiscoverTransactions transactions: [WalletTransactionContainer]) {
-        transactionsStream.enqueueTransactions(transactions)
+        enqueueStoreTransactionTasks(transactions)
+    }
+    
+}
+
+// MARK: - WalletTaskQueueDelegate
+
+extension WalletAPIManager: WalletTaskQueueDelegate {
+    
+    func taskQueueDidStartDequeingTasks(taskQueue: WalletTaskQueue) {
+        
+    }
+    
+    func taskQueueDidStopDequeingTasks(taskQueue: WalletTaskQueue) {
+        
     }
     
 }
@@ -179,11 +223,11 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
     }
     
     func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletTransactionContainer) {
-        transactionsStream.enqueueTransactions([transaction])
+        enqueueStoreTransactionTasks([transaction])
     }
     
     func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveBlock block: WalletBlockContainer) {
-        
+        enqueueStoreBlockTasks([block])
     }
     
 }
@@ -191,16 +235,6 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
 // MARK: - WalletTransactionsStreamDelegate
 
 extension WalletAPIManager: WalletTransactionsStreamDelegate {
-    
-    func transactionsStreamDidStartDequeuingTransactions(transactionsStream: WalletTransactionsStream) {
-        
-    }
-    
-    func transactionsStreamDidStopDequeuingTransactions(transactionsStream: WalletTransactionsStream, updatedStore: Bool) {
-        if updatedStore {
-            balanceUpdater.updateAccountBalances()
-        }
-    }
     
     func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
         handleMissingAccountAtIndex(index, continueBlock: continueBlock)

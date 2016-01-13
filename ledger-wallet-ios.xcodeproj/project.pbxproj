@@ -183,6 +183,8 @@
 		37EB45EA1C4561D3003149CE /* WalletStoreTransactionTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45E91C4561D3003149CE /* WalletStoreTransactionTask.swift */; };
 		37EB45EC1C4562C0003149CE /* WalletStartTransactionsConsumerTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45EB1C4562C0003149CE /* WalletStartTransactionsConsumerTask.swift */; };
 		37EB45EE1C4562E2003149CE /* WalletStoreBlockTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45ED1C4562E2003149CE /* WalletStoreBlockTask.swift */; };
+		37EB45F01C457276003149CE /* WalletStartTransactionsListenerTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45EF1C457276003149CE /* WalletStartTransactionsListenerTask.swift */; };
+		37EB45F21C457488003149CE /* WalletUpdateBalanceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45F11C457488003149CE /* WalletUpdateBalanceTask.swift */; };
 		37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
@@ -467,6 +469,8 @@
 		37EB45E91C4561D3003149CE /* WalletStoreTransactionTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStoreTransactionTask.swift; sourceTree = "<group>"; };
 		37EB45EB1C4562C0003149CE /* WalletStartTransactionsConsumerTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStartTransactionsConsumerTask.swift; sourceTree = "<group>"; };
 		37EB45ED1C4562E2003149CE /* WalletStoreBlockTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStoreBlockTask.swift; sourceTree = "<group>"; };
+		37EB45EF1C457276003149CE /* WalletStartTransactionsListenerTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStartTransactionsListenerTask.swift; sourceTree = "<group>"; };
+		37EB45F11C457488003149CE /* WalletUpdateBalanceTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletUpdateBalanceTask.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NavigationBar.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1049,9 +1053,11 @@
 			children = (
 				37EB45E11C4558FF003149CE /* WalletTaskQueue.swift */,
 				37EB45E71C456137003149CE /* WalletTaskType.swift */,
-				37EB45E91C4561D3003149CE /* WalletStoreTransactionTask.swift */,
 				37EB45EB1C4562C0003149CE /* WalletStartTransactionsConsumerTask.swift */,
+				37EB45EF1C457276003149CE /* WalletStartTransactionsListenerTask.swift */,
+				37EB45E91C4561D3003149CE /* WalletStoreTransactionTask.swift */,
 				37EB45ED1C4562E2003149CE /* WalletStoreBlockTask.swift */,
+				37EB45F11C457488003149CE /* WalletUpdateBalanceTask.swift */,
 			);
 			path = "Events Queue";
 			sourceTree = "<group>";
@@ -1273,6 +1279,7 @@
 				37D0F4981C3FEED400984743 /* Localization.swift in Sources */,
 				3718F49A1C204D8F00B907AC /* WalletTransactionOutputEntity.swift in Sources */,
 				373B63F31C1F0E0D004E3298 /* WalletAddressEntity.swift in Sources */,
+				37EB45F01C457276003149CE /* WalletStartTransactionsListenerTask.swift in Sources */,
 				37F8E4151BFE2E2B001609BA /* main.swift in Sources */,
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				373B63711C1EF87C004E3298 /* WalletTransactionsListener.swift in Sources */,
@@ -1417,6 +1424,7 @@
 				376F510D1A82190E001C6684 /* BTCOutpoint.m in Sources */,
 				37E37F461C3ACB0300731747 /* WalletLayoutHolder.swift in Sources */,
 				373B63F51C1F0E0D004E3298 /* WalletOperationEntity.swift in Sources */,
+				37EB45F21C457488003149CE /* WalletUpdateBalanceTask.swift in Sources */,
 				376F51071A82190E001C6684 /* BTCKey.m in Sources */,
 				37E37F341C32E76300731747 /* WalletOperation.swift in Sources */,
 				376F51181A82190E001C6684 /* NS+BTCBase58.m in Sources */,

@@ -10,8 +10,17 @@ import Foundation
 
 struct WalletStartTransactionsConsumerTask: WalletTaskType {
     
-    func process(completion: () -> Void) {
-        
+    private let transactionsConsumer: WalletTransactionsConsumer
+    
+    func process(completionQueue: NSOperationQueue, completion: () -> Void) {
+        transactionsConsumer.startRefreshing()
+        completion()
+    }
+    
+    // MARK: Initialization
+    
+    init(transactionsConsumer: WalletTransactionsConsumer) {
+        self.transactionsConsumer = transactionsConsumer
     }
     
 }

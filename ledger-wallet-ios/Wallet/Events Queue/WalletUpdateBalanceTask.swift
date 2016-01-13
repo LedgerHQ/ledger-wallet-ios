@@ -1,5 +1,5 @@
 //
-//  WalletStoreBlockTask.swift
+//  WalletUpdateBalanceTask.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 12/01/2016.
@@ -8,18 +8,19 @@
 
 import Foundation
 
-struct WalletStoreBlockTask: WalletTaskType {
-
-    private let block: WalletBlockContainer
+struct WalletUpdateBalanceTask: WalletTaskType {
+    
+    private let balanceUpdater: WalletBalanceUpdater
     
     func process(completionQueue: NSOperationQueue, completion: () -> Void) {
+        balanceUpdater.updateAccountBalances()
         completion()
     }
     
     // MARK: Initialization
     
-    init(block: WalletBlockContainer) {
-        self.block = block
+    init(balanceUpdater: WalletBalanceUpdater) {
+        self.balanceUpdater = balanceUpdater
     }
     
 }

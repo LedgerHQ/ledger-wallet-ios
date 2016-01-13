@@ -20,6 +20,8 @@ final class WalletTransactionsStreamContext {
     var conflictsToAdd: [WalletDoubleSpendConflict] = []
     var transactionsToRemove: [WalletTransaction] = []
     
+    // MARK: Initialization
+    
     init(remoteTransaction: WalletTransactionContainer) {
         self.remoteTransaction = remoteTransaction
     } 

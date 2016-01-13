@@ -12,6 +12,7 @@ enum WalletTransactionsConsumerError: ErrorType {
     
     case MissesAccountAtIndex(Int)
     case UnableToFetchTransactions
+    case Cancelled
     
 }
 
@@ -65,7 +66,7 @@ final class WalletTransactionsConsumer {
     }
     
     func stopRefreshing() {
-        self.stopRefreshingWithError(nil)
+        self.stopRefreshingWithError(.Cancelled)
     }
     
     private func stopRefreshingWithError(error: WalletTransactionsConsumerError?) {
