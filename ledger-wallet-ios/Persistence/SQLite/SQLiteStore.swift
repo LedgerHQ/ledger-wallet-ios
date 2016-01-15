@@ -13,26 +13,26 @@ typealias SQLiteStoreContext = FMDatabase
 final class SQLiteStore {
 
     private var database: FMDatabase!
-    private let queue = NSOperationQueue(name: "SQLiteStore", maxConcurrentOperationCount: 1)
     private let URL: NSURL?
+    private let workingQueue = NSOperationQueue(name: "SQLiteStore", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "SQLiteStore")
     
     var isOpen: Bool {
         var open = false
-        queue.addOperationWithBlock() {
+        workingQueue.addOperationWithBlock() {
             guard let database = self.database else {
                 return
             }
             open = database.goodConnection()
         }
-        queue.waitUntilAllOperationsAreFinished()
+        workingQueue.waitUntilAllOperationsAreFinished()
         return open
     }
     
     // MARK: Blocks management
     
     func performBlock(block: (SQLiteStoreContext) -> Void) {
-        queue.addOperationWithBlock() { [weak self] in
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
             guard let database = strongSelf.database else {
@@ -45,7 +45,7 @@ final class SQLiteStore {
     }
 
     func performTransaction(block: (SQLiteStoreContext) -> Bool) {
-        queue.addOperationWithBlock() { [weak self] in
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
             guard let database = strongSelf.database else {
@@ -65,8 +65,10 @@ final class SQLiteStore {
     
     // MARK: Open/close
     
-    func open() {
-        queue.addOperationWithBlock() { [weak self] in
+    func open() -> Bool {
+        var opened = false
+        
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             guard strongSelf.database == nil else { return }
 
@@ -108,7 +110,7 @@ final class SQLiteStore {
                         return
                     }
                 }
-                strongSelf.logger.info("Opening store at URL \"\(URL)\"")
+                strongSelf.logger.info("Opening store at URL \"\(URL.absoluteString)\"")
             }
             else {
                 strongSelf.logger.info("Opening store in memory")
@@ -117,7 +119,7 @@ final class SQLiteStore {
             // create and open database
             guard let database = FMDatabase(path: databasePath) where database.open() else {
                 if strongSelf.URL != nil {
-                    strongSelf.logger.error("Unable to open store at URL: \(strongSelf.URL!)")
+                    strongSelf.logger.error("Unable to open store at URL: \(strongSelf.URL!.absoluteString)")
                 }
                 else {
                     strongSelf.logger.error("Unable to open store in memory")
@@ -128,12 +130,17 @@ final class SQLiteStore {
             database.logsErrors = false
             database.setShouldCacheStatements(true)
             strongSelf.database = database
+            opened = true
         }
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return opened
     }
     
-    func close() {
-        queue.cancelAllOperations()
-        queue.addOperationWithBlock() { [weak self] in
+    func close() -> Bool {
+        var closed = true
+        
+        workingQueue.cancelAllOperations()
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             guard let database = strongSelf.database else { return }
             
@@ -144,10 +151,11 @@ final class SQLiteStore {
             {
                 strongSelf.logger.info("Closing store in memory")
             }
-            database.close()
+            closed = database.close()
             strongSelf.database = nil
         }
-        queue.waitUntilAllOperationsAreFinished()
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return closed
     }
     
     // MARK: Initialization

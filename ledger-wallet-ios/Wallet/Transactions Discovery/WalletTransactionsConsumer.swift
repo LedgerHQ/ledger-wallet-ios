@@ -58,7 +58,6 @@ final class WalletTransactionsConsumer {
             strongSelf.refreshing = true
             strongSelf.foundTransactionsInCurrentAccount = false
             strongSelf.fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: WalletLayoutHolder.BIP44AddressesGap - 1)
-            ApplicationManager.sharedInstance.startNetworkActivity()
             
             // notify delegate
             strongSelf.delegateQueue.addOperationWithBlock() { strongSelf.delegate?.transactionsConsumerDidStart(strongSelf) }
@@ -79,7 +78,6 @@ final class WalletTransactionsConsumer {
             strongSelf.logger.info("Stop refreshing transactions")
             strongSelf.refreshing = false
             strongSelf.foundTransactionsInCurrentAccount = false
-            ApplicationManager.sharedInstance.stopNetworkActivity()
             
             // notify delegate
             strongSelf.delegateQueue.addOperationWithBlock() { strongSelf.delegate?.transactionsConsumer(strongSelf, didStopWithError: error) }

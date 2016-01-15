@@ -23,6 +23,6 @@ protocol WalletManagerType: class {
     func stopRefreshingTransactions()
     func stopAllServices()
     
-    init(uniqueIdentifier: String, servicesProvider: ServicesProviderType)
+    init?(uniqueIdentifier: String, servicesProvider: ServicesProviderType)
     
 }

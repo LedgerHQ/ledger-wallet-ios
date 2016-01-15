@@ -15,15 +15,15 @@ final class WalletAPIManager: WalletManagerType {
     var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
     private var isListeningTransactions: Bool { return transactionsListener.isListening }
     
-    private let store: SQLiteStore
-    private let storeProxy: WalletStoreProxy
-    private let addressCache: WalletAddressCache
-    private let layoutHolder: WalletLayoutHolder
-    private let balanceUpdater: WalletBalanceUpdater
-    private let transactionsConsumer: WalletTransactionsConsumer
-    private let transactionsListener: WalletTransactionsListener
-    private let transactionsStream: WalletTransactionsStream
-    private let taskQueue: WalletTaskQueue
+    private let store: SQLiteStore!
+    private let storeProxy: WalletStoreProxy!
+    private let addressCache: WalletAddressCache!
+    private let layoutHolder: WalletLayoutHolder!
+    private let balanceUpdater: WalletBalanceUpdater!
+    private let transactionsConsumer: WalletTransactionsConsumer!
+    private let transactionsListener: WalletTransactionsListener!
+    private let transactionsStream: WalletTransactionsStream!
+    private let taskQueue: WalletTaskQueue!
     private let logger = Logger.sharedInstance(name: "WalletAPIManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
     private let workingQueue = NSOperationQueue.mainQueue()
@@ -39,6 +39,9 @@ final class WalletAPIManager: WalletManagerType {
     }
     
     func stopAllServices() {
+        if transactionsConsumer.isRefreshing {
+            ApplicationManager.sharedInstance.stopNetworkActivity()
+        }
         transactionsConsumer.stopRefreshing()
         transactionsListener.stopListening()
         taskQueue.cancelAllTasks()
@@ -46,15 +49,30 @@ final class WalletAPIManager: WalletManagerType {
     
     // MARK: Initialization
 
-    init(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
-        logger.info("Using services provider \"\(servicesProvider.name)\" with coin network \"\(servicesProvider.coinNetwork.name)\"")
+    init?(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
         self.uniqueIdentifier = uniqueIdentifier
-    
+
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
-        self.store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier)
-        
+        guard let store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier) else {
+            
+            self.store = nil
+            self.storeProxy = nil
+            self.addressCache = nil
+            self.layoutHolder = nil
+            self.balanceUpdater = nil
+            self.transactionsConsumer = nil
+            self.transactionsListener = nil
+            self.transactionsStream = nil
+            self.taskQueue = nil
+            return nil
+        }
+
+        // log services provider and coin network
+        logger.info("Using services provider \"\(servicesProvider.name)\" with coin network \"\(servicesProvider.coinNetwork.name)\"")
+
         // create services
+        self.store = store
         self.storeProxy = WalletStoreProxy(store: store)
         self.addressCache = WalletAddressCache(storeProxy: storeProxy)
         self.layoutHolder = WalletLayoutHolder(storeProxy: storeProxy)
@@ -160,11 +178,13 @@ extension WalletAPIManager {
 extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     
     func transactionsConsumerDidStart(transactionsConsumer: WalletTransactionsConsumer) {
+        ApplicationManager.sharedInstance.startNetworkActivity()
         transactionsListener.stopListening()
         enqueueNotifyObserversTask(WalletManagerDidStartRefreshingTransactionsNotification)
     }
     
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didStopWithError error: WalletTransactionsConsumerError?) {
+        ApplicationManager.sharedInstance.stopNetworkActivity()
         transactionsListener.startListening()
         enqueueNotifyObserversTask(WalletManagerDidStopRefreshingTransactionsNotification)
     }

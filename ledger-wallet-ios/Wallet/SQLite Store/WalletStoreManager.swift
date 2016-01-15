@@ -15,12 +15,14 @@ final class WalletStoreManager {
     
     // MARK: Convenience method
     
-    class func managedStoreAtURL(URL: NSURL?, uniqueIdentifier: String) -> SQLiteStore {
+    class func managedStoreAtURL(URL: NSURL?, uniqueIdentifier: String) -> SQLiteStore? {
         let store = SQLiteStore(URL: URL)
+        guard store.open() else {
+            return nil
+        }
+        
         let manager = WalletStoreManager(store: store)
         let schema = WalletStoreSchemas.currentSchema
-        
-        store.open()
         manager.executePragmaCommands(schema)
         manager.automigrateOrInstallSchema(schema, uniqueIdentifier: uniqueIdentifier)
         return store
