@@ -13,7 +13,7 @@ final class WalletAPIManager: WalletManagerType {
     let uniqueIdentifier: String
     
     var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
-    var isListeningTransactions: Bool { return transactionsListener.isListening }
+    private var isListeningTransactions: Bool { return transactionsListener.isListening }
     
     private let store: SQLiteStore
     private let storeProxy: WalletStoreProxy
@@ -31,70 +31,17 @@ final class WalletAPIManager: WalletManagerType {
     // MARK: Wallet management
     
     func startRefreshingTransactions() {
-        enqueueStartTransactionsConsumerTask()
+        transactionsConsumer.startRefreshing()
     }
     
     func stopRefreshingTransactions() {
         transactionsConsumer.stopRefreshing()
     }
     
-    func startListeningTransactions() {
-        enqueueStartTransactionsListenerTask()
-    }
-    
-    func stopListeningTransactions() {
-        transactionsListener.stopListening()
-    }
-    
-    func startAllServices() {
-        enqueueUpdateBalanceTask()
-        startRefreshingTransactions()
-        startListeningTransactions()
-    }
-    
     func stopAllServices() {
-        stopRefreshingTransactions()
-        stopListeningTransactions()
-    }
-    
-    // MARK: Utils
-    
-    private func registerAccount(account: WalletAccount) {
-        // add account
-        storeProxy.addAccount(account, completionQueue: workingQueue, completion: { _ in })
-        
-        // reload layout
-        layoutHolder.reload()
-        
-        // cache 20 first internal + external addresses
-        let internalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
-        let externalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
-        addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: workingQueue, completion: { _ in })
-    }
-    
-    private func handleMissingAccountAtIndex(index: Int, continueBlock: (Bool) -> Void) {
-//        let accounts = [
-//            WalletAccount(index: 0, extendedPublicKey: "xpub67tVq9TLPPoaJgTkpz64N6YtB9pCorrwkLjqNgrnxWgGSVBkg2F7WhhRz5eBy7tEb2ZST4RUsC4iuMNGnWbQG69gPrTKmSKZMT3Xo7p9H4n", name: nil),
-//            WalletAccount(index: 1, extendedPublicKey: "xpub6D4waFVPfPCpUjYZexFNXjxusXSa5WrRj2iU8v5U6x2EvVuHaSKuo1zQEJA6Lt9dRcjgM1CSQmyq3tmSj5jCSup6WC24vRrHrBUyZkv5Jem", name: nil),
-//            WalletAccount(index: 2, extendedPublicKey: "xpub6D4waFVPfPCpX183njE1zjMayNCAnMHV4D989WsFd8ENDwfcdogPfRXSaA4opz3qoLoyCZCHZy9F7GQQnBxF4nNmZfXKKiokb2ABY8Bi8Jz", name: nil),
-//            WalletAccount(index: 3, extendedPublicKey: "xpub6D4waFVPfPCpZtpCLcfWBKLy2BqmWxDGuYVn4DmHyDSeVUDzjD5AsHy98SDmyXoiKmLWpsdfZszbcveZzFaEY6NhZSqw476xXu8LYBosvbG", name: nil),
-//        ]
-        let accounts = [
-            WalletAccount(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
-            WalletAccount(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
-            WalletAccount(index: 2, extendedPublicKey: "xpub6Cec5KTvWeSNJtrFK6PqoCoP369xG8HYEDswqmTsQq63frkqF6dqYV56qRjJ7VQn1TEaejBPowG9vMGxVhsfRinhTgH5fTcAvMedABC8w6P", name: nil),
-            WalletAccount(index: 3, extendedPublicKey: "xpub6Cec5KTvWeSNLwb2fMVRYVJn4w49WebLyg7cJM2QsbQotPggFX49H8jKvieYCMHaGCsKrW9VVknSt7KRxRuacasuGyJm74hZ4JeNRdsRB6Y", name: nil),
-            WalletAccount(index: 4, extendedPublicKey: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb", name: nil)
-        ]
-        //        let accounts = [
-        //            WalletAccountModel(index: 0, extendedPublicKey: "xpub6C47CZq7qLLXHgpoSdpBfjvxBz4YcnY4qXcgbbeeZGiSdyUDugFN3XMLavrUmdedGgaQaQRgVau69dUtoLQvgE1kSXHKWAQfiZHU7hGR2TX", name: nil)
-        //        ]
-        guard let account = accounts.filter({ $0.index == index }).first else {
-            continueBlock(false)
-            return
-        }
-        registerAccount(account)
-        continueBlock(true)
+        transactionsConsumer.stopRefreshing()
+        transactionsListener.stopListening()
+        taskQueue.cancelAllTasks()
     }
     
     // MARK: Initialization
@@ -122,10 +69,6 @@ final class WalletAPIManager: WalletManagerType {
         self.transactionsConsumer.delegate = self
         self.transactionsListener.delegate = self
         self.transactionsStream.delegate = self
-        self.taskQueue.delegate = self
-        
-        // start services
-        startAllServices()
     }
     
     deinit {
@@ -135,40 +78,79 @@ final class WalletAPIManager: WalletManagerType {
     
 }
 
-// MARK: - Tasks management
+// MARK: - Accounts management
 
 private extension WalletAPIManager {
-
-    private func enqueueStartTransactionsConsumerTask() {
-        taskQueue.enqueueTask(WalletStartTransactionsConsumerTask(transactionsConsumer: transactionsConsumer))
+    
+    private func registerAccount(account: WalletAccount) {
+        // add account
+        storeProxy.addAccount(account, completionQueue: workingQueue, completion: { _ in })
+        
+        // reload layout
+        layoutHolder.reload()
+        
+        // cache 20 first internal + external addresses
+        let internalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 0, keyIndex: $0) }
+        let externalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(accountIndex: account.index, chainIndex: 1, keyIndex: $0) }
+        addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: workingQueue, completion: { _ in })
+        
+        enqueueNotifyObserversTask(WalletManagerDidUpdateAccountsNotification)
     }
     
-    private func enqueueStartTransactionsListenerTask() {
-        taskQueue.enqueueTask(WalletStartTransactionsListenerTask(transactionsListener: transactionsListener))
-    }
-    
-    private func enqueueUpdateBalanceTask() {
-        taskQueue.enqueueTask(WalletUpdateBalanceTask(balanceUpdater: balanceUpdater))
-    }
-    
-    private func enqueueStoreTransactionTasks(transactions: [WalletTransactionContainer]) {
-        taskQueue.enqueueTasks(transactions.map({ WalletStoreTransactionTask(transaction: $0, transactionsStream: transactionsStream) }))
-    }
-    
-    private func enqueueStoreBlockTasks(blocks: [WalletBlockContainer]) {
-        taskQueue.enqueueTasks(blocks.map({ WalletStoreBlockTask(block: $0) }))
+    private func handleMissingAccountAtIndex(index: Int, continueBlock: (Bool) -> Void) {
+        //        let accounts = [
+        //            WalletAccount(index: 0, extendedPublicKey: "xpub67tVq9TLPPoaJgTkpz64N6YtB9pCorrwkLjqNgrnxWgGSVBkg2F7WhhRz5eBy7tEb2ZST4RUsC4iuMNGnWbQG69gPrTKmSKZMT3Xo7p9H4n", name: nil),
+        //            WalletAccount(index: 1, extendedPublicKey: "xpub6D4waFVPfPCpUjYZexFNXjxusXSa5WrRj2iU8v5U6x2EvVuHaSKuo1zQEJA6Lt9dRcjgM1CSQmyq3tmSj5jCSup6WC24vRrHrBUyZkv5Jem", name: nil),
+        //            WalletAccount(index: 2, extendedPublicKey: "xpub6D4waFVPfPCpX183njE1zjMayNCAnMHV4D989WsFd8ENDwfcdogPfRXSaA4opz3qoLoyCZCHZy9F7GQQnBxF4nNmZfXKKiokb2ABY8Bi8Jz", name: nil),
+        //            WalletAccount(index: 3, extendedPublicKey: "xpub6D4waFVPfPCpZtpCLcfWBKLy2BqmWxDGuYVn4DmHyDSeVUDzjD5AsHy98SDmyXoiKmLWpsdfZszbcveZzFaEY6NhZSqw476xXu8LYBosvbG", name: nil),
+        //        ]
+        let accounts = [
+            WalletAccount(index: 0, extendedPublicKey: "xpub6Cec5KTvWeSNEw9bHe5v5sFPRwpM1x86Scuu7FuBpsQrhBg5GjhhBePAxpUQxmX8RNdAW2rfxZPQrrE5JAUqaa7MRfnXGKjQJB2awZ7Qgxy", name: nil),
+            WalletAccount(index: 1, extendedPublicKey: "xpub6Cec5KTvWeSNG1BsXpNab628WvCGZEECqiHPY7JcBWSQgKfQN5wK4hUr3e9PM464Q7u9owCNHKTRGNGMxYdfPgUFZ3hR3ko2ap7xqxHmCxk", name: nil),
+            WalletAccount(index: 2, extendedPublicKey: "xpub6Cec5KTvWeSNJtrFK6PqoCoP369xG8HYEDswqmTsQq63frkqF6dqYV56qRjJ7VQn1TEaejBPowG9vMGxVhsfRinhTgH5fTcAvMedABC8w6P", name: nil),
+            WalletAccount(index: 3, extendedPublicKey: "xpub6Cec5KTvWeSNLwb2fMVRYVJn4w49WebLyg7cJM2QsbQotPggFX49H8jKvieYCMHaGCsKrW9VVknSt7KRxRuacasuGyJm74hZ4JeNRdsRB6Y", name: nil),
+            WalletAccount(index: 4, extendedPublicKey: "xpub6Cec5KTvWeSNQLuVYmj4JZkX8q3VpSoQRd4BRkcPmhQvDaFi3yPobQXW795SLwN9zHXv9vYJyt4FrkWRBuJZMrg81qx7BDxNffPtJmFg2mb", name: nil)
+        ]
+        //        let accounts = [
+        //            WalletAccountModel(index: 0, extendedPublicKey: "xpub6C47CZq7qLLXHgpoSdpBfjvxBz4YcnY4qXcgbbeeZGiSdyUDugFN3XMLavrUmdedGgaQaQRgVau69dUtoLQvgE1kSXHKWAQfiZHU7hGR2TX", name: nil)
+        //        ]
+        guard let account = accounts.filter({ $0.index == index }).first else {
+            continueBlock(false)
+            return
+        }
+        registerAccount(account)
+        continueBlock(true)
     }
     
 }
 
-// MARK: - Notifications management
+// MARK: - Tasks management
 
-private extension WalletAPIManager {
+extension WalletAPIManager {
     
-    private func notifyObservers(notification: String, userInfo: [String: AnyObject]? = nil) {
-        delegateQueue.addOperationWithBlock() {
-            NSNotificationCenter.defaultCenter().postNotificationName(notification, object: self, userInfo: userInfo)
+    private func enqueueUpdateBalancesTask() {
+        let task = WalletUpdateAccountBalancesTask(balanceUpdater: balanceUpdater)
+        taskQueue.enqueueDebouncedTask(task)
+    }
+    
+    private func enqueueStoreTransactionTasks(transactions: [WalletTransactionContainer]) {
+        let tasks: [WalletTaskType] = transactions.map({ return WalletStoreTransactionTask(transaction: $0, transactionsStream: transactionsStream) })
+        taskQueue.enqueueTasks(tasks)
+    }
+    
+    private func enqueueNotifyObserversTask(notification: String, userInfo: [String: AnyObject]? = nil) {
+        let task = WalletBlockTask(identifier: notification) { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            // post notification
+            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+
+                strongSelf.logger.info("Notifying \(notification)")
+                NSNotificationCenter.defaultCenter().postNotificationName(notification, object: strongSelf, userInfo: userInfo)
+            }
         }
+        taskQueue.enqueueDebouncedTask(task)
     }
     
 }
@@ -178,11 +160,13 @@ private extension WalletAPIManager {
 extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     
     func transactionsConsumerDidStart(transactionsConsumer: WalletTransactionsConsumer) {
-
+        transactionsListener.stopListening()
+        enqueueNotifyObserversTask(WalletManagerDidStartRefreshingTransactionsNotification)
     }
     
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didStopWithError error: WalletTransactionsConsumerError?) {
-        enqueueUpdateBalanceTask()
+        transactionsListener.startListening()
+        enqueueNotifyObserversTask(WalletManagerDidStopRefreshingTransactionsNotification)
     }
     
     func transactionsConsumer(transactionsConsumer: WalletTransactionsConsumer, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
@@ -195,30 +179,16 @@ extension WalletAPIManager: WalletTransactionsConsumerDelegate {
     
 }
 
-// MARK: - WalletTaskQueueDelegate
-
-extension WalletAPIManager: WalletTaskQueueDelegate {
-    
-    func taskQueueDidStartDequeingTasks(taskQueue: WalletTaskQueue) {
-        
-    }
-    
-    func taskQueueDidStopDequeingTasks(taskQueue: WalletTaskQueue) {
-        
-    }
-    
-}
-
 // MARK: - WalletTransactionsListenerDelegate
 
 extension WalletAPIManager: WalletTransactionsListenerDelegate {
     
     func transactionsListenerDidStart(transactionsListener: WalletTransactionsListener) {
-
+   
     }
     
     func transactionsListenerDidStop(transactionsListener: WalletTransactionsListener) {
-        
+
     }
     
     func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveTransaction transaction: WalletTransactionContainer) {
@@ -226,7 +196,7 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
     }
     
     func transactionsListener(transactionsListener: WalletTransactionsListener, didReceiveBlock block: WalletBlockContainer) {
-        enqueueStoreBlockTasks([block])
+    
     }
     
 }
@@ -239,16 +209,22 @@ extension WalletAPIManager: WalletTransactionsStreamDelegate {
         handleMissingAccountAtIndex(index, continueBlock: continueBlock)
     }
     
+    func transactionsStreamDidUpdateTransactions(transactionsStream: WalletTransactionsStream) {
+        enqueueNotifyObserversTask(WalletManagerDidUpdateOperationsNotification)
+    }
+    
     func transactionsStreamDidUpdateAccountLayouts(transactionsStream: WalletTransactionsStream) {
-        
+        enqueueNotifyObserversTask(WalletManagerDidUpdateAccountsNotification)
     }
     
     func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream) {
-        
+        enqueueNotifyObserversTask(WalletManagerDidUpdateOperationsNotification)
+        enqueueUpdateBalancesTask()
     }
     
     func transactionsStreamDidUpdateDoubleSpendConflicts(transactionsStream: WalletTransactionsStream) {
-        
+        enqueueNotifyObserversTask(WalletManagerDidUpdateOperationsNotification)
+        enqueueUpdateBalancesTask()
     }
     
 }
@@ -258,7 +234,7 @@ extension WalletAPIManager: WalletTransactionsStreamDelegate {
 extension WalletAPIManager: WalletBalanceUpdaterDelegate {
     
     func balanceUpdaterDidUpdateAccountBalances(balanceUpdater: WalletBalanceUpdater) {
-        
+        enqueueNotifyObserversTask(WalletManagerDidUpdateAccountsNotification)
     }
     
 }

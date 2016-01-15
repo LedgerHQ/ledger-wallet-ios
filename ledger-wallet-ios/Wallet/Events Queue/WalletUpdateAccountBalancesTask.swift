@@ -1,18 +1,23 @@
 //
-//  WalletUpdateBalanceTask.swift
+//  WalletUpdateAccountBalancesTask.swift
 //  ledger-wallet-ios
 //
-//  Created by Nicolas Bigot on 12/01/2016.
+//  Created by Nicolas Bigot on 14/01/2016.
 //  Copyright © 2016 Ledger. All rights reserved.
 //
 
 import Foundation
 
-struct WalletUpdateBalanceTask: WalletTaskType {
+struct WalletUpdateAccountBalancesTask: WalletTaskType {
     
-    private let balanceUpdater: WalletBalanceUpdater
+    let identifier = "WalletUpdateAccountBalancesTask"
+    private weak var balanceUpdater: WalletBalanceUpdater?
     
     func process(completionQueue: NSOperationQueue, completion: () -> Void) {
+        guard let balanceUpdater = balanceUpdater else {
+            completion()
+            return
+        }
         balanceUpdater.updateAccountBalances()
         completion()
     }

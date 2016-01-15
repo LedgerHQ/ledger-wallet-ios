@@ -66,22 +66,31 @@ final class WalletTransactionsConsumer {
     }
     
     func stopRefreshing() {
-        self.stopRefreshingWithError(.Cancelled)
+        stopRefreshingWithError(.Cancelled)
     }
     
     private func stopRefreshingWithError(error: WalletTransactionsConsumerError?) {
         apiClient.cancelAllTasks()
         workingQueue.cancelAllOperations()
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self where strongSelf.refreshing else { return }
         
+        let cancelBlock = { [weak self] in
+            guard let strongSelf = self where strongSelf.refreshing else { return }
+            
             strongSelf.logger.info("Stop refreshing transactions")
             strongSelf.refreshing = false
             strongSelf.foundTransactionsInCurrentAccount = false
             ApplicationManager.sharedInstance.stopNetworkActivity()
-
+            
             // notify delegate
             strongSelf.delegateQueue.addOperationWithBlock() { strongSelf.delegate?.transactionsConsumer(strongSelf, didStopWithError: error) }
+        }
+        
+        if NSOperationQueue.currentQueue() != workingQueue {
+            workingQueue.addOperationWithBlock(cancelBlock)
+            workingQueue.waitUntilAllOperationsAreFinished()
+        }
+        else {
+            cancelBlock()
         }
     }
     
@@ -197,6 +206,7 @@ final class WalletTransactionsConsumer {
         }
         else {
             // notify delegate
+            logger.info("Discovered \(transactions.count) transactions")
             delegateQueue.addOperationWithBlock() { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.delegate?.transactionsConsumer(strongSelf, didDiscoverTransactions: transactions)
@@ -221,7 +231,6 @@ final class WalletTransactionsConsumer {
     
     deinit {
         stopRefreshingWithError(nil)
-        workingQueue.waitUntilAllOperationsAreFinished()
     }
 
 }

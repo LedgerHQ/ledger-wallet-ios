@@ -12,6 +12,7 @@ protocol WalletTaskQueueDelegate: class {
     
     func taskQueueDidStartDequeingTasks(taskQueue: WalletTaskQueue)
     func taskQueueDidStopDequeingTasks(taskQueue: WalletTaskQueue)
+    func taskQueue(taskQueue: WalletTaskQueue, didProcessTask task: WalletTaskType)
     
 }
 
@@ -25,7 +26,21 @@ final class WalletTaskQueue {
     
     // MARK: Tasks management
     
-    func enqueueTask(task: WalletTaskType) {
+    func enqueueDebouncedTask(task: WalletTaskType) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+
+            let tasksToKeep = strongSelf.pendingTasks.filter({ $0.identifier != task.identifier })
+            strongSelf.pendingTasks = tasksToKeep
+            strongSelf.pendingTasks.append(task)
+            
+            // process next pending transaction if not busy
+            strongSelf.processNextPendingTaskIfNotBusy()
+        }
+    }
+    
+    func enqueueBlockTaskWithIdentifier(identifier: String, block: () -> Void) {
+        let task = WalletBlockTask(identifier: identifier, block: block)
         enqueueTasks([task])
     }
     
@@ -39,15 +54,26 @@ final class WalletTaskQueue {
             strongSelf.pendingTasks.appendContentsOf(tasks)
             
             // process next pending transaction if not busy
-            if !strongSelf.busy {
-                strongSelf.initiateDequeueProcess()
-                strongSelf.processNextPendingTask()
-            }
+            strongSelf.processNextPendingTaskIfNotBusy()
         }
     }
     
     func cancelAllTasks() {
         workingQueue.cancelAllOperations()
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+
+            strongSelf.pendingTasks.removeAll()
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+    }
+    
+    private func processNextPendingTaskIfNotBusy() {
+        // process next pending transaction if not busy
+        if !busy {
+            initiateDequeueProcess()
+            processNextPendingTask()
+        }
     }
     
     private func processNextPendingTask() {
@@ -64,7 +90,8 @@ final class WalletTaskQueue {
             // execute task
             task.process(strongSelf.workingQueue) { [weak self] in
                 guard let strongSelf = self else { return }
-
+                
+                strongSelf.notifyDidProcessTask(task)
                 strongSelf.processNextPendingTask()
             }
         }
@@ -90,7 +117,6 @@ final class WalletTaskQueue {
     
     deinit {
         cancelAllTasks()
-        self.workingQueue.waitUntilAllOperationsAreFinished()
     }
     
 }
@@ -110,6 +136,13 @@ private extension WalletTaskQueue {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.taskQueueDidStopDequeingTasks(strongSelf)
+        }
+    }
+    
+    private func notifyDidProcessTask(task: WalletTaskType) {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.taskQueue(strongSelf, didProcessTask: task)
         }
     }
     

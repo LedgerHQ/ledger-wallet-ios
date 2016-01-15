@@ -10,10 +10,15 @@ import Foundation
 
 struct WalletStoreTransactionTask: WalletTaskType {
     
+    let identifier = "WalletStoreTransactionTask"
     private let transaction: WalletTransactionContainer
-    private let transactionsStream: WalletTransactionsStream
+    private weak var transactionsStream: WalletTransactionsStream?
     
     func process(completionQueue: NSOperationQueue, completion: () -> Void) {
+        guard let transactionsStream = transactionsStream else {
+            completion()
+            return
+        }
         transactionsStream.processTransaction(transaction, completionQueue: completionQueue, completion: completion)
     }
     

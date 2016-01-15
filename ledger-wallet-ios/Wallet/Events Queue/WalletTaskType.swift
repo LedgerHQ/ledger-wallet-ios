@@ -10,6 +10,8 @@ import Foundation
 
 protocol WalletTaskType {
     
+    var identifier: String { get }
+    
     func process(completionQueue: NSOperationQueue, completion: () -> Void)
     
 }

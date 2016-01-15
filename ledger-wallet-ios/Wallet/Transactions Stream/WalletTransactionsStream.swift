@@ -10,6 +10,7 @@ import Foundation
 
 protocol WalletTransactionsStreamDelegate: class {
     
+    func transactionsStreamDidUpdateTransactions(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateAccountLayouts(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateOperations(transactionsStream: WalletTransactionsStream)
     func transactionsStreamDidUpdateDoubleSpendConflicts(transactionsStream: WalletTransactionsStream)
@@ -107,6 +108,13 @@ private extension WalletTransactionsStream {
             strongSelf.delegate?.transactionsStreamDidUpdateOperations(strongSelf)
         }
     }
+
+    private func notifyUpdateTransactions() {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.transactionsStreamDidUpdateTransactions(strongSelf)
+        }
+    }
     
     private func notifyUpdateDoubleSpendConflicts() {
         delegateQueue.addOperationWithBlock() { [weak self] in
@@ -146,7 +154,7 @@ extension WalletTransactionsStream: WalletTransactionsStreamLayoutFunnelDelegate
 extension WalletTransactionsStream: WalletTransactionsStreamSaveFunnelDelegate {
 
     func saveFunnelDidUpdateTransactions(saveFunnel: WalletTransactionsStreamSaveFunnel) {
-    
+        notifyUpdateTransactions()
     }
 
     func saveFunnelDidUpdateOperations(saveFunnel: WalletTransactionsStreamSaveFunnel) {

@@ -70,6 +70,7 @@ final class WalletTransactionsListener {
                 strongSelf.delegate?.transactionsListenerDidStop(strongSelf)
             }
         }
+        dispatchSyncOnQueue(workingQueue, block: {})
     }
     
     // MARK: Initialization
@@ -81,7 +82,6 @@ final class WalletTransactionsListener {
     
     deinit {
         stopListening()
-        dispatchSyncOnQueue(workingQueue, block: {})
     }
 
 }
@@ -92,7 +92,6 @@ extension WalletTransactionsListener: WebSocketDelegate {
     
     func websocketDidConnect(socket: WebSocket) {
         guard listening else { return }
-        
     }
     
     func websocketDidDisconnect(socket: WebSocket, error: NSError?) {

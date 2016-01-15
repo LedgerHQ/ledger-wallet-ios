@@ -10,8 +10,6 @@ import Foundation
 
 let WalletManagerDidStartRefreshingTransactionsNotification = "WalletManagerDidStartRefreshingTransactionsNotification"
 let WalletManagerDidStopRefreshingTransactionsNotification = "WalletManagerDidStopRefreshingTransactionsNotification"
-let WalletManagerDidStartListeningTransactionsNotification = "WalletManagerDidStartListeningTransactionsNotification"
-let WalletManagerDidStopListeningTransactionsNotification = "WalletManagerDidStopListeningTransactionsNotification"
 let WalletManagerDidUpdateAccountsNotification = "WalletManagerDidUpdateAccountsNotification"
 let WalletManagerDidUpdateOperationsNotification = "WalletManagerDidUpdateOperationsNotification"
 let WalletManagerDidMissAccountNotification = "WalletManagerDidMissAccountNotification"
@@ -20,13 +18,9 @@ protocol WalletManagerType: class {
     
     var uniqueIdentifier: String { get }
     var isRefreshingTransactions: Bool { get }
-    var isListeningTransactions: Bool { get }
     
     func startRefreshingTransactions()
     func stopRefreshingTransactions()
-    func startListeningTransactions()
-    func stopListeningTransactions()
-    func startAllServices()
     func stopAllServices()
     
     init(uniqueIdentifier: String, servicesProvider: ServicesProviderType)

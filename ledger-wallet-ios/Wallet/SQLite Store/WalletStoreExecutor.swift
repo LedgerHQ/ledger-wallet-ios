@@ -440,7 +440,7 @@ final class WalletStoreExecutor {
     
     class func schemaVersion(context: SQLiteStoreContext) -> Int? {
         guard let results = context.executeQuery("SELECT \(WalletMetadataEntity.schemaVersionKey) FROM \(WalletMetadataEntity.tableName)", withArgumentsInArray: nil) else {
-            logger.error("Unable to fetch schema version: \(context.lastErrorMessage())")
+            logger.warn("Unable to fetch schema version: \(context.lastErrorMessage())")
             return nil
         }
         guard results.next() && !results.columnIsNull(WalletMetadataEntity.schemaVersionKey) else {

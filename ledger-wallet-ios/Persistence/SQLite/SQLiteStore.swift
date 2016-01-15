@@ -62,10 +62,6 @@ final class SQLiteStore {
             }
         }
     }
-
-    func waitCompletionOfAllBlocks() {
-        queue.waitUntilAllOperationsAreFinished()
-    }
     
     // MARK: Open/close
     
@@ -151,6 +147,7 @@ final class SQLiteStore {
             database.close()
             strongSelf.database = nil
         }
+        queue.waitUntilAllOperationsAreFinished()
     }
     
     // MARK: Initialization
@@ -161,7 +158,6 @@ final class SQLiteStore {
     
     deinit {
         close()
-        waitCompletionOfAllBlocks()
     }
     
 }
