@@ -18,11 +18,12 @@ protocol WalletManagerType: class {
     
     var uniqueIdentifier: String { get }
     var isRefreshingTransactions: Bool { get }
+    var fetchRequestBuilder: WalletFetchRequestBuilder! { get }
     
     func startRefreshingTransactions()
     func stopRefreshingTransactions()
     func stopAllServices()
-    
+        
     init?(uniqueIdentifier: String, servicesProvider: ServicesProviderType)
     
 }

@@ -32,10 +32,15 @@ final class WalletStoreExecutor {
         return fetchAccounts(whereStatement: whereStatement, context: context)
     }
     
-    class func fetchAllVisibleAccounts(context: SQLiteStoreContext) -> [WalletAccount]? {
+    class func fetchAllVisibleAccountsFrom(from: Int, size: Int, order: WalletFetchRequestOrder, context: SQLiteStoreContext) -> [WalletAccount]? {
         let whereStatement = "(\"\(WalletAccountEntity.nextInternalIndexKey)\" > 0 OR \"\(WalletAccountEntity.nextExternalIndexKey)\" > 0) AND \"\(WalletAccountEntity.hiddenKey)\" = 0"
-        let orderStatement = "\"\(WalletAccountEntity.indexKey)\" ASC"
+        let orderStatement = "\"\(WalletAccountEntity.indexKey)\" " + order.representativeStatement
         return fetchAccounts(whereStatement: whereStatement, orderStatement: orderStatement, context: context)
+    }
+    
+    class func countAllVisibleAccounts(context: SQLiteStoreContext) -> Int? {
+        let whereStatement = "(\"\(WalletAccountEntity.nextInternalIndexKey)\" > 0 OR \"\(WalletAccountEntity.nextExternalIndexKey)\" > 0) AND \"\(WalletAccountEntity.hiddenKey)\" = 0"
+        return countAccounts(whereStatement: whereStatement, context: context)
     }
     
     private class func fetchAccounts(whereStatement whereStatement: String? = nil, orderStatement: String? = nil, context: SQLiteStoreContext) -> [WalletAccount]? {
@@ -44,6 +49,12 @@ final class WalletStoreExecutor {
         if let whereStatement = whereStatement { statement += " WHERE \(whereStatement)" }
         if let orderStatement = orderStatement { statement += " ORDER BY \(orderStatement)" }
         return fetchModelCollection(statement, context: context)
+    }
+    
+    private class func countAccounts(whereStatement whereStatement: String? = nil, context: SQLiteStoreContext) -> Int? {
+        var statement = "SELECT COUNT(*) FROM \"\(WalletAccountEntity.tableName)\""
+        if let whereStatement = whereStatement { statement += " WHERE \(whereStatement)" }
+        return countModelCollection(statement, context: context)
     }
 
     class func addAccount(account: WalletAccount, context: SQLiteStoreContext) -> Bool {
@@ -510,4 +521,21 @@ final class WalletStoreExecutor {
         }
         return T.collectionFromResultSet(results)
     }
+    
+    private class func countModelCollection(statement: String, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> Int? {
+        guard let results = context.executeQuery(statement, withArgumentsInArray: values) else {
+            logger.error("Unable to count model collection: \(context.lastErrorMessage())")
+            return nil
+        }
+        guard results.next() else {
+            return nil
+        }
+        guard let count = results.objectForColumnIndex(0) where count is NSNumber else {
+            logger.error("Unable to count model collection: column 0 is not a number")
+            return nil
+        }
+        let number = count as! NSNumber
+        return number.integerValue
+    }
+
 }

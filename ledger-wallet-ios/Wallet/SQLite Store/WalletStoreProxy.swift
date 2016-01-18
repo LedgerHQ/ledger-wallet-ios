@@ -27,8 +27,12 @@ final class WalletStoreProxy {
         executeModelCollectionFetch({ return WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
-    func fetchAllVisibleAccounts(completionQueue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllVisibleAccounts($0) }, completionQueue: completionQueue, completion: completion)
+    func fetchAllVisibleAccountsFrom(from: Int, size: Int, order: WalletFetchRequestOrder, completionQueue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
+        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllVisibleAccountsFrom(from, size: size, order: order, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+    
+    func countAllVisibleAccounts(completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
+        executeModelCollectionCount({ return WalletStoreExecutor.countAllVisibleAccounts($0) }, completionQueue: completionQueue, completion: completion)
     }
 
     func addAccount(account: WalletAccount, completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
@@ -108,6 +112,14 @@ final class WalletStoreProxy {
             guard let _ = self else { return }
             let results = block(context)
             completionQueue.addOperationWithBlock() { completion(results) }
+        }
+    }
+    
+    private func executeModelCollectionCount(block: (SQLiteStoreContext) -> Int?, completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
+        store.performBlock() { [weak self] context in
+            guard let _ = self else { return }
+            let count = block(context)
+            completionQueue.addOperationWithBlock() { completion(count) }
         }
     }
     

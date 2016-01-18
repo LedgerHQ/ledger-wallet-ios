@@ -11,6 +11,7 @@ import Foundation
 final class WalletAPIManager: WalletManagerType {
     
     let uniqueIdentifier: String
+    let fetchRequestBuilder: WalletFetchRequestBuilder!
     
     var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
     private var isListeningTransactions: Bool { return transactionsListener.isListening }
@@ -51,11 +52,10 @@ final class WalletAPIManager: WalletManagerType {
 
     init?(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
         self.uniqueIdentifier = uniqueIdentifier
-
+        
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
         guard let store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier) else {
-            
             self.store = nil
             self.storeProxy = nil
             self.addressCache = nil
@@ -65,6 +65,7 @@ final class WalletAPIManager: WalletManagerType {
             self.transactionsListener = nil
             self.transactionsStream = nil
             self.taskQueue = nil
+            self.fetchRequestBuilder = nil
             return nil
         }
 
@@ -81,6 +82,7 @@ final class WalletAPIManager: WalletManagerType {
         self.transactionsListener = WalletTransactionsListener(servicesProvider: servicesProvider, delegateQueue: workingQueue)
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: workingQueue)
         self.taskQueue = WalletTaskQueue(delegateQueue: workingQueue)
+        self.fetchRequestBuilder = WalletFetchRequestBuilder(storeProxy: storeProxy)
         
         // plug delegates
         self.balanceUpdater.delegate = self
