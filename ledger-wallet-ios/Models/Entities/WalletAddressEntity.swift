@@ -16,5 +16,14 @@ struct WalletAddressEntity: SQLiteEntityType {
     static let accountIndexKey = "account_index"
     static let chainIndexKey = "chain_index"
     static let keyIndexKey = "key_index"
+    static let relativePathKey = "relative_path"
+    
+    static let allFieldKeys = [
+        addressKey,
+        accountIndexKey,
+        chainIndexKey,
+        keyIndexKey,
+        relativePathKey
+    ]
     
 }

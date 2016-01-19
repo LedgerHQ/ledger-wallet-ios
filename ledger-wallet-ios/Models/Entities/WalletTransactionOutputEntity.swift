@@ -18,4 +18,12 @@ struct WalletTransactionOutputEntity: SQLiteEntityType {
     static let indexKey = "index"
     static let transactionHashKey = "transaction_hash"
     
+    static let allFieldKeys =  [
+        scriptHexKey,
+        valueKey,
+        addressKey,
+        indexKey,
+        transactionHashKey
+    ]
+    
 }

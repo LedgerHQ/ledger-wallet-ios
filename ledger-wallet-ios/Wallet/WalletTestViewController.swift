@@ -21,14 +21,9 @@ class WalletTestViewController: BaseViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStartRefreshingTransactionsNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: WalletManagerDidStopRefreshingTransactionsNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateModel", name: WalletManagerDidUpdateAccountsNotification, object: nil)
         updateUI()
-        
-        walletManager?.fetchRequestBuilder.accountsFetchRequestWithIncrementSize(20, order: .Ascending) { fetchRequest in
-            self.fetchRequest = fetchRequest
-            self.fetchRequest?.allObjects() { objects in
-                print(objects)
-            }
-        }
+        updateModel()
     }
 
     @IBAction func scanForTransactions(sender: AnyObject) {
@@ -47,6 +42,15 @@ class WalletTestViewController: BaseViewController {
     private dynamic func updateUI() {
         startButton.enabled = !walletManager!.isRefreshingTransactions
         stopButton.enabled = !startButton.enabled
+    }
+    
+    private dynamic func updateModel() {
+        walletManager?.fetchRequestBuilder.accountsFetchRequestWithIncrementSize(20, order: .Ascending) { fetchRequest in
+            self.fetchRequest = fetchRequest
+            self.fetchRequest?.allObjects() { objects in
+                print(objects)
+            }
+        }
     }
     
 }

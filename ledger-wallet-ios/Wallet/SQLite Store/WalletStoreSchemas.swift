@@ -51,6 +51,7 @@ final class WalletStoreSchemas {
         addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.chainIndexKey, type: .Integer, notNull: true, unique: false))
         addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.keyIndexKey, type: .Integer, notNull: true, unique: false))
         addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.accountIndexKey, type: .Integer, notNull: true, unique: false))
+        addressesTable.addField(SQLiteTableField(name: WalletAddressEntity.relativePathKey, type: .Text, notNull: true, unique: true))
         schema.addTable(addressesTable)
         
         let metadataTable = WalletMetadataEntity.eponymTable

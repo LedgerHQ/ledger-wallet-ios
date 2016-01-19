@@ -11,13 +11,15 @@ import Foundation
 struct WalletAddress {
     
     let address: String
+    let relativePath: String
     let path: WalletAddressPath
     
     // MARK: Initialization
     
-    init(address: String, path: WalletAddressPath) {
+    init(address: String, path: WalletAddressPath, relativePath: String) {
         self.path = path
         self.address = address
+        self.relativePath = relativePath
     }
     
 }
@@ -28,16 +30,18 @@ extension WalletAddress: SQLiteFetchableModel {
     
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
-            accountIndex = resultSet.integerForKey(WalletAddressEntity.accountIndexKey),
-            chainIndex = resultSet.integerForKey(WalletAddressEntity.chainIndexKey),
-            keyIndex = resultSet.integerForKey(WalletAddressEntity.keyIndexKey),
-            address = resultSet.stringForKey(WalletAddressEntity.addressKey)
+            accountIndex = resultSet.integerForKey(WalletAddressEntity.fieldKeypathWithKey(WalletAddressEntity.accountIndexKey)),
+            chainIndex = resultSet.integerForKey(WalletAddressEntity.fieldKeypathWithKey(WalletAddressEntity.chainIndexKey)),
+            keyIndex = resultSet.integerForKey(WalletAddressEntity.fieldKeypathWithKey(WalletAddressEntity.keyIndexKey)),
+            address = resultSet.stringForKey(WalletAddressEntity.fieldKeypathWithKey(WalletAddressEntity.addressKey)),
+            relativePath = resultSet.stringForKey(WalletAddressEntity.fieldKeypathWithKey(WalletAddressEntity.relativePathKey))
         else {
             return nil
         }
         
         self.address = address
         self.path = WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
+        self.relativePath = relativePath
     }
     
 }

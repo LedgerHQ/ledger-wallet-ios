@@ -114,7 +114,7 @@ final class WalletAddressCache {
                     return
                 }
                 
-                addressesCache.append(WalletAddress(address: address.string, path: path))
+                addressesCache.append(WalletAddress(address: address.string, path: path, relativePath: path.relativePath))
             }
             
             // try to get keychain from account number

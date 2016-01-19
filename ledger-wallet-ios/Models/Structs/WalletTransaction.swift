@@ -49,10 +49,10 @@ extension WalletTransaction: SQLiteFetchableModel {
     
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
-            hash = resultSet.stringForKey(WalletTransactionEntity.hashKey),
-            receiveAt = resultSet.stringForKey(WalletTransactionEntity.receptionDateKey),
-            lockTime = resultSet.integerForKey(WalletTransactionEntity.lockTimeKey),
-            fees = resultSet.integer64ForKey(WalletTransactionEntity.feesKey)
+            hash = resultSet.stringForKey(WalletTransactionEntity.fieldKeypathWithKey(WalletTransactionEntity.hashKey)),
+            receiveAt = resultSet.stringForKey(WalletTransactionEntity.fieldKeypathWithKey(WalletTransactionEntity.receptionDateKey)),
+            lockTime = resultSet.integerForKey(WalletTransactionEntity.fieldKeypathWithKey(WalletTransactionEntity.lockTimeKey)),
+            fees = resultSet.integer64ForKey(WalletTransactionEntity.fieldKeypathWithKey(WalletTransactionEntity.feesKey))
         else {
             return nil
         }
@@ -61,7 +61,7 @@ extension WalletTransaction: SQLiteFetchableModel {
         self.receiveAt = receiveAt
         self.lockTime = lockTime
         self.fees = fees
-        self.blockHash = resultSet.stringForKey(WalletTransactionEntity.blockHashKey)
+        self.blockHash = resultSet.stringForKey(WalletTransactionEntity.fieldKeypathWithKey(WalletTransactionEntity.blockHashKey))
     }
     
 }

@@ -51,6 +51,10 @@ class WalletFetchRequest<T: WalletFetchRequestProviderType> {
     
     func objectsInRange(range: Range<Int>, completion: ([T.ModelType]?) -> Void) {
         logger.info("Asking for objects in range \(range)")
+        guard numberOfObjects > 0 else {
+            completion([])
+            return
+        }
         guard incrementSize > 0 else {
             logger.error("Unable to fetch object(s) in range \(range): incrementSize is 0")
             completion(nil)

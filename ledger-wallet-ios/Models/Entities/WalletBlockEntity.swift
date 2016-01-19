@@ -16,4 +16,10 @@ struct WalletBlockEntity: SQLiteEntityType {
     static let heightKey = "height"
     static let timeKey = "time"
     
+    static let allFieldKeys =  [
+        hashKey,
+        heightKey,
+        timeKey
+    ]
+    
 }

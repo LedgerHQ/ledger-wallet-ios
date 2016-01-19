@@ -19,5 +19,15 @@ struct WalletTransactionInputEntity: SQLiteEntityType {
     static let addressKey = "address"
     static let coinbaseKey = "coinbase"
     static let transactionHashKey = "transaction_hash"
+ 
+    static let allFieldKeys =  [
+        outputHashKey,
+        outputIndexKey,
+        valueKey,
+        scriptSignature,
+        addressKey,
+        coinbaseKey,
+        transactionHashKey
+    ]
     
 }

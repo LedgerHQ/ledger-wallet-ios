@@ -36,15 +36,15 @@ extension WalletBlock: JSONInitializableModel {
     
 }
 
-// MARK: - WalletBlock
+// MARK: - SQLiteFetchableModel
 
 extension WalletBlock: SQLiteFetchableModel {
     
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
-            hash = resultSet.stringForKey("hash"),
-            height = resultSet.integerForKey("height"),
-            time = resultSet.stringForKey("time")
+            hash = resultSet.stringForKey(WalletBlockEntity.fieldKeypathWithKey(WalletBlockEntity.hashKey)),
+            height = resultSet.integerForKey(WalletBlockEntity.fieldKeypathWithKey(WalletBlockEntity.heightKey)),
+            time = resultSet.stringForKey(WalletBlockEntity.fieldKeypathWithKey(WalletBlockEntity.timeKey))
         else {
             return nil
         }

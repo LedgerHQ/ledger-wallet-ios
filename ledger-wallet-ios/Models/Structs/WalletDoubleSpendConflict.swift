@@ -21,8 +21,8 @@ extension WalletDoubleSpendConflict: SQLiteFetchableModel {
     
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
-            leftTransactionHash = resultSet.stringForKey(WalletDoubleSpendConflictEntity.leftTransactionHashKey),
-            rightTransactionHash = resultSet.stringForKey(WalletDoubleSpendConflictEntity.rightTransactionHashKey)
+            leftTransactionHash = resultSet.stringForKey(WalletDoubleSpendConflictEntity.fieldKeypathWithKey(WalletDoubleSpendConflictEntity.leftTransactionHashKey)),
+            rightTransactionHash = resultSet.stringForKey(WalletDoubleSpendConflictEntity.fieldKeypathWithKey(WalletDoubleSpendConflictEntity.rightTransactionHashKey))
         else {
             return nil
         }

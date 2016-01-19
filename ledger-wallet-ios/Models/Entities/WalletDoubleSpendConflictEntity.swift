@@ -14,5 +14,10 @@ struct WalletDoubleSpendConflictEntity: SQLiteEntityType {
     
     static let leftTransactionHashKey = "left_transaction_hash"
     static let rightTransactionHashKey = "right_transaction_hash"
+ 
+    static let allFieldKeys =  [
+        leftTransactionHashKey,
+        rightTransactionHashKey
+    ]
     
 }
