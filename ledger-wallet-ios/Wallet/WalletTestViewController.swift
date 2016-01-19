@@ -12,9 +12,11 @@ import UIKit
 class WalletTestViewController: BaseViewController {
     
     var walletManager: WalletManagerType?
-    var fetchRequest: WalletFetchRequest<WalletAllVisibleAccountsFetchRequestProvider>?
+    private var fetchRequest: WalletFetchRequest<WalletAllVisibleAccountsFetchRequestProvider>?
+    private var accounts: [WalletAccount] = []
     @IBOutlet private weak var startButton: UIButton!
     @IBOutlet private weak var stopButton: UIButton!
+    @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +50,33 @@ class WalletTestViewController: BaseViewController {
         walletManager?.fetchRequestBuilder.accountsFetchRequestWithIncrementSize(20, order: .Ascending) { fetchRequest in
             self.fetchRequest = fetchRequest
             self.fetchRequest?.allObjects() { objects in
-                print(objects)
+                self.accounts = objects!
+                self.tableView.reloadData()
             }
         }
+    }
+    
+}
+
+extension WalletTestViewController: UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return accounts.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("AccountCell", forIndexPath: indexPath)
+        return cell
+    }
+    
+}
+
+extension WalletTestViewController: UITableViewDelegate {
+
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let account = accounts[indexPath.row]
+        cell.textLabel?.text = "Account #\(account.index)"
+        cell.detailTextLabel?.text = String(account.balance)
     }
     
 }
