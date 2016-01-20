@@ -12,7 +12,7 @@ final class WalletTransactionsStreamContext {
     
     let remoteTransaction: WalletTransactionContainer
     
-    var mappedInputs: [WalletTransactionRegularInput: WalletAddress] = [:]
+    var mappedInputs: [WalletTransactionInput: WalletAddress] = [:]
     var mappedOutputs: [WalletTransactionOutput: WalletAddress] = [:]
 
     var sendOperations: [WalletOperation] = []

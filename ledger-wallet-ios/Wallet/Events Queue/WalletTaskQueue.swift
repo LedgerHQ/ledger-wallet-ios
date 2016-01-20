@@ -22,7 +22,7 @@ final class WalletTaskQueue {
     private var pendingTasks: [WalletTaskType] = []
     private var busy = false
     private let delegateQueue: NSOperationQueue
-    private let workingQueue = NSOperationQueue(name: dispatchQueueNameForIdentifier("WalletTaskQueue"), maxConcurrentOperationCount: 1)
+    private let workingQueue = NSOperationQueue(name: "WalletTaskQueue", maxConcurrentOperationCount: 1)
     
     // MARK: Tasks management
     

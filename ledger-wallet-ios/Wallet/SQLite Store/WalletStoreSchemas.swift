@@ -68,12 +68,14 @@ final class WalletStoreSchemas {
         schema.addTable(transactionsTable)
 
         let transactionInputsTable = WalletTransactionInputEntity.eponymTable
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.uidKey, type: .Text, notNull: false, unique: false))
         transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.outputHashKey, type: .Text, notNull: false, unique: false))
         transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.outputIndexKey, type: .Integer, notNull: false, unique: false))
         transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.valueKey, type: .Text, notNull: false, unique: false))
-        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.scriptSignature, type: .Text, notNull: false, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.scriptSignatureKey, type: .Text, notNull: false, unique: false))
         transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.addressKey, type: .Text, notNull: false, unique: false))
         transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.coinbaseKey, type: .Integer, notNull: true, unique: false))
+        transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.indexKey, type: .Integer, notNull: true, unique: false))
         transactionInputsTable.addField(SQLiteTableField(name: WalletTransactionInputEntity.transactionHashKey, type: .Text, notNull: true, unique: false))
         schema.addTable(transactionInputsTable)
 

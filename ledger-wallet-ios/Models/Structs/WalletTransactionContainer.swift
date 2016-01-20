@@ -11,7 +11,7 @@ import Foundation
 struct WalletTransactionContainer {
     
     let transaction: WalletTransaction
-    let inputs: [WalletTransactionInputType]
+    let inputs: [WalletTransactionInput]
     let outputs: [WalletTransactionOutput]
     let block: WalletBlock?
     
@@ -19,7 +19,7 @@ struct WalletTransactionContainer {
         var addresses: [String] = []
         
         for input in inputs {
-            if let regularInput = input as? WalletTransactionRegularInput, address = regularInput.address where !addresses.contains(address) {
+            if let address = input.address where !addresses.contains(address) {
                 addresses.append(address)
             }
         }
@@ -31,13 +31,13 @@ struct WalletTransactionContainer {
         return addresses
     }
     
-    var regularInputs: [WalletTransactionRegularInput] {
-        return inputs.flatMap({ $0 as? WalletTransactionRegularInput })
+    var regularInputs: [WalletTransactionInput] {
+        return inputs.filter({ !$0.coinbase })
     }
     
     // MARK: Initialization
     
-    init(transaction: WalletTransaction, inputs: [WalletTransactionInputType], outputs: [WalletTransactionOutput], block: WalletBlock?) {
+    init(transaction: WalletTransaction, inputs: [WalletTransactionInput], outputs: [WalletTransactionOutput], block: WalletBlock?) {
         self.transaction = transaction
         self.inputs = inputs
         self.outputs = outputs
@@ -73,15 +73,7 @@ extension WalletTransactionContainer: JSONInitializableModel {
         
         // inputs and outputs
         let finalOutputs = WalletTransactionOutput.collectionFromJSONArray(outputs, parentObject: transaction)
-        var finalInputs: [WalletTransactionInputType] = []
-        for input in inputs {
-            if let regularInput = WalletTransactionRegularInput(JSONObject: input, parentObject: transaction) {
-                finalInputs.append(regularInput)
-            }
-            else if let coinbaseInput = WalletTransactionCoinbaseInput(JSONObject: input, parentObject: transaction) {
-                finalInputs.append(coinbaseInput)
-            }
-        }
+        let finalInputs = WalletTransactionInput.collectionFromJSONArray(inputs, parentObject: transaction)
         guard finalOutputs.count > 0 && finalInputs.count > 0 else {
             return nil
         }

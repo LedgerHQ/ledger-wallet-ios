@@ -12,21 +12,25 @@ struct WalletTransactionInputEntity: SQLiteEntityType {
     
     static let tableName = "transaction_input"
     
+    static let uidKey = "uid"
     static let outputHashKey = "output_hash"
     static let outputIndexKey = "output_index"
     static let valueKey = "value"
-    static let scriptSignature = "script_signature"
+    static let scriptSignatureKey = "script_signature"
     static let addressKey = "address"
     static let coinbaseKey = "coinbase"
     static let transactionHashKey = "transaction_hash"
+    static let indexKey = "index"
  
     static let allFieldKeys =  [
+        uidKey,
         outputHashKey,
         outputIndexKey,
         valueKey,
-        scriptSignature,
+        scriptSignatureKey,
         addressKey,
         coinbaseKey,
+        indexKey,
         transactionHashKey
     ]
     

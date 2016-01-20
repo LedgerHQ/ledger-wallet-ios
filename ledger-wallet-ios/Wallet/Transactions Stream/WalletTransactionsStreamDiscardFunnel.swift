@@ -43,7 +43,7 @@ final class WalletTransactionsStreamDiscardFunnel: WalletTransactionsStreamFunne
     
     private func mapAddresses(addresses: [WalletAddress], toTransactionInContext context: WalletTransactionsStreamContext) {
         for input in context.remoteTransaction.inputs {
-            if let input = input as? WalletTransactionRegularInput, address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
+            if let address = input.address, addressModel = addressWithAddress(address, fromBucket: addresses) {
                 context.mappedInputs[input] = addressModel
             }
         }

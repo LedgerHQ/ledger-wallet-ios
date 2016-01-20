@@ -10,11 +10,9 @@ import Foundation
 
 protocol WalletFetchRequestProviderType {
     
-    typealias ModelType: SQLiteFetchableModel
+    typealias ModelType
     
     func fetchObjectsFromStoreFrom(from: Int, size: Int, order: WalletFetchRequestOrder, completion: ([ModelType]?) -> Void)
     func countNumberOfObjectsFromStoreWithCompletion(completion: (Int?) -> Void)
-    
-    init(storeProxy: WalletStoreProxy)
-    
+        
 }

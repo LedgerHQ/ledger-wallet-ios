@@ -8,80 +8,105 @@
 
 import Foundation
 
-protocol WalletTransactionInputType { }
-
-struct WalletTransactionRegularInput: WalletTransactionInputType {
+struct WalletTransactionInput {
     
-    var uid: String { return "\(outputHash)-\(outputIndex)" }
-    let outputHash: String
-    let outputIndex: Int
-    let value: Int64
-    let scriptSignature: String
+    let uid: String?
+    let index: Int
+    let outputHash: String?
+    let outputIndex: Int?
+    let value: Int64?
+    let scriptSignature: String?
     let address: String?
-    let transactionHash: String
-    
-}
-
-struct WalletTransactionCoinbaseInput: WalletTransactionInputType {
-    
-    let coinbase: String
+    let coinbase: Bool
     let transactionHash: String
     
 }
 
 // MARK: - JSONInitializableModel
 
-extension WalletTransactionRegularInput: JSONInitializableModel {
+extension WalletTransactionInput: JSONInitializableModel {
     
     init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
-            outputHash = JSONObject["output_hash"] as? String,
-            outputIndex = JSONObject["output_index"] as? Int,
-            value = JSONObject["value"] as? NSNumber,
-            scriptSignature = JSONObject["script_signature"] as? String,
-            transaction = parentObject as? WalletTransaction
+            transaction = parentObject as? WalletTransaction,
+        	index = JSONObject["input_index"] as? Int
         else {
             return nil
         }
         
-        self.address = (JSONObject["addresses"] as? [String])?.first
-        self.outputIndex = outputIndex
-        self.outputHash = outputHash
-        self.value = value.longLongValue
-        self.scriptSignature = scriptSignature
+        self.index = index
         self.transactionHash = transaction.hash
-    }
-}
 
-extension WalletTransactionCoinbaseInput: JSONInitializableModel {
-    
-    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
-        guard let
-            coinbase = JSONObject["coinbase"] as? String,
-            transaction = parentObject as? WalletTransaction
-        else {
-            return nil
+        if let _ = JSONObject["coinbase"] as? String {
+            self.uid = nil
+            self.address = nil
+            self.outputIndex = nil
+            self.outputHash = nil
+            self.value = nil
+            self.scriptSignature = nil
+            self.coinbase = true
         }
-        
-        self.coinbase = coinbase
-        self.transactionHash = transaction.hash
+        else {
+            guard let
+                outputHash = JSONObject["output_hash"] as? String,
+                outputIndex = JSONObject["output_index"] as? Int,
+                value = JSONObject["value"] as? NSNumber,
+                scriptSignature = JSONObject["script_signature"] as? String
+            else {
+                return nil
+            }
+            
+            self.uid = "\(outputHash)-\(outputIndex)"
+            self.address = (JSONObject["addresses"] as? [String])?.first
+            self.outputIndex = outputIndex
+            self.outputHash = outputHash
+            self.value = value.longLongValue
+            self.scriptSignature = scriptSignature
+            self.coinbase = false
+        }
     }
-    
 }
 
 // MARK: - Equatable
 
-extension WalletTransactionRegularInput: Equatable {}
+extension WalletTransactionInput: Equatable {}
 
-func ==(lhs: WalletTransactionRegularInput, rhs: WalletTransactionRegularInput) -> Bool {
+func ==(lhs: WalletTransactionInput, rhs: WalletTransactionInput) -> Bool {
     return lhs.outputHash == rhs.outputHash && lhs.outputIndex == rhs.outputIndex && lhs.value == rhs.value &&
-        lhs.scriptSignature == rhs.scriptSignature && lhs.address == rhs.address && lhs.transactionHash == rhs.transactionHash
+        lhs.scriptSignature == rhs.scriptSignature && lhs.address == rhs.address && lhs.transactionHash == rhs.transactionHash &&
+        lhs.index == rhs.index && lhs.coinbase == rhs.coinbase && lhs.uid == rhs.uid
 }
 
 // MARK: - Hashable
 
-extension WalletTransactionRegularInput: Hashable {
+extension WalletTransactionInput: Hashable {
     
-    var hashValue: Int { return "\(outputHash) \(outputIndex) \(value) \(scriptSignature) \(address) \(transactionHash)".hashValue }
+    var hashValue: Int { return "\(outputHash) \(outputIndex) \(value) \(scriptSignature) \(address) \(transactionHash) \(index) \(coinbase) \(uid)".hashValue }
+    
+}
+
+// MARK: - SQLiteFetchableModel
+
+extension WalletTransactionInput: SQLiteFetchableModel {
+    
+    init?(resultSet: SQLiteStoreResultSet) {
+        guard let
+            transactionHash = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.transactionHashKey)),
+            index = resultSet.integerForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.indexKey)),
+            coinbase = resultSet.boolForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.coinbaseKey))
+        else {
+            return nil
+        }
+        
+        self.uid = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.uidKey))
+        self.address = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.addressKey))
+        self.outputIndex = resultSet.integerForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.outputIndexKey))
+        self.outputHash = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.outputHashKey))
+        self.value = resultSet.integer64ForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.valueKey))
+        self.scriptSignature = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.scriptSignatureKey))
+        self.transactionHash = transactionHash
+        self.index = index
+        self.coinbase = coinbase
+    }
     
 }

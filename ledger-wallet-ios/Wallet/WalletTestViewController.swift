@@ -12,7 +12,7 @@ import UIKit
 class WalletTestViewController: BaseViewController {
     
     var walletManager: WalletManagerType?
-    private var fetchRequest: WalletFetchRequest<WalletAllVisibleAccountsFetchRequestProvider>?
+    private var fetchRequest: WalletFetchRequest<WalletVisibleAccountsFetchRequestProvider>?
     private var accounts: [WalletAccount] = []
     @IBOutlet private weak var startButton: UIButton!
     @IBOutlet private weak var stopButton: UIButton!
@@ -77,6 +77,15 @@ extension WalletTestViewController: UITableViewDelegate {
         let account = accounts[indexPath.row]
         cell.textLabel?.text = "Account #\(account.index)"
         cell.detailTextLabel?.text = String(account.balance)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let account = accounts[indexPath.row]
+        let vc = WalletOperationsViewController.instantiateFromMainStoryboard()
+        vc.account = account
+        vc.walletManager = walletManager
+        navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
 }

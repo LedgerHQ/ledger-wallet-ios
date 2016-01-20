@@ -14,13 +14,18 @@ final class WalletFetchRequestBuilder {
     
     // MARK: Fetch request management
     
-    func accountsFetchRequestWithIncrementSize(incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<WalletAllVisibleAccountsFetchRequestProvider>?) -> Void) {
-        fetchRequestWithIncrementSize(incrementSize, order: order, completion: completion)
+    func accountsFetchRequestWithIncrementSize(incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<WalletVisibleAccountsFetchRequestProvider>?) -> Void) {
+        let provider = WalletVisibleAccountsFetchRequestProvider(storeProxy: storeProxy)
+        fetchRequestWithProvider(provider, incrementSize: incrementSize, order: order, completion: completion)
     }
     
-    private func fetchRequestWithIncrementSize<T: WalletFetchRequestProviderType>(incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<T>?) -> Void) {
+    func accountOperationsFetchRequestForAccountAtIndex(index: Int?, incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<WalletVisibleAccountOperationsFetchRequestProvider>?) -> Void) {
+        let provider = WalletVisibleAccountOperationsFetchRequestProvider(accountIndex: index, storeProxy: storeProxy)
+        fetchRequestWithProvider(provider, incrementSize: incrementSize, order: order, completion: completion)
+    }
+    
+    private func fetchRequestWithProvider<T: WalletFetchRequestProviderType>(provider: T, incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<T>?) -> Void) {
         // fetch objects count
-        let provider = T.init(storeProxy: storeProxy)
         provider.countNumberOfObjectsFromStoreWithCompletion() { count in
             // if we succeeded to count results
             guard let count = count else {

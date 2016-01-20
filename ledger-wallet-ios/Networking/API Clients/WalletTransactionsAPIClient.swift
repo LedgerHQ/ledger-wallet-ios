@@ -12,7 +12,7 @@ final class WalletTransactionsAPIClient: APIClientType {
     
     let httpClient: HTTPClient
     private let logger = Logger.sharedInstance(name: "WalletTransactionsAPIClient")
-    private let workingQueue = NSOperationQueue(name: dispatchQueueNameForIdentifier("WalletTransactionsAPIClient"), maxConcurrentOperationCount: NSOperationQueueDefaultMaxConcurrentOperationCount)
+    private let workingQueue = NSOperationQueue(name: "WalletTransactionsAPIClient", maxConcurrentOperationCount: NSOperationQueueDefaultMaxConcurrentOperationCount)
     private let servicesProvider: ServicesProviderType
     private let delegateQueue: NSOperationQueue
     

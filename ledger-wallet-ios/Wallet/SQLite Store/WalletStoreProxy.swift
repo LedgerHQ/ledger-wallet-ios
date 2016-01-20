@@ -16,23 +16,23 @@ final class WalletStoreProxy {
     // MARK: Accounts management
     
     func fetchAllAccounts(completionQueue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllAccounts($0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchAllAccounts($0) }, completionQueue: completionQueue, completion: completion)
     }
     
     func fetchAccountAtIndex(index: Int, completionQueue: NSOperationQueue, completion: (WalletAccount?) -> Void) {
-        executeModelFetch({ return WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchAccountAtIndex(index, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
     func fetchAccountsAtIndexes(indexes: [Int], completionQueue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchAccountsAtIndexes(indexes, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
-    func fetchAllVisibleAccountsFrom(from: Int, size: Int, order: WalletFetchRequestOrder, completionQueue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAllVisibleAccountsFrom(from, size: size, order: order, context: $0) }, completionQueue: completionQueue, completion: completion)
+    func fetchVisibleAccountsFrom(from: Int, size: Int, order: WalletFetchRequestOrder, completionQueue: NSOperationQueue, completion: ([WalletAccount]?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.fetchVisibleAccountsFrom(from, size: size, order: order, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
-    func countAllVisibleAccounts(completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
-        executeModelCollectionCount({ return WalletStoreExecutor.countAllVisibleAccounts($0) }, completionQueue: completionQueue, completion: completion)
+    func countVisibleAccounts(completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.countVisibleAccounts($0) }, completionQueue: completionQueue, completion: completion)
     }
 
     func addAccount(account: WalletAccount, completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
@@ -50,11 +50,11 @@ final class WalletStoreProxy {
     // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], completionQueue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchAddressesAtPaths(paths, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
     func fetchAddressesWithAddresses(addresses: [String], completionQueue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchAddressesWithAddresses(addresses, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
     func addAddresses(addresses: [WalletAddress], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
@@ -68,11 +68,11 @@ final class WalletStoreProxy {
     }
     
     func fetchTransactionsConflictingWithTransaction(transaction: WalletTransactionContainer, completionQueue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchTransactionsDoubleSpendingWithTransaction(transaction, context: $0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchTransactionsDoubleSpendingWithTransaction(transaction, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
     func fetchTransactionsToResolveFromConflictsOfTransaction(transaction: WalletTransaction, completionQueue: NSOperationQueue, completion: ([WalletTransaction]?) -> Void) {
-        executeModelCollectionFetch({ return WalletStoreExecutor.fetchTransactionsToResolveFromConflictsOfTransaction(transaction, context: $0) }, completionQueue: completionQueue, completion: completion)
+        executeBlock({ return WalletStoreExecutor.fetchTransactionsToResolveFromConflictsOfTransaction(transaction, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
 
     func removeTransactions(transactions: [WalletTransaction], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
@@ -83,6 +83,16 @@ final class WalletStoreProxy {
     
     func storeOperations(operations: [WalletOperation], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
         executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+
+    // MARK: Account operation management
+    
+    func fetchVisibleAccountOperationsForAccountAtIndex(index: Int?, from: Int, size: Int, order: WalletFetchRequestOrder, completionQueue: NSOperationQueue, completion: ([WalletAccountOperationContainer]?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.fetchVisibleAccountOperationsForAccountAtIndex(index, from: from, size: size, order: order, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+    
+    func countVisibleAccountOperationsForAccountAtIndex(index: Int?, completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.countVisibleAccountOperationsForAccountAtIndex(index, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
     // MARK: Balances management
@@ -99,27 +109,11 @@ final class WalletStoreProxy {
     
     // MARK: Internal methods
     
-    private func executeModelFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> T?, completionQueue: NSOperationQueue, completion: (T?) -> Void) {
+    private func executeBlock<T>(block: (SQLiteStoreContext) -> T, completionQueue: NSOperationQueue, completion: (T) -> Void) {
         store.performBlock() { [weak self] context in
             guard let _ = self else { return }
             let result = block(context)
             completionQueue.addOperationWithBlock() { completion(result) }
-        }
-    }
-    
-    private func executeModelCollectionFetch<T: SQLiteFetchableModel>(block: (SQLiteStoreContext) -> [T]?, completionQueue: NSOperationQueue, completion: ([T]?) -> Void) {
-        store.performBlock() { [weak self] context in
-            guard let _ = self else { return }
-            let results = block(context)
-            completionQueue.addOperationWithBlock() { completion(results) }
-        }
-    }
-    
-    private func executeModelCollectionCount(block: (SQLiteStoreContext) -> Int?, completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
-        store.performBlock() { [weak self] context in
-            guard let _ = self else { return }
-            let count = block(context)
-            completionQueue.addOperationWithBlock() { completion(count) }
         }
     }
     

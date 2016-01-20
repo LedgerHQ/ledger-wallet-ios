@@ -32,25 +32,31 @@ final class WalletStoreExecutor {
         return fetchAccounts(whereStatement: whereStatement, context: context)
     }
     
-    class func fetchAllVisibleAccountsFrom(from: Int, size: Int, order: WalletFetchRequestOrder, context: SQLiteStoreContext) -> [WalletAccount]? {
-        let whereStatement = "(\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.nextInternalIndexKey)) > 0 OR \(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.nextExternalIndexKey)) > 0) AND \(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.hiddenKey)) = 0"
+    class func fetchVisibleAccountsFrom(from: Int, size: Int, order: WalletFetchRequestOrder, context: SQLiteStoreContext) -> [WalletAccount]? {
+        let whereStatement = visibleAccountsWhereStatement()
         let orderStatement = "\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.indexKey)) " + order.representativeStatement
-        return fetchAccounts(whereStatement: whereStatement, orderStatement: orderStatement, context: context)
+        let limitStatement = "\(from), \(size)"
+        return fetchAccounts(whereStatement: whereStatement, orderStatement: orderStatement, limitStatement: limitStatement, context: context)
     }
     
-    class func countAllVisibleAccounts(context: SQLiteStoreContext) -> Int? {
-        let whereStatement =
-            "(\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.nextInternalIndexKey)) > 0 OR " +
-            "\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.nextExternalIndexKey)) > 0) AND " +
-            "\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.hiddenKey)) = 0"
+    class func countVisibleAccounts(context: SQLiteStoreContext) -> Int? {
+        let whereStatement = visibleAccountsWhereStatement()
         return countAccounts(whereStatement: whereStatement, context: context)
     }
     
-    private class func fetchAccounts(whereStatement whereStatement: String? = nil, orderStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [WalletAccount]? {
+    class func visibleAccountsWhereStatement() -> String {
+        return
+            "(\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.nextInternalIndexKey)) > 0 OR " +
+            "\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.nextExternalIndexKey)) > 0) AND " +
+            "\(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.hiddenKey)) = 0"
+    }
+    
+    private class func fetchAccounts(whereStatement whereStatement: String? = nil, orderStatement: String? = nil, limitStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [WalletAccount]? {
         let fieldsStatement = WalletAccountEntity.allRenamedFieldKeypathsStatement
         var statement = "SELECT \(fieldsStatement) FROM \(WalletAccountEntity.tableNameStatement)"
         if let whereStatement = whereStatement { statement += " WHERE \(whereStatement)" }
         if let orderStatement = orderStatement { statement += " ORDER BY \(orderStatement)" }
+        if let limitStatement = limitStatement { statement += " LIMIT \(limitStatement)" }
         return fetchModelCollection(statement, values: values, context: context)
     }
     
@@ -301,76 +307,7 @@ final class WalletStoreExecutor {
         }
         return true
     }
-    
-    private class func addTransactionInputs(inputs: [WalletTransactionInputType], context: SQLiteStoreContext) -> Bool {
-        guard inputs.count > 0 else { return true }
-        
-        for input in inputs {
-            let insertFieldsStatement = WalletTransactionInputEntity.allFieldKeysStatement
-            let insertValuesStatement = WalletTransactionInputEntity.allFieldValuesStatement
-            let insertValues: [AnyObject]
-            if let input = input as? WalletTransactionRegularInput {
-                insertValues = [
-                    input.outputHash,
-                    input.outputIndex,
-                    NSNumber(longLong: input.value),
-                    input.scriptSignature,
-                    input.address ?? NSNull(),
-                    false,
-                    input.transactionHash
-                ]
-            }
-            else if let input = input as? WalletTransactionCoinbaseInput {
-                insertValues = [
-                    NSNull(),
-                    NSNull(),
-                    NSNull(),
-                    NSNull(),
-                    NSNull(),
-                    true,
-                    input.transactionHash
-                ]
-            }
-            else {
-                insertValues = []
-            }
-            
-            guard insertValues.count > 0 else {
-                logger.error("Unable to insert transaction input because input type is unknown")
-                return false
-            }
-            
-            let insertStatement = "INSERT INTO \(WalletTransactionInputEntity.tableNameStatement) (\(insertFieldsStatement)) VALUES (\(insertValuesStatement))"
-            guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
-                logger.error("Unable to insert input for transaction \(insertValues.last!): \(context.lastErrorMessage())")
-                return false
-            }
-        }
-        return true
-    }
-    
-    private class func addTransactionOutputs(outputs: [WalletTransactionOutput], context: SQLiteStoreContext) -> Bool {
-        guard outputs.count > 0 else { return true }
 
-        for output in outputs {
-            let insertFieldsStatement = WalletTransactionOutputEntity.allFieldKeysStatement
-            let insertValuesStatement = WalletTransactionOutputEntity.allFieldValuesStatement
-            let insertValues = [
-                output.scriptHex,
-                NSNumber(longLong: output.value),
-                output.address ?? NSNull(),
-                output.index,
-                output.transactionHash
-            ]
-            let insertStatement = "INSERT INTO \(WalletTransactionOutputEntity.tableNameStatement) (\(insertFieldsStatement)) VALUES (\(insertValuesStatement))"
-            guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
-                logger.error("Unable to insert output for transaction \(output.transactionHash): \(context.lastErrorMessage())")
-                return false
-            }
-        }
-        return true
-    }
-    
     class func fetchTransactionsDoubleSpendingWithTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> [WalletTransaction]? {
         guard transaction.regularInputs.count > 0 else { return [] }
         
@@ -378,9 +315,7 @@ final class WalletStoreExecutor {
         let innerJoinStatement = "INNER JOIN \(WalletTransactionEntity.tableNameStatement)"
         let onStatement = "ON \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.transactionHashKey)) = \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey))"
         let whereStatement =
-            "WHERE \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.outputHashKey)) || " +
-            "'-' || " +
-            "\(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.outputIndexKey)) IN (\(inStatement)) " +
+            "WHERE \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.uidKey)) IN (\(inStatement)) " +
             "AND \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey)) IS NOT ?"
         let fieldsStatement = WalletTransactionEntity.allRenamedFieldKeypathsStatement
         let statement = "SELECT DISTINCT \(fieldsStatement) FROM \(WalletTransactionInputEntity.tableNameStatement) \(innerJoinStatement) \(onStatement) \(whereStatement)"
@@ -405,6 +340,89 @@ final class WalletStoreExecutor {
             return false
         }
         return true
+    }
+    
+    // MARK: Transaction inputs management
+    
+    private class func addTransactionInputs(inputs: [WalletTransactionInput], context: SQLiteStoreContext) -> Bool {
+        guard inputs.count > 0 else { return true }
+        
+        for input in inputs {
+            let insertFieldsStatement = WalletTransactionInputEntity.allFieldKeysStatement
+            let insertValuesStatement = WalletTransactionInputEntity.allFieldValuesStatement
+            let insertValues = [
+                input.uid ?? NSNull(),
+                input.outputHash ?? NSNull(),
+                input.outputIndex ?? NSNull(),
+                NSNumber(longLong: input.value ?? 0),
+                input.scriptSignature ?? NSNull(),
+                input.address ?? NSNull(),
+                input.coinbase,
+                input.index,
+                input.transactionHash
+            ]
+            
+            let insertStatement = "INSERT INTO \(WalletTransactionInputEntity.tableNameStatement) (\(insertFieldsStatement)) VALUES (\(insertValuesStatement))"
+            guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
+                logger.error("Unable to insert input for transaction \(insertValues.last!): \(context.lastErrorMessage())")
+                return false
+            }
+        }
+        return true
+    }
+    
+    class func fetchTransactionInputsForTransactionHash(hash: String, context: SQLiteStoreContext) -> [WalletTransactionInput]? {
+        let whereStatement = "\(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.transactionHashKey)) = ?"
+        let orderStatement = "\(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.indexKey)) ASC"
+        let values = [hash]
+        return fetchTransactionInputs(whereStatement, orderStatement: orderStatement, values: values, context: context)
+    }
+    
+    private class func fetchTransactionInputs(whereStatement: String? = nil, orderStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [WalletTransactionInput]? {
+        let fieldsStatement = WalletTransactionInputEntity.allRenamedFieldKeypathsStatement
+        var statement = "SELECT \(fieldsStatement) FROM \(WalletTransactionInputEntity.tableNameStatement)"
+        if let whereStatement = whereStatement { statement += " WHERE \(whereStatement)" }
+        if let orderStatement = orderStatement { statement += " ORDER BY \(orderStatement)" }
+        return fetchModelCollection(statement, values: values, context: context)
+    }
+    
+    // MARK: Transaction outputs management
+    
+    private class func addTransactionOutputs(outputs: [WalletTransactionOutput], context: SQLiteStoreContext) -> Bool {
+        guard outputs.count > 0 else { return true }
+        
+        for output in outputs {
+            let insertFieldsStatement = WalletTransactionOutputEntity.allFieldKeysStatement
+            let insertValuesStatement = WalletTransactionOutputEntity.allFieldValuesStatement
+            let insertValues = [
+                output.scriptHex,
+                NSNumber(longLong: output.value),
+                output.address ?? NSNull(),
+                output.index,
+                output.transactionHash
+            ]
+            let insertStatement = "INSERT INTO \(WalletTransactionOutputEntity.tableNameStatement) (\(insertFieldsStatement)) VALUES (\(insertValuesStatement))"
+            guard context.executeUpdate(insertStatement, withArgumentsInArray: insertValues) else {
+                logger.error("Unable to insert output for transaction \(output.transactionHash): \(context.lastErrorMessage())")
+                return false
+            }
+        }
+        return true
+    }
+
+    class func fetchTransactionOutputsForTransactionHash(hash: String, context: SQLiteStoreContext) -> [WalletTransactionOutput]? {
+        let whereStatement = "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.transactionHashKey)) = ?"
+        let orderStatement = "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.indexKey)) ASC"
+        let values = [hash]
+        return fetchTransactionOutputs(whereStatement, orderStatement: orderStatement, values: values, context: context)
+    }
+    
+    private class func fetchTransactionOutputs(whereStatement: String? = nil, orderStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [WalletTransactionOutput]? {
+        let fieldsStatement = WalletTransactionOutputEntity.allRenamedFieldKeypathsStatement
+        var statement = "SELECT \(fieldsStatement) FROM \(WalletTransactionOutputEntity.tableNameStatement)"
+        if let whereStatement = whereStatement { statement += " WHERE \(whereStatement)" }
+        if let orderStatement = orderStatement { statement += " ORDER BY \(orderStatement)" }
+        return fetchModelCollection(statement, values: values, context: context)
     }
     
     // MARK: Operations management
@@ -443,7 +461,72 @@ final class WalletStoreExecutor {
         }
         return true
     }
-
+    
+    // MARK: Account operations management
+    
+    class func fetchVisibleAccountOperationsForAccountAtIndex(index: Int?, from: Int, size: Int, order: WalletFetchRequestOrder, context: SQLiteStoreContext) -> [WalletAccountOperationContainer]? {
+        guard let containers = fetchVisibleAccountOperationPartialContainers(index, from: from, size: size, order: order, context: context) else { return nil }
+    
+        var objects: [WalletAccountOperationContainer] = []
+        for container in containers {
+            guard let
+                inputs = fetchTransactionInputsForTransactionHash(container.transaction.hash, context: context),
+                outputs = fetchTransactionOutputsForTransactionHash(container.transaction.hash, context: context)
+            else {
+                logger.error("Unable for fetch inputs and outputs of transaction \(container.transaction.hash) to create account operations: \(context.lastErrorMessage())")
+                return nil
+            }
+            
+            let transactionContainer = WalletTransactionContainer(transaction: container.transaction, inputs: inputs, outputs: outputs, block: container.block)
+            let operationContainer = WalletOperationContainer(operation: container.operation, transactionContainer: transactionContainer)
+            let accountOperationContainer = WalletAccountOperationContainer(account: container.account, operationContainer: operationContainer)
+            objects.append(accountOperationContainer)
+        }
+        return objects
+    }
+    
+    class func countVisibleAccountOperationsForAccountAtIndex(index: Int?, context: SQLiteStoreContext) -> Int? {
+        let whereStatement = visibleAccountOperationsWhereStatementForAccountAtIndex(index)
+        return countVisibleAccountOperationPartialContainers(whereStatement, values: index != nil ? [index!] : [], context: context)
+    }
+    
+    private class func fetchVisibleAccountOperationPartialContainers(accountIndex: Int?, from: Int, size: Int, order: WalletFetchRequestOrder, context: SQLiteStoreContext) -> [WalletAccountOperationPartialContainer]? {
+        let fieldsStatement =
+        WalletAccountEntity.allRenamedFieldKeypathsStatement + ", " +
+            WalletOperationEntity.allRenamedFieldKeypathsStatement + ", " +
+            WalletTransactionEntity.allRenamedFieldKeypathsStatement + ", " +
+            WalletBlockEntity.allRenamedFieldKeypathsStatement
+        
+        let innerJoinTransactionsStatement =
+            "INNER JOIN \(WalletTransactionEntity.tableNameStatement) " +
+            "ON \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey)) = \(WalletOperationEntity.fieldKeypathWithKeyStatement(WalletOperationEntity.transactionHashKey))"
+        let innerJoinBlockStatement =
+            "LEFT JOIN \(WalletBlockEntity.tableNameStatement)" +
+            "ON \(WalletBlockEntity.fieldKeypathWithKeyStatement(WalletBlockEntity.hashKey)) = \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.blockHashKey))"
+        let innerJoinAccountStatement =
+            "INNER JOIN \(WalletAccountEntity.tableNameStatement)" +
+            "ON \(WalletAccountEntity.fieldKeypathWithKeyStatement(WalletAccountEntity.indexKey)) = \(WalletOperationEntity.fieldKeypathWithKeyStatement(WalletOperationEntity.accountIndexKey))"
+        let whereStatement = "WHERE " + visibleAccountOperationsWhereStatementForAccountAtIndex(accountIndex)
+        let orderByStatement = "ORDER BY \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.receptionDateKey)) " + order.representativeStatement
+        let limitStatement = "LIMIT \(from), \(size)"
+        let values = accountIndex != nil ? [accountIndex!] : []
+        let statement =
+            "SELECT \(fieldsStatement) FROM \(WalletOperationEntity.tableNameStatement) " +
+            "\(innerJoinTransactionsStatement) \(innerJoinBlockStatement) \(innerJoinAccountStatement) " +
+            "\(whereStatement) \(orderByStatement) \(limitStatement)"
+        return fetchModelCollection(statement, values: values, context: context)
+    }
+    
+    private class func countVisibleAccountOperationPartialContainers(whereStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> Int? {
+        var statement = "SELECT COUNT(*) FROM \(WalletOperationEntity.tableNameStatement)"
+        if let whereStatement = whereStatement { statement += " WHERE \(whereStatement)" }
+        return countModelCollection(statement, values: values, context: context)
+    }
+    
+    private class func visibleAccountOperationsWhereStatementForAccountAtIndex(accountIndex: Int?) -> String {
+        return accountIndex != nil ? "\(WalletOperationEntity.fieldKeypathWithKeyStatement(WalletOperationEntity.accountIndexKey)) = ?" : ""
+    }
+    
     // MARK: Double spend conflicts management
     
     class func addDoubleSpendConflicts(conflicts: [WalletDoubleSpendConflict], context: SQLiteStoreContext) -> Bool {

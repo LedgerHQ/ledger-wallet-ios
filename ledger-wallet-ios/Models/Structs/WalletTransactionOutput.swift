@@ -56,3 +56,26 @@ extension WalletTransactionOutput: Hashable {
     var hashValue: Int { return "\(index) \(scriptHex) \(value) \(transactionHash) \(address)".hashValue }
     
 }
+
+// MARK: - SQLiteFetchableModel
+
+extension WalletTransactionOutput: SQLiteFetchableModel {
+    
+    init?(resultSet: SQLiteStoreResultSet) {
+        guard let
+            value = resultSet.integer64ForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.valueKey)),
+            scriptHex = resultSet.stringForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.scriptHexKey)),
+            index = resultSet.integerForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.indexKey)),
+            transactionHash = resultSet.stringForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.transactionHashKey))
+        else {
+            return nil
+        }
+
+        self.value = value
+        self.scriptHex = scriptHex
+        self.index = index
+        self.transactionHash = transactionHash
+        self.address = resultSet.stringForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.addressKey))
+    }
+    
+}
