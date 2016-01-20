@@ -89,6 +89,9 @@ final class WalletAPIManager: WalletManagerType {
         self.transactionsConsumer.delegate = self
         self.transactionsListener.delegate = self
         self.transactionsStream.delegate = self
+        
+        // start listening
+        transactionsListener.startListening()
     }
     
     deinit {

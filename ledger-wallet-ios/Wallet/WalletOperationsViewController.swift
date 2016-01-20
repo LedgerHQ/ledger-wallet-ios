@@ -18,17 +18,17 @@ class WalletOperationsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        walletManager?.fetchRequestBuilder.accountOperationsFetchRequestForAccountAtIndex(account!.index, incrementSize: 20, order: .Descending) { [weak self] fetchRequest in
+            self?.fetchRequest = fetchRequest
+            self?.updateModel()
+        }
         
-        updateModel()
     }
     
     private func updateModel(wantsNew: Bool = false) {
-        walletManager?.fetchRequestBuilder.accountOperationsFetchRequestForAccountAtIndex(account!.index, incrementSize: 20, order: .Descending) { fetchRequest in
-            self.fetchRequest = fetchRequest
-            self.fetchRequest?.objectsInRange(0 ..< (wantsNew ? self.operations.count + 20 : 20)) { objects in
-                self.operations.appendContentsOf(objects!)
-                self.tableView.reloadData()
-            }
+        self.fetchRequest?.objectsInRange((wantsNew ? self.operations.count : 0) ..< (wantsNew ? self.operations.count + 20 : 20)) { [weak self] objects in
+            self?.operations.appendContentsOf(objects!)
+            self?.tableView.reloadData()
         }
     }
     
@@ -51,8 +51,8 @@ extension WalletOperationsViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let operation = operations[indexPath.row]
-        cell.textLabel?.text = operation.operationContainer.operation.kind.rawValue + " " + operation.operationContainer.transactionContainer.transaction.receiveAt
-        cell.detailTextLabel?.text = String(operation.operationContainer.operation.amount)
+        cell.textLabel?.text = operation.operationContainer.transactionContainer.transaction.receiveAt
+        cell.detailTextLabel?.text = operation.operationContainer.operation.kind.rawValue + " " + String(operation.operationContainer.operation.amount)
         
         if indexPath.row == operations.count - 1 && operations.count < fetchRequest!.numberOfObjects {
             updateModel(true)

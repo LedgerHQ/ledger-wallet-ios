@@ -60,7 +60,7 @@ class WalletFetchRequest<T: WalletFetchRequestProviderType> {
             completion(nil)
             return
         }
-        guard (range.endIndex >= range.startIndex) && (range.endIndex <= numberOfObjects) else {
+        guard (range.endIndex >= range.startIndex) && (range.startIndex <= numberOfObjects) else {
             logger.error("Unable to fetch object(s) in range \(range): only \(numberOfObjects) object(s) to return")
             completion(nil)
             return
@@ -74,7 +74,7 @@ class WalletFetchRequest<T: WalletFetchRequestProviderType> {
         // get missing bucket indexes
         let missingBucketIndexes = missingBucketIndexesForBucketIndexes(requiredIndexes)
         guard missingBucketIndexes.count > 0 else {
-            let objects = bucketObjectsInRange(range, bucketIndexes: requiredIndexes)
+            let objects = bucketObjectsInRange(range)
             completion(objects)
             return
         }
@@ -89,29 +89,25 @@ class WalletFetchRequest<T: WalletFetchRequestProviderType> {
                 return
             }
             
-            let objects = strongSelf.bucketObjectsInRange(range, bucketIndexes: requiredIndexes)
+            let objects = strongSelf.bucketObjectsInRange(range)
             completion(objects)
         }
     }
     
     // MARK: Utils
     
-    private func bucketObjectsInRange(range: Range<Int>, bucketIndexes: Range<Int>) -> [T.ModelType]? {
+    private func bucketObjectsInRange(range: Range<Int>) -> [T.ModelType]? {
         var objects: [T.ModelType] = []
         
-        // add all first indexes
-        let firstIndexes = Set(bucketIndexes.dropLast())
-        for index in firstIndexes where buckets[index] != nil {
-            objects.appendContentsOf(buckets[index]!)
+        for index in range {
+            if let bucket = buckets[normalizeIndexToIncrementSize(index)] {
+                let pos = index % incrementSize
+                if pos < bucket.count {
+                    objects.append(bucket[pos])
+                }
+            }
         }
-        
-        // add objects of last bucket
-        guard let lastIndex = bucketIndexes.last, lastObjects = buckets[lastIndex] else {
-            return objects
-        }
-        let remainingRange = range.suffixFrom(firstIndexes.count * incrementSize)
-        let remainingObjects = lastObjects.prefix(remainingRange.count)
-        return objects + remainingObjects
+        return objects
     }
     
     private func bucketIndexesForObjectsInRange(range: Range<Int>) -> Range<Int>? {
