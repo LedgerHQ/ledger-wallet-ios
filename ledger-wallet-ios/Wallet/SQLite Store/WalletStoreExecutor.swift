@@ -220,7 +220,28 @@ final class WalletStoreExecutor {
     
     // MARK: Blocks management
     
-    class func addBlocks(blocks: [WalletBlock], context: SQLiteStoreContext) -> Bool {
+    class func storeBlocks(blocks: [WalletBlockContainer], context: SQLiteStoreContext) -> Bool {
+        guard blocks.count > 0 else { return true }
+        return blocks.reduce(true) { $0 && storeBlock($1, context: context) }
+    }
+    
+    private class func storeBlock(block: WalletBlockContainer, context: SQLiteStoreContext) -> Bool {
+        guard addBlock(block.block, context: context) else { return false }
+        guard block.transactionHashes.count > 0 else { return true }
+
+        let setStatement = "SET \(WalletTransactionEntity.fieldKeyStatement(WalletTransactionEntity.blockHashKey)) = ?"
+        let whereStatement = "WHERE \(WalletTransactionEntity.fieldKeyStatement(WalletTransactionEntity.hashKey))"
+        let inStatement = "IN (\(block.transactionHashes.map({ "\"\($0)\"" }).joinWithSeparator(", ")))"
+        let statement = "UPDATE \(WalletTransactionEntity.tableNameStatement) \(setStatement) \(whereStatement) \(inStatement)"
+        
+        guard context.executeUpdate(statement, withArgumentsInArray: [block.block.hash]) else {
+            logger.error("Unable to store block \(block.block.hash): \(context.lastErrorMessage())")
+            return false
+        }
+        return true
+    }
+    
+    private class func addBlocks(blocks: [WalletBlock], context: SQLiteStoreContext) -> Bool {
         guard blocks.count > 0 else { return true }
         return blocks.reduce(true) { $0 && addBlock($1, context: context) }
     }
@@ -329,6 +350,21 @@ final class WalletStoreExecutor {
         let fieldsStatement = WalletTransactionEntity.allRenamedFieldKeypathsStatement
         let statement = "SELECT \(fieldsStatement) FROM \(WalletDoubleSpendConflictEntity.tableNameStatement) \(innerJoinStatement) \(onStatement) \(whereStatement)"
         return fetchModelCollection(statement, values: [transaction.hash], context: context)
+    }
+    
+    private class func fetchTransactionsWithHashes(hashes: [String], context: SQLiteStoreContext) -> [WalletTransaction]? {
+        let fieldsStatement = WalletTransactionEntity.allRenamedFieldKeypathsStatement
+        let whereStatement = "WHERE \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey))"
+        let inStatement = "IN (\(hashes.map({ "\"\($0)\"" }).joinWithSeparator(", ")))"
+        let statement = "SELECT \(fieldsStatement) FROM \(WalletTransactionEntity.tableNameStatement) \(whereStatement) \(inStatement)"
+        return fetchModelCollection(statement, context: context)
+    }
+    
+    class func countTransactionsWithHashes(hashes: [String], context: SQLiteStoreContext) -> Int? {
+        let whereStatement = "WHERE \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey))"
+        let inStatement = "IN (\(hashes.map({ "\"\($0)\"" }).joinWithSeparator(", ")))"
+        let statement = "SELECT COUNT(*) FROM \(WalletTransactionEntity.tableNameStatement) \(whereStatement) \(inStatement)"
+        return countModelCollection(statement, context: context)
     }
     
     class func removeTransactions(transactions: [WalletTransaction], context: SQLiteStoreContext) -> Bool {

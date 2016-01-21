@@ -75,6 +75,10 @@ final class WalletStoreProxy {
         executeBlock({ return WalletStoreExecutor.fetchTransactionsToResolveFromConflictsOfTransaction(transaction, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
 
+    func countTransactionsWithHashes(hashes: [String], completionQueue: NSOperationQueue, completion: (Int?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.countTransactionsWithHashes(hashes, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+    
     func removeTransactions(transactions: [WalletTransaction], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
         executeTransaction({ return WalletStoreExecutor.removeTransactions(transactions, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
@@ -84,7 +88,13 @@ final class WalletStoreProxy {
     func storeOperations(operations: [WalletOperation], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
         executeTransaction({ return WalletStoreExecutor.storeOperations(operations, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
+    
+    // MARK: Blocks management
 
+    func storeBlocks(blocks: [WalletBlockContainer], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {
+        executeTransaction({ return WalletStoreExecutor.storeBlocks(blocks, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+    
     // MARK: Account operation management
     
     func fetchVisibleAccountOperationsForAccountAtIndex(index: Int?, from: Int, size: Int, order: WalletFetchRequestOrder, completionQueue: NSOperationQueue, completion: ([WalletAccountOperationContainer]?) -> Void) {
