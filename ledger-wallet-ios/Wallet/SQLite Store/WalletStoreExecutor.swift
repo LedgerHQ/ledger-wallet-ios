@@ -332,7 +332,7 @@ final class WalletStoreExecutor {
     class func fetchTransactionsDoubleSpendingWithTransaction(transaction: WalletTransactionContainer, context: SQLiteStoreContext) -> [WalletTransaction]? {
         guard transaction.regularInputs.count > 0 else { return [] }
         
-        let inStatement = transaction.regularInputs.map({ "\"\($0.uid)\"" }).joinWithSeparator(", ")
+        let inStatement = transaction.regularInputs.filter({ $0.uid != nil }).map({ "\"\($0.uid!)\"" }).joinWithSeparator(", ")
         let innerJoinStatement = "INNER JOIN \(WalletTransactionEntity.tableNameStatement)"
         let onStatement = "ON \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.transactionHashKey)) = \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey))"
         let whereStatement =
