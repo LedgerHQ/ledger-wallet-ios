@@ -13,3 +13,6 @@
 [submodule "ledger-wallet-ios/Vendor/FMDB"]
 	path = ledger-wallet-ios/Vendor/FMDB
 	url = git@github.com:ccgus/fmdb.git
+[submodule "ledger-wallet-ios/Vendor/DispatchTimer"]
+	path = ledger-wallet-ios/Vendor/DispatchTimer
+	url = git@github.com:ambientlight/DispatchTimer.git

@@ -4,19 +4,21 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : 0,
     "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : 0,
-    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : 0,
+    "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : 0,
     "A5967575A82190AAAA29664569CD239121414FCA" : 0,
+    "0A24D25194D49237654CA0FD781691DC3A07A890" : 0,
+    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : 0,
     "04101981B66E318109934C9516F88D824BB96459" : 0,
     "0E0A98171E336D1655B102FE87F6C416C1D752A9" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "79430CA3-7EDC-469C-AC2D-CDD1753DCF3A",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : "ledger-wallet-ios",
     "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/Starscream",
-    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/CryptoSwift\/",
+    "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : "ledger-wallet-ios",
     "A5967575A82190AAAA29664569CD239121414FCA" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/FontAwesome",
+    "0A24D25194D49237654CA0FD781691DC3A07A890" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/DispatchTimer\/",
+    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/CryptoSwift\/",
     "04101981B66E318109934C9516F88D824BB96459" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/FMDB\/",
     "0E0A98171E336D1655B102FE87F6C416C1D752A9" : "ledger-wallet-iosledger-wallet-ios\/Vendor\/CoreBitcoin"
   },
@@ -28,6 +30,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ccgus\/fmdb.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "04101981B66E318109934C9516F88D824BB96459"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ambientlight\/DispatchTimer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0A24D25194D49237654CA0FD781691DC3A07A890"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:oleganza\/CoreBitcoin.git",

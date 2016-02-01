@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 private enum LedgerAPIHeaderFields: String {
     
@@ -48,7 +49,7 @@ final class LedgerServicesProvider: ServicesProviderType {
         return NSURL(string: path, relativeToURL: APIBaseURL)!
     }
     
-    // Attestation keys
+    // MARK: Attestation keys
     
     let attestationKeys = [
         AttestationKey(batchID: 0x00, derivationID: 0x01, publicKey: "04e69fd3c044865200e66f124b5ea237c918503931bee070edfcab79a00a25d6b5a09afbee902b4b763ecf1f9c25f82d6b0cf72bce3faf98523a1066948f1a395f"),     // beta
@@ -56,7 +57,7 @@ final class LedgerServicesProvider: ServicesProviderType {
         AttestationKey(batchID: 0x02, derivationID: 0x01, publicKey: "04c370d4013107a98dfef01d6db5bb3419deb9299535f0be47f05939a78b314a3c29b51fcaa9b3d46fa382c995456af50cd57fb017c0ce05e4a31864a79b8fbfd6")      // production (post 1.4.11)
     ]
     
-    // HTTP headers
+    // MARK: HTTP headers
     
     var httpHeaders: [String: String] {
         var headers: [String: String] = [
@@ -70,6 +71,25 @@ final class LedgerServicesProvider: ServicesProviderType {
         #endif
         return headers
     }
+    
+    // MARK: Device descriptors
+
+    var remoteDeviceDescriptors: [RemoteDeviceDescriptorType] {
+        var devices: [RemoteDeviceDescriptorType] = []
+        
+        // Ledger Blue
+        do {
+            let deviceService = CBMutableService(type: CBUUID(string: "D973F2E0-B19E-11E2-9E96-0800200C9A66"), primary: true)
+            let readCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "D973F2E1-B19E-11E2-9E96-0800200C9A66"), properties: [.Read, .Notify], value: nil, permissions: .Readable)
+            let writeCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "D973F2E2-B19E-11E2-9E96-0800200C9A66"), properties: [.Write], value: nil, permissions: .Writeable)
+            deviceService.characteristics = [readCharacteristic, writeCharacteristic]
+            let deviceDescriptor = RemoteBluetoothDeviceDescriptor(name: "Ledger", services: [deviceService])
+            devices.append(deviceDescriptor)
+        }
+        return devices
+    }
+
+    // MARK: Initialization
     
     init(coinNetwork: CoinNetworkType) {
         self.coinNetwork = coinNetwork

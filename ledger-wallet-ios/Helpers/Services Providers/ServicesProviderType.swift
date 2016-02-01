@@ -30,6 +30,18 @@ protocol ServicesProviderType {
     // HTTP headers
     var httpHeaders: [String: String] { get }
     
+    // Device descriptors
+    var remoteDeviceDescriptors: [RemoteDeviceDescriptorType] { get }
+    var remoteBluetoothDeviceDescriptors: [RemoteBluetoothDeviceDescriptor] { get }
+    
     init(coinNetwork: CoinNetworkType)
+    
+}
+
+extension ServicesProviderType {
+    
+    var remoteBluetoothDeviceDescriptors: [RemoteBluetoothDeviceDescriptor] {
+        return remoteDeviceDescriptors.flatMap({ $0 as? RemoteBluetoothDeviceDescriptor })
+    }
     
 }

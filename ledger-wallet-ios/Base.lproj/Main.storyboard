@@ -161,6 +161,59 @@
             </objects>
             <point key="canvasLocation" x="275" y="322"/>
         </scene>
+        <!--Remote Devices List View Controller-->
+        <scene sceneID="qQU-bf-Uix">
+            <objects>
+                <viewController storyboardIdentifier="RemoteDevicesListViewController" id="n43-Yd-Gd8" customClass="RemoteDevicesListViewController" customModule="ledger_wallet_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IV0-f1-e9o"/>
+                        <viewControllerLayoutGuide type="bottom" id="BoX-ZO-58j"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UoG-h7-c0w">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EML-Pc-G3g">
+                                <rect key="frame" x="20" y="20" width="100" height="30"/>
+                                <state key="normal" title="Start scanning"/>
+                                <connections>
+                                    <action selector="startScanning" destination="n43-Yd-Gd8" eventType="touchUpInside" id="CnA-ts-P6R"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="apg-jj-rBR">
+                                <rect key="frame" x="0.0" y="58" width="600" height="542"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9a-qm-0t6">
+                                <rect key="frame" x="482" y="20" width="98" height="30"/>
+                                <state key="normal" title="Stop scanning"/>
+                                <connections>
+                                    <action selector="stopScanning" destination="n43-Yd-Gd8" eventType="touchUpInside" id="vOn-PL-7LH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="apg-jj-rBR" firstAttribute="top" secondItem="EML-Pc-G3g" secondAttribute="bottom" constant="8" symbolic="YES" id="353-cS-WWI"/>
+                            <constraint firstItem="EML-Pc-G3g" firstAttribute="leading" secondItem="UoG-h7-c0w" secondAttribute="leadingMargin" id="87E-ot-feD"/>
+                            <constraint firstItem="EML-Pc-G3g" firstAttribute="top" secondItem="IV0-f1-e9o" secondAttribute="bottom" id="AcI-j1-x1b"/>
+                            <constraint firstItem="apg-jj-rBR" firstAttribute="bottom" secondItem="BoX-ZO-58j" secondAttribute="top" id="Fvu-Js-Ewn"/>
+                            <constraint firstItem="I9a-qm-0t6" firstAttribute="trailing" secondItem="UoG-h7-c0w" secondAttribute="trailingMargin" id="GF3-8f-pxy"/>
+                            <constraint firstItem="apg-jj-rBR" firstAttribute="leading" secondItem="UoG-h7-c0w" secondAttribute="leading" id="fAb-Bb-Mie"/>
+                            <constraint firstItem="EML-Pc-G3g" firstAttribute="baseline" secondItem="I9a-qm-0t6" secondAttribute="baseline" id="nmD-9k-9zX"/>
+                            <constraint firstAttribute="trailing" secondItem="apg-jj-rBR" secondAttribute="trailing" id="sRQ-kd-Na1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="startButton" destination="EML-Pc-G3g" id="Fr2-nt-Chh"/>
+                        <outlet property="stopButton" destination="I9a-qm-0t6" id="GTe-av-099"/>
+                        <outlet property="tableView" destination="apg-jj-rBR" id="pDh-eq-2wD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lUy-M2-WzR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="322"/>
+        </scene>
         <!--Base Navigation Controller-->
         <scene sceneID="0aG-74-Ne4">
             <objects>
