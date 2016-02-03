@@ -11,17 +11,22 @@ import CoreBluetooth
 
 final class RemoteBluetoothDevice: NSObject, RemoteDeviceType {
     
-    let name: String?
+    var uid: String { return "\(peripheral.identifier.UUIDString)" }
+    let name: String
     let transportType = RemoteTransportType.Bluetooth
+    let descriptor: RemoteDeviceDescriptorType
     let peripheral: CBPeripheral
-    let descriptor: RemoteBluetoothDeviceDescriptor
+    unowned let devicesManager: RemoteDevicesManagerType
+    weak var readCharacteristic: CBCharacteristic?
+    weak var writeCharacteristic: CBCharacteristic?
     
     // MARK: Initialization
     
-    init(name: String?, peripheral: CBPeripheral, descriptor: RemoteBluetoothDeviceDescriptor) {
+    init(name: String, descriptor: RemoteDeviceDescriptorType, peripheral: CBPeripheral, devicesManager: RemoteDevicesManagerType) {
         self.name = name
-        self.peripheral = peripheral
         self.descriptor = descriptor
+        self.peripheral = peripheral
+        self.devicesManager = devicesManager
     }
     
 }

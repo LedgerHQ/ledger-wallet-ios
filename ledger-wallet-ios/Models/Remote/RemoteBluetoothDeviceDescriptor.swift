@@ -13,13 +13,17 @@ final class RemoteBluetoothDeviceDescriptor: RemoteDeviceDescriptorType {
     
     let name: String
     let transportType = RemoteTransportType.Bluetooth
-    let services: [CBService]
+    let service: CBService
+    let readCharacteristic: CBCharacteristic
+    let writeCharacteristic: CBCharacteristic
     
     // MARK: Initialization
     
-    init(name: String, services: [CBService]) {
+    init(name: String, service: CBService, readCharacteristic: CBCharacteristic, writeCharacteristic: CBCharacteristic) {
         self.name = name
-        self.services = services
+        self.service = service
+        self.readCharacteristic = readCharacteristic
+        self.writeCharacteristic = writeCharacteristic
     }
     
 }

@@ -80,10 +80,9 @@ final class LedgerServicesProvider: ServicesProviderType {
         // Ledger Blue
         do {
             let deviceService = CBMutableService(type: CBUUID(string: "D973F2E0-B19E-11E2-9E96-0800200C9A66"), primary: true)
-            let readCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "D973F2E1-B19E-11E2-9E96-0800200C9A66"), properties: [.Read, .Notify], value: nil, permissions: .Readable)
-            let writeCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "D973F2E2-B19E-11E2-9E96-0800200C9A66"), properties: [.Write], value: nil, permissions: .Writeable)
-            deviceService.characteristics = [readCharacteristic, writeCharacteristic]
-            let deviceDescriptor = RemoteBluetoothDeviceDescriptor(name: "Ledger", services: [deviceService])
+            let readCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "D973F2E1-B19E-11E2-9E96-0800200C9A66"), properties: [.Notify], value: nil, permissions: [])
+            let writeCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "D973F2E2-B19E-11E2-9E96-0800200C9A66"), properties: [.Write], value: nil, permissions: [])
+            let deviceDescriptor = RemoteBluetoothDeviceDescriptor(name: "Ledger", service: deviceService, readCharacteristic: readCharacteristic, writeCharacteristic: writeCharacteristic)
             devices.append(deviceDescriptor)
         }
         return devices

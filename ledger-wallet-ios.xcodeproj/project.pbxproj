@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3707F5B51C60AD180038AABD /* RemoteConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707F5B41C60AD180038AABD /* RemoteConnectionState.swift */; };
+		3707F5B71C60B1A00038AABD /* RemoteBluetoothDevicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707F5B61C60B1A00038AABD /* RemoteBluetoothDevicesManager.swift */; };
+		3707F5B91C60B20A0038AABD /* RemoteDevicesManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707F5B81C60B20A0038AABD /* RemoteDevicesManagerType.swift */; };
 		370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370E838D1B5695D500D67A9D /* Pairing.storyboard */; };
 		371537E01BDE2A9D00582193 /* CompletionResultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537DD1BDE2A9D00582193 /* CompletionResultable.swift */; };
 		371537E11BDE2A9D00582193 /* ContentStatusCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537DE1BDE2A9D00582193 /* ContentStatusCustomizable.swift */; };
@@ -187,10 +190,7 @@
 		37E5EDD61C522DCD00716241 /* WalletTransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDC81C522DCD00716241 /* WalletTransactionOutput.swift */; };
 		37E5EDDB1C522EA700716241 /* RemoteTransportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDDA1C522EA700716241 /* RemoteTransportType.swift */; };
 		37E5EDDD1C52313D00716241 /* RemoteDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDDC1C52313D00716241 /* RemoteDeviceType.swift */; };
-		37E5EDE31C5233DA00716241 /* RemoteBluetoothDeviceScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDE11C5233DA00716241 /* RemoteBluetoothDeviceScanner.swift */; };
-		37E5EDE41C5233DA00716241 /* RemoteDeviceScannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDE21C5233DA00716241 /* RemoteDeviceScannerType.swift */; };
 		37E5EDE71C52358200716241 /* RemoteDevicesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDE61C52358200716241 /* RemoteDevicesListViewController.swift */; };
-		37E5EDEA1C5238BC00716241 /* RemoteDevicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDE91C5238BC00716241 /* RemoteDevicesManager.swift */; };
 		37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37E962341B441B890092946B /* fontawesome-webfont.ttf */; };
 		37EB45E21C4558FF003149CE /* WalletTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45E11C4558FF003149CE /* WalletTaskQueue.swift */; };
 		37EB45E81C456137003149CE /* WalletTaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45E71C456137003149CE /* WalletTaskType.swift */; };
@@ -204,7 +204,6 @@
 		37EC9F561C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F551C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift */; };
 		37EC9F5A1C5F65C300D3D417 /* RemoteBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F591C5F65C300D3D417 /* RemoteBluetoothDevice.swift */; };
 		37EC9F601C5F98DE00D3D417 /* DispatchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F5D1C5F98DE00D3D417 /* DispatchTimer.swift */; };
-		37EC9F651C5FBA9100D3D417 /* RemoteDeviceConnectorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F641C5FBA9100D3D417 /* RemoteDeviceConnectorType.swift */; };
 		37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
 		37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B51A6D3C47007DBBAF /* Label.swift */; };
@@ -244,6 +243,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3707F5B41C60AD180038AABD /* RemoteConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConnectionState.swift; sourceTree = "<group>"; };
+		3707F5B61C60B1A00038AABD /* RemoteBluetoothDevicesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDevicesManager.swift; sourceTree = "<group>"; };
+		3707F5B81C60B20A0038AABD /* RemoteDevicesManagerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDevicesManagerType.swift; sourceTree = "<group>"; };
 		370E838E1B5695D500D67A9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pairing.storyboard; sourceTree = "<group>"; };
 		371537DD1BDE2A9D00582193 /* CompletionResultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletionResultable.swift; sourceTree = "<group>"; };
 		371537DE1BDE2A9D00582193 /* ContentStatusCustomizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentStatusCustomizable.swift; sourceTree = "<group>"; };
@@ -493,10 +495,7 @@
 		37E5EDC81C522DCD00716241 /* WalletTransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionOutput.swift; sourceTree = "<group>"; };
 		37E5EDDA1C522EA700716241 /* RemoteTransportType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteTransportType.swift; sourceTree = "<group>"; };
 		37E5EDDC1C52313D00716241 /* RemoteDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceType.swift; sourceTree = "<group>"; };
-		37E5EDE11C5233DA00716241 /* RemoteBluetoothDeviceScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDeviceScanner.swift; sourceTree = "<group>"; };
-		37E5EDE21C5233DA00716241 /* RemoteDeviceScannerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceScannerType.swift; sourceTree = "<group>"; };
 		37E5EDE61C52358200716241 /* RemoteDevicesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDevicesListViewController.swift; sourceTree = "<group>"; };
-		37E5EDE91C5238BC00716241 /* RemoteDevicesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDevicesManager.swift; sourceTree = "<group>"; };
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		37EB45E11C4558FF003149CE /* WalletTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTaskQueue.swift; sourceTree = "<group>"; };
 		37EB45E71C456137003149CE /* WalletTaskType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTaskType.swift; sourceTree = "<group>"; };
@@ -510,7 +509,6 @@
 		37EC9F551C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDeviceDescriptor.swift; sourceTree = "<group>"; };
 		37EC9F591C5F65C300D3D417 /* RemoteBluetoothDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDevice.swift; sourceTree = "<group>"; };
 		37EC9F5D1C5F98DE00D3D417 /* DispatchTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchTimer.swift; sourceTree = "<group>"; };
-		37EC9F641C5FBA9100D3D417 /* RemoteDeviceConnectorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceConnectorType.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B61A6D3C47007DBBAF /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NavigationBar.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1071,8 +1069,6 @@
 			children = (
 				37E5EDE61C52358200716241 /* RemoteDevicesListViewController.swift */,
 				37E5EDE81C5238AF00716241 /* Devices Manager */,
-				37E5EDE01C5233DA00716241 /* Device Scanners */,
-				37EC9F631C5FBA8300D3D417 /* Devices Connectors */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1102,6 +1098,7 @@
 			isa = PBXGroup;
 			children = (
 				37E5EDDA1C522EA700716241 /* RemoteTransportType.swift */,
+				3707F5B41C60AD180038AABD /* RemoteConnectionState.swift */,
 				37E5EDDC1C52313D00716241 /* RemoteDeviceType.swift */,
 				37EC9F591C5F65C300D3D417 /* RemoteBluetoothDevice.swift */,
 				37EC9F531C528C4500D3D417 /* RemoteDeviceDescriptorType.swift */,
@@ -1110,19 +1107,11 @@
 			path = Remote;
 			sourceTree = "<group>";
 		};
-		37E5EDE01C5233DA00716241 /* Device Scanners */ = {
-			isa = PBXGroup;
-			children = (
-				37E5EDE21C5233DA00716241 /* RemoteDeviceScannerType.swift */,
-				37E5EDE11C5233DA00716241 /* RemoteBluetoothDeviceScanner.swift */,
-			);
-			path = "Device Scanners";
-			sourceTree = "<group>";
-		};
 		37E5EDE81C5238AF00716241 /* Devices Manager */ = {
 			isa = PBXGroup;
 			children = (
-				37E5EDE91C5238BC00716241 /* RemoteDevicesManager.swift */,
+				3707F5B81C60B20A0038AABD /* RemoteDevicesManagerType.swift */,
+				3707F5B61C60B1A00038AABD /* RemoteBluetoothDevicesManager.swift */,
 			);
 			path = "Devices Manager";
 			sourceTree = "<group>";
@@ -1167,14 +1156,6 @@
 			);
 			name = DispatchTimer;
 			path = Vendor/DispatchTimer;
-			sourceTree = "<group>";
-		};
-		37EC9F631C5FBA8300D3D417 /* Devices Connectors */ = {
-			isa = PBXGroup;
-			children = (
-				37EC9F641C5FBA9100D3D417 /* RemoteDeviceConnectorType.swift */,
-			);
-			path = "Devices Connectors";
 			sourceTree = "<group>";
 		};
 		37EF91B31A6D3C47007DBBAF /* Base */ = {
@@ -1400,6 +1381,7 @@
 				3718F49A1C204D8F00B907AC /* WalletTransactionOutputEntity.swift in Sources */,
 				373B63F31C1F0E0D004E3298 /* WalletAddressEntity.swift in Sources */,
 				37F8E4151BFE2E2B001609BA /* main.swift in Sources */,
+				3707F5B71C60B1A00038AABD /* RemoteBluetoothDevicesManager.swift in Sources */,
 				37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */,
 				373B63711C1EF87C004E3298 /* WalletTransactionsListener.swift in Sources */,
 				3798BA1E1A6E6D8800F5B603 /* UITextField+Utils.swift in Sources */,
@@ -1430,7 +1412,6 @@
 				37E316EA1C14665800BE2C87 /* WalletManagerType.swift in Sources */,
 				37EF91C41A6D3C47007DBBAF /* TableViewCell.swift in Sources */,
 				37F283B01A655D3400F432CC /* UIView+Allure.swift in Sources */,
-				37E5EDEA1C5238BC00716241 /* RemoteDevicesManager.swift in Sources */,
 				373073761B2ECF7400DDFE5A /* BTCAssetType.m in Sources */,
 				373B63E31C1F0DDA004E3298 /* SQLiteTable.swift in Sources */,
 				373B63DD1C1F0DDA004E3298 /* SQLiteFetchableModel.swift in Sources */,
@@ -1446,12 +1427,12 @@
 				37E37F451C3ACB0300731747 /* WalletAddressCache.swift in Sources */,
 				37F283AF1A655D3400F432CC /* UILabel+Utils.swift in Sources */,
 				37EF91C61A6D3C47007DBBAF /* ActionBarView.swift in Sources */,
+				3707F5B91C60B20A0038AABD /* RemoteDevicesManagerType.swift in Sources */,
 				37EB46051C490EED003149CE /* WalletFetchRequest.swift in Sources */,
 				371537E01BDE2A9D00582193 /* CompletionResultable.swift in Sources */,
 				37E5EDD51C522DCD00716241 /* WalletTransactionInput.swift in Sources */,
 				373B63E21C1F0DDA004E3298 /* SQLiteStore.swift in Sources */,
 				37EB460F1C4952A0003149CE /* WalletVisibleAccountsFetchRequestProvider.swift in Sources */,
-				37E5EDE41C5233DA00716241 /* RemoteDeviceScannerType.swift in Sources */,
 				373B63E41C1F0DDA004E3298 /* SQLiteEntityType.swift in Sources */,
 				376F510F1A82190E001C6684 /* BTCProcessor.m in Sources */,
 				37D0F4AB1C3FF37C00984743 /* BitcoinNetwork.swift in Sources */,
@@ -1460,7 +1441,6 @@
 				376F51051A82190E001C6684 /* BTCErrors.m in Sources */,
 				37D0F4951C3FEED400984743 /* Blocks.swift in Sources */,
 				377822481C05D6AB009FD634 /* HTTPClient.swift in Sources */,
-				37E5EDE31C5233DA00716241 /* RemoteBluetoothDeviceScanner.swift in Sources */,
 				37E5EDD31C522DCD00716241 /* WalletTransaction.swift in Sources */,
 				373B63B41C1F0DAF004E3298 /* DialogViewController.swift in Sources */,
 				37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */,
@@ -1477,7 +1457,6 @@
 				37A115D51C15D7DD00322437 /* WalletStoreProxy.swift in Sources */,
 				37CEAD3F1C4509D400085222 /* WalletBlockEntity.swift in Sources */,
 				373E22CF1A72490D00BAF63F /* NSObject+Utils.m in Sources */,
-				37EC9F651C5FBA9100D3D417 /* RemoteDeviceConnectorType.swift in Sources */,
 				37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */,
 				37EB45FA1C47FFA0003149CE /* WalletUpdateAccountBalancesTask.swift in Sources */,
 				37D0F4941C3FEED400984743 /* AttestationKey.swift in Sources */,
@@ -1568,6 +1547,7 @@
 				373B63E51C1F0DDA004E3298 /* SQLiteTableField.swift in Sources */,
 				376F51171A82190E001C6684 /* BTCTransactionOutput.m in Sources */,
 				375070741C088C5E00214B83 /* FMDatabaseQueue.m in Sources */,
+				3707F5B51C60AD180038AABD /* RemoteConnectionState.swift in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
 				376F51031A82190E001C6684 /* BTCData.m in Sources */,
 				3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */,
