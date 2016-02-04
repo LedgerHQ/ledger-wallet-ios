@@ -12,6 +12,7 @@ import CoreBluetooth
 final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     
     private static let lostDeviceCheckTimeInterval = 10.0
+    private static let deviceConnectionTimeoutInterval = 15.0
     
     weak var delegate: RemoteDevicesManagerDelegate?
     private var scannedDevices: [RemoteBluetoothDevice: DispatchTimer] = [:]
@@ -20,6 +21,7 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     private var scanning = false
     private var centralManager: CBCentralManager!
     private let servicesProvider: ServicesProviderType
+    private var connectionTimer: DispatchTimer?
     private let delegateQueue: NSOperationQueue
     private let workingQueue: NSOperationQueue
     private let logger = Logger.sharedInstance(name: "RemoteBluetoothDevicesManager")
@@ -118,8 +120,10 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             guard strongSelf.state == .Connected else { return }
+            guard let device = strongSelf.currentDevice else { return }
+            guard let writeCharacteristic = device.writeCharacteristic else { return }
             
-            
+            device.peripheral.writeValue(data, forCharacteristic: writeCharacteristic, type: .WithResponse)
         }
     }
     
@@ -222,6 +226,10 @@ private extension RemoteBluetoothDevicesManager {
         
         // look device name
         for descriptor in servicesProvider.remoteBluetoothDeviceDescriptors {
+            guard let isConnectable = advertisementData[CBAdvertisementDataIsConnectable] as? NSNumber where isConnectable.boolValue else {
+                continue
+            }
+            
             if let name = peripheral.name where name.hasPrefix(descriptor.name) {
                 handleDeviceFindBlock(name, peripheral, descriptor)
                 break
@@ -251,6 +259,9 @@ private extension RemoteBluetoothDevicesManager {
         device.writeCharacteristic = nil
         centralManager.delegate = self
         centralManager.connectPeripheral(device.peripheral, options: nil)
+        
+        // start timeout timer
+        startTimeoutTimerForDevice(device)
     }
     
     private func processDisconnectDevice(notifyDelegate notifyDelegate: Bool, error: RemoteDevicesManagerError?) {
@@ -269,6 +280,9 @@ private extension RemoteBluetoothDevicesManager {
         device.readCharacteristic = nil
         device.writeCharacteristic = nil
         centralManager.cancelPeripheralConnection(device.peripheral)
+        
+        // start timeout timer
+        stopTimeoutTimer()
         
         // if notify delegate
         if notifyDelegate {
@@ -369,10 +383,12 @@ private extension RemoteBluetoothDevicesManager {
         }
         
         // configure device
-        logger.info("Device \(device.uid) conforms to descriptor, accepting as valid and connected")
-        device.peripheral.setNotifyValue(true, forCharacteristic: rCharacteristic)
+        logger.info("Device \(device.uid) conforms to descriptor, keeping its read and write characteristics")
         device.readCharacteristic = rCharacteristic
         device.writeCharacteristic = wCharacteristic
+        
+        logger.info("Asking for read notifications of device \(device.uid)")
+        device.peripheral.setNotifyValue(true, forCharacteristic: rCharacteristic)
     }
     
     private func handleReadCharacteristicNotifyStateOfDevice(device: RemoteBluetoothDevice, characteristic: CBCharacteristic, error: NSError?) {
@@ -383,16 +399,50 @@ private extension RemoteBluetoothDevicesManager {
         }
         
         guard error == nil else {
-            logger.error("Unable to listen for notification of read characteristic, disconnecting")
+            logger.error("Unable to listen for notification of read characteristic: \(error!.localizedDescription), disconnecting")
+            processDisconnectDevice(notifyDelegate: true, error: .UnableToBind)
+            return
+        }
+        
+        guard characteristic.isNotifying == true else {
+            logger.error("Unable to listen for notification of read characteristic: isNotifying is false, disconnecting")
             processDisconnectDevice(notifyDelegate: true, error: .UnableToBind)
             return
         }
         
         // connection is now successfull
+        logger.info("Got read notifications for device \(device.uid), now connected")
         state = .Connected
+        
+        // stop timeout timer
+        stopTimeoutTimer()
         
         // notify delegate
         notifyDelegateDidConnectDevice(device)
+    }
+    
+}
+
+// MARK: - Timeout management
+
+private extension RemoteBluetoothDevicesManager {
+    
+    private func startTimeoutTimerForDevice(device: RemoteBluetoothDevice) {
+        // start timeout timer
+        if let queue = workingQueue.underlyingQueue {
+            connectionTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(self.dynamicType.deviceConnectionTimeoutInterval) * 1000, queue: queue, repeats: false) { [weak self] _ in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.processDisconnectDevice(notifyDelegate: false, error: nil)
+                strongSelf.notifyDelegateDidFailToConnectDevice(device)
+            }
+        }
+    }
+    
+    private func stopTimeoutTimer() {
+        // stop timeout timer
+        connectionTimer?.invalidate()
+        connectionTimer = nil
     }
     
 }
@@ -431,6 +481,7 @@ private extension RemoteBluetoothDevicesManager {
     private func notifyDelegateDidConnectDevice(device: RemoteDeviceType) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
             strongSelf.delegate?.devicesManager(strongSelf, didConnectDevice: device)
         }
     }
@@ -438,6 +489,7 @@ private extension RemoteBluetoothDevicesManager {
     private func notifyDelegateDidDisconnectDevice(device: RemoteDeviceType, withError error: RemoteDevicesManagerError?) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
             strongSelf.delegate?.devicesManager(strongSelf, didDisconnectDevice: device, withError: error)
         }
     }
@@ -445,6 +497,7 @@ private extension RemoteBluetoothDevicesManager {
     private func notifyDelegateDidReveiveData(data: NSData, fromDevice device: RemoteDeviceType) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
             strongSelf.delegate?.devicesManager(strongSelf, didReceiveData: data, fromDevice: device)
         }
     }
@@ -452,6 +505,7 @@ private extension RemoteBluetoothDevicesManager {
     private func notifyDelegateDidSendData(data: NSData, toDevice device: RemoteDeviceType) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
+            
             strongSelf.delegate?.devicesManager(strongSelf, didSendData: data, toDevice: device)
         }
     }

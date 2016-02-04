@@ -146,6 +146,9 @@
 		37B485901C22D34C00C8419E /* WalletTransactionsStreamOperationsFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B4858F1C22D34C00C8419E /* WalletTransactionsStreamOperationsFunnel.swift */; };
 		37B604CE1A9226FA00E6AD78 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B604CD1A9226FA00E6AD78 /* AlertController.swift */; };
 		37B9E4901A67F01F0055E81A /* UIImage+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */; };
+		37BAAD2C1C625D77008FBA82 /* RemoteBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BAAD2A1C625D77008FBA82 /* RemoteBluetoothDevice.swift */; };
+		37BAAD2D1C625D77008FBA82 /* RemoteDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BAAD2B1C625D77008FBA82 /* RemoteDeviceType.swift */; };
+		37BAAD321C626078008FBA82 /* RemoteDevicesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BAAD311C626078008FBA82 /* RemoteDevicesCoordinator.swift */; };
 		37C15D151C402F110065C7D4 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C15D141C402F110065C7D4 /* Navigator.swift */; };
 		37C851291BDFB47E0042834D /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C851271BDFB47E0042834D /* OpenSSL.framework */; };
 		37CEAD391C43C11D00085222 /* APIClientType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD381C43C11D00085222 /* APIClientType.swift */; };
@@ -189,7 +192,6 @@
 		37E5EDD51C522DCD00716241 /* WalletTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDC71C522DCD00716241 /* WalletTransactionInput.swift */; };
 		37E5EDD61C522DCD00716241 /* WalletTransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDC81C522DCD00716241 /* WalletTransactionOutput.swift */; };
 		37E5EDDB1C522EA700716241 /* RemoteTransportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDDA1C522EA700716241 /* RemoteTransportType.swift */; };
-		37E5EDDD1C52313D00716241 /* RemoteDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDDC1C52313D00716241 /* RemoteDeviceType.swift */; };
 		37E5EDE71C52358200716241 /* RemoteDevicesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E5EDE61C52358200716241 /* RemoteDevicesListViewController.swift */; };
 		37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37E962341B441B890092946B /* fontawesome-webfont.ttf */; };
 		37EB45E21C4558FF003149CE /* WalletTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB45E11C4558FF003149CE /* WalletTaskQueue.swift */; };
@@ -202,7 +204,6 @@
 		37EB460F1C4952A0003149CE /* WalletVisibleAccountsFetchRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB460E1C4952A0003149CE /* WalletVisibleAccountsFetchRequestProvider.swift */; };
 		37EC9F541C528C4600D3D417 /* RemoteDeviceDescriptorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F531C528C4500D3D417 /* RemoteDeviceDescriptorType.swift */; };
 		37EC9F561C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F551C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift */; };
-		37EC9F5A1C5F65C300D3D417 /* RemoteBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F591C5F65C300D3D417 /* RemoteBluetoothDevice.swift */; };
 		37EC9F601C5F98DE00D3D417 /* DispatchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC9F5D1C5F98DE00D3D417 /* DispatchTimer.swift */; };
 		37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E981B57D552006C325E /* Logger.swift */; };
 		37EF91BF1A6D3C47007DBBAF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91B41A6D3C47007DBBAF /* Button.swift */; };
@@ -449,6 +450,9 @@
 		37B746A41A5D5020001373C5 /* WebSocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		37B9E48F1A67F01F0055E81A /* UIImage+Colorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Colorize.swift"; sourceTree = "<group>"; };
 		37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ledger-wallet-ios-Bridging-Header.h"; sourceTree = "<group>"; };
+		37BAAD2A1C625D77008FBA82 /* RemoteBluetoothDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDevice.swift; sourceTree = "<group>"; };
+		37BAAD2B1C625D77008FBA82 /* RemoteDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceType.swift; sourceTree = "<group>"; };
+		37BAAD311C626078008FBA82 /* RemoteDevicesCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDevicesCoordinator.swift; sourceTree = "<group>"; };
 		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37C15D141C402F110065C7D4 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		37C851271BDFB47E0042834D /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = Vendor/OpenSSL.framework; sourceTree = "<group>"; };
@@ -494,7 +498,6 @@
 		37E5EDC71C522DCD00716241 /* WalletTransactionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionInput.swift; sourceTree = "<group>"; };
 		37E5EDC81C522DCD00716241 /* WalletTransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionOutput.swift; sourceTree = "<group>"; };
 		37E5EDDA1C522EA700716241 /* RemoteTransportType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteTransportType.swift; sourceTree = "<group>"; };
-		37E5EDDC1C52313D00716241 /* RemoteDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceType.swift; sourceTree = "<group>"; };
 		37E5EDE61C52358200716241 /* RemoteDevicesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDevicesListViewController.swift; sourceTree = "<group>"; };
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		37EB45E11C4558FF003149CE /* WalletTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTaskQueue.swift; sourceTree = "<group>"; };
@@ -507,7 +510,6 @@
 		37EB460E1C4952A0003149CE /* WalletVisibleAccountsFetchRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletVisibleAccountsFetchRequestProvider.swift; sourceTree = "<group>"; };
 		37EC9F531C528C4500D3D417 /* RemoteDeviceDescriptorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceDescriptorType.swift; sourceTree = "<group>"; };
 		37EC9F551C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDeviceDescriptor.swift; sourceTree = "<group>"; };
-		37EC9F591C5F65C300D3D417 /* RemoteBluetoothDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBluetoothDevice.swift; sourceTree = "<group>"; };
 		37EC9F5D1C5F98DE00D3D417 /* DispatchTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchTimer.swift; sourceTree = "<group>"; };
 		37EF91B41A6D3C47007DBBAF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Button.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91B51A6D3C47007DBBAF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Label.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -983,6 +985,30 @@
 			name = Vendor;
 			sourceTree = "<group>";
 		};
+		37BAAD291C625D77008FBA82 /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				37BAAD2B1C625D77008FBA82 /* RemoteDeviceType.swift */,
+				37BAAD2A1C625D77008FBA82 /* RemoteBluetoothDevice.swift */,
+			);
+			path = Devices;
+			sourceTree = "<group>";
+		};
+		37BAAD301C626078008FBA82 /* Devices Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				37BAAD311C626078008FBA82 /* RemoteDevicesCoordinator.swift */,
+			);
+			path = "Devices Coordinator";
+			sourceTree = "<group>";
+		};
+		37BAAD331C6261C5008FBA82 /* Device APIs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Device APIs";
+			sourceTree = "<group>";
+		};
 		37D0F48A1C3FEED400984743 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1068,7 +1094,10 @@
 			isa = PBXGroup;
 			children = (
 				37E5EDE61C52358200716241 /* RemoteDevicesListViewController.swift */,
+				37BAAD291C625D77008FBA82 /* Devices */,
+				37BAAD301C626078008FBA82 /* Devices Coordinator */,
 				37E5EDE81C5238AF00716241 /* Devices Manager */,
+				37BAAD331C6261C5008FBA82 /* Device APIs */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1099,8 +1128,6 @@
 			children = (
 				37E5EDDA1C522EA700716241 /* RemoteTransportType.swift */,
 				3707F5B41C60AD180038AABD /* RemoteConnectionState.swift */,
-				37E5EDDC1C52313D00716241 /* RemoteDeviceType.swift */,
-				37EC9F591C5F65C300D3D417 /* RemoteBluetoothDevice.swift */,
 				37EC9F531C528C4500D3D417 /* RemoteDeviceDescriptorType.swift */,
 				37EC9F551C528F0300D3D417 /* RemoteBluetoothDeviceDescriptor.swift */,
 			);
@@ -1395,8 +1422,8 @@
 				3725D4C11B58F66200252F2B /* LogWriter.swift in Sources */,
 				373B63F41C1F0E0D004E3298 /* WalletMetadataEntity.swift in Sources */,
 				3730736E1B2ECD6200DDFE5A /* BTCPaymentRequest.m in Sources */,
+				37BAAD2C1C625D77008FBA82 /* RemoteBluetoothDevice.swift in Sources */,
 				3777A0F11C4E518A00CF7446 /* WalletOperationsViewController.swift in Sources */,
-				37EC9F5A1C5F65C300D3D417 /* RemoteBluetoothDevice.swift in Sources */,
 				37EC9F541C528C4600D3D417 /* RemoteDeviceDescriptorType.swift in Sources */,
 				37EB45E81C456137003149CE /* WalletTaskType.swift in Sources */,
 				37A115DA1C15E73700322437 /* WalletStoreExecutor.swift in Sources */,
@@ -1463,6 +1490,7 @@
 				373073751B2ECF7400DDFE5A /* BTCAssetID.m in Sources */,
 				37C15D151C402F110065C7D4 /* Navigator.swift in Sources */,
 				373B63B21C1F0DAF004E3298 /* BaseViewController.swift in Sources */,
+				37BAAD321C626078008FBA82 /* RemoteDevicesCoordinator.swift in Sources */,
 				37F283AD1A655D3400F432CC /* UIButton+Utils.swift in Sources */,
 				373B63B51C1F0DAF004E3298 /* MessageDialogViewController.swift in Sources */,
 				37AEA4B51B43FD0800C84721 /* NavigationItem.swift in Sources */,
@@ -1518,6 +1546,7 @@
 				37B604CE1A9226FA00E6AD78 /* AlertController.swift in Sources */,
 				373B63F21C1F0E0D004E3298 /* WalletAccountEntity.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
+				37BAAD2D1C625D77008FBA82 /* RemoteDeviceType.swift in Sources */,
 				376F510E1A82190E001C6684 /* BTCPriceSource.m in Sources */,
 				373073541B2ECCE100DDFE5A /* WebSocket.swift in Sources */,
 				374A1E9B1B57D779006C325E /* LogEntry.swift in Sources */,
@@ -1531,7 +1560,6 @@
 				373B63DC1C1F0DDA004E3298 /* PairingKeychainItem.swift in Sources */,
 				3777A0FB1C4FFB7900CF7446 /* WalletStoreBlockTask.swift in Sources */,
 				37D0F49C1C3FEED400984743 /* VarIntParser.swift in Sources */,
-				37E5EDDD1C52313D00716241 /* RemoteDeviceType.swift in Sources */,
 				376F51081A82190E001C6684 /* BTCKeychain.m in Sources */,
 				376F50F71A82190D001C6684 /* BTC256.m in Sources */,
 				375070461C088C0600214B83 /* FMResultSet.m in Sources */,

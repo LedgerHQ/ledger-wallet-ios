@@ -16,6 +16,7 @@ final class RemoteBluetoothDeviceDescriptor: RemoteDeviceDescriptorType {
     let service: CBService
     let readCharacteristic: CBCharacteristic
     let writeCharacteristic: CBCharacteristic
+    let writeByteSize = 20
     
     // MARK: Initialization
     

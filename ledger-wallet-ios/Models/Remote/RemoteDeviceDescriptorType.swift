@@ -11,6 +11,7 @@ import Foundation
 protocol RemoteDeviceDescriptorType {
     
     var name: String { get }
-    var transportType: RemoteTransportType { get }    
+    var transportType: RemoteTransportType { get }
+    var writeByteSize: Int { get }
     
 }
