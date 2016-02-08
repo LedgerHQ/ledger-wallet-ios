@@ -12,16 +12,20 @@ import CoreBluetooth
 final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     
     private static let lostDeviceCheckTimeInterval = 10.0
-    private static let deviceConnectionTimeoutInterval = 15.0
+    private static let connectionTimeoutInterval = 15.0
+    private static let transferTimeoutInterval = 5.0
     
     weak var delegate: RemoteDevicesManagerDelegate?
+    let transportType = RemoteTransportType.Bluetooth
     private var scannedDevices: [RemoteBluetoothDevice: DispatchTimer] = [:]
     private var state = RemoteConnectionState.Disconnected
     private var currentDevice: RemoteBluetoothDevice?
     private var scanning = false
+    private var currentData: NSData?
     private var centralManager: CBCentralManager!
     private let servicesProvider: ServicesProviderType
-    private var connectionTimer: DispatchTimer?
+    private var timeoutTimer: DispatchTimer?
+    private let extendedLog = false
     private let delegateQueue: NSOperationQueue
     private let workingQueue: NSOperationQueue
     private let logger = Logger.sharedInstance(name: "RemoteBluetoothDevicesManager")
@@ -119,11 +123,9 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     func send(data: NSData) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            guard strongSelf.state == .Connected else { return }
-            guard let device = strongSelf.currentDevice else { return }
-            guard let writeCharacteristic = device.writeCharacteristic else { return }
             
-            device.peripheral.writeValue(data, forCharacteristic: writeCharacteristic, type: .WithResponse)
+            // send
+            strongSelf.processSendData(data)
         }
     }
     
@@ -255,16 +257,14 @@ private extension RemoteBluetoothDevicesManager {
         state = .Connecting
         currentDevice = device
         device.peripheral.delegate = self
-        device.readCharacteristic = nil
-        device.writeCharacteristic = nil
         centralManager.delegate = self
         centralManager.connectPeripheral(device.peripheral, options: nil)
         
         // start timeout timer
-        startTimeoutTimerForDevice(device)
+        startConnectionTimeoutTimerForDevice(device)
     }
     
-    private func processDisconnectDevice(notifyDelegate notifyDelegate: Bool, error: RemoteDevicesManagerError?) {
+    private func processDisconnectDevice(notifyDelegate notifyDelegate: Bool, error: RemoteDeviceError?) {
         guard state == .Connecting || state == .Connected else { return }
         guard let device = currentDevice else { return }
         
@@ -279,9 +279,10 @@ private extension RemoteBluetoothDevicesManager {
         device.peripheral.delegate = nil
         device.readCharacteristic = nil
         device.writeCharacteristic = nil
+        currentData = nil
         centralManager.cancelPeripheralConnection(device.peripheral)
         
-        // start timeout timer
+        // stop timeout timer
         stopTimeoutTimer()
         
         // if notify delegate
@@ -423,26 +424,111 @@ private extension RemoteBluetoothDevicesManager {
     
 }
 
+// MARK: - Send management
+
+private extension RemoteBluetoothDevicesManager {
+
+    private func processSendData(data: NSData) {
+        guard state == .Connected else { return }
+        guard let device = currentDevice else { return }
+        guard let writeCharacteristic = device.writeCharacteristic else { return }
+        
+        guard currentData == nil else {
+            logger.warn("Unable to write data \(data), current data \(currentData!) not sent yet")
+            return
+        }
+        
+        guard data.length <= device.descriptor.writeByteSize else {
+            logger.warn("Unable to write data of size \(data.length), should be <= \(device.descriptor.writeByteSize)")
+            notifyDelegateDidFailToSendDataToDevice(device)
+            return
+        }
+        
+        // write data
+        if extendedLog {
+            logger.info("Sending data \(data) to device \(device.uid)")
+        }
+        currentData = data
+        device.peripheral.writeValue(data, forCharacteristic: writeCharacteristic, type: .WithResponse)
+        
+        // start send timeout timer
+        startSendTimeoutTimerForDevice(device)
+    }
+    
+    private func processEndSendDataToDevice(device: RemoteBluetoothDevice, notifyDelegate: Bool, hasError: Bool, data: NSData?) {
+        guard state == .Connected else { return }
+        guard let currentDevice = currentDevice else { return }
+        guard device.peripheral === currentDevice.peripheral else { return }
+        
+        currentData = nil
+        
+        // stop timeout timer
+        stopTimeoutTimer()
+
+        if notifyDelegate {
+            if hasError {
+                notifyDelegateDidFailToSendDataToDevice(device)
+            }
+            else if data != nil {
+                notifyDelegateDidSendData(data!, toDevice: device)
+            }
+        }
+    }
+    
+    private func processEndReceiveDataFromDevice(device: RemoteBluetoothDevice, notifyDelegate: Bool, hasError: Bool, data: NSData?) {
+        guard state == .Connected else { return }
+        guard let currentDevice = currentDevice else { return }
+        guard device.peripheral === currentDevice.peripheral else { return }
+
+        if notifyDelegate {
+            if hasError {
+                notifyDelegateDidFailToReceiveDataFromDevice(device)
+            }
+            else if data != nil {
+                notifyDelegateDidReceiveData(data!, fromDevice: device)
+            }
+        }
+    }
+    
+}
+
 // MARK: - Timeout management
 
 private extension RemoteBluetoothDevicesManager {
     
-    private func startTimeoutTimerForDevice(device: RemoteBluetoothDevice) {
+    private func startConnectionTimeoutTimerForDevice(device: RemoteBluetoothDevice) {
         // start timeout timer
         if let queue = workingQueue.underlyingQueue {
-            connectionTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(self.dynamicType.deviceConnectionTimeoutInterval) * 1000, queue: queue, repeats: false) { [weak self] _ in
+            timeoutTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(self.dynamicType.connectionTimeoutInterval) * 1000, queue: queue, repeats: false) { [weak self] _ in
                 guard let strongSelf = self else { return }
+                guard strongSelf.state == .Connecting else { return }
+                guard let currentDevice = strongSelf.currentDevice where currentDevice === device else { return }
                 
+                strongSelf.logger.error("Connection timed out for device \(device.uid), disconnecting")
                 strongSelf.processDisconnectDevice(notifyDelegate: false, error: nil)
                 strongSelf.notifyDelegateDidFailToConnectDevice(device)
             }
         }
     }
     
+    private func startSendTimeoutTimerForDevice(device: RemoteBluetoothDevice) {
+        // start timeout timer
+        if let queue = workingQueue.underlyingQueue {
+            timeoutTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(self.dynamicType.transferTimeoutInterval) * 1000, queue: queue, repeats: false) { [weak self] _ in
+                guard let strongSelf = self else { return }
+                guard strongSelf.state == .Connected else { return }
+                guard let currentDevice = strongSelf.currentDevice where currentDevice === device else { return }
+                
+                strongSelf.logger.error("Send timed out for device \(device.uid)")
+                strongSelf.processEndSendDataToDevice(device, notifyDelegate: true, hasError: true, data: nil)
+            }
+        }
+    }
+    
     private func stopTimeoutTimer() {
         // stop timeout timer
-        connectionTimer?.invalidate()
-        connectionTimer = nil
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
     }
     
 }
@@ -486,7 +572,7 @@ private extension RemoteBluetoothDevicesManager {
         }
     }
     
-    private func notifyDelegateDidDisconnectDevice(device: RemoteDeviceType, withError error: RemoteDevicesManagerError?) {
+    private func notifyDelegateDidDisconnectDevice(device: RemoteDeviceType, withError error: RemoteDeviceError?) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -494,11 +580,19 @@ private extension RemoteBluetoothDevicesManager {
         }
     }
     
-    private func notifyDelegateDidReveiveData(data: NSData, fromDevice device: RemoteDeviceType) {
+    private func notifyDelegateDidReceiveData(data: NSData, fromDevice device: RemoteDeviceType) {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
             strongSelf.delegate?.devicesManager(strongSelf, didReceiveData: data, fromDevice: device)
+        }
+    }
+    
+    private func notifyDelegateDidFailToReceiveDataFromDevice(device: RemoteDeviceType) {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.delegate?.devicesManager(strongSelf, didFailToReceiveDataFromDevice: device)
         }
     }
     
@@ -507,6 +601,14 @@ private extension RemoteBluetoothDevicesManager {
             guard let strongSelf = self else { return }
             
             strongSelf.delegate?.devicesManager(strongSelf, didSendData: data, toDevice: device)
+        }
+    }
+    
+    private func notifyDelegateDidFailToSendDataToDevice(device: RemoteDeviceType) {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.delegate?.devicesManager(strongSelf, didFailToSendDataToDevice: device)
         }
     }
     
@@ -615,14 +717,21 @@ extension RemoteBluetoothDevicesManager: CBPeripheralDelegate {
         guard let device = currentDevice where device.peripheral === peripheral else { return }
 
         if let error = error {
-            logger.error("Unable to write value to write characteristic of device \(device.uid): \(error.localizedDescription), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .UnableToWrite)
+            logger.error("Unable to write value to write characteristic of device \(device.uid): \(error.localizedDescription)")
+            processEndSendDataToDevice(device, notifyDelegate: true, hasError: true, data: nil)
             return
         }
-        else if let data = characteristic.value {
-            // notify delegate
-            notifyDelegateDidSendData(data, toDevice: device)
+        
+        guard let data = currentData else {
+            logger.error("Sent data to device \(device.uid) but do not have trace of which data")
+            processEndSendDataToDevice(device, notifyDelegate: true, hasError: true, data: nil)
+            return
         }
+
+        if extendedLog {
+            logger.info("Sent data \(data) to device \(device.uid)")
+        }
+        processEndSendDataToDevice(device, notifyDelegate: true, hasError: false, data: data)
     }
     
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
@@ -630,14 +739,22 @@ extension RemoteBluetoothDevicesManager: CBPeripheralDelegate {
         guard let device = currentDevice where device.peripheral === peripheral else { return }
 
         if let error = error {
-            logger.error("Unable to read value from read characteristic of device \(device.uid): \(error.localizedDescription), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .UnableToRead)
+            logger.error("Unable to read value from read characteristic of device \(device.uid): \(error.localizedDescription)")
+            processEndReceiveDataFromDevice(device, notifyDelegate: true, hasError: true, data: nil)
             return
         }
-        else if let data = characteristic.value {
-            // notify delegate
-            notifyDelegateDidReveiveData(data, fromDevice: device)
+        
+        guard let data = characteristic.value else {
+            logger.error("Received data from device \(device.uid) but nothing to read")
+            processEndReceiveDataFromDevice(device, notifyDelegate: true, hasError: true, data: nil)
+            return
         }
+
+        // notify delegate
+        if extendedLog {
+            logger.info("Received data \(data) from device \(device.uid)")
+        }
+        processEndReceiveDataFromDevice(device, notifyDelegate: true, hasError: false, data: data)
     }
     
 }

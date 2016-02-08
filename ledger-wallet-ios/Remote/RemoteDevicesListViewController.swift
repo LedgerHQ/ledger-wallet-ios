@@ -10,7 +10,7 @@ import Foundation
 
 final class RemoteDevicesListViewController: BaseViewController {
     
-    var devicesManager: RemoteDevicesManagerType!
+    var devicesCoordinator: RemoteDevicesCoordinator!
     private var devices: [RemoteDeviceType] = []
     @IBOutlet private weak var startButton: UIButton!
     @IBOutlet private weak var stopButton: UIButton!
@@ -22,14 +22,14 @@ final class RemoteDevicesListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        devicesManager?.delegate = self
+        devicesCoordinator?.delegate = self
         startScanning()
     }
     
     private func updateUI() {
-        guard let devicesManager = devicesManager else { return }
+        guard let devicesManager = devicesCoordinator else { return }
         
-        startButton.enabled = !devicesManager.isScanning
+        startButton.enabled = !devicesCoordinator.isScanning
         stopButton.enabled = !startButton.enabled
         tableView.reloadData()
         
@@ -38,7 +38,7 @@ final class RemoteDevicesListViewController: BaseViewController {
             stopButton.enabled = false
         }
         
-        switch devicesManager.connectionState {
+        switch devicesCoordinator.connectionState {
         case .Connecting:
             statusLabel.text = "Connecting"
         case .Connected:
@@ -52,60 +52,68 @@ final class RemoteDevicesListViewController: BaseViewController {
     }
     
     @IBAction private func startScanning() {
-        devicesManager?.startScanning()
+        devicesCoordinator?.startScanning()
         updateUI()
     }
     
     @IBAction private func stopScanning() {
-        devicesManager?.stopScanning()
+        devicesCoordinator?.stopScanning()
         devices.removeAll()
         updateUI()
     }
     
     @IBAction private func sendHello() {
+        devicesCoordinator?.send(RemoteAPDU(hexString: "E0C4000000")!)
     }
 
     @IBAction private func disconnect() {
-        devicesManager.disconnect()
+        devicesCoordinator.disconnect()
     }
     
 }
 
-extension RemoteDevicesListViewController: RemoteDevicesManagerDelegate {
+extension RemoteDevicesListViewController: RemoteDevicesCoordinatorDelegate {
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didFindDevice device: RemoteDeviceType) {
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didFindDevice device: RemoteDeviceType) {
         devices.append(device)
         updateUI()
-
     }
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didLoseDevice device: RemoteDeviceType) {
-        if let index = devices.indexOf({ $0.uid == device.uid }) {
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didLoseDevice device: RemoteDeviceType) {
+        if let index = devices.indexOf({ $0 === device }) {
             devices.removeAtIndex(index)
             updateUI()
         }
     }
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didConnectDevice device: RemoteDeviceType) {
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didConnectDevice device: RemoteDeviceType) {
         updateUI()
     }
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didFailToConnectDevice device: RemoteDeviceType) {
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didFailToConnectDevice device: RemoteDeviceType) {
         startScanning()
         updateUI()
     }
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didDisconnectDevice device: RemoteDeviceType, withError error: RemoteDevicesManagerError?) {
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didDisconnectDevice device: RemoteDeviceType, withError error: RemoteDeviceError?) {
         startScanning()
         updateUI()
     }
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didSendData data: NSData, toDevice device: RemoteDeviceType) {
-        print("SENT \(data)")
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didSendAPDU APDU: RemoteAPDU, toDevice device: RemoteDeviceType) {
+
     }
     
-    func devicesManager(devicesManager: RemoteDevicesManagerType, didReceiveData data: NSData, fromDevice device: RemoteDeviceType) {
-        print("RECEIVED \(data)")
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didFailToSendAPDUToDevice device: RemoteDeviceType) {
+        
+    }
+    
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didReceiveAPDU APDU: RemoteAPDU, fromDevice device: RemoteDeviceType) {
+
+    }
+    
+    func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didFailToReceiveAPDUFromDevice device: RemoteDeviceType) {
+        
     }
     
 }
@@ -134,7 +142,7 @@ extension RemoteDevicesListViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let device = devices[indexPath.row]
         stopScanning()
-        devicesManager?.connect(device)
+        devicesCoordinator?.connect(device)
         updateUI()
     }
     

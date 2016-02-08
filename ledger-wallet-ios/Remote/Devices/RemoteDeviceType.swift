@@ -8,7 +8,15 @@
 
 import Foundation
 
-protocol RemoteDeviceType {
+enum RemoteDeviceError: ErrorType {
+    
+    case RemoteDisconnection
+    case WrongDevice
+    case UnableToBind
+    
+}
+
+protocol RemoteDeviceType: class {
 
     var uid: String { get }
     var name: String { get }
