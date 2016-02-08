@@ -35,7 +35,7 @@ final class RemoteDevicesCoordinator {
     private var pendingSlices: [RemoteAPDUSlice] = []
     private var currentTransferType: RemoteTransferType?
     private var timeoutTimer: DispatchTimer?
-    private let extendedLogs = true
+    private let extendedLogs = false
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "RemoteDevicesCoordinator", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "RemoteDevicesCoordinator")

@@ -25,7 +25,7 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     private var centralManager: CBCentralManager!
     private let servicesProvider: ServicesProviderType
     private var timeoutTimer: DispatchTimer?
-    private let extendedLog = false
+    private let extendedLogs = false
     private let delegateQueue: NSOperationQueue
     private let workingQueue: NSOperationQueue
     private let logger = Logger.sharedInstance(name: "RemoteBluetoothDevicesManager")
@@ -445,7 +445,7 @@ private extension RemoteBluetoothDevicesManager {
         }
         
         // write data
-        if extendedLog {
+        if extendedLogs {
             logger.info("Sending data \(data) to device \(device.uid)")
         }
         currentData = data
@@ -728,7 +728,7 @@ extension RemoteBluetoothDevicesManager: CBPeripheralDelegate {
             return
         }
 
-        if extendedLog {
+        if extendedLogs {
             logger.info("Sent data \(data) to device \(device.uid)")
         }
         processEndSendDataToDevice(device, notifyDelegate: true, hasError: false, data: data)
@@ -751,7 +751,7 @@ extension RemoteBluetoothDevicesManager: CBPeripheralDelegate {
         }
 
         // notify delegate
-        if extendedLog {
+        if extendedLogs {
             logger.info("Received data \(data) from device \(device.uid)")
         }
         processEndReceiveDataFromDevice(device, notifyDelegate: true, hasError: false, data: data)
