@@ -27,7 +27,7 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     private var timeoutTimer: DispatchTimer?
     private let extendedLogs = false
     private let delegateQueue: NSOperationQueue
-    private let workingQueue: NSOperationQueue
+    private let workingQueue = NSOperationQueue(name: "RemoteBluetoothDevicesManager", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "RemoteBluetoothDevicesManager")
 
     // MARK: Scan management
@@ -134,7 +134,6 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
         self.servicesProvider = servicesProvider
         self.delegateQueue = delegateQueue
-        self.workingQueue = NSOperationQueue(name: "RemoteBluetoothDevicesManager", maxConcurrentOperationCount: 1)
         self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteBluetoothDevicesManager"))
     }
     

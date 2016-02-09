@@ -163,6 +163,7 @@ final class RemoteDevicesCoordinator {
     
     init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
         self.delegateQueue = delegateQueue
+        self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteDevicesCoordinator"))
         
         let bluetoothSlicer = RemoteBluetoothAPDUSlicer()
         self.slicers = [bluetoothSlicer]
