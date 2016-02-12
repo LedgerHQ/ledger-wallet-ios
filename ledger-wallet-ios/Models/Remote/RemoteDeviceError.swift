@@ -19,12 +19,12 @@ enum RemoteDeviceError: ErrorType {
     case UnableToWrite
     case CancelledTask
     case NotConnected
-    case IncorrectLength
+    case InvalidLength
     case InvalidAccessRights
-    case InvalidData
+    case InvalidRequest
     case InvalidResponse
-    case FileNotFound
     case InvalidParameters
+    case FileNotFound
     case NotImplemented
     case TechnicalProblem(byte: UInt8)
     case Unknown
@@ -43,11 +43,11 @@ enum RemoteDeviceError: ErrorType {
         case BTCDataFromHex("9000"):
             return nil
         case BTCDataFromHex("6700"):
-            self = .IncorrectLength
+            self = .InvalidLength
         case BTCDataFromHex("6982"):
             self = .InvalidAccessRights
         case BTCDataFromHex("6A80"):
-            self = .InvalidData
+            self = .InvalidRequest
         case BTCDataFromHex("6A82"):
             self = .FileNotFound
         case BTCDataFromHex("6B00"):

@@ -10,13 +10,14 @@ import Foundation
 
 final class RemoteDeviceAPICheckAttestationTask: RemoteDeviceAPITaskType {
     
-    typealias CompletionBlock = (isAuthentic: Bool, error: RemoteDeviceError?) -> Void
+    typealias CompletionBlock = (isAuthentic: Bool, isBeta: Bool, error: RemoteDeviceError?) -> Void
     var completionBlock: (() -> Void)?
     let devicesCoordinator: RemoteDevicesCoordinator
     
     private let servicesProvider: ServicesProviderType
     private var dataBlob: NSData?
     private var authentic = false
+    private var beta = false
     private let resultCompletionQueue: NSOperationQueue
     private let resultCompletionBlock: CompletionBlock
     
@@ -41,26 +42,41 @@ final class RemoteDeviceAPICheckAttestationTask: RemoteDeviceAPITaskType {
         
         let reader = DataReader(data: responseData)
         guard let
-            _ = reader.readNextBigEndianUInt32(),
-            _ = reader.readNextBigEndianUInt32(),
+            batchID = reader.readNextBigEndianUInt32(),
+            derivationID = reader.readNextBigEndianUInt32(),
             versionData = reader.readNextDataOfLength(8),
             signatureData = reader.readNextAvailableData(),
-            blobData = dataBlob,
-            key = BTCKey(publicKey: servicesProvider.betaAttestationKey.publicKey)
+            blobData = dataBlob
         else {
             completeWithError(.InvalidResponse)
             return
         }
         
         let verifyData = NSMutableData(data: versionData); verifyData.appendData(blobData)
+        
+        // try production key
+        if let productionAttestationKey = servicesProvider.attestationKeyWithIDs(batchID: batchID, derivationID: derivationID, fallbackToBeta: false) {
+            let key = BTCKey(publicKey: productionAttestationKey.publicKey)
+            authentic = key.isValidSignature(signatureData, hash: BTCSHA256(verifyData))
+            if authentic {
+                completeWithError(nil)
+                return
+            }
+        }
+        
+        // try beta key
+        let betaAttestationKey = servicesProvider.betaAttestationKey
+        let key = BTCKey(publicKey: betaAttestationKey.publicKey)
+        beta = true
         authentic = key.isValidSignature(signatureData, hash: BTCSHA256(verifyData))
         completeWithError(nil)
     }
 
     func notifyResultWithError(error: RemoteDeviceError?) {
         let authentic = self.authentic
+        let beta = self.beta
         let completionBlock = self.resultCompletionBlock
-        self.resultCompletionQueue.addOperationWithBlock() { completionBlock(isAuthentic: authentic, error: error) }
+        self.resultCompletionQueue.addOperationWithBlock() { completionBlock(isAuthentic: authentic, isBeta: beta, error: error) }
     }
     
     // MARK: Initialization

@@ -47,7 +47,7 @@ final class RemoteDevicesListViewController: BaseViewController {
         }
         
         sendButton.enabled = devicesCommunicator.connectionState == .Connected
-        disconnectButton.enabled = sendButton.enabled
+        disconnectButton.enabled = devicesCommunicator.connectionState == .Connected || devicesCommunicator.connectionState == .Connecting
     }
     
     @IBAction private func startScanning() {
@@ -71,8 +71,8 @@ final class RemoteDevicesListViewController: BaseViewController {
     }
     
     @IBAction private func sendHello() {
-        devicesCommunicator?.deviceAPI?.getFirmwareVersion(NSOperationQueue.mainQueue()) { version, error in
-            print(version, error)
+        devicesCommunicator?.deviceAPI?.checkAttestation(NSOperationQueue.mainQueue()) { isAuthentic, isBeta, error in
+            print(isAuthentic, isBeta, error)
         }
     }
 

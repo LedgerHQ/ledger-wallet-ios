@@ -14,6 +14,7 @@ final class RemoteDeviceAPI {
     private let servicesProvider: ServicesProviderType
     private let queue = RemoteDeviceAPIQueue()
     private var firmwareVersion: RemoteDeviceFirmwareVersion?
+    private var checkAttestion: (isAuthentic: Bool, isBeta: Bool)?
     private let workingQueue = NSOperationQueue(name: "RemoteDeviceAPI", maxConcurrentOperationCount: 1)
     
     // MARK: API management
@@ -40,9 +41,19 @@ final class RemoteDeviceAPI {
     func checkAttestation(completionQueue: NSOperationQueue, completion: RemoteDeviceAPICheckAttestationTask.CompletionBlock) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-
-            let task = RemoteDeviceAPICheckAttestationTask(devicesCoordinator: strongSelf.devicesCoordinator, servicesProvider: strongSelf.servicesProvider, completionQueue: completionQueue, completion: completion)
-            strongSelf.queue.enqueueTask(task)
+            
+            if let checkAttestion = strongSelf.checkAttestion {
+                completionQueue.addOperationWithBlock() { completion(isAuthentic: checkAttestion.isAuthentic, isBeta: checkAttestion.isBeta, error: nil) }
+            }
+            else {
+                let task = RemoteDeviceAPICheckAttestationTask(devicesCoordinator: strongSelf.devicesCoordinator, servicesProvider: strongSelf.servicesProvider, completionQueue: strongSelf.workingQueue) { [weak self] isAuthentic, isBeta, error in
+                    guard let strongSelf = self else { return }
+                    
+                    strongSelf.checkAttestion = (isAuthentic, isBeta)
+                    completionQueue.addOperationWithBlock() { completion(isAuthentic: isAuthentic, isBeta: isBeta, error: error) }
+                }
+                strongSelf.queue.enqueueTask(task)
+            }
         }
     }
     
