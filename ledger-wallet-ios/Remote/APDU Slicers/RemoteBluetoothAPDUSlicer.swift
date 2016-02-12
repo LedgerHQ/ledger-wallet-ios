@@ -50,7 +50,7 @@ final class RemoteBluetoothAPDUSlicer: RemoteAPDUSlicerType {
             APDUData.appendData(data)
         }
         guard APDUData.length == totalBytesLength else { return nil }
-        return RemoteAPDU(data: APDUData)
+        return RemoteAPDU(responseData: APDUData)
     }
     
     private func sliceDataFromSlice(slice: RemoteAPDUSlice) -> NSData? {

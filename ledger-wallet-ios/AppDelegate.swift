@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let servicesProvider = LedgerServicesProvider(coinNetwork: BitcoinNetwork())
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let rootViewController = RemoteDevicesListViewController.instantiateFromMainStoryboard()
-        rootViewController.devicesCoordinator = RemoteDevicesCoordinator(servicesProvider: servicesProvider, delegateQueue: NSOperationQueue.mainQueue())
+        rootViewController.devicesCommunicator = RemoteDeviceCommunicator(servicesProvider: servicesProvider)
         //        let rootViewController = WalletTestViewController.instantiateFromMainStoryboard()
 //        rootViewController.walletManager = WalletAPIManager(uniqueIdentifier: "identifier", servicesProvider: servicesProvider)
         window?.rootViewController = Navigator.embedViewController(rootViewController)

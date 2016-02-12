@@ -29,8 +29,33 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "RemoteBluetoothDevicesManager", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "RemoteBluetoothDevicesManager")
+    
+    // MARK: Initialization
+    
+    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
+        self.servicesProvider = servicesProvider
+        self.delegateQueue = delegateQueue
+        self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteBluetoothDevicesManager"))
+    }
+    
+    private func createCentralManagedIfNeeded() {
+        guard centralManager == nil else { return }
+        
+        let options = [CBCentralManagerOptionShowPowerAlertKey: true]
+        centralManager = CBCentralManager(delegate: nil, queue: workingQueue.underlyingQueue, options: options)
+    }
+    
+    deinit {
+        workingQueue.cancelAllOperations()
+        stopScanning()
+        disconnect()
+    }
+    
+}
 
-    // MARK: Scan management
+// MARK: - Scan management
+
+extension RemoteBluetoothDevicesManager {
     
     var isScanning: Bool {
         var scanning = false
@@ -69,93 +94,7 @@ final class RemoteBluetoothDevicesManager: NSObject, RemoteDevicesManagerType {
         }
         workingQueue.waitUntilAllOperationsAreFinished()
     }
-    
-    // MARK: Connection management
-    
-    var connectionState: RemoteConnectionState {
-        var state = RemoteConnectionState.Disconnected
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            state = strongSelf.state
-        }
-        workingQueue.waitUntilAllOperationsAreFinished()
-        return state
-    }
-    
-    var activeDevice: RemoteDeviceType? {
-        var device: RemoteDeviceType?
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            device = strongSelf.currentDevice
-        }
-        workingQueue.waitUntilAllOperationsAreFinished()
-        return device
-    }
-    
-    func connect(device: RemoteDeviceType) {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
 
-            guard let bluetoothDevice = device as? RemoteBluetoothDevice else {
-                strongSelf.logger.error("Unable to connect non bluetooth device, aborting")
-                strongSelf.notifyDelegateDidFailToConnectDevice(device)
-                return
-            }
-
-            // connect
-            strongSelf.processConnectToDevice(bluetoothDevice)
-        }
-    }
-    
-    func disconnect() {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-
-            // disconnect
-            strongSelf.processDisconnectDevice(notifyDelegate: true, error: nil)
-        }
-        workingQueue.waitUntilAllOperationsAreFinished()
-    }
-    
-    // MARK: Send management
-    
-    func send(data: NSData) {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            // send
-            strongSelf.processSendData(data)
-        }
-    }
-    
-    // MARK: Initialization
-    
-    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
-        self.servicesProvider = servicesProvider
-        self.delegateQueue = delegateQueue
-        self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteBluetoothDevicesManager"))
-    }
-    
-    private func createCentralManagedIfNeeded() {
-        guard centralManager == nil else { return }
-        
-        let options = [CBCentralManagerOptionShowPowerAlertKey: true]
-        centralManager = CBCentralManager(delegate: nil, queue: workingQueue.underlyingQueue, options: options)
-    }
-    
-    deinit {
-        workingQueue.cancelAllOperations()
-        stopScanning()
-        disconnect()
-    }
-    
-}
-
-// MARK: - Scan management
-
-private extension RemoteBluetoothDevicesManager {
-    
     private func processStartScanIfPossible() {
         guard centralManager != nil && centralManager.state == .PoweredOn else {
             logger.info("Trying to start bluetooth central scan but not powered on yet, waiting")
@@ -246,7 +185,53 @@ private extension RemoteBluetoothDevicesManager {
 
 // MARK: - Connection management
 
-private extension RemoteBluetoothDevicesManager {
+extension RemoteBluetoothDevicesManager {
+
+    var connectionState: RemoteConnectionState {
+        var state = RemoteConnectionState.Disconnected
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            state = strongSelf.state
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return state
+    }
+    
+    var activeDevice: RemoteDeviceType? {
+        var device: RemoteDeviceType?
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            device = strongSelf.currentDevice
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return device
+    }
+    
+    func connect(device: RemoteDeviceType) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            guard let bluetoothDevice = device as? RemoteBluetoothDevice else {
+                strongSelf.logger.error("Unable to connect non bluetooth device, aborting")
+                strongSelf.notifyDelegateDidFailToConnectDevice(device)
+                return
+            }
+            
+            // connect
+            strongSelf.processConnectToDevice(bluetoothDevice)
+        }
+    }
+    
+    func disconnect() {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            // disconnect
+            strongSelf.processDisconnectDevice(notifyDelegate: true, error: nil)
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+    }
     
     private func processConnectToDevice(device: RemoteBluetoothDevice) {
         guard state == .Disconnected else { return }
@@ -314,21 +299,21 @@ private extension RemoteBluetoothDevicesManager {
             error == nil
         else {
             logger.error("Unable to retreive services of device \(device.uid), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .WrongDevice)
+            processDisconnectDevice(notifyDelegate: true, error: .DoesNotMatchDescriptor)
             return
         }
         
         // check that got the required number of services
         guard services.count == 1 else {
             logger.error("Device \(device.uid) has \(services.count), expected \(1), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .WrongDevice)
+            processDisconnectDevice(notifyDelegate: true, error: .DoesNotMatchDescriptor)
             return
         }
         
         // check that got the required number of services
         guard services[0].UUID == descriptor.service.UUID else {
             logger.error("Discovered services of device \(device.uid) do not match descriptor (got \(services[0].UUID) expected \(descriptor.service.UUID)), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .WrongDevice)
+            processDisconnectDevice(notifyDelegate: true, error: .DoesNotMatchDescriptor)
             return
         }
         
@@ -345,7 +330,7 @@ private extension RemoteBluetoothDevicesManager {
             error == nil
         else {
             logger.error("Unable to retreive services to handle characteristics of device \(device.uid), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .WrongDevice)
+            processDisconnectDevice(notifyDelegate: true, error: .DoesNotMatchDescriptor)
             return
         }
         
@@ -356,7 +341,7 @@ private extension RemoteBluetoothDevicesManager {
         // check that we got characteristics
         guard let characteristics = service.characteristics else {
             logger.error("Unable to retreive characteristics of device \(device.uid), disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .WrongDevice)
+            processDisconnectDevice(notifyDelegate: true, error: .DoesNotMatchDescriptor)
             return
         }
         
@@ -378,7 +363,7 @@ private extension RemoteBluetoothDevicesManager {
         
         guard let rCharacteristic = readCharacteristic, wCharacteristic = writeCharacteristic else {
             logger.error("Unable to find read or write characteristic of device \(device.uid) from descriptor, disconnecting")
-            processDisconnectDevice(notifyDelegate: true, error: .WrongDevice)
+            processDisconnectDevice(notifyDelegate: true, error: .DoesNotMatchDescriptor)
             return
         }
         
@@ -425,8 +410,17 @@ private extension RemoteBluetoothDevicesManager {
 
 // MARK: - Send management
 
-private extension RemoteBluetoothDevicesManager {
+extension RemoteBluetoothDevicesManager {
 
+    func send(data: NSData) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            // send
+            strongSelf.processSendData(data)
+        }
+    }
+    
     private func processSendData(data: NSData) {
         guard state == .Connected else { return }
         guard let device = currentDevice else { return }

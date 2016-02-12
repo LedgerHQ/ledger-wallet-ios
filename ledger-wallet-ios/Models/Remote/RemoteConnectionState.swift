@@ -10,8 +10,8 @@ import Foundation
 
 enum RemoteConnectionState {
     
+    case Disconnected
     case Connecting
     case Connected
-    case Disconnected
     
 }

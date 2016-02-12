@@ -39,8 +39,32 @@ final class RemoteDevicesCoordinator {
     private let delegateQueue: NSOperationQueue
     private let workingQueue = NSOperationQueue(name: "RemoteDevicesCoordinator", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "RemoteDevicesCoordinator")
+
+    // MARK: Initialization
     
-    // MARK: Scan management
+    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
+        self.delegateQueue = delegateQueue
+        self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteDevicesCoordinator"))
+        
+        let bluetoothSlicer = RemoteBluetoothAPDUSlicer()
+        self.slicers = [bluetoothSlicer]
+
+        let bluetoothManager = RemoteBluetoothDevicesManager(servicesProvider: servicesProvider, delegateQueue: workingQueue)
+        self.managers = [bluetoothManager]
+        self.managers.forEach({ $0.delegate = self })
+    }
+    
+    deinit {
+        workingQueue.cancelAllOperations()
+        stopScanning()
+        disconnect()
+    }
+    
+}
+
+// MARK: - Scan management
+
+extension RemoteDevicesCoordinator {
     
     var isScanning: Bool {
         var scanning = false
@@ -65,7 +89,7 @@ final class RemoteDevicesCoordinator {
             strongSelf.logger.info("Start scanning all transport types")
             strongSelf.managers.forEach({ $0.startScanning() })
         }
-     }
+    }
     
     func stopScanning() {
         workingQueue.addOperationWithBlock() { [weak self] in
@@ -78,13 +102,17 @@ final class RemoteDevicesCoordinator {
         workingQueue.waitUntilAllOperationsAreFinished()
     }
     
-    // MARK: Connection management
+}
+
+// MARK: - Connection management
+
+extension RemoteDevicesCoordinator {
     
     var connectionState: RemoteConnectionState {
         var state = RemoteConnectionState.Disconnected
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-
+            
             state = strongSelf.state
         }
         workingQueue.waitUntilAllOperationsAreFinished()
@@ -148,76 +176,6 @@ final class RemoteDevicesCoordinator {
         }
     }
     
-    // MARK: Send management
-    
-    func send(APDU: RemoteAPDU) {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-
-            // send APDU
-            strongSelf.processSendAPDU(APDU)
-        }
-    }
-    
-    // MARK: Initialization
-    
-    init(servicesProvider: ServicesProviderType, delegateQueue: NSOperationQueue) {
-        self.delegateQueue = delegateQueue
-        self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteDevicesCoordinator"))
-        
-        let bluetoothSlicer = RemoteBluetoothAPDUSlicer()
-        self.slicers = [bluetoothSlicer]
-
-        let bluetoothManager = RemoteBluetoothDevicesManager(servicesProvider: servicesProvider, delegateQueue: workingQueue)
-        self.managers = [bluetoothManager]
-        self.managers.forEach({ $0.delegate = self })
-    }
-    
-    deinit {
-        workingQueue.cancelAllOperations()
-        stopScanning()
-        disconnect()
-    }
-    
-}
-
-// MARK: - Timeout management
-
-private extension RemoteDevicesCoordinator {
-
-    private func startTransferTimeoutTimerForDevice(device: RemoteDeviceType, manager: RemoteDevicesManagerType, transferType: RemoteTransferType) {
-        // start timeout timer
-        if let queue = workingQueue.underlyingQueue {
-            timeoutTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(self.dynamicType.transferTimeoutInterval) * 1000, queue: queue, repeats: false) { [weak self] _ in
-                guard let strongSelf = self else { return }
-                guard let currentDevice = strongSelf.currentDevice where device === currentDevice else { return }
-                guard let currentManager = strongSelf.currentManager where manager === currentManager else { return }
-                guard strongSelf.currentTransferType == transferType else { return }
-                guard strongSelf.state == .Connected else { return }
-                
-                strongSelf.logger.error("Transfer \(transferType) timed out for device \(device.uid) with transport type \(device.transportType)")
-                if transferType == .Read {
-                    strongSelf.processEndReceiveAPDUFromDevice(device, notifyDelegate: true, hasError: true, APDU: nil)
-                }
-                else {
-                    strongSelf.processEndSendAPDUToDevice(device, notifyDelegate: true, hasError: true, APDU: nil)
-                }
-            }
-        }
-    }
-    
-    private func stopTimeoutTimer() {
-        // stop timeout timer
-        timeoutTimer?.invalidate()
-        timeoutTimer = nil
-    }
-    
-}
-
-// MARK: - Connection management
-
-private extension RemoteDevicesCoordinator {
-    
     private func resetInternalState() {
         currentManager = nil
         resetTransferInternalState()
@@ -239,7 +197,16 @@ private extension RemoteDevicesCoordinator {
 
 // MARK: - Send management
 
-private extension RemoteDevicesCoordinator {
+extension RemoteDevicesCoordinator {
+
+    func send(APDU: RemoteAPDU) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            // send APDU
+            strongSelf.processSendAPDU(APDU)
+        }
+    }
 
     private func processSendAPDU(APDU: RemoteAPDU) {
         guard state == .Connected else { return }
@@ -339,6 +306,38 @@ private extension RemoteDevicesCoordinator {
     
 }
 
+// MARK: - Timeout management
+
+private extension RemoteDevicesCoordinator {
+    
+    private func startTransferTimeoutTimerForDevice(device: RemoteDeviceType, manager: RemoteDevicesManagerType, transferType: RemoteTransferType) {
+        // start timeout timer
+        if let queue = workingQueue.underlyingQueue {
+            timeoutTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(self.dynamicType.transferTimeoutInterval) * 1000, queue: queue, repeats: false) { [weak self] _ in
+                guard let strongSelf = self else { return }
+                guard let currentDevice = strongSelf.currentDevice where device === currentDevice else { return }
+                guard let currentManager = strongSelf.currentManager where manager === currentManager else { return }
+                guard strongSelf.currentTransferType == transferType else { return }
+                guard strongSelf.state == .Connected else { return }
+                
+                strongSelf.logger.error("Transfer \(transferType) timed out for device \(device.uid) with transport type \(device.transportType)")
+                if transferType == .Read {
+                    strongSelf.processEndReceiveAPDUFromDevice(device, notifyDelegate: true, hasError: true, APDU: nil)
+                }
+                else {
+                    strongSelf.processEndSendAPDUToDevice(device, notifyDelegate: true, hasError: true, APDU: nil)
+                }
+            }
+        }
+    }
+    
+    private func stopTimeoutTimer() {
+        // stop timeout timer
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
+    }
+    
+}
 
 // MARK: - Notifications management
 

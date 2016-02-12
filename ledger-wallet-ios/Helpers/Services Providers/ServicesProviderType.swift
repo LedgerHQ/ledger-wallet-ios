@@ -26,6 +26,8 @@ protocol ServicesProviderType {
 
     // Attestation keys
     var attestationKeys: [AttestationKey] { get }
+    var betaAttestationKey: AttestationKey { get }
+    func attestationKeyWithIDs(batchID batchID: UInt32, derivationID: UInt32, fallbackToBeta: Bool) -> AttestationKey?
     
     // HTTP headers
     var httpHeaders: [String: String] { get }
@@ -42,6 +44,18 @@ extension ServicesProviderType {
     
     var remoteBluetoothDeviceDescriptors: [RemoteBluetoothDeviceDescriptor] {
         return remoteDeviceDescriptors.flatMap({ $0 as? RemoteBluetoothDeviceDescriptor })
+    }
+    
+    func attestationKeyWithIDs(batchID batchID: UInt32, derivationID: UInt32, fallbackToBeta: Bool) -> AttestationKey? {
+        for attestationKey in attestationKeys {
+            if attestationKey.batchID == batchID && attestationKey.derivationID == derivationID {
+                return attestationKey
+            }
+        }
+        if fallbackToBeta {
+            return betaAttestationKey
+        }
+        return nil
     }
     
 }

@@ -34,7 +34,7 @@ final class WalletTaskQueue {
             strongSelf.pendingTasks = tasksToKeep
             strongSelf.pendingTasks.append(task)
             
-            // process next pending transaction if not busy
+            // process next pending task if not busy
             strongSelf.processNextPendingTaskIfNotBusy()
         }
     }
@@ -53,7 +53,7 @@ final class WalletTaskQueue {
             // enqueue tasks
             strongSelf.pendingTasks.appendContentsOf(tasks)
             
-            // process next pending transaction if not busy
+            // process next pending task if not busy
             strongSelf.processNextPendingTaskIfNotBusy()
         }
     }
@@ -69,7 +69,7 @@ final class WalletTaskQueue {
     }
     
     private func processNextPendingTaskIfNotBusy() {
-        // process next pending transaction if not busy
+        // process next pending task if not busy
         if !busy {
             initiateDequeueProcess()
             processNextPendingTask()
