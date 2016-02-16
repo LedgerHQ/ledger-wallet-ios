@@ -78,12 +78,24 @@ final class DataReader {
         return readNextDataOfLength(remainingBytesLength)
     }
     
+    func readNextReversedAvailableData() -> NSData? {
+        return readNextReversedDataOfLength(remainingBytesLength)
+    }
+    
     func readNextDataOfLength(length: Int) -> NSData? {
+        guard length > 0 else { return nil }
         guard internalData.length >= length else { return nil }
         
         let data = internalData.subdataWithRange(NSMakeRange(0, length))
         internalData.replaceBytesInRange(NSMakeRange(0, length), withBytes: nil, length: 0)
         return data
+    }
+    
+    func readNextReversedDataOfLength(length: Int) -> NSData? {
+        guard let data = readNextDataOfLength(length) else { return nil }
+        
+        BTCDataReverse(NSMutableData(data: data))
+        return data.copy() as? NSData
     }
 
     // MARK: Internal methods

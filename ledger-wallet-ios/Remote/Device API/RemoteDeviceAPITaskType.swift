@@ -11,24 +11,27 @@ import Foundation
 protocol RemoteDeviceAPITaskType: class {
     
     var completionBlock: (() -> Void)? { get set }
+    var timeoutInterval: Double { get set }
     var devicesCoordinator: RemoteDevicesCoordinator { get }
     
     func run(completion completion: () -> Void)
     func notifyRunIsComplete()
-    func processReceivedAPDU(APDU: RemoteAPDU)
+    func receiveAPDU(APDU: RemoteAPDU)
     func cancel()
     func completeWithError(error: RemoteDeviceError?)
 
     // to reimplement
     func main() -> Bool
-    func handleReceivedAPDU(APDU: RemoteAPDU)
-    func handleSentAPDU(APDU: RemoteAPDU)
+    func didReceiveAPDU(APDU: RemoteAPDU)
+    func didSendAPDU(APDU: RemoteAPDU)
     func notifyResultWithError(error: RemoteDeviceError?)
     
 }
 
 extension RemoteDeviceAPITaskType {
     
+    // MARK: Queue management
+
     func run(completion completion: () -> Void) {
         completionBlock = completion
         
@@ -42,22 +45,31 @@ extension RemoteDeviceAPITaskType {
         completionBlock?()
     }
     
-    func processReceivedAPDU(APDU: RemoteAPDU) {
+    // MARK: APDU mangement
+    
+    func receiveAPDU(APDU: RemoteAPDU) {
         guard APDU.isResponse else {
             completeWithError(.InvalidResponse)
             return
         }
         if let error = APDU.statusError {
-            completeWithError(error)
+            switch error {
+            case .Unknown:
+                didReceiveAPDU(APDU)
+            default:
+                completeWithError(error)
+            }
             return
         }
         
-        handleReceivedAPDU(APDU)
+        didReceiveAPDU(APDU)
     }
     
-    func handleSentAPDU(APDU: RemoteAPDU) {
+    func didSendAPDU(APDU: RemoteAPDU) {
         
     }
+    
+    // MARK: Completion management
     
     func cancel() {
         notifyResultWithError(.CancelledTask)

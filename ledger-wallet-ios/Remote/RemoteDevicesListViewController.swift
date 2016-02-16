@@ -71,8 +71,10 @@ final class RemoteDevicesListViewController: BaseViewController {
     }
     
     @IBAction private func sendHello() {
-        devicesCommunicator?.deviceAPI?.checkAttestation(NSOperationQueue.mainQueue()) { isAuthentic, isBeta, error in
-            print(isAuthentic, isBeta, error)
+        devicesCommunicator?.deviceAPI?.verifyPIN(PIN: nil, timeoutInterval: 0, completionQueue: NSOperationQueue.mainQueue()) { isVerified, remainingAttempts, error in
+            self.devicesCommunicator?.deviceAPI?.getPublicKey(path: WalletAddressPath(accountIndex: 0, chainIndex: 0, keyIndex: 0), completionQueue: NSOperationQueue.mainQueue()) { publicKey, publicAddress, chainCode, error in
+                print(publicKey, publicAddress, chainCode, error)
+            }
         }
     }
 

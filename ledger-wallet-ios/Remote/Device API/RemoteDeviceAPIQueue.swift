@@ -8,12 +8,21 @@
 
 import Foundation
 
+protocol RemoteDeviceAPIQueueDelegate: class {
+    
+    func deviceAPIQueue(deviceAPIQueue: RemoteDeviceAPIQueue, didTimeoutTask: RemoteDeviceAPITaskType)
+    
+}
+
 final class RemoteDeviceAPIQueue {
     
+    weak var delegate: RemoteDeviceAPIQueueDelegate?
     private var busy = false
+    private var timeoutTimer: DispatchTimer?
     private var currentTask: RemoteDeviceAPITaskType?
     private var pendingTasks: [RemoteDeviceAPITaskType] = []
-    private var workingQueue = NSOperationQueue(name: "RemoteDeviceAPIQueue", maxConcurrentOperationCount: 1)
+    private let delegateQueue: NSOperationQueue
+    private let workingQueue = NSOperationQueue(name: "RemoteDeviceAPIQueue", maxConcurrentOperationCount: 1)
     
     // MARK: Tasks management
     
@@ -73,10 +82,17 @@ final class RemoteDeviceAPIQueue {
             strongSelf.currentTask = task
             strongSelf.pendingTasks.removeFirst()
             
+            // start timeout timer
+            if task.timeoutInterval > 0 {
+                strongSelf.startTimeoutTimerWithInterval(task.timeoutInterval)
+            }
+            
             // execute task
             task.run() { [weak self] in
                 guard let strongSelf = self else { return }
                 
+                strongSelf.currentTask = nil
+                strongSelf.stopTimeoutTimer()
                 strongSelf.processNextPendingTask()
             }
         }
@@ -89,7 +105,7 @@ final class RemoteDeviceAPIQueue {
             guard let strongSelf = self else { return }
             guard strongSelf.busy else { return }
             
-            strongSelf.currentTask?.processReceivedAPDU(APDU)
+            strongSelf.currentTask?.receiveAPDU(APDU)
         }
     }
     
@@ -98,7 +114,7 @@ final class RemoteDeviceAPIQueue {
             guard let strongSelf = self else { return }
             guard strongSelf.busy else { return }
             
-            strongSelf.currentTask?.handleSentAPDU(APDU)
+            strongSelf.currentTask?.didSendAPDU(APDU)
         }
     }
     
@@ -113,9 +129,44 @@ final class RemoteDeviceAPIQueue {
     
     // MARK: Initialization
     
+    init(delegateQueue: NSOperationQueue) {
+        self.delegateQueue = delegateQueue
+        self.workingQueue.underlyingQueue = dispatchSerialQueueWithName(dispatchQueueNameForIdentifier("RemoteDeviceAPIQueue"))
+    }
+    
     deinit {
-        workingQueue.cancelAllOperations()
+        handleError(.CancelledTask)
         cancelAllTasks(cancelPendingTasks: true)
+    }
+    
+}
+
+
+// MARK: - Timeout management
+
+extension RemoteDeviceAPIQueue {
+    
+    private func startTimeoutTimerWithInterval(interval: Double) {
+        guard interval > 0 else { return }
+        guard let queue = workingQueue.underlyingQueue else { return }
+        
+        timeoutTimer = DispatchTimer.scheduledTimerWithTimeInterval(milliseconds: UInt(interval * 1000), queue: queue, repeats: false) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            guard strongSelf.busy else { return }
+            guard let task = strongSelf.currentTask else { return }
+            
+            strongSelf.delegateQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.delegate?.deviceAPIQueue(strongSelf, didTimeoutTask: task)
+            }
+            task.completeWithError(.TransferTimeout)
+        }
+    }
+    
+    private func stopTimeoutTimer() {
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
     }
     
 }

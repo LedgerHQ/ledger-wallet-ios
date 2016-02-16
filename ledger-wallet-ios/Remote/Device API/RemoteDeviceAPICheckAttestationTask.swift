@@ -11,6 +11,8 @@ import Foundation
 final class RemoteDeviceAPICheckAttestationTask: RemoteDeviceAPITaskType {
     
     typealias CompletionBlock = (isAuthentic: Bool, isBeta: Bool, error: RemoteDeviceError?) -> Void
+    
+    var timeoutInterval = 0.0
     var completionBlock: (() -> Void)?
     let devicesCoordinator: RemoteDevicesCoordinator
     
@@ -34,7 +36,7 @@ final class RemoteDeviceAPICheckAttestationTask: RemoteDeviceAPITaskType {
         return true
     }
     
-    func handleReceivedAPDU(APDU: RemoteAPDU) {
+    func didReceiveAPDU(APDU: RemoteAPDU) {
         guard let responseData = APDU.responseData else {
             completeWithError(.InvalidResponse)
             return
@@ -52,12 +54,21 @@ final class RemoteDeviceAPICheckAttestationTask: RemoteDeviceAPITaskType {
             return
         }
         
+        // normalize data
         let verifyData = NSMutableData(data: versionData); verifyData.appendData(blobData)
+        let finalSignatureData = NSMutableData(data: signatureData)
+        
+        // fix first byte 0x31 issue
+        var byte: UInt8 = 0
+        finalSignatureData.getBytes(&byte, length: sizeofValue(byte))
+        if byte == 0x31 {
+            finalSignatureData.replaceBytesInRange(NSMakeRange(0, sizeofValue(byte)), withBytes: [0x30] as [UInt8], length: sizeofValue(byte))
+        }
         
         // try production key
         if let productionAttestationKey = servicesProvider.attestationKeyWithIDs(batchID: batchID, derivationID: derivationID, fallbackToBeta: false) {
             let key = BTCKey(publicKey: productionAttestationKey.publicKey)
-            authentic = key.isValidSignature(signatureData, hash: BTCSHA256(verifyData))
+            authentic = key.isValidSignature(finalSignatureData, hash: BTCSHA256(verifyData))
             if authentic {
                 completeWithError(nil)
                 return
@@ -68,7 +79,7 @@ final class RemoteDeviceAPICheckAttestationTask: RemoteDeviceAPITaskType {
         let betaAttestationKey = servicesProvider.betaAttestationKey
         let key = BTCKey(publicKey: betaAttestationKey.publicKey)
         beta = true
-        authentic = key.isValidSignature(signatureData, hash: BTCSHA256(verifyData))
+        authentic = key.isValidSignature(finalSignatureData, hash: BTCSHA256(verifyData))
         completeWithError(nil)
     }
 

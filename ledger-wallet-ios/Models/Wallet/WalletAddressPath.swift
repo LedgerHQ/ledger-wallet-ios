@@ -29,6 +29,18 @@ struct WalletAddressPath {
         return "/44'/0'" + relativePath
     }
     
+    var BIP44Indexes: [UInt32] {
+        var indexes: [UInt32] = []
+        
+        let hardenedPow = UInt32(pow(2.0, 31.0))
+        indexes.append(hardenedPow + 44)
+        indexes.append(hardenedPow + 0)
+        indexes.append(hardenedPow + UInt32(accountIndex))
+        indexes.append(UInt32(chainIndex))
+        indexes.append(UInt32(keyIndex))
+        return indexes
+    }
+    
     func rangeStringToKeyIndex(keyIndex: Int) -> String {
         return "\(relativePath)-\(keyIndex)"
     }

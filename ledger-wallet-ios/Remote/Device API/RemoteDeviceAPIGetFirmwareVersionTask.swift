@@ -11,6 +11,8 @@ import Foundation
 final class RemoteDeviceAPIGetFirmwareVersionTask: RemoteDeviceAPITaskType {
     
     typealias CompletionBlock = (version: RemoteDeviceFirmwareVersion?, error: RemoteDeviceError?) -> Void
+    
+    var timeoutInterval = 0.0
     var completionBlock: (() -> Void)?
     let devicesCoordinator: RemoteDevicesCoordinator
 
@@ -27,7 +29,7 @@ final class RemoteDeviceAPIGetFirmwareVersionTask: RemoteDeviceAPITaskType {
         return true
     }
     
-    func handleReceivedAPDU(APDU: RemoteAPDU) {
+    func didReceiveAPDU(APDU: RemoteAPDU) {
         guard let responseData = APDU.responseData, let version = RemoteDeviceFirmwareVersion(versionData: responseData) else {
             completeWithError(.InvalidResponse)
             return

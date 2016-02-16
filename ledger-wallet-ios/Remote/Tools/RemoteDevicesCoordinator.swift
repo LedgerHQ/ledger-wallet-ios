@@ -207,6 +207,18 @@ extension RemoteDevicesCoordinator {
             strongSelf.processSendAPDU(APDU)
         }
     }
+    
+    func abortCurrentTransfer() {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard strongSelf.currentTransferType != nil else { return }
+            guard strongSelf.state == .Connected else { return }
+            guard let device = strongSelf.currentDevice else { return }
+
+            strongSelf.logger.info("Aborting current transfer \(strongSelf.currentTransferType!) for device \(device.uid) with transport type \(device.transportType)")
+            strongSelf.resetTransferInternalState()
+        }
+    }
 
     private func processSendAPDU(APDU: RemoteAPDU) {
         guard state == .Connected else { return }

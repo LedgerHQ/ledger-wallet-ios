@@ -272,11 +272,11 @@ extension RemoteDeviceCommunicator: RemoteDevicesCoordinatorDelegate {
         // check attestation
         logger.info("Checking attestation for device \(device.uid)")
         deviceAPI = RemoteDeviceAPI(devicesCoordinator: self.devicesCoordinator, servicesProvider: servicesProvider)
-        deviceAPI?.checkAttestation(workingQueue) { [weak self] isAuthentic, isBeta, error in
+        deviceAPI?.checkAttestation(timeoutInterval: 5.0, completionQueue: workingQueue) { [weak self] isAuthentic, isBeta, error in
             guard let strongSelf = self else { return }
             
             if isAuthentic {
-                strongSelf.logger.info("Attestation passed for device \(device.uid), considering connected")
+                strongSelf.logger.info("Attestation passed for device \(device.uid) (beta = \(isBeta)), considering connected")
             }
             else {
                 strongSelf.logger.warn("Attestation failed for device \(device.uid), disconnecting")

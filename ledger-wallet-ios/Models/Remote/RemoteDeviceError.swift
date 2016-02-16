@@ -19,6 +19,7 @@ enum RemoteDeviceError: ErrorType {
     case UnableToWrite
     case CancelledTask
     case NotConnected
+    case InvalidPIN(remainingAttempts: Int)
     case InvalidLength
     case InvalidAccessRights
     case InvalidRequest
@@ -26,7 +27,10 @@ enum RemoteDeviceError: ErrorType {
     case InvalidParameters
     case FileNotFound
     case NotImplemented
+    case TransferTimeout
     case TechnicalProblem(byte: UInt8)
+    case NotProvisioned
+    case NeedsPowerCycle
     case Unknown
     
     init?(statusData: NSData) {
@@ -54,10 +58,13 @@ enum RemoteDeviceError: ErrorType {
             self = .InvalidParameters
         case BTCDataFromHex("6D00"):
             self = .NotImplemented
+        case BTCDataFromHex("6985"):
+            self = .NotProvisioned
+        case BTCDataFromHex("6D00"):
+            self = NeedsPowerCycle
         default:
-            break
+            self = Unknown
         }
-        self = Unknown
     }
     
 }
