@@ -40,7 +40,7 @@ extension WalletAddress: SQLiteFetchableModel {
         }
         
         self.address = address
-        self.path = WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
+        self.path = WalletAddressPath(BIP32AccountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
         self.relativePath = relativePath
     }
     

@@ -10,6 +10,7 @@ import Foundation
 
 final class RemoteDeviceCommunicator {
     
+    let servicesProvider: ServicesProviderType
     private(set) var deviceAPI: RemoteDeviceAPI?
     private var passingAttestation: Bool?
     private var forcedDelegateError: RemoteDeviceError?
@@ -18,7 +19,6 @@ final class RemoteDeviceCommunicator {
     private var connectionHandlerQueue: NSOperationQueue?
     private var connectionHandlerBlock: ConnectionHandlerBlock?
     private let devicesCoordinator: RemoteDevicesCoordinator
-    private let servicesProvider: ServicesProviderType
     private let workingQueue = NSOperationQueue(name: "RemoteDeviceCommunicator", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "RemoteDeviceCommunicator")
     

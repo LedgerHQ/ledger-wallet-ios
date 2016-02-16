@@ -32,11 +32,11 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
     private func flattenInputs(context: WalletTransactionsStreamContext) -> [Int: WalletOperation] {
         var operations: [Int: WalletOperation] = [:]
         
-        for (input, address) in context.mappedInputs where input.value != nil {
-            let uid = "\(WalletOperationKind.Send.rawValue)-\(context.remoteTransaction.transaction.hash)-\(address.path.accountIndex)"
-            let operation = operations[address.path.accountIndex] ??
-                WalletOperation(uid: uid, accountIndex: address.path.accountIndex, transactionHash: context.remoteTransaction.transaction.hash, kind: .Send, amount: 0)
-            operations[address.path.accountIndex] = operation.increaseAmount(input.value!)
+        for (input, address) in context.mappedInputs where input.value != nil && address.path.conformsToBIP32 {
+            let uid = "\(WalletOperationKind.Send.rawValue)-\(context.remoteTransaction.transaction.hash)-\(address.path.BIP32AccountIndex!)"
+            let operation = operations[address.path.BIP32AccountIndex!] ??
+                WalletOperation(uid: uid, accountIndex: address.path.BIP32AccountIndex!, transactionHash: context.remoteTransaction.transaction.hash, kind: .Send, amount: 0)
+            operations[address.path.BIP32AccountIndex!] = operation.increaseAmount(input.value!)
         }
         return operations
     }
@@ -44,11 +44,11 @@ final class WalletTransactionsStreamOperationsFunnel: WalletTransactionsStreamFu
     private func flattenOutputs(context: WalletTransactionsStreamContext, external: Bool) -> [Int: WalletOperation] {
         var operations: [Int: WalletOperation] = [:]
         
-        for (output, address) in context.mappedOutputs where address.path.isInternal == !external {
-            let uid = "\(WalletOperationKind.Receive.rawValue)-\(context.remoteTransaction.transaction.hash)-\(address.path.accountIndex)"
-            let operation = operations[address.path.accountIndex] ??
-                WalletOperation(uid: uid, accountIndex: address.path.accountIndex, transactionHash: context.remoteTransaction.transaction.hash, kind: .Receive, amount: 0)
-            operations[address.path.accountIndex] = operation.increaseAmount(output.value)
+        for (output, address) in context.mappedOutputs where address.path.isBIP32Internal == !external && address.path.conformsToBIP32 {
+            let uid = "\(WalletOperationKind.Receive.rawValue)-\(context.remoteTransaction.transaction.hash)-\(address.path.BIP32AccountIndex!)"
+            let operation = operations[address.path.BIP32AccountIndex!] ??
+                WalletOperation(uid: uid, accountIndex: address.path.BIP32AccountIndex!, transactionHash: context.remoteTransaction.transaction.hash, kind: .Receive, amount: 0)
+            operations[address.path.BIP32AccountIndex!] = operation.increaseAmount(output.value)
         }
         return operations
     }

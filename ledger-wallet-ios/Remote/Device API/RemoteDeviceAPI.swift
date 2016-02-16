@@ -79,6 +79,10 @@ final class RemoteDeviceAPI {
         }
     }
     
+    func getExtendedPublicKey(accountIndex accountIndex: Int, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: (extendedPublicKey: String?, error: RemoteDeviceError?) -> Void) {
+        
+    }
+    
     // MARK: Events management
     
     func handleDidReceiveAPDU(APDU: RemoteAPDU, fromDevice device: RemoteDeviceType) {

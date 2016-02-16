@@ -17,7 +17,7 @@ private enum LedgerAPIHeaderFields: String {
     
 }
 
-final class LedgerServicesProvider: ServicesProviderType {
+struct LedgerServicesProvider: ServicesProviderType {
     
     let name = "Ledger Services Provider"
     let coinNetwork: CoinNetworkType
@@ -31,7 +31,7 @@ final class LedgerServicesProvider: ServicesProviderType {
     // MARK: Endpoint URLs
     
     var walletEventsWebsocketURL: NSURL {
-        let path = "/blockchain/\(coinNetwork.identifier)/ws"
+        let path = "/blockchain/\(coinNetwork.acronym)/ws"
         return NSURL(string: path, relativeToURL: websocketBaseURL)!
     }
     
@@ -40,7 +40,7 @@ final class LedgerServicesProvider: ServicesProviderType {
     }
 
     func walletTransactionsURLForAddresses(addresses: [String]) -> NSURL {
-        let path = "/blockchain/\(coinNetwork.identifier)/addresses/\(addresses.joinWithSeparator(","))/transactions"
+        let path = "/blockchain/\(coinNetwork.acronym)/addresses/\(addresses.joinWithSeparator(","))/transactions"
         return NSURL(string: path, relativeToURL: APIBaseURL)!
     }
     

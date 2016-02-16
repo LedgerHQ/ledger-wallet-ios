@@ -57,7 +57,7 @@ final class WalletTransactionsConsumer {
             strongSelf.logger.info("Start refreshing transactions")
             strongSelf.refreshing = true
             strongSelf.foundTransactionsInCurrentAccount = false
-            strongSelf.fetchNextAddressesFromPath(WalletAddressPath(), toKeyIndex: WalletLayoutHolder.BIP44AddressesGap - 1)
+            strongSelf.fetchNextAddressesFromPath(WalletAddressPath(BIP32AccountIndex: 0, chainIndex: 0, keyIndex: 0), toKeyIndex: WalletLayoutHolder.BIP44AddressesGap - 1)
             
             // notify delegate
             strongSelf.delegateQueue.addOperationWithBlock() { strongSelf.delegate?.transactionsConsumerDidStart(strongSelf) }
@@ -97,17 +97,17 @@ final class WalletTransactionsConsumer {
     private func fetchNextAddressesFromPath(path: WalletAddressPath, toKeyIndex keyIndex: Int) {
         // generate all paths
         var requestedPaths: [WalletAddressPath] = []
-        for i in path.keyIndex...keyIndex { requestedPaths.append(WalletAddressPath(accountIndex: path.accountIndex, chainIndex: path.chainIndex, keyIndex: i)) }
+        for i in path.BIP32KeyIndex!...keyIndex { requestedPaths.append(WalletAddressPath(BIP32AccountIndex: path.BIP32AccountIndex!, chainIndex: path.BIP32ChainIndex!, keyIndex: i)) }
 
         // get addresses
-        logger.info("Fetching addresses for paths in range \(path.rangeStringToKeyIndex(keyIndex))")
+        logger.info("Fetching addresses for paths in range \(path.rangeStringToIndex(keyIndex))")
         addressCache.fetchOrDeriveAddressesAtPaths(requestedPaths, queue: workingQueue) { [weak self] addresses in
             guard let strongSelf = self where strongSelf.refreshing else { return }
             
             // check we got the addresses
             guard let addresses = addresses else {
                 // ask delegate for missing account
-                strongSelf.askDelegateForAccountAtIndex(path.accountIndex, requestedPaths: requestedPaths, startingPath: path, toKeyIndex: keyIndex)
+                strongSelf.askDelegateForAccountAtIndex(path.BIP32AccountIndex!, requestedPaths: requestedPaths, startingPath: path, toKeyIndex: keyIndex)
                 return
             }
         
@@ -117,7 +117,7 @@ final class WalletTransactionsConsumer {
     }
     
     private func askDelegateForAccountAtIndex(accountIndex: Int, requestedPaths: [WalletAddressPath], startingPath: WalletAddressPath, toKeyIndex keyIndex: Int) {
-        logger.warn("Unknown account at index \(requestedPaths.first!.accountIndex), asking delegate")
+        logger.warn("Unknown account at index \(requestedPaths.first!.BIP32AccountIndex!), asking delegate")
         
         let continueBlock = { [weak self] (shouldContinue: Bool) in
             guard let strongSelf = self where strongSelf.refreshing else { return }
@@ -159,7 +159,7 @@ final class WalletTransactionsConsumer {
     
     private func fetchTransactionsForAddresses(addresses: [WalletAddress], startingPath: WalletAddressPath, toKeyIndex keyIndex: Int) {
         // fetch transactions from API
-        let currentPath = startingPath.rangeStringToKeyIndex(keyIndex)
+        let currentPath = startingPath.rangeStringToIndex(keyIndex)
         logger.info("Fetching transactions for addresses in range \(currentPath)")
         apiClient.fetchTransactionsForAddresses(addresses.map() { return $0.address }) { [weak self] transactions in
             guard let strongSelf = self where strongSelf.refreshing else { return }
@@ -179,26 +179,26 @@ final class WalletTransactionsConsumer {
         // check it is is the end of discovery
         if transactions.count == 0 {
             // if we are already on the last chain index
-            if startingPath.chainIndex >= self.dynamicType.maxChainIndex {
+            if startingPath.BIP32ChainIndex! >= self.dynamicType.maxChainIndex {
                 if foundTransactionsInCurrentAccount {
                     // next account
                     foundTransactionsInCurrentAccount = false
-                    let newAddressPath = startingPath.pathWithNewAccountIndex(startingPath.accountIndex + 1)
+                    let newAddressPath = startingPath.pathWithNewBIP32AccountIndex(startingPath.BIP32AccountIndex! + 1)
                     let newKeyIndex = WalletLayoutHolder.BIP44AddressesGap - 1
-                    logger.info("No transactions found, continuing on the next account in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
+                    logger.info("No transactions found, continuing on the next account in range \(newAddressPath.rangeStringToIndex(newKeyIndex))")
                     fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
                 }
                 else {
                     // stop discovery
-                    logger.info("No transactions found for account \(startingPath.accountIndex), stopping")
+                    logger.info("No transactions found for account \(startingPath.BIP32AccountIndex!), stopping")
                     stopRefreshingWithError(nil)
                 }
             }
             else {
                 // next chain
-                let newAddressPath = startingPath.pathWithNewChainIndex(startingPath.chainIndex + 1)
+                let newAddressPath = startingPath.pathWithNewBIP32ChainIndex(startingPath.BIP32ChainIndex! + 1)!
                 let newKeyIndex = WalletLayoutHolder.BIP44AddressesGap - 1
-                logger.info("No transactions found, continuing on the next chain in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
+                logger.info("No transactions found, continuing on the next chain in range \(newAddressPath.rangeStringToIndex(newKeyIndex))")
                 fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
             }
         }
@@ -212,9 +212,9 @@ final class WalletTransactionsConsumer {
             
             // next key
             foundTransactionsInCurrentAccount = true
-            let newAddressPath = startingPath.pathWithKeyIndex(keyIndex + 1)
-            let newKeyIndex = newAddressPath.keyIndex + WalletLayoutHolder.BIP44AddressesGap - 1
-            logger.info("Transactions found, continuing on the same chain in range \(newAddressPath.rangeStringToKeyIndex(newKeyIndex))")
+            let newAddressPath = startingPath.pathWithBIP32KeyIndex(keyIndex + 1)!
+            let newKeyIndex = newAddressPath.BIP32KeyIndex! + WalletLayoutHolder.BIP44AddressesGap - 1
+            logger.info("Transactions found, continuing on the same chain in range \(newAddressPath.rangeStringToIndex(newKeyIndex))")
             fetchNextAddressesFromPath(newAddressPath, toKeyIndex: newKeyIndex)
         }
     }

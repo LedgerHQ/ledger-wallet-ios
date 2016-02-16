@@ -10,8 +10,10 @@ import Foundation
 
 struct BitcoinNetwork: CoinNetworkType {
     
+    let identifier = "btc-mainnet"
     let name = "Bitcoin Mainnet"
-    let identifier = "btc"
     let isTest = false
+    let BIP44Index = 0
+    let acronym = "btc"
     
 }

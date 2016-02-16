@@ -10,8 +10,10 @@ import Foundation
 
 protocol CoinNetworkType {
     
-    var name: String { get }
     var identifier: String { get }
+    var name: String { get }
     var isTest: Bool { get }
+    var BIP44Index: Int { get }
+    var acronym: String { get }
     
 }

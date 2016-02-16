@@ -106,7 +106,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     }
     
     private func transactionReferencesObservableAccountAtIndex(index: Int, context: WalletTransactionsStreamContext) -> Bool {
-        for (_, address) in context.mappedOutputs where address.path.accountIndex == index {
+        for (_, address) in context.mappedOutputs where address.path.BIP32AccountIndex == index {
             return true
         }
         return false
@@ -116,28 +116,32 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
         for (_, address) in context.mappedOutputs {
             var updatedLayouts = false
             
-            if address.path.isExternal {
-                if layoutHolder.externalIndex(address.path.keyIndex, isInsideObservableRangeForAccountAtIndex: address.path.accountIndex) {
+            guard let accountIndex = address.path.BIP32AccountIndex, keyIndex = address.path.BIP32KeyIndex else {
+                continue
+            }
+            
+            if address.path.isBIP32External {
+                if layoutHolder.externalIndex(keyIndex, isInsideObservableRangeForAccountAtIndex: accountIndex) {
                     // bump external index
-                    layoutHolder.setNextExternalIndex(address.path.keyIndex + 1, forAccountAtIndex: address.path.accountIndex)
+                    layoutHolder.setNextExternalIndex(keyIndex + 1, forAccountAtIndex: accountIndex)
                     updatedLayouts = true
                     
                     // cache new addresses
-                    if let range = layoutHolder.observableExternalRangeForAccountAtIndex(address.path.accountIndex) {
-                        let paths = range.map({ return address.path.pathWithKeyIndex($0) })
+                    if let range = layoutHolder.observableExternalRangeForAccountAtIndex(accountIndex) {
+                        let paths = range.flatMap({ return address.path.pathWithBIP32KeyIndex($0) })
                         cacheAddressesAtPaths(paths, external: true, workingQueue: workingQueue)
                     }
                 }
             }
             else {
-                if layoutHolder.internalIndex(address.path.keyIndex, isInsideObservableRangeForAccountAtIndex: address.path.accountIndex) {
+                if layoutHolder.internalIndex(keyIndex, isInsideObservableRangeForAccountAtIndex: accountIndex) {
                     // bump internal index
-                    layoutHolder.setNextInternalIndex(address.path.keyIndex + 1, forAccountAtIndex: address.path.accountIndex)
+                    layoutHolder.setNextInternalIndex(keyIndex + 1, forAccountAtIndex: accountIndex)
                     updatedLayouts = true
                     
                     // cache new addresses
-                    if let range = layoutHolder.observableInternalRangeForAccountAtIndex(address.path.accountIndex) {
-                        let paths = range.map({ return address.path.pathWithKeyIndex($0) })
+                    if let range = layoutHolder.observableInternalRangeForAccountAtIndex(accountIndex) {
+                        let paths = range.flatMap({ return address.path.pathWithBIP32KeyIndex($0) })
                         cacheAddressesAtPaths(paths, external: false, workingQueue: workingQueue)
                     }
                 }
@@ -151,7 +155,7 @@ final class WalletTransactionsStreamLayoutFunnel: WalletTransactionsStreamFunnel
     
     private func cacheAddressesAtPaths(paths: [WalletAddressPath], external: Bool, workingQueue: NSOperationQueue) {
         if let first = paths.first, last = paths.last {
-            logger.info("Caching new \(external ? "external" : "internal") addresses for range \(first.rangeStringToKeyIndex(last.keyIndex))")
+            logger.info("Caching new \(external ? "external" : "internal") addresses for range \(first.rangeStringToIndex(last.BIP32KeyIndex!))")
             addressCache.fetchOrDeriveAddressesAtPaths(paths, queue: workingQueue, completion: { _ in })
         }
     }

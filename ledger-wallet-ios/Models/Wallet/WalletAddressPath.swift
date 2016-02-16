@@ -1,87 +1,203 @@
 //
-//  WalletAddressPath.swift
+//  WalletAddressPathe.swift
 //  ledger-wallet-ios
 //
-//  Created by Nicolas Bigot on 03/12/2015.
-//  Copyright © 2015 Ledger. All rights reserved.
+//  Created by Nicolas Bigot on 16/02/2016.
+//  Copyright © 2016 Ledger. All rights reserved.
 //
 
 import Foundation
 
 struct WalletAddressPath {
     
-    let accountIndex: Int
-    let chainIndex: Int
-    let keyIndex: Int
+    private(set) var indexes: [WalletAddressPathIndex]
     
-    var isExternal: Bool { return chainIndex == 0 }
-    var isInternal: Bool { return chainIndex == 1 }
+    // MARK: Utils
     
-    var relativePath: String {
-        return "/\(accountIndex)'" + chainPath
+    var derivationIndexes: [UInt32] {
+        return indexes.map { $0.derivationIndex }
     }
     
-    var chainPath: String {
-        return "/\(chainIndex)/\(keyIndex)"
+    var depth: Int {
+        return indexes.count
     }
     
-    var BIP44Path: String {
-        return "/44'/0'" + relativePath
-    }
-    
-    var BIP44Indexes: [UInt32] {
-        var indexes: [UInt32] = []
+    func indexAtDepth(depth: Int) -> WalletAddressPathIndex? {
+        guard depth <= indexes.count - 1 else { return nil }
         
-        let hardenedPow = UInt32(pow(2.0, 31.0))
-        indexes.append(hardenedPow + 44)
-        indexes.append(hardenedPow + 0)
-        indexes.append(hardenedPow + UInt32(accountIndex))
-        indexes.append(UInt32(chainIndex))
-        indexes.append(UInt32(keyIndex))
-        return indexes
+        return indexes[depth]
     }
     
-    func rangeStringToKeyIndex(keyIndex: Int) -> String {
-        return "\(relativePath)-\(keyIndex)"
+    var parentPath: WalletAddressPath? {
+        guard indexes.count > 0 else { return nil }
+        
+        return WalletAddressPath(indexes: Array(indexes.dropLast()))
     }
     
-    func pathWithAcccountIndex(index: Int) -> WalletAddressPath {
-        return WalletAddressPath(accountIndex: index, chainIndex: chainIndex, keyIndex: keyIndex)
+    func pathPrefixedWithPath(path: WalletAddressPath) -> WalletAddressPath {
+        return WalletAddressPath(indexes: path.indexes + indexes)
     }
     
-    func pathWithChainIndex(index: Int) -> WalletAddressPath {
-        return WalletAddressPath(accountIndex: accountIndex, chainIndex: index, keyIndex: keyIndex)
+    func pathSuffixedWithPath(path: WalletAddressPath) -> WalletAddressPath {
+        return WalletAddressPath(indexes: indexes + path.indexes)
     }
     
-    func pathWithKeyIndex(index: Int) -> WalletAddressPath {
-        return WalletAddressPath(accountIndex: accountIndex, chainIndex: chainIndex, keyIndex: index)
+    func pathDroppingFirst(n: Int) -> WalletAddressPath? {
+        guard indexes.count >= depth else { return nil }
+        
+        return WalletAddressPath(indexes: Array(indexes.dropFirst(n)))
     }
     
-    func pathWithNewAccountIndex(index: Int) -> WalletAddressPath {
-        return WalletAddressPath(accountIndex: index, chainIndex: 0, keyIndex: 0)
+    func pathDroppingLast(n: Int) -> WalletAddressPath? {
+        guard indexes.count >= depth else { return nil }
+
+        return WalletAddressPath(indexes: Array(indexes.dropLast(n)))
     }
     
-    func pathWithNewChainIndex(index: Int) -> WalletAddressPath {
-        return WalletAddressPath(accountIndex: accountIndex, chainIndex: index, keyIndex: 0)
+    func representativeString(includeMasterLevel includeMasterLevel: Bool = false) -> String {
+        return indexes.reduce(includeMasterLevel ? "m" : "", combine: { return "\($0)/\($1.index)\($1.isHardened ? "'" : "")" })
+    }
+    
+    func rangeStringToIndex(index: Int, includeMasterLevel: Bool = false) -> String {
+        return representativeString(includeMasterLevel: includeMasterLevel) + "-\(index)"
     }
     
     // MARK: Initialization
-
-    init(accountIndex: Int, chainIndex: Int, keyIndex: Int) {
-        self.accountIndex = accountIndex
-        self.chainIndex = chainIndex
-        self.keyIndex = keyIndex
-    }
     
     init() {
-        self.init(accountIndex: 0, chainIndex: 0, keyIndex: 0)
+        self.init(indexes: [])
     }
+    
+    init(var path: String) {
+        let characterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        path = path.stringByTrimmingCharactersInSet(characterSet)
+        let levels = path.componentsSeparatedByString("/").map({ $0.stringByTrimmingCharactersInSet(characterSet) }).filter({ $0.characters.count > 0 && $0 != "m" })
+        var foundIndexes: [WalletAddressPathIndex] = []
+        
+        levels.forEach { level in
+            var level = level
+            let hardened: Bool
+            
+            if level.characters.last == "'" {
+                level = level.stringByReplacingOccurrencesOfString("'", withString: "")
+                hardened = true
+            }
+            else {
+                hardened = false
+            }
+            
+            guard let index = Int(level) else { return }
+            guard let newIndex = WalletAddressPathIndex(index: index, isHardened: hardened) else { return }
+            foundIndexes.append(newIndex)
+        }
+        self.init(indexes: foundIndexes)
+    }
+    
+    init(indexes: [WalletAddressPathIndex]) {
+        self.indexes = indexes
+    }
+    
 }
 
 // MARK: - Equatable
 
-extension WalletAddressPath: Equatable {}
+extension WalletAddressPath: Equatable { }
 
 func ==(lhs: WalletAddressPath, rhs: WalletAddressPath) -> Bool {
-    return lhs.accountIndex == rhs.accountIndex && lhs.chainIndex == rhs.chainIndex && lhs.keyIndex == rhs.keyIndex
+    return lhs.indexes == rhs.indexes
+}
+
+// MARK: - BIP32
+
+extension WalletAddressPath {
+    
+    var conformsToBIP32: Bool {
+        return indexes.count == 3 && indexes[0].isHardened &&
+            !indexes[1].isHardened && !indexes[2].isHardened
+    }
+    
+    var BIP32AccountIndex: Int? {
+        return BIP32IndexAtDepth(0)
+    }
+    
+    var BIP32ChainIndex: Int? {
+        return BIP32IndexAtDepth(1)
+    }
+    
+    var BIP32KeyIndex: Int? {
+        return BIP32IndexAtDepth(2)
+    }
+    
+    var isBIP32External: Bool {
+        return BIP32ChainIndex == 0
+    }
+    
+    var isBIP32Internal: Bool {
+        return BIP32ChainIndex == 1
+    }
+    
+    func pathWithBIP32AccountIndex(accountIndex: Int) -> WalletAddressPath? {
+        guard let chainIndex = BIP32ChainIndex, keyIndex = BIP32KeyIndex else { return nil }
+        
+        return WalletAddressPath(BIP32AccountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
+    }
+    
+    func pathWithBIP32ChainIndex(chainIndex: Int) -> WalletAddressPath? {
+        guard let accountIndex = BIP32AccountIndex, keyIndex = BIP32KeyIndex else { return nil }
+        
+        return WalletAddressPath(BIP32AccountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
+    }
+    
+    func pathWithBIP32KeyIndex(keyIndex: Int) -> WalletAddressPath? {
+        guard let accountIndex = BIP32AccountIndex, chainIndex = BIP32ChainIndex else { return nil }
+        
+        return WalletAddressPath(BIP32AccountIndex: accountIndex, chainIndex: chainIndex, keyIndex: keyIndex)
+    }
+    
+    func pathWithNewBIP32AccountIndex(accountIndex: Int) -> WalletAddressPath {
+        return WalletAddressPath(BIP32AccountIndex: accountIndex, chainIndex: 0, keyIndex: 0)
+    }
+    
+    func pathWithNewBIP32ChainIndex(chainIndex: Int) -> WalletAddressPath? {
+        guard let accountIndex = BIP32AccountIndex else { return nil }
+
+        return WalletAddressPath(BIP32AccountIndex: accountIndex, chainIndex: chainIndex, keyIndex: 0)
+    }
+
+    private func BIP32IndexAtDepth(depth: Int) -> Int? {
+        guard conformsToBIP32 else { return nil }
+        
+        return indexes[depth].index
+    }
+    
+    init(BIP32AccountIndex accountIndex: Int, chainIndex: Int, keyIndex: Int) {
+        self.init(path: "/\(accountIndex)'/\(chainIndex)/\(keyIndex)")
+    }
+    
+}
+
+// MARK: - BIP44
+
+extension WalletAddressPath {
+    
+    var conformsToBIP44: Bool {
+        return indexes.count == 5 && indexes[0].index == 44 && indexes[0].isHardened &&
+            indexes[1].isHardened && indexes[2].isHardened &&
+            !indexes[3].isHardened && !indexes[4].isHardened
+    }
+    
+    func BIP44PathWithCoinNetwork(coinNetwork: CoinNetworkType) -> WalletAddressPath? {
+        if conformsToBIP44 {
+            return self
+        }
+        else if conformsToBIP32 {
+            return self.pathPrefixedWithPath(WalletAddressPath(path: "/44'/\(coinNetwork.BIP44Index)'"))
+        }
+        return nil
+    }
+
+    init(BIP44AccountIndex accountIndex: Int, chainIndex: Int, keyIndex: Int, coinNetwork: CoinNetworkType) {
+        self.init(path: "/44'/\(coinNetwork.BIP44Index)'/\(accountIndex)'/\(chainIndex)/\(keyIndex)")
+    }
+    
 }

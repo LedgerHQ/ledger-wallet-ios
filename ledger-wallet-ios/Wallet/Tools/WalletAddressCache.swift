@@ -20,6 +20,12 @@ final class WalletAddressCache {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
         
+            guard strongSelf.pathsConformBIP32(paths) else {
+                strongSelf.logger.error("Unable to fetch addresses at paths that are not conform to BIP32")
+                queue.addOperationWithBlock() { completion(nil) }
+                return
+            }
+            
             strongSelf.storeProxy.fetchAddressesAtPaths(paths, completionQueue: strongSelf.workingQueue) { [weak self] addresses in
                 guard let strongSelf = self else { return }
                 
@@ -63,6 +69,10 @@ final class WalletAddressCache {
     
     // MARK: Internal methods
     
+    private func pathsConformBIP32(paths: [WalletAddressPath]) -> Bool {
+        return paths.reduce(true, combine: { $0 && $1.conformsToBIP32 })
+    }
+    
     private func fetchAccountsForAddressesAtPaths(paths: [WalletAddressPath], requestedPaths: [WalletAddressPath], existingAddresses: [WalletAddress], queue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
         // get missing paths
         let missingPaths = requestedPaths.filter({ !paths.contains($0) })
@@ -73,15 +83,15 @@ final class WalletAddressCache {
         }
         
         // get unique accounts to fetch
-        let uniqueAccounts = uniqueAccountsForPaths(missingPaths)
-        guard uniqueAccounts.count > 0 else {
-            logger.error("Unable to compute unique accounts to derive addresses")
+        let uniqueAccountIndexes = uniqueAccountIndexesForPaths(missingPaths)
+        guard uniqueAccountIndexes.count > 0 else {
+            logger.error("Unable to compute unique account indexes to derive addresses")
             queue.addOperationWithBlock() { completion(nil) }
             return
         }
         
         // fetch accounts
-        storeProxy.fetchAccountsAtIndexes(uniqueAccounts, completionQueue: workingQueue) { [weak self] accounts in
+        storeProxy.fetchAccountsAtIndexes(uniqueAccountIndexes, completionQueue: workingQueue) { [weak self] accounts in
             guard let strongSelf = self else { return }
             
             guard let accounts = accounts else {
@@ -91,8 +101,8 @@ final class WalletAddressCache {
             }
             
             // check that we have all the accounts
-            guard accounts.count == uniqueAccounts.count else {
-                strongSelf.logger.warn("Unable to fetch accounts with indexes \(uniqueAccounts)")
+            guard accounts.count == uniqueAccountIndexes.count else {
+                strongSelf.logger.warn("Unable to fetch accounts with indexes \(uniqueAccountIndexes)")
                 queue.addOperationWithBlock() { completion(nil) }
                 return
             }
@@ -108,34 +118,38 @@ final class WalletAddressCache {
         // derive all addresses
         for path in paths {
             let deriver: (BTCKeychain, WalletAddressPath) -> Void = { keychain, path in
-                guard let key = keychain.keyWithPath(path.chainPath), let address = key.address else {
-                    self.logger.error("Unable to derive address for account at index \(path.accountIndex)")
+                guard let
+                    chainPath = path.pathDroppingFirst(1),
+                    key = keychain.keyWithPath(chainPath.representativeString()),
+                    address = key.address
+                else {
+                    self.logger.error("Unable to derive address for account at index \(path.BIP32AccountIndex!)")
                     queue.addOperationWithBlock() { completion(nil) }
                     return
                 }
                 
-                addressesCache.append(WalletAddress(address: address.string, path: path, relativePath: path.relativePath))
+                addressesCache.append(WalletAddress(address: address.string, path: path, relativePath: path.representativeString()))
             }
             
             // try to get keychain from account number
-            if let keychain = keychainCache[path.accountIndex] {
+            if let keychain = keychainCache[path.BIP32AccountIndex!] {
                 deriver(keychain, path)
             }
             else {
                 // get account
-                guard let account = accountAtIndex(path.accountIndex, accounts: accounts) else {
-                    logger.error("Unable to get account at index \(path.accountIndex)")
+                guard let account = accountAtIndex(path.BIP32AccountIndex!, accounts: accounts) else {
+                    logger.error("Unable to get account at index \(path.BIP32AccountIndex!)")
                     queue.addOperationWithBlock() { completion(nil) }
                     return
                 }
                 
                 // create addresses from xpub
                 guard let keychain = BTCKeychain(extendedKey: account.extendedPublicKey) else {
-                    logger.error("Unable to create keychain for account at index \(path.accountIndex)")
+                    logger.error("Unable to create keychain for account at index \(path.BIP32AccountIndex!)")
                     queue.addOperationWithBlock() { completion(nil) }
                     return
                 }
-                keychainCache[path.accountIndex] = keychain
+                keychainCache[path.BIP32AccountIndex!] = keychain
                 deriver(keychain, path)
             }
         }
@@ -158,15 +172,15 @@ final class WalletAddressCache {
         }
     }
     
-    private func uniqueAccountsForPaths(paths: [WalletAddressPath]) -> [Int] {
-        var uniqueAccounts: [Int] = []
+    private func uniqueAccountIndexesForPaths(paths: [WalletAddressPath]) -> [Int] {
+        var accountIndexes: [Int] = []
         
         paths.forEach { path in
-            if !uniqueAccounts.contains(path.accountIndex) {
-                uniqueAccounts.append(path.accountIndex)
+            if !accountIndexes.contains(path.BIP32AccountIndex!) {
+                accountIndexes.append(path.BIP32AccountIndex!)
             }
         }
-        return uniqueAccounts
+        return accountIndexes
     }
     
     private func accountAtIndex(index: Int, accounts: [WalletAccount]) -> WalletAccount? {

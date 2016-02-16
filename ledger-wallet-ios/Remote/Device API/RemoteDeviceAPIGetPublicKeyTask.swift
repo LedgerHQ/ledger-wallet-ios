@@ -25,7 +25,7 @@ final class RemoteDeviceAPIGetPublicKeyTask: RemoteDeviceAPITaskType {
     
     func main() -> Bool {
         let dataWriter = DataWriter()
-        let indexes = addressPath.BIP44Indexes
+        let indexes = addressPath.derivationIndexes
         dataWriter.writeNextUInt8(UInt8(indexes.count))
         indexes.forEach({ dataWriter.writeNextBigEndianUInt32($0) })
         

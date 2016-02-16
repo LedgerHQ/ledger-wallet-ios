@@ -161,7 +161,7 @@ final class WalletStoreExecutor {
     class func fetchAddressesAtPaths(paths: [WalletAddressPath], context: SQLiteStoreContext) -> [WalletAddress]? {
         guard paths.count > 0 else { return [] }
         
-        let inStatement = paths.map({ return "\"\($0.relativePath)\"" }).joinWithSeparator(", ")
+        let inStatement = paths.map({ return "\"\($0.representativeString())\"" }).joinWithSeparator(", ")
         let whereStatement = "\(WalletAddressEntity.fieldKeypathWithKeyStatement(WalletAddressEntity.relativePathKey)) IN (\(inStatement))"
         return fetchAddresses(whereStatement: whereStatement, context: context)
     }
@@ -191,14 +191,19 @@ final class WalletStoreExecutor {
         guard fetchAddressWithAddress(address.address, context: context) == nil else { return true }
         guard fetchAddressAtPath(address.path, context: context) == nil else { return true }
         
+        guard address.path.conformsToBIP32 else {
+            logger.error("Unable to add addresses that have not a BIP32 conform address path")
+            return false
+        }
+        
         let fieldsStatement = WalletAddressEntity.allFieldKeysStatement
         let valuesStatement = WalletAddressEntity.allFieldValuesStatement
         let statement = "INSERT INTO \(WalletAddressEntity.tableNameStatement) (\(fieldsStatement)) VALUES (\(valuesStatement))"
         let values: [AnyObject] = [
             address.address,
-            address.path.accountIndex,
-            address.path.chainIndex,
-            address.path.keyIndex,
+            address.path.BIP32AccountIndex!,
+            address.path.BIP32ChainIndex!,
+            address.path.BIP32KeyIndex!,
             address.relativePath
         ]
         guard context.executeUpdate(statement, withArgumentsInArray: values) else {
