@@ -80,7 +80,74 @@ final class RemoteDeviceAPI {
     }
     
     func getExtendedPublicKey(accountIndex accountIndex: Int, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: (extendedPublicKey: String?, error: RemoteDeviceError?) -> Void) {
-        
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+
+            let path = WalletAddressPath(BIP44AccountIndex: accountIndex, coinNetwork: strongSelf.servicesProvider.coinNetwork)
+            guard let parentPath = path.parentPath else {
+                completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: .InvalidParameters) }
+                return
+            }
+
+            let finalize = { (fingerprint: UInt32) in
+                strongSelf.getPublicKey(path: path, timeoutInterval: timeoutInterval, completionQueue: strongSelf.workingQueue) { publicKey, publicAddress, chainCode, error in
+                    guard error == nil else {
+                        completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: error) }
+                        return
+                    }
+                    
+                    guard let
+                        publicKey = publicKey,
+                        chainCode = chainCode,
+                        key = BTCKey(publicKey: publicKey),
+                        compressedPublicKey = key.compressedPublicKey,
+                        derivationIndex = path.derivationIndexes.last
+                    else {
+                        completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: error) }
+                        return
+                    }
+                    
+                    let writer = DataWriter()
+                    writer.writeNextData(strongSelf.servicesProvider.coinNetwork.extendedPublicKeyVersionData)
+                    writer.writeNextUInt8(UInt8(path.depth))
+                    writer.writeNextBigEndianUInt32(fingerprint)
+                    writer.writeNextBigEndianUInt32(derivationIndex)
+                    writer.writeNextData(chainCode)
+                    writer.writeNextData(compressedPublicKey)
+                    
+                    if writer.data.length == 78, let extendedPublicKey = BTCBase58CheckStringWithData(writer.data) {
+                        completionQueue.addOperationWithBlock() { completion(extendedPublicKey: extendedPublicKey, error: nil) }
+                    }
+                    else {
+                        completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: .InvalidResponse) }
+                    }
+                }
+            }
+            
+            strongSelf.getPublicKey(path: parentPath, timeoutInterval: timeoutInterval, completionQueue: strongSelf.workingQueue) { publicKey, publicAddress, chainCode, error in
+                guard error == nil else {
+                    completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: error) }
+                    return
+                }
+                
+                guard let
+                    publicKey = publicKey,
+                    key = BTCKey(publicKey: publicKey),
+                    compressedPublicKey = key.compressedPublicKey,
+                    hash = BTCHash160(compressedPublicKey)
+                else {
+                    completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: error) }
+                    return
+                }
+                
+                let reader = DataReader(data: hash)
+                guard let fingerprint = reader.readNextBigEndianUInt32() else {
+                    completionQueue.addOperationWithBlock() { completion(extendedPublicKey: nil, error: error) }
+                    return
+                }
+                finalize(fingerprint)
+            }
+        }
     }
     
     // MARK: Events management

@@ -15,5 +15,6 @@ protocol CoinNetworkType {
     var isTest: Bool { get }
     var BIP44Index: Int { get }
     var acronym: String { get }
+    var extendedPublicKeyVersionData: NSData { get }
     
 }

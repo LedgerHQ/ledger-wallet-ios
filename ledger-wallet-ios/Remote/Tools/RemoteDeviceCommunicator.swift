@@ -11,7 +11,7 @@ import Foundation
 final class RemoteDeviceCommunicator {
     
     let servicesProvider: ServicesProviderType
-    private(set) var deviceAPI: RemoteDeviceAPI?
+    private var currentAPI: RemoteDeviceAPI?
     private var passingAttestation: Bool?
     private var forcedDelegateError: RemoteDeviceError?
     private var scanHandlerQueue: NSOperationQueue?
@@ -186,7 +186,24 @@ extension RemoteDeviceCommunicator {
         connectionHandlerQueue = nil
         passingAttestation = nil
         forcedDelegateError = nil
-        deviceAPI = nil
+        currentAPI = nil
+    }
+    
+}
+
+// MARK: - API management
+
+extension RemoteDeviceCommunicator {
+    
+    var deviceAPI: RemoteDeviceAPI? {
+        var api: RemoteDeviceAPI?
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            api = strongSelf.currentAPI
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return api
     }
     
 }
@@ -271,8 +288,8 @@ extension RemoteDeviceCommunicator: RemoteDevicesCoordinatorDelegate {
         
         // check attestation
         logger.info("Checking attestation for device \(device.uid)")
-        deviceAPI = RemoteDeviceAPI(devicesCoordinator: self.devicesCoordinator, servicesProvider: servicesProvider)
-        deviceAPI?.checkAttestation(timeoutInterval: 5.0, completionQueue: workingQueue) { [weak self] isAuthentic, isBeta, error in
+        currentAPI = RemoteDeviceAPI(devicesCoordinator: self.devicesCoordinator, servicesProvider: servicesProvider)
+        currentAPI?.checkAttestation(timeoutInterval: 5.0, completionQueue: workingQueue) { [weak self] isAuthentic, isBeta, error in
             guard let strongSelf = self else { return }
             
             if isAuthentic {
@@ -317,7 +334,7 @@ extension RemoteDeviceCommunicator: RemoteDevicesCoordinatorDelegate {
         notifyHandlerDidDisconnectDevice(device, error: error)
 
         // notify API
-        deviceAPI?.handleDidDisconnectDevice(device, withError: error)
+        currentAPI?.handleDidDisconnectDevice(device, withError: error)
         
         resetConnectionState()
     }
@@ -326,28 +343,28 @@ extension RemoteDeviceCommunicator: RemoteDevicesCoordinatorDelegate {
         guard internalState == .Connected || internalState == .Connecting else { return }
     
         // notify API
-        deviceAPI?.handleDidSendAPDU(APDU, toDevice: device)
+        currentAPI?.handleDidSendAPDU(APDU, toDevice: device)
     }
     
     func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didFailToSendAPDUToDevice device: RemoteDeviceType) {
         guard internalState == .Connected || internalState == .Connecting else { return }
 
         // notify API
-        deviceAPI?.handleDidFailToSendAPDUToDevice(device)
+        currentAPI?.handleDidFailToSendAPDUToDevice(device)
     }
     
     func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didReceiveAPDU APDU: RemoteAPDU, fromDevice device: RemoteDeviceType) {
         guard internalState == .Connected || internalState == .Connecting else { return }
 
         // notify API
-        deviceAPI?.handleDidReceiveAPDU(APDU, fromDevice: device)
+        currentAPI?.handleDidReceiveAPDU(APDU, fromDevice: device)
     }
     
     func devicesCoordinator(devicesCoordinator: RemoteDevicesCoordinator, didFailToReceiveAPDUFromDevice device: RemoteDeviceType) {
         guard internalState == .Connected || internalState == .Connecting else { return }
 
         // notify API
-        deviceAPI?.handleDidFailToReceiveAPDUFromDevice(device)
+        currentAPI?.handleDidFailToReceiveAPDUFromDevice(device)
     }
     
 }

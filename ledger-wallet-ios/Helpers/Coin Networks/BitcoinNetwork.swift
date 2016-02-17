@@ -15,5 +15,6 @@ struct BitcoinNetwork: CoinNetworkType {
     let isTest = false
     let BIP44Index = 0
     let acronym = "btc"
-    
+    let extendedPublicKeyVersionData = BTCDataFromHex("0488B21E")!
+
 }

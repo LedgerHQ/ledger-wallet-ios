@@ -200,4 +200,8 @@ extension WalletAddressPath {
         self.init(path: "/44'/\(coinNetwork.BIP44Index)'/\(accountIndex)'/\(chainIndex)/\(keyIndex)")
     }
     
+    init(BIP44AccountIndex accountIndex: Int, coinNetwork: CoinNetworkType) {
+        self.init(path: "/44'/\(coinNetwork.BIP44Index)'/\(accountIndex)'")
+    }
+    
 }
