@@ -12,9 +12,19 @@ protocol CoinNetworkType {
     
     var identifier: String { get }
     var name: String { get }
-    var isTest: Bool { get }
-    var BIP44Index: Int { get }
     var acronym: String { get }
-    var extendedPublicKeyVersionData: NSData { get }
     
+    var BIP44Index: Int { get }
+    var extendedPublicKeyVersionData: NSData { get }
+    var publicKeyHashPrefix: UInt8 { get }
+    var scriptHashPrefix: UInt8 { get }
+    
+}
+
+private let globalCoinNetworkTypes: [CoinNetworkType] = [
+    BitcoinNetwork()
+]
+
+func coinNetworkTypeWithIdentifier(identifier: String) -> CoinNetworkType? {
+    return globalCoinNetworkTypes.filter({ $0.identifier == identifier }).first
 }
