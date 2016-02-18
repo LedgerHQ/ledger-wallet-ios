@@ -1,5 +1,5 @@
 //
-//  WalletManagerType.swift
+//  WalletTransactionsManagerType.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 02/12/2015.
@@ -14,9 +14,8 @@ let WalletManagerDidUpdateAccountsNotification = "WalletManagerDidUpdateAccounts
 let WalletManagerDidUpdateOperationsNotification = "WalletManagerDidUpdateOperationsNotification"
 let WalletManagerDidMissAccountNotification = "WalletManagerDidMissAccountNotification"
 
-protocol WalletManagerType: class {
+protocol WalletTransactionsManagerType: class {
     
-    var uniqueIdentifier: String { get }
     var isRefreshingTransactions: Bool { get }
     var fetchRequestBuilder: WalletFetchRequestBuilder { get }
     
@@ -24,6 +23,6 @@ protocol WalletManagerType: class {
     func stopRefreshingTransactions()
     func stopAllServices()
         
-    init?(uniqueIdentifier: String, servicesProvider: ServicesProviderType)
+    init?(identifier: String, servicesProvider: ServicesProviderType)
     
 }

@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  ApplicationDelegate.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 07/01/2015.
@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import CoreData
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class ApplicationDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - States management
     
@@ -27,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        rootViewController.devicesCommunicator = RemoteDeviceCommunicator(servicesProvider: servicesProvider)
         
         let rootViewController = WalletTestViewController.instantiateFromMainStoryboard()
-        rootViewController.walletManager = WalletAPIManager(uniqueIdentifier: "identifier", servicesProvider: servicesProvider)
+        rootViewController.walletManager = WalletTransactionsManager(identifier: "identifier", servicesProvider: servicesProvider)
         
         window?.rootViewController = Navigator.embedViewController(rootViewController)
         window?.makeKeyAndVisible()

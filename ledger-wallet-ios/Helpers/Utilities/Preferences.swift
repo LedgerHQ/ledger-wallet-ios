@@ -21,6 +21,11 @@ final class Preferences {
         synchronizeIfNeeded()
     }
     
+    func setString(value: String, forKey defaultName: String) {
+        userDefaults.setObject(value, forKey: persistentKeyForName(defaultName))
+        synchronizeIfNeeded()
+    }
+    
     func setInteger(value: Int, forKey defaultName: String) {
         userDefaults.setInteger(value, forKey: persistentKeyForName(defaultName))
         synchronizeIfNeeded()

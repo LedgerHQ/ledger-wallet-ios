@@ -10,7 +10,7 @@ import Foundation
 
 class WalletOperationsViewController: BaseViewController {
     
-    var walletManager: WalletManagerType?
+    var walletManager: WalletTransactionsManager?
     var account: WalletAccount?
     private var fetchRequest: WalletFetchRequest<WalletVisibleAccountOperationsFetchRequestProvider>?
     private var operations: [WalletAccountOperationContainer] = []

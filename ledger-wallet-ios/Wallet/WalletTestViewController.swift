@@ -11,7 +11,7 @@ import UIKit
 
 class WalletTestViewController: BaseViewController {
     
-    var walletManager: WalletManagerType?
+    var walletManager: WalletTransactionsManager?
     private var fetchRequest: WalletFetchRequest<WalletVisibleAccountsFetchRequestProvider>?
     private var accounts: [WalletAccount] = []
     @IBOutlet private weak var startButton: UIButton!

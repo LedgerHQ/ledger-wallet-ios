@@ -15,7 +15,7 @@ final class WalletStoreManager {
     
     // MARK: Convenience method
     
-    class func managedStoreAtURL(URL: NSURL?, uniqueIdentifier: String, coinNetwork: CoinNetworkType) -> SQLiteStore? {
+    class func managedStoreAtURL(URL: NSURL?, identifier: String, coinNetwork: CoinNetworkType) -> SQLiteStore? {
         let store = SQLiteStore(URL: URL)
         guard store.open() else {
             return nil
@@ -24,7 +24,7 @@ final class WalletStoreManager {
         let manager = WalletStoreManager(store: store)
         let schema = WalletStoreSchemas.currentSchema
         manager.executePragmaCommands(schema)
-        manager.automigrateOrInstallSchema(schema, uniqueIdentifier: uniqueIdentifier, coinNetwork: coinNetwork)
+        manager.automigrateOrInstallSchema(schema, identifier: identifier, coinNetwork: coinNetwork)
         return store
     }
     
@@ -41,9 +41,9 @@ final class WalletStoreManager {
         }
     }
     
-    private func installSchema(schema: SQLiteSchema, uniqueIdentifier: String, coinNetwork: CoinNetworkType) {
+    private func installSchema(schema: SQLiteSchema, identifier: String, coinNetwork: CoinNetworkType) {
         store.performBlock() { context in
-            self.installSchema(schema, uniqueIdentifier: uniqueIdentifier, coinNetwork: coinNetwork, context: context)
+            self.installSchema(schema, identifier: identifier, coinNetwork: coinNetwork, context: context)
         }
     }
     
@@ -53,10 +53,10 @@ final class WalletStoreManager {
         }
     }
     
-    private func automigrateOrInstallSchema(schema: SQLiteSchema, uniqueIdentifier: String, coinNetwork: CoinNetworkType) {
+    private func automigrateOrInstallSchema(schema: SQLiteSchema, identifier: String, coinNetwork: CoinNetworkType) {
         store.performBlock() { context in
             if self.needsToInstallSchema(schema, context: context) {
-                self.installSchema(schema, uniqueIdentifier: uniqueIdentifier, coinNetwork: coinNetwork, context: context)
+                self.installSchema(schema, identifier: identifier, coinNetwork: coinNetwork, context: context)
             }
             else {
                 self.migrateToSchemaIfNeeded(schema, context: context)
@@ -64,7 +64,7 @@ final class WalletStoreManager {
         }
     }
 
-    private func installSchema(schema: SQLiteSchema, uniqueIdentifier: String, coinNetwork: CoinNetworkType, context: SQLiteStoreContext) -> Bool {
+    private func installSchema(schema: SQLiteSchema, identifier: String, coinNetwork: CoinNetworkType, context: SQLiteStoreContext) -> Bool {
         logger.info("Initializing store with schema with version \(schema.version)")
         context.beginTransaction()
         
@@ -78,7 +78,7 @@ final class WalletStoreManager {
         logger.info("Setting default store metadata")
         let metadata: [String: AnyObject] = [
             WalletMetadataEntity.schemaVersionKey: schema.version,
-            WalletMetadataEntity.uniqueIdentifierKey: uniqueIdentifier,
+            WalletMetadataEntity.uniqueIdentifierKey: identifier,
             WalletMetadataEntity.coinNetworkIdentifierKey: coinNetwork.identifier,
         ]
         guard WalletStoreExecutor.updateMetadata(metadata, context: context) else {

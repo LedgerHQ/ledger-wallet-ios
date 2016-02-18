@@ -1,5 +1,5 @@
 //
-//  WalletAPIManager.swift
+//  WalletTransactionsManager.swift
 //  ledger-wallet-ios
 //
 //  Created by Nicolas Bigot on 25/11/2015.
@@ -8,9 +8,8 @@
 
 import Foundation
 
-final class WalletAPIManager: WalletManagerType {
+final class WalletTransactionsManager: WalletTransactionsManagerType {
     
-    let uniqueIdentifier: String
     let fetchRequestBuilder: WalletFetchRequestBuilder
     
     var isRefreshingTransactions: Bool { return transactionsConsumer.isRefreshing }
@@ -26,7 +25,7 @@ final class WalletAPIManager: WalletManagerType {
     private let transactionsStream: WalletTransactionsStream!
     private let blocksStream: WalletBlocksStream!
     private let taskQueue: WalletTaskQueue!
-    private let logger = Logger.sharedInstance(name: "WalletAPIManager")
+    private let logger = Logger.sharedInstance(name: "WalletTransactionsManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
     private let workingQueue = NSOperationQueue.mainQueue()
     
@@ -51,12 +50,10 @@ final class WalletAPIManager: WalletManagerType {
     
     // MARK: Initialization
 
-    init?(uniqueIdentifier: String, servicesProvider: ServicesProviderType) {
-        self.uniqueIdentifier = uniqueIdentifier
-        
+    init?(identifier: String, servicesProvider: ServicesProviderType) {
         // open store
-        let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
-        guard let store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier, coinNetwork: servicesProvider.coinNetwork) else {
+        let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(identifier + ".sqlite"))
+        guard let store = WalletStoreManager.managedStoreAtURL(storeURL, identifier: identifier, coinNetwork: servicesProvider.coinNetwork) else {
             return nil
         }
 
@@ -95,7 +92,7 @@ final class WalletAPIManager: WalletManagerType {
 
 // MARK: - Accounts management
 
-private extension WalletAPIManager {
+private extension WalletTransactionsManager {
     
     private func registerAccount(account: WalletAccount) {
         // add account
@@ -141,7 +138,7 @@ private extension WalletAPIManager {
 
 // MARK: - Tasks management
 
-extension WalletAPIManager {
+extension WalletTransactionsManager {
     
     private func enqueueUpdateBalancesTask() {
         let task = WalletUpdateAccountBalancesTask(balanceUpdater: balanceUpdater)
@@ -177,7 +174,7 @@ extension WalletAPIManager {
 
 // MARK: - WalletTransactionsConsumerDelegate
 
-extension WalletAPIManager: WalletTransactionsConsumerDelegate {
+extension WalletTransactionsManager: WalletTransactionsConsumerDelegate {
     
     func transactionsConsumerDidStart(transactionsConsumer: WalletTransactionsConsumer) {
         ApplicationManager.sharedInstance.startNetworkActivity()
@@ -203,7 +200,7 @@ extension WalletAPIManager: WalletTransactionsConsumerDelegate {
 
 // MARK: - WalletTransactionsListenerDelegate
 
-extension WalletAPIManager: WalletTransactionsListenerDelegate {
+extension WalletTransactionsManager: WalletTransactionsListenerDelegate {
     
     func transactionsListenerDidStart(transactionsListener: WalletTransactionsListener) {
    
@@ -225,7 +222,7 @@ extension WalletAPIManager: WalletTransactionsListenerDelegate {
 
 // MARK: - WalletTransactionsStreamDelegate
 
-extension WalletAPIManager: WalletTransactionsStreamDelegate {
+extension WalletTransactionsManager: WalletTransactionsStreamDelegate {
     
     func transactionsStream(transactionsStream: WalletTransactionsStream, didMissAccountAtIndex index: Int, continueBlock: (Bool) -> Void) {
         handleMissingAccountAtIndex(index, continueBlock: continueBlock)
@@ -253,7 +250,7 @@ extension WalletAPIManager: WalletTransactionsStreamDelegate {
 
 // MARK: - WalletBlocksStreamDelegate
 
-extension WalletAPIManager: WalletBlocksStreamDelegate {
+extension WalletTransactionsManager: WalletBlocksStreamDelegate {
     
     func blocksStreamDidUpdateTransactions(blocksStream: WalletBlocksStream) {
         enqueueNotifyObserversTask(WalletManagerDidUpdateOperationsNotification)
@@ -263,7 +260,7 @@ extension WalletAPIManager: WalletBlocksStreamDelegate {
 
 // MARK: - WalletBalanceUpdaterDelegate
 
-extension WalletAPIManager: WalletBalanceUpdaterDelegate {
+extension WalletTransactionsManager: WalletBalanceUpdaterDelegate {
     
     func balanceUpdaterDidUpdateAccountBalances(balanceUpdater: WalletBalanceUpdater) {
         enqueueNotifyObserversTask(WalletManagerDidUpdateAccountsNotification)
