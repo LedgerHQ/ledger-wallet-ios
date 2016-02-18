@@ -62,7 +62,7 @@ final class HTTPClient {
         let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { [weak self] data, response, error in
             guard let strongSelf = self else { return }
             
-            strongSelf.activeTasksCount--
+            strongSelf.activeTasksCount -= 1
             ApplicationManager.sharedInstance.stopNetworkActivity()
             
             guard error == nil else {
@@ -92,7 +92,7 @@ final class HTTPClient {
         preprocessRequest(request)
         task.resume()
         
-        activeTasksCount++
+        activeTasksCount += 1
         ApplicationManager.sharedInstance.startNetworkActivity()
         
         return task

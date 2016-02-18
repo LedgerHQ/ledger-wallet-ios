@@ -75,7 +75,7 @@ class LoadingIndicator: View {
     
     dynamic private func timerFired() {
         let oldIndex = highlightedLayerIndex
-        highlightedLayerIndex++
+        highlightedLayerIndex += 1
         if (highlightedLayerIndex >= layer.sublayers!.count) {
             highlightedLayerIndex = 0
             if (highlightedLayerIndex >= layer.sublayers!.count) {

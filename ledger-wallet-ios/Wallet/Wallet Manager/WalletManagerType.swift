@@ -18,7 +18,7 @@ protocol WalletManagerType: class {
     
     var uniqueIdentifier: String { get }
     var isRefreshingTransactions: Bool { get }
-    var fetchRequestBuilder: WalletFetchRequestBuilder! { get }
+    var fetchRequestBuilder: WalletFetchRequestBuilder { get }
     
     func startRefreshingTransactions()
     func stopRefreshingTransactions()

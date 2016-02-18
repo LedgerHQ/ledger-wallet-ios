@@ -108,7 +108,7 @@ final class ApplicationManager {
     
     func startNetworkActivity() {
         dispatchAsyncOnMainQueue() {
-            self.networkActivitiesCount++
+            self.networkActivitiesCount += 1
             self.updateNetworkActivityIndicator()
         }
     }
@@ -116,7 +116,7 @@ final class ApplicationManager {
     func stopNetworkActivity() {
         dispatchAsyncOnMainQueue() {
             if self.networkActivitiesCount > 0 {
-                self.networkActivitiesCount--
+                self.networkActivitiesCount -= 1
                 self.updateNetworkActivityIndicator()
             }
         }

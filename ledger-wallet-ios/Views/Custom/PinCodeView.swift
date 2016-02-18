@@ -132,7 +132,7 @@ class PinCodeView: View {
             letter.drawAtPoint(CGPointMake(point.x - ceil(size.width) / 2.0, point.y - ceil(size.height) / 2.0), withAttributes: attributes)
         }
 
-        for var i = 0; i < length; ++i {
+        for i in 0..<length {
             // draw box
             let boxRect = CGRectMake(CGFloat(i) * (boxSize.width - borderDecal + boxSpacing) + borderDecal, borderDecal, boxSize.width - borderDecal * 2, boxSize.height - borderDecal * 2)
             let boxPath = UIBezierPath(roundedRect: boxRect, cornerRadius: VisualFactory.Metrics.BordersRadius.Large)
