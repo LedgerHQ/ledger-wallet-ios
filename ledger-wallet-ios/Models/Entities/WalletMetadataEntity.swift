@@ -14,10 +14,12 @@ final class WalletMetadataEntity: SQLiteEntityType {
     
     static let schemaVersionKey = "schema_version"
     static let uniqueIdentifierKey = "unique_identifier"
+    static let coinNetworkIdentifierKey = "coin_network_identifier"
 
     static let allFieldKeys = [
         schemaVersionKey,
-        uniqueIdentifierKey
+        uniqueIdentifierKey,
+        coinNetworkIdentifierKey
     ]
     
 }

@@ -56,7 +56,7 @@ final class WalletAPIManager: WalletManagerType {
         
         // open store
         let storeURL = NSURL(fileURLWithPath: (ApplicationManager.sharedInstance.databasesDirectoryPath as NSString).stringByAppendingPathComponent(uniqueIdentifier + ".sqlite"))
-        guard let store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier) else {
+        guard let store = WalletStoreManager.managedStoreAtURL(storeURL, uniqueIdentifier: uniqueIdentifier, coinNetwork: servicesProvider.coinNetwork) else {
             return nil
         }
 

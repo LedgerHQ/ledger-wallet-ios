@@ -57,6 +57,7 @@ final class WalletStoreSchemas {
         let metadataTable = WalletMetadataEntity.eponymTable
         metadataTable.addField(SQLiteTableField(name: WalletMetadataEntity.schemaVersionKey, type: .Integer, notNull: true, unique: true))
         metadataTable.addField(SQLiteTableField(name: WalletMetadataEntity.uniqueIdentifierKey, type: .Text, notNull: true, unique: true))
+        metadataTable.addField(SQLiteTableField(name: WalletMetadataEntity.coinNetworkIdentifierKey, type: .Text, notNull: true, unique: true))
         schema.addTable(metadataTable)
         
         let transactionsTable = WalletTransactionEntity.eponymTable
