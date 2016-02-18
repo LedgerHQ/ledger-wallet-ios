@@ -72,8 +72,8 @@ final class RemoteDevicesListViewController: BaseViewController {
     
     @IBAction private func sendHello() {
         devicesCommunicator?.deviceAPI?.verifyPIN(PIN: nil, timeoutInterval: 0, completionQueue: NSOperationQueue.mainQueue()) { isVerified, remainingAttempts, error in
-            self.devicesCommunicator?.deviceAPI?.getExtendedPublicKey(accountIndex: 0, completionQueue: NSOperationQueue.mainQueue()) { extendedPublicKey, error in
-                print(extendedPublicKey, error)
+            self.devicesCommunicator?.deviceAPI?.setCoinVersion(self.devicesCommunicator!.servicesProvider.coinNetwork, completionQueue: NSOperationQueue.mainQueue()) { error in
+                print(error)
             }
         }
     }

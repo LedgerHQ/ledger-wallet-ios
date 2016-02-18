@@ -21,6 +21,7 @@
 		371537E61BDE396100582193 /* PairingProtocolContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537E51BDE396100582193 /* PairingProtocolContextTests.swift */; };
 		371537EB1BDE596700582193 /* PairingTransactionsCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537EA1BDE596700582193 /* PairingTransactionsCryptorTests.swift */; };
 		371537EF1BDE802A00582193 /* VarIntParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371537EE1BDE802A00582193 /* VarIntParserTests.swift */; };
+		371546D11C7628400069BEE8 /* RemoteDeviceAPISetCoinVersionTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371546D01C7628400069BEE8 /* RemoteDeviceAPISetCoinVersionTask.swift */; };
 		371732F01BDA265E000835DE /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D2BDDF1BD92C4B0008AA1E /* JSONTests.swift */; };
 		371732F11BDA265E000835DE /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379197171BB58EE60051CD22 /* PreferencesTests.swift */; };
 		371732F21BDA265E000835DE /* PairingProtocolCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */; };
@@ -278,6 +279,7 @@
 		371537E51BDE396100582193 /* PairingProtocolContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolContextTests.swift; sourceTree = "<group>"; };
 		371537EA1BDE596700582193 /* PairingTransactionsCryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptorTests.swift; sourceTree = "<group>"; };
 		371537EE1BDE802A00582193 /* VarIntParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarIntParserTests.swift; sourceTree = "<group>"; };
+		371546D01C7628400069BEE8 /* RemoteDeviceAPISetCoinVersionTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceAPISetCoinVersionTask.swift; sourceTree = "<group>"; };
 		371733231BDA2BE7000835DE /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		371733261BDA423E000835DE /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		371733271BDA423E000835DE /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				370526ED1C6B497600FBAB50 /* RemoteDeviceAPICheckAttestationTask.swift */,
 				37FA17B81C72096C0013712C /* RemoteDeviceAPIGetPublicKeyTask.swift */,
 				378281001C72368100740FED /* RemoteDeviceAPIVerifyPINTask.swift */,
+				371546D01C7628400069BEE8 /* RemoteDeviceAPISetCoinVersionTask.swift */,
 			);
 			path = "Device API";
 			sourceTree = "<group>";
@@ -1672,6 +1675,7 @@
 				376F51191A82190E001C6684 /* NSData+BTCData.m in Sources */,
 				376F51111A82190E001C6684 /* BTCQRCode.m in Sources */,
 				3725D4C31B59023000252F2B /* LogLevel.swift in Sources */,
+				371546D11C7628400069BEE8 /* RemoteDeviceAPISetCoinVersionTask.swift in Sources */,
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,
 				3730736C1B2ECD6200DDFE5A /* BTCMerkleTree.m in Sources */,
 				37D0F4B11C3FF3AD00984743 /* ServicesProviderType.swift in Sources */,

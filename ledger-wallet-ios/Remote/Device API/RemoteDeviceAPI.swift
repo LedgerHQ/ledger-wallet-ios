@@ -150,6 +150,16 @@ final class RemoteDeviceAPI {
         }
     }
     
+    func setCoinVersion(coinNetwork: CoinNetworkType, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPISetCoinVersionTask.CompletionBlock) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            let task = RemoteDeviceAPISetCoinVersionTask(coinNetwork: coinNetwork, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
+            task.timeoutInterval = timeoutInterval
+            strongSelf.queue.enqueueTask(task)
+        }
+    }
+    
     // MARK: Events management
     
     func handleDidReceiveAPDU(APDU: RemoteAPDU, fromDevice device: RemoteDeviceType) {
