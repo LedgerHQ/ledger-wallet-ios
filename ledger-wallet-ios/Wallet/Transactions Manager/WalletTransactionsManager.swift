@@ -39,7 +39,7 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
     private let delegateQueue = NSOperationQueue.mainQueue()
     private let workingQueue = NSOperationQueue(name: "WalletTransactionsManager", maxConcurrentOperationCount: 1)
     
-    // MARK: Wallet management
+    // MARK: Refresh management
     
     func refreshTransactions() {
         workingQueue.addOperationWithBlock() { [weak self] in
@@ -65,6 +65,26 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
         enqueueUpdateStoreTasks()
         enqueueDidStopRefreshingTransactionsTask()
         enqueueNotifyObserversTask(WalletTransactionsManagerDidStopRefreshingTransactionsNotification)
+    }
+    
+    // MARK: Prepare management
+    
+    func collectUnspentOutputs(amount amount: Int64, completion: ([WalletTransactionOutput]?) -> ()) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+
+            strongSelf.enqueueCollectUnspentOutputs(amount: amount, completion: completion)
+        }
+    }
+    
+    // MARK: Addresses management
+    
+    func fetchLastReceiveAddress(amount: Int, completion: (String?) -> ()) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            
+        }
     }
     
     // MARK: Initialization
@@ -132,9 +152,6 @@ private extension WalletTransactionsManager {
         let internalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(BIP32AccountIndex: account.index, chainIndex: 0, keyIndex: $0) }
         let externalPaths = (0..<WalletLayoutHolder.BIP44AddressesGap).map() { return WalletAddressPath(BIP32AccountIndex: account.index, chainIndex: 1, keyIndex: $0) }
         addressCache.fetchOrDeriveAddressesAtPaths(internalPaths + externalPaths, queue: workingQueue, completion: { _ in })
-        
-        // notify observers
-        notifyObservers(WalletTransactionsManagerDidUpdateAccountsNotification)
     }
     
     private func handleMissingAccountAtIndex(index: Int, continueBlock: (Bool) -> Void) {
@@ -251,6 +268,19 @@ extension WalletTransactionsManager {
         enqueueUpdateBalancesTask()
         enqueueNotifyObserversTask(WalletTransactionsManagerDidUpdateOperationsNotification)
         enqueueNotifyObserversTask(WalletTransactionsManagerDidUpdateAccountsNotification)
+    }
+    
+    private func enqueueCollectUnspentOutputs(amount amount: Int64, completion: ([WalletTransactionOutput]?) -> ()) {
+        let task = WalletBlockTask(identifier: "WalletCollectUnspentOutputsTask", source: nil) { [weak self] completion in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                
+            }
+        }
+        taskQueue.enqueueTask(task)
     }
     
 }

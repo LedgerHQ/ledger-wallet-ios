@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wsR-9H-e4q">
-                                <rect key="frame" x="0.0" y="104" width="600" height="496"/>
+                                <rect key="frame" x="0.0" y="142" width="600" height="458"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DeviceCell" textLabel="dfD-dm-s9M" detailTextLabel="AVA-Zs-HVG" style="IBUITableViewCellStyleValue1" id="DNh-M7-xCa">
@@ -90,23 +90,33 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_comment_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hnh-xG-S17">
+                                <rect key="frame" x="20" y="104" width="560" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Lq0-CI-GGa" firstAttribute="centerX" secondItem="UnX-Fp-Y4n" secondAttribute="centerX" id="13v-Ak-Jz2"/>
+                            <constraint firstItem="Hnh-xG-S17" firstAttribute="top" secondItem="UnX-Fp-Y4n" secondAttribute="bottom" constant="20" id="8ms-Ic-kbg"/>
                             <constraint firstAttribute="trailing" secondItem="wsR-9H-e4q" secondAttribute="trailing" id="Czj-1x-AI0"/>
                             <constraint firstItem="Lq0-CI-GGa" firstAttribute="baseline" secondItem="UZn-my-Pd4" secondAttribute="baseline" id="HOC-7g-Y6A"/>
+                            <constraint firstAttribute="trailing" secondItem="Hnh-xG-S17" secondAttribute="trailing" constant="20" id="KGl-fI-xbZ"/>
                             <constraint firstItem="UnX-Fp-Y4n" firstAttribute="centerX" secondItem="wsR-9H-e4q" secondAttribute="centerX" id="MIw-qh-HTJ"/>
-                            <constraint firstItem="wsR-9H-e4q" firstAttribute="top" secondItem="UnX-Fp-Y4n" secondAttribute="bottom" constant="20" id="QiJ-O9-BJf"/>
+                            <constraint firstItem="wsR-9H-e4q" firstAttribute="top" secondItem="Hnh-xG-S17" secondAttribute="bottom" constant="20" id="S9g-Iv-ztY"/>
                             <constraint firstItem="UnX-Fp-Y4n" firstAttribute="top" secondItem="Lq0-CI-GGa" secondAttribute="bottom" constant="8" symbolic="YES" id="SOw-UU-Vjb"/>
                             <constraint firstItem="Lq0-CI-GGa" firstAttribute="top" secondItem="h2z-Iq-HpD" secondAttribute="bottom" constant="20" id="SSk-ht-63S"/>
                             <constraint firstItem="UZn-my-Pd4" firstAttribute="trailing" secondItem="CBP-Ym-m1M" secondAttribute="trailingMargin" id="Txp-rq-23n"/>
                             <constraint firstItem="wsR-9H-e4q" firstAttribute="bottom" secondItem="t6x-kb-8F0" secondAttribute="top" id="dG6-Bb-nfg"/>
                             <constraint firstItem="wsR-9H-e4q" firstAttribute="leading" secondItem="CBP-Ym-m1M" secondAttribute="leading" id="hOX-O0-WVn"/>
+                            <constraint firstItem="Hnh-xG-S17" firstAttribute="leading" secondItem="CBP-Ym-m1M" secondAttribute="leading" constant="20" id="kIf-me-zck"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="UZn-my-Pd4" id="7RB-XH-Zb7"/>
+                        <outlet property="commentLabel" destination="Hnh-xG-S17" id="cHN-gP-fRf"/>
                         <outlet property="statusLabel" destination="UnX-Fp-Y4n" id="1Y4-8t-R1p"/>
                         <outlet property="tableView" destination="wsR-9H-e4q" id="w1C-gP-hLR"/>
                     </connections>

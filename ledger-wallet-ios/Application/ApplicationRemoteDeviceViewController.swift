@@ -16,6 +16,7 @@ final class ApplicationRemoteDeviceViewController: ApplicationViewController {
     @IBOutlet private weak var cancelButton: UIButton?
     @IBOutlet private weak var statusLabel: UILabel?
     @IBOutlet private weak var tableView: UITableView?
+    @IBOutlet private weak var commentLabel: UILabel?
     private var devices: [RemoteDeviceType] = []
 
     @IBAction private func cancelButtonTouched() {
@@ -40,6 +41,13 @@ final class ApplicationRemoteDeviceViewController: ApplicationViewController {
         else {
             statusLabel?.text = "Unknown"
             tableView?.userInteractionEnabled = true
+        }
+        
+        if acceptableIdentifier != nil {
+            commentLabel?.text = "Please reconnect your Ledger Blue to continue using your wallet on this device."
+        }
+        else {
+            commentLabel?.text = "Please connect your Ledger Blue to open your wallet on this device."
         }
     }
     

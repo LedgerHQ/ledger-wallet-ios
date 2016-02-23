@@ -21,6 +21,8 @@ protocol WalletTransactionsManagerType: class {
     var fetchRequestBuilder: WalletFetchRequestBuilder { get }
     
     func refreshTransactions()
+    func fetchLastReceiveAddress(amount: Int, completion: (String?) -> ())
+    func collectUnspentOutputs(amount amount: Int64, completion: ([WalletTransactionOutput]?) -> ())
         
     init?(identifier: String, servicesProvider: ServicesProviderType)
     
