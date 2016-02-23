@@ -19,16 +19,9 @@ class ApplicationDelegate: UIResponder, UIApplicationDelegate {
         ApplicationManager.sharedInstance.handleLaunchWithOptions(launchOptions)
 
         // switch to root view controller
-        let servicesProvider = LedgerServicesProvider(coinNetwork: BitcoinNetwork())
+        let tabBarController = ApplicationTabBarController.instantiateFromMainStoryboard()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-//        let rootViewController = RemoteDevicesListViewController.instantiateFromMainStoryboard()
-//        rootViewController.devicesCommunicator = RemoteDeviceCommunicator(servicesProvider: servicesProvider)
-        
-        let rootViewController = WalletTestViewController.instantiateFromMainStoryboard()
-        rootViewController.walletManager = WalletTransactionsManager(identifier: "identifier", servicesProvider: servicesProvider)
-        
-        window?.rootViewController = Navigator.embedViewController(rootViewController)
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         return true
     }

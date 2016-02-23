@@ -11,17 +11,18 @@ import Foundation
 struct WalletBlockTask: WalletTaskType {
     
     let identifier: String
-    private let block: () -> Void
+    let source: WalletTaskSource?
+    private let block: (completion: () -> Void) -> Void
     
     func process(completionQueue: NSOperationQueue, completion: () -> Void) {
-        block()
-        completion()
+        block(completion: completion)
     }
     
     // MARK: Initialize
     
-    init(identifier: String, block: () -> Void) {
+    init(identifier: String, source: WalletTaskSource?, block: (completion: () -> Void) -> Void) {
         self.identifier = identifier
+        self.source = source
         self.block = block
     }
     

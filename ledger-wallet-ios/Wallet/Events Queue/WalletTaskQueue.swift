@@ -12,6 +12,7 @@ protocol WalletTaskQueueDelegate: class {
     
     func taskQueueDidStartDequeingTasks(taskQueue: WalletTaskQueue)
     func taskQueueDidStopDequeingTasks(taskQueue: WalletTaskQueue)
+    func taskQueue(taskQueue: WalletTaskQueue, willProcessTask task: WalletTaskType)
     func taskQueue(taskQueue: WalletTaskQueue, didProcessTask task: WalletTaskType)
     
 }
@@ -39,8 +40,7 @@ final class WalletTaskQueue {
         }
     }
     
-    func enqueueBlockTaskWithIdentifier(identifier: String, block: () -> Void) {
-        let task = WalletBlockTask(identifier: identifier, block: block)
+    func enqueueTask(task: WalletTaskType) {
         enqueueTasks([task])
     }
     
@@ -88,6 +88,7 @@ final class WalletTaskQueue {
             strongSelf.pendingTasks.removeFirst()
         
             // execute task
+            strongSelf.notifyWillProcessTask(task)
             task.process(strongSelf.workingQueue) { [weak self] in
                 guard let strongSelf = self else { return }
                 
@@ -136,6 +137,13 @@ private extension WalletTaskQueue {
         delegateQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.taskQueueDidStopDequeingTasks(strongSelf)
+        }
+    }
+    
+    private func notifyWillProcessTask(task: WalletTaskType) {
+        delegateQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.taskQueue(strongSelf, willProcessTask: task)
         }
     }
     

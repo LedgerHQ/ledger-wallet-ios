@@ -150,6 +150,16 @@ final class RemoteDeviceAPI {
         }
     }
     
+    func getIdentifier(completionQueue completionQueue: NSOperationQueue, completion: (identifier: String?, error: RemoteDeviceError?) -> Void) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.getPublicKey(path: WalletAddressPath(path: "0"), completionQueue: strongSelf.workingQueue) { publicKey, publicAddress, chainCode, error in
+                completionQueue.addOperationWithBlock() { completion(identifier: publicAddress, error: error) }
+            }
+        }
+    }
+    
     func setCoinVersion(coinNetwork: CoinNetworkType, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPISetCoinVersionTask.CompletionBlock) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }

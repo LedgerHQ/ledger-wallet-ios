@@ -142,7 +142,7 @@ private extension WalletTransactionsListener {
         }
         
         guard let transaction = WalletTransactionContainer(JSONObject: transactionJSON, parentObject: nil) else {
-            logger.error("Unable to create transaction object from JSON")
+            logger.error("Unable to create transaction object from JSON \(transactionJSON)")
             return
         }
         

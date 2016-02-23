@@ -8,22 +8,25 @@
 
 import Foundation
 
-protocol WalletBalanceUpdaterDelegate: class {
-    
-    func balanceUpdaterDidUpdateAccountBalances(balanceUpdater: WalletBalanceUpdater)
-    
-}
-
 final class WalletBalanceUpdater {
     
-    weak var delegate: WalletBalanceUpdaterDelegate?
     private let workingQueue = NSOperationQueue(name: "WalletBalanceUpdater", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "WalletBalanceUpdater")
     private let storeProxy: WalletStoreProxy
-    private let delegateQueue: NSOperationQueue
     private var updatingBalance = false
     
-    func updateAccountBalances() {
+    var isUpdating: Bool {
+        var updatingBalance = false
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+
+            updatingBalance = strongSelf.updatingBalance
+        }
+        workingQueue.waitUntilAllOperationsAreFinished()
+        return updatingBalance
+    }
+    
+    func updateAccountBalances(completionQueue completionQueue: NSOperationQueue, completion: (updated: Bool) -> Void) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             guard !strongSelf.updatingBalance else { return }
@@ -33,53 +36,67 @@ final class WalletBalanceUpdater {
             
             // fetch all accounts to compute balances
             strongSelf.logger.info("Received request to update balance of all accounts")
-            strongSelf.fetchAllAccounts()
+            strongSelf.fetchAllAccounts(completionQueue, completion: completion)
         }
     }
     
-    private func fetchAllAccounts() {
-        storeProxy.fetchAllAccounts(workingQueue) { [weak self] accounts in
+    private func fetchAllAccounts(completionQueue: NSOperationQueue, completion: (updated: Bool) -> Void) {
+        workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            
-            // check that we got accounts
-            guard let accounts = accounts else {
-                strongSelf.logger.error("Unable to fetch accounts to update balances, aborting")
-                strongSelf.updatingBalance = false
-                return
-            }
-            
-            // if there are accounts to update
-            guard accounts.count > 0 else {
-                strongSelf.logger.info("No accounts to compute balance, aborting")
-                strongSelf.updatingBalance = false
-                return
-            }
-            
-            // update balance
-            strongSelf.updateBalanceOfAccounts(accounts)
-        }
-    }
-    
-    private func updateBalanceOfAccounts(accounts: [WalletAccount]) {
-        storeProxy.updateBalanceOfAccounts(accounts, completionQueue: workingQueue) { [weak self] success in
-            guard let strongSelf = self else { return }
+            guard strongSelf.updatingBalance else { return }
 
-            if success {
-                strongSelf.logger.info("Successully updated balance of all accounts")
-                strongSelf.delegate?.balanceUpdaterDidUpdateAccountBalances(strongSelf)
+            strongSelf.storeProxy.fetchAllAccounts(strongSelf.workingQueue) { [weak self] accounts in
+                guard let strongSelf = self else { return }
+                guard strongSelf.updatingBalance else { return }
+                
+                // check that we got accounts
+                guard let accounts = accounts else {
+                    strongSelf.logger.error("Unable to fetch accounts to update balances, aborting")
+                    strongSelf.updatingBalance = false
+                    completionQueue.addOperationWithBlock() { completion(updated: false) }
+                    return
+                }
+                
+                // if there are accounts to update
+                guard accounts.count > 0 else {
+                    strongSelf.logger.info("No accounts to compute balance, aborting")
+                    strongSelf.updatingBalance = false
+                    completionQueue.addOperationWithBlock() { completion(updated: false) }
+                    return
+                }
+                
+                // update balance
+                strongSelf.updateBalanceOfAccounts(accounts, completionQueue: completionQueue, completion: completion)
             }
-            else {
-                strongSelf.logger.error("Failed to update balance of all accounts")
+        }
+    }
+    
+    private func updateBalanceOfAccounts(accounts: [WalletAccount], completionQueue: NSOperationQueue, completion: (updated: Bool) -> Void) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            guard strongSelf.updatingBalance else { return }
+
+            strongSelf.storeProxy.updateBalanceOfAccounts(accounts, completionQueue: strongSelf.workingQueue) { [weak self] success in
+                guard let strongSelf = self else { return }
+                guard strongSelf.updatingBalance else { return }
+                
+                strongSelf.updatingBalance = false
+                if success {
+                    strongSelf.logger.info("Successully updated balance of all accounts")
+                    completionQueue.addOperationWithBlock() { completion(updated: true) }
+                }
+                else {
+                    strongSelf.logger.error("Failed to update balance of all accounts")
+                    completionQueue.addOperationWithBlock() { completion(updated: false) }
+                }
             }
-            strongSelf.updatingBalance = false
         }
     }
 
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy, delegateQueue: NSOperationQueue) {
+    init(storeProxy: WalletStoreProxy) {
         self.storeProxy = storeProxy
-        self.delegateQueue = delegateQueue
     }
     
 }

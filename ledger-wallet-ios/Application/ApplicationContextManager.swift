@@ -24,10 +24,12 @@ final class ApplicationContextManager {
 
         // try to fetch saved identifier
         guard let identifier = preferences.stringForKey(self.dynamicType.activeContextIdentifierKey) else {
+            logger.info("No active context identifier persisted, cannot provide active context")
             return nil
         }
         
         // build context from identifier
+        logger.info("Got existing persisted active identifier, restoring context")
         guard let context = ApplicationContext(identifier: identifier, deviceCommunicator: vendRemoteDeviceCommunicator(), servicesProvider: servicesProvider) else {
             logger.error("Failed to build context to get active context with identifier \(identifier)")
             return nil

@@ -30,7 +30,7 @@ final class WalletTransactionsConsumer {
     private static let maxChainIndex = 1
     
     weak var delegate: WalletTransactionsConsumerDelegate?
-    private var refreshing = false
+    private var consuming = false
     private var foundTransactionsInCurrentAccount = false
     private let apiClient: WalletTransactionsAPIClient
     private let addressCache: WalletAddressCache
@@ -38,24 +38,24 @@ final class WalletTransactionsConsumer {
     private var workingQueue = NSOperationQueue(name: "WalletTransactionsConsumer", maxConcurrentOperationCount: 1)
     private let logger = Logger.sharedInstance(name: "WalletTransactionsConsumer")
     
-    var isRefreshing: Bool {
-        var refreshing = false
+    var isConsumimg: Bool {
+        var consuming = false
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
-            refreshing = strongSelf.refreshing
+            consuming = strongSelf.consuming
         }
         workingQueue.waitUntilAllOperationsAreFinished()
-        return refreshing
+        return consuming
     }
     
     // MARK: Layout discovery
     
-    func startRefreshing() {
+    func startConsuming() {
         workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self where !strongSelf.refreshing else { return }
+            guard let strongSelf = self where !strongSelf.consuming else { return }
             
-            strongSelf.logger.info("Start refreshing transactions")
-            strongSelf.refreshing = true
+            strongSelf.logger.info("Start consuming transactions")
+            strongSelf.consuming = true
             strongSelf.foundTransactionsInCurrentAccount = false
             strongSelf.fetchNextAddressesFromPath(WalletAddressPath(BIP32AccountIndex: 0, chainIndex: 0, keyIndex: 0), toKeyIndex: WalletLayoutHolder.BIP44AddressesGap - 1)
             
@@ -64,7 +64,7 @@ final class WalletTransactionsConsumer {
         }
     }
     
-    func stopRefreshing() {
+    func stopConsuming() {
         stopRefreshingWithError(.Cancelled)
     }
     
@@ -73,10 +73,10 @@ final class WalletTransactionsConsumer {
         workingQueue.cancelAllOperations()
         
         let cancelBlock = { [weak self] in
-            guard let strongSelf = self where strongSelf.refreshing else { return }
+            guard let strongSelf = self where strongSelf.consuming else { return }
             
-            strongSelf.logger.info("Stop refreshing transactions")
-            strongSelf.refreshing = false
+            strongSelf.logger.info("Stop consuming transactions")
+            strongSelf.consuming = false
             strongSelf.foundTransactionsInCurrentAccount = false
             
             // notify delegate
@@ -102,7 +102,7 @@ final class WalletTransactionsConsumer {
         // get addresses
         logger.info("Fetching addresses for paths in range \(path.rangeStringToIndex(keyIndex))")
         addressCache.fetchOrDeriveAddressesAtPaths(requestedPaths, queue: workingQueue) { [weak self] addresses in
-            guard let strongSelf = self where strongSelf.refreshing else { return }
+            guard let strongSelf = self where strongSelf.consuming else { return }
             
             // check we got the addresses
             guard let addresses = addresses else {
@@ -120,7 +120,7 @@ final class WalletTransactionsConsumer {
         logger.warn("Unknown account at index \(requestedPaths.first!.BIP32AccountIndex!), asking delegate")
         
         let continueBlock = { [weak self] (shouldContinue: Bool) in
-            guard let strongSelf = self where strongSelf.refreshing else { return }
+            guard let strongSelf = self where strongSelf.consuming else { return }
             
             // check if we should retry
             guard shouldContinue == true else {
@@ -132,7 +132,7 @@ final class WalletTransactionsConsumer {
             // get addresses
             strongSelf.logger.info("Delegate provided account at index \(accountIndex), retrying")
             strongSelf.addressCache.fetchOrDeriveAddressesAtPaths(requestedPaths, queue: strongSelf.workingQueue) { [weak self] addresses in
-                guard let strongSelf = self where strongSelf.refreshing else { return }
+                guard let strongSelf = self where strongSelf.consuming else { return }
                 
                 guard let addresses = addresses else {
                     strongSelf.logger.error("Still no account at index \(accountIndex), aborting")
@@ -162,7 +162,7 @@ final class WalletTransactionsConsumer {
         let currentPath = startingPath.rangeStringToIndex(keyIndex)
         logger.info("Fetching transactions for addresses in range \(currentPath)")
         apiClient.fetchTransactionsForAddresses(addresses.map() { return $0.address }) { [weak self] transactions in
-            guard let strongSelf = self where strongSelf.refreshing else { return }
+            guard let strongSelf = self where strongSelf.consuming else { return }
             
             guard let transactions = transactions else {
                 strongSelf.logger.error("Unable to fetch transactions in range \(currentPath), aborting")

@@ -8,20 +8,19 @@
 
 import Foundation
 
-let WalletManagerDidStartRefreshingTransactionsNotification = "WalletManagerDidStartRefreshingTransactionsNotification"
-let WalletManagerDidStopRefreshingTransactionsNotification = "WalletManagerDidStopRefreshingTransactionsNotification"
-let WalletManagerDidUpdateAccountsNotification = "WalletManagerDidUpdateAccountsNotification"
-let WalletManagerDidUpdateOperationsNotification = "WalletManagerDidUpdateOperationsNotification"
-let WalletManagerDidMissAccountNotification = "WalletManagerDidMissAccountNotification"
+let WalletTransactionsManagerDidStartRefreshingTransactionsNotification = "WalletTransactionsManagerDidStartRefreshingTransactionsNotification"
+let WalletTransactionsManagerDidStopRefreshingTransactionsNotification = "WalletTransactionsManagerDidStopRefreshingTransactionsNotification"
+let WalletTransactionsManagerDidUpdateAccountsNotification = "WalletTransactionsManagerDidUpdateAccountsNotification"
+let WalletTransactionsManagerDidUpdateOperationsNotification = "WalletTransactionsManagerDidUpdateOperationsNotification"
+let WalletTransactionsManagerDidMissAccountNotification = "WalletTransactionsManagerDidMissAccountNotification"
+let WalletTransactionsManagerMissingAccountRequestKey = "WalletTransactionsManagerMissingAccountRequestKey"
 
 protocol WalletTransactionsManagerType: class {
     
     var isRefreshingTransactions: Bool { get }
     var fetchRequestBuilder: WalletFetchRequestBuilder { get }
     
-    func startRefreshingTransactions()
-    func stopRefreshingTransactions()
-    func stopAllServices()
+    func refreshTransactions()
         
     init?(identifier: String, servicesProvider: ServicesProviderType)
     

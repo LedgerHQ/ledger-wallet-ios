@@ -8,9 +8,17 @@
 
 import Foundation
 
+enum WalletTaskSource {
+    
+    case TransactionsConsumer
+    case TransactionsListener
+    
+}
+
 protocol WalletTaskType {
     
     var identifier: String { get }
+    var source: WalletTaskSource? { get }
     
     func process(completionQueue: NSOperationQueue, completion: () -> Void)
     

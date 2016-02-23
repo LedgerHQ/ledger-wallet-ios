@@ -33,7 +33,7 @@ final class AlertController: NSObject {
         actions.append(action)
     }
     
-    func presentFromViewController(viewController: BaseViewController, animated: Bool) {
+    func presentFromViewController(viewController: UIViewController, animated: Bool) {
         alertController = UIAlertController(title: title, message: message, preferredStyle: style.systemAlertControllerStyle)
         for action in actions {
             let alertAction = UIAlertAction(title: action.title, style: action.style.systemAlertActionStyle) { handler in
