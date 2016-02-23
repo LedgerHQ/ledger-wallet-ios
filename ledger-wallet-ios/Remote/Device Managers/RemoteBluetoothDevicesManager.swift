@@ -170,11 +170,7 @@ extension RemoteBluetoothDevicesManager {
                 continue
             }
             
-            if let name = peripheral.name where name.hasPrefix(descriptor.name) {
-                handleDeviceFindBlock(name, peripheral, descriptor)
-                break
-            }
-            else if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String where name.hasPrefix(descriptor.name) {
+            if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String where name.hasPrefix(descriptor.name) {
                 handleDeviceFindBlock(name, peripheral, descriptor)
                 break
             }
