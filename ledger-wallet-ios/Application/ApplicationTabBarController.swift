@@ -19,6 +19,7 @@ final class ApplicationTabBarController: UITabBarController {
                     for viewController in viewControllers where viewController is ApplicationNavigationController && (viewController as! ApplicationNavigationController).topViewController is ApplicationViewController {
                         ((viewController as! ApplicationNavigationController).topViewController as! ApplicationViewController).context = context
                     }
+                    context.transactionsManager.refreshTransactions()
                     return true
                 }
                 return false
