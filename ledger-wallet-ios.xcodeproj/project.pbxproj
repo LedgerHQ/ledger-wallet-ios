@@ -191,6 +191,7 @@
 		37D29DA01C2192BC0082CAA6 /* WalletTransactionsStreamDiscardFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D29D9F1C2192BC0082CAA6 /* WalletTransactionsStreamDiscardFunnel.swift */; };
 		37D29DA21C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D29DA11C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift */; };
 		37D5124C1C159958003B597D /* WalletTransactionsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D512491C159958003B597D /* WalletTransactionsAPIClient.swift */; };
+		37DF833A1C7DB8D3003E6A6F /* WalletUnspentOutputsCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF83391C7DB8D3003E6A6F /* WalletUnspentOutputsCollector.swift */; };
 		37E316ED1C14667600BE2C87 /* WalletTransactionsStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E316EC1C14667600BE2C87 /* WalletTransactionsStream.swift */; };
 		37E35E541A6FAB7C00D0ED00 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */; };
 		37E37F451C3ACB0300731747 /* WalletAddressCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E37F431C3ACB0300731747 /* WalletAddressCache.swift */; };
@@ -526,6 +527,7 @@
 		37D29DA11C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStreamContext.swift; sourceTree = "<group>"; };
 		37D2BDDF1BD92C4B0008AA1E /* JSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
 		37D512491C159958003B597D /* WalletTransactionsAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WalletTransactionsAPIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		37DF83391C7DB8D3003E6A6F /* WalletUnspentOutputsCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletUnspentOutputsCollector.swift; sourceTree = "<group>"; };
 		37E316EC1C14667600BE2C87 /* WalletTransactionsStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStream.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37E37F431C3ACB0300731747 /* WalletAddressCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAddressCache.swift; sourceTree = "<group>"; };
@@ -1168,6 +1170,7 @@
 				3777A0FC1C4FFBD500CF7446 /* WalletBlocksStream.swift */,
 				37CD32BF1C7B634B005B3386 /* WalletMissingAccountRequest.swift */,
 				37377EA71C7CAE3000F61C7F /* WalletTransactionBuilder.swift */,
+				37DF83391C7DB8D3003E6A6F /* WalletUnspentOutputsCollector.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1699,6 +1702,7 @@
 				376F51081A82190E001C6684 /* BTCKeychain.m in Sources */,
 				376F50F71A82190D001C6684 /* BTC256.m in Sources */,
 				375070461C088C0600214B83 /* FMResultSet.m in Sources */,
+				37DF833A1C7DB8D3003E6A6F /* WalletUnspentOutputsCollector.swift in Sources */,
 				37D0F4B31C3FF46100984743 /* LedgerServicesProvider.swift in Sources */,
 				376F51141A82190E001C6684 /* BTCTransaction.m in Sources */,
 				37193DF61C75CC87005FDEA8 /* WebSocket.swift in Sources */,

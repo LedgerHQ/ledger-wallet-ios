@@ -457,6 +457,38 @@ final class WalletStoreExecutor {
         let values = [hash]
         return fetchTransactionOutputs(whereStatement, orderStatement: orderStatement, values: values, context: context)
     }
+
+    class func fetchUnspentTransactionOutputsFromAccountAtIndex(index: Int, context: SQLiteStoreContext) -> [WalletTransactionOutput]? {
+        let fieldsStatement = WalletTransactionOutputEntity.allRenamedFieldKeypathsStatement
+        let leftJoinTransactionInputsStatement =
+            "LEFT JOIN \(WalletTransactionInputEntity.tableNameStatement) ON" +
+            "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.indexKey)) = \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.outputIndexKey)) AND " +
+            "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.transactionHashKey)) = \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.outputHashKey))"
+        let innerJoinAddressesStatement =
+            "INNER JOIN \(WalletAddressEntity.tableNameStatement) ON" +
+            "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.addressKey)) = \(WalletAddressEntity.fieldKeypathWithKeyStatement(WalletAddressEntity.addressKey))"
+        let innerJoinTransactionsStatement =
+            "INNER JOIN \(WalletTransactionEntity.tableNameStatement) ON" +
+            "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.transactionHashKey)) = \(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.hashKey))"
+        let leftJoinBlocksStatement =
+            "LEFT JOIN \(WalletBlockEntity.tableNameStatement) ON" +
+            "\(WalletTransactionEntity.fieldKeypathWithKeyStatement(WalletTransactionEntity.blockHashKey)) = \(WalletBlockEntity.fieldKeypathWithKeyStatement(WalletBlockEntity.hashKey))"
+        let leftJoinConfictsStatement =
+            "LEFT JOIN \(WalletDoubleSpendConflictEntity.tableNameStatement) ON" +
+            "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.transactionHashKey)) = \(WalletDoubleSpendConflictEntity.fieldKeypathWithKeyStatement(WalletDoubleSpendConflictEntity.leftTransactionHashKey))"
+        let whereStatement =
+            "WHERE \(WalletAddressEntity.fieldKeypathWithKeyStatement(WalletAddressEntity.accountIndexKey)) = ? AND " +
+            "\(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.uidKey)) IS NULL AND " +
+            "\(WalletDoubleSpendConflictEntity.fieldKeypathWithKeyStatement(WalletDoubleSpendConflictEntity.leftTransactionHashKey)) IS NULL"
+        let orderByStatement =
+            "ORDER BY (CASE WHEN \(WalletBlockEntity.fieldKeypathWithKeyStatement(WalletBlockEntity.heightKey)) IS NULL THEN 0 ELSE 1 END) DESC, " +
+            "\(WalletBlockEntity.fieldKeypathWithKeyStatement(WalletBlockEntity.heightKey)) ASC"
+        let statement =
+            "SELECT \(fieldsStatement) FROM \(WalletTransactionOutputEntity.tableNameStatement) " +
+                "\(leftJoinTransactionInputsStatement) \(innerJoinAddressesStatement) \(innerJoinTransactionsStatement) \(leftJoinBlocksStatement) \(leftJoinConfictsStatement)" +
+                "\(whereStatement) \(orderByStatement)"
+        return fetchModelCollection(statement, values: [index], context: context)
+    }
     
     private class func fetchTransactionOutputs(whereStatement: String? = nil, orderStatement: String? = nil, values: [AnyObject]? = nil, context: SQLiteStoreContext) -> [WalletTransactionOutput]? {
         let fieldsStatement = WalletTransactionOutputEntity.allRenamedFieldKeypathsStatement

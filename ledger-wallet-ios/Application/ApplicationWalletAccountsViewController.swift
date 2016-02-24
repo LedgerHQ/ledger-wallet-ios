@@ -18,6 +18,12 @@ final class ApplicationWalletAccountsViewController: ApplicationViewController {
     private var fetchRequest: WalletFetchRequest<WalletVisibleAccountsFetchRequestProvider>?
     private var formatter = BTCNumberFormatter(bitcoinUnit: .BTC, symbolStyle: .Code)
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        formatter.locale = NSLocale(localeIdentifier: "en-US")
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let
             vc = segue.destinationViewController as? ApplicationWalletAccountDetailViewController,

@@ -34,6 +34,7 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
     private let transactionsListener: WalletTransactionsListener
     private let transactionsStream: WalletTransactionsStream
     private let blocksStream: WalletBlocksStream
+    private let unspentOutputsCollector: WalletUnspentOutputsCollector
     private let taskQueue: WalletTaskQueue
     private let logger = Logger.sharedInstance(name: "WalletTransactionsManager")
     private let delegateQueue = NSOperationQueue.mainQueue()
@@ -64,29 +65,18 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
         ApplicationManager.sharedInstance.stopNetworkActivity()
         enqueueUpdateStoreTasks()
         enqueueDidStopRefreshingTransactionsTask()
-        enqueueNotifyObserversTask(WalletTransactionsManagerDidStopRefreshingTransactionsNotification)
     }
     
     // MARK: Prepare management
     
-    func collectUnspentOutputs(amount amount: Int64, completion: ([WalletTransactionOutput]?) -> ()) {
+    func collectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 
-            strongSelf.enqueueCollectUnspentOutputs(amount: amount, completion: completion)
+            strongSelf.enqueueCollectUnspentOutputsFromAccountAtIndex(index, amount: amount, completion: completion)
         }
     }
-    
-    // MARK: Addresses management
-    
-    func fetchLastReceiveAddress(amount: Int, completion: (String?) -> ()) {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            
-        }
-    }
-    
+
     // MARK: Initialization
 
     init?(identifier: String, servicesProvider: ServicesProviderType) {
@@ -109,6 +99,7 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
         self.transactionsListener = WalletTransactionsListener(servicesProvider: servicesProvider, delegateQueue: workingQueue)
         self.transactionsStream = WalletTransactionsStream(storeProxy: storeProxy, addressCache: addressCache, layoutHolder: layoutHolder, delegateQueue: workingQueue)
         self.blocksStream = WalletBlocksStream(storeProxy: storeProxy, delegateQueue: workingQueue)
+        self.unspentOutputsCollector = WalletUnspentOutputsCollector(storeProxy: storeProxy)
         self.taskQueue = WalletTaskQueue(delegateQueue: workingQueue)
         self.fetchRequestBuilder = WalletFetchRequestBuilder(storeProxy: storeProxy)
         
@@ -214,6 +205,7 @@ extension WalletTransactionsManager {
             
                 strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
                     guard let strongSelf = self else { return }
+                    
                     strongSelf.transactionsStream.processTransaction(transaction, completionQueue: strongSelf.workingQueue, completion: completion)
                 }
             }
@@ -258,6 +250,7 @@ extension WalletTransactionsManager {
                 guard let strongSelf = self else { return }
                 
                 strongSelf.refreshingTransactions = false
+                strongSelf.notifyObservers(WalletTransactionsManagerDidStopRefreshingTransactionsNotification)
                 completion()
             }
         }
@@ -270,14 +263,19 @@ extension WalletTransactionsManager {
         enqueueNotifyObserversTask(WalletTransactionsManagerDidUpdateAccountsNotification)
     }
     
-    private func enqueueCollectUnspentOutputs(amount amount: Int64, completion: ([WalletTransactionOutput]?) -> ()) {
-        let task = WalletBlockTask(identifier: "WalletCollectUnspentOutputsTask", source: nil) { [weak self] completion in
+    private func enqueueCollectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
+        let task = WalletBlockTask(identifier: "WalletCollectUnspentOutputsTask", source: nil) { [weak self] taskCompletion in
             guard let strongSelf = self else { return }
             
             strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
                 guard let strongSelf = self else { return }
                 
-                
+                strongSelf.unspentOutputsCollector.collectUnspentOutputsFromAccountAtIndex(index, amount: amount, completionQueue: strongSelf.workingQueue) { [weak self] outputs, error in
+                    guard let strongSelf = self else { return }
+
+                    strongSelf.delegateQueue.addOperationWithBlock() { completion(outputs, error) }
+                    taskCompletion()
+                }
             }
         }
         taskQueue.enqueueTask(task)

@@ -19,6 +19,7 @@ final class ApplicationWalletAccountDetailViewController: ApplicationViewControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        formatter.locale = NSLocale(localeIdentifier: "en-US")
         handleDidUpdateOperations()
     }
     
@@ -45,7 +46,7 @@ final class ApplicationWalletAccountDetailViewController: ApplicationViewControl
     }
     
     private func updateUI() {
-        navigationItem.title = account?.name
+        navigationItem.title = "Account #\(account!.index)"
         tableView.reloadData()
     }
     
