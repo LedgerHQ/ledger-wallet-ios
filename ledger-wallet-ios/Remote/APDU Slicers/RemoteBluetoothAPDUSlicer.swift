@@ -80,8 +80,9 @@ final class RemoteBluetoothAPDUSlicer: RemoteAPDUSlicerType {
         return Int(index)
     }
     
-    private func slicesAreCondigous(var slices: [RemoteAPDUSlice]) -> Bool {
+    private func slicesAreCondigous(slices: [RemoteAPDUSlice]) -> Bool {
         var index = 0
+        var slices = slices
         
         while slices.count > 0 {
             let firstSlice = slices.removeFirst()

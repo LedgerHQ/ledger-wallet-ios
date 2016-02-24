@@ -87,11 +87,13 @@ final class DataWriter {
         writeNextData(reversedData)
     }
     
-    private func writeNextInteger<T: IntegerType>(var value: T) {
+    private func writeNextInteger<T: IntegerType>(value: T) {
+        var value = value
         internalData.appendBytes(&value, length: sizeof(T))
     }
     
-    private func writeNextInteger<T: EndianConvertible>(var value: T, bigEndian: Bool) {
+    private func writeNextInteger<T: EndianConvertible>(value: T, bigEndian: Bool) {
+        var value = value
         value = bigEndian ? value.bigEndian : value.littleEndian
         internalData.appendBytes(&value, length: sizeof(T))
     }

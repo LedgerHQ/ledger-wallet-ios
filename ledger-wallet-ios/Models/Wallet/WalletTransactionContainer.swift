@@ -50,7 +50,8 @@ struct WalletTransactionContainer {
 
 extension WalletTransactionContainer: JSONInitializableModel {
     
-    init?(var JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
+    init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
+        var JSONObject = JSONObject
         WalletTransactionContainer.normalizeJSON(&JSONObject)
         
         // build block
