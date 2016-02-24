@@ -69,8 +69,8 @@ struct WalletAddressPath {
     }
     
     init(path: String) {
-        var path = path.stringByTrimmingCharactersInSet(characterSet)
         let characterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        let path = path.stringByTrimmingCharactersInSet(characterSet)
         let levels = path.componentsSeparatedByString("/").map({ $0.stringByTrimmingCharactersInSet(characterSet) }).filter({ $0.characters.count > 0 && $0 != "m" })
         var foundIndexes: [WalletAddressPathIndex] = []
         
