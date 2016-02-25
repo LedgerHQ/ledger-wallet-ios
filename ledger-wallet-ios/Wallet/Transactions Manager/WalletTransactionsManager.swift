@@ -69,7 +69,7 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
     
     // MARK: Prepare management
     
-    func collectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
+    func collectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 
@@ -263,7 +263,7 @@ extension WalletTransactionsManager {
         enqueueNotifyObserversTask(WalletTransactionsManagerDidUpdateAccountsNotification)
     }
     
-    private func enqueueCollectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
+    private func enqueueCollectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
         let task = WalletBlockTask(identifier: "WalletCollectUnspentOutputsTask", source: nil) { [weak self] taskCompletion in
             guard let strongSelf = self else { return }
             

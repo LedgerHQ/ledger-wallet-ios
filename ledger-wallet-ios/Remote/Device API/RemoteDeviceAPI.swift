@@ -59,7 +59,7 @@ final class RemoteDeviceAPI {
         }
     }
     
-    func verifyPIN(PIN PIN: String?, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPIVerifyPINTask.CompletionBlock) {
+    func verifyPIN(PIN: String?, timeoutInterval: Double = 0.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPIVerifyPINTask.CompletionBlock) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -165,6 +165,26 @@ final class RemoteDeviceAPI {
             guard let strongSelf = self else { return }
             
             let task = RemoteDeviceAPISetCoinVersionTask(coinNetwork: coinNetwork, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
+            task.timeoutInterval = timeoutInterval
+            strongSelf.queue.enqueueTask(task)
+        }
+    }
+    
+    func getTrustedInput(rawTransaction rawTransaction: NSData, outputIndex: UInt32, timeoutInterval: Double = 0.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPIGetTrustedInputTask.CompletionBlock) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+
+            let task = RemoteDeviceAPIGetTrustedInputTask(rawTransaction: rawTransaction, outputIndex: outputIndex, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
+            task.timeoutInterval = timeoutInterval
+            strongSelf.queue.enqueueTask(task)
+        }
+    }
+    
+    func startUntrustedHashTransactionInput(trustedInputs trustedInputs: [NSData], trustedInputIndex: Int, outputScript: NSData, timeoutInterval: Double = 0.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPIStartUntrustedHashTransactionInputTask.CompletionBlock) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            let task = RemoteDeviceAPIStartUntrustedHashTransactionInputTask(trustedInputs: trustedInputs, trustedInputIndex: trustedInputIndex, outputScript: outputScript, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
             task.timeoutInterval = timeoutInterval
             strongSelf.queue.enqueueTask(task)
         }

@@ -394,12 +394,12 @@ final class WalletStoreExecutor {
             let insertValues = [
                 input.uid ?? NSNull(),
                 input.outputHash ?? NSNull(),
-                input.outputIndex ?? NSNull(),
+                input.outputIndex != nil ? NSNumber(unsignedInt: input.outputIndex!) : NSNull(),
                 NSNumber(longLong: input.value ?? 0),
                 input.scriptSignature ?? NSNull(),
                 input.address ?? NSNull(),
                 input.coinbase,
-                input.index,
+                NSNumber(unsignedInt: input.index),
                 input.transactionHash
             ]
             
@@ -439,7 +439,7 @@ final class WalletStoreExecutor {
                 output.scriptHex,
                 NSNumber(longLong: output.value),
                 output.address ?? NSNull(),
-                output.index,
+                NSNumber(unsignedInt: output.index),
                 output.transactionHash
             ]
             let insertStatement = "INSERT INTO \(WalletTransactionOutputEntity.tableNameStatement) (\(insertFieldsStatement)) VALUES (\(insertValuesStatement))"
@@ -458,8 +458,10 @@ final class WalletStoreExecutor {
         return fetchTransactionOutputs(whereStatement, orderStatement: orderStatement, values: values, context: context)
     }
 
-    class func fetchUnspentTransactionOutputsFromAccountAtIndex(index: Int, context: SQLiteStoreContext) -> [WalletTransactionOutput]? {
-        let fieldsStatement = WalletTransactionOutputEntity.allRenamedFieldKeypathsStatement
+    class func fetchUnspentTransactionOutputsFromAccountAtIndex(index: Int, context: SQLiteStoreContext) -> [WalletUnspentTransactionOutput]? {
+        let fieldsStatement =
+            WalletTransactionOutputEntity.allRenamedFieldKeypathsStatement + ", " +
+            WalletAddressEntity.allRenamedFieldKeypathsStatement
         let leftJoinTransactionInputsStatement =
             "LEFT JOIN \(WalletTransactionInputEntity.tableNameStatement) ON" +
             "\(WalletTransactionOutputEntity.fieldKeypathWithKeyStatement(WalletTransactionOutputEntity.indexKey)) = \(WalletTransactionInputEntity.fieldKeypathWithKeyStatement(WalletTransactionInputEntity.outputIndexKey)) AND " +

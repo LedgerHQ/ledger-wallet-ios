@@ -51,4 +51,16 @@ extension NSData {
         return outData.subdataWithRange(NSMakeRange(0, writtenBytes))
     }
     
+    func splitWithSize(size: Int) -> [NSData] {
+        let mutableData = NSMutableData(data: self)
+        var slices: [NSData] = []
+        
+        while mutableData.length > 0 {
+            let range = NSMakeRange(0, min(size, mutableData.length))
+            slices.append(mutableData.subdataWithRange(range))
+            mutableData.replaceBytesInRange(range, withBytes: nil, length: 0)
+        }
+        return slices
+    }
+    
 }

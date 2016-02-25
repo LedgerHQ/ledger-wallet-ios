@@ -78,6 +78,13 @@ final class DataWriter {
         writeNextInteger(value, bigEndian: false)
     }
     
+    func writeNextVarInteger(value: UInt64) {
+        let parser = VarIntParser(value: value)
+        if let data = parser.representativeBytes {
+            writeNextData(data)
+        }
+    }
+    
     func writeNextData(data: NSData) {
         internalData.appendData(data)
     }

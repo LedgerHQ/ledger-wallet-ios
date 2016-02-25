@@ -13,7 +13,7 @@ struct WalletTransactionOutput {
     let value: Int64
     let scriptHex: String
     let address: String?
-    let index: Int
+    let index: UInt32
     let transactionHash: String
     
 }
@@ -26,7 +26,7 @@ extension WalletTransactionOutput: JSONInitializableModel {
         guard let
             value = JSONObject["value"] as? NSNumber,
             scriptHex = JSONObject["script_hex"] as? String,
-            index = JSONObject["output_index"] as? Int,
+            index = JSONObject["output_index"] as? UInt32,
             transaction = parentObject as? WalletTransaction
         else {
             return nil
@@ -65,7 +65,7 @@ extension WalletTransactionOutput: SQLiteFetchableModel {
         guard let
             value = resultSet.integer64ForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.valueKey)),
             scriptHex = resultSet.stringForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.scriptHexKey)),
-            index = resultSet.integerForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.indexKey)),
+            index = resultSet.unsignedInteger32ForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.indexKey)),
             transactionHash = resultSet.stringForKey(WalletTransactionOutputEntity.fieldKeypathWithKey(WalletTransactionOutputEntity.transactionHashKey))
         else {
             return nil

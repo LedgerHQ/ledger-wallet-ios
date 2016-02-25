@@ -85,7 +85,7 @@ final class WalletStoreProxy {
     
     // MARK: Unspent transaction outputs management
     
-    func fetchUnspentTransactionOutputsFromAccountAtIndex(index: Int, completionQueue: NSOperationQueue, completion: ([WalletTransactionOutput]?) -> Void) {
+    func fetchUnspentTransactionOutputsFromAccountAtIndex(index: Int, completionQueue: NSOperationQueue, completion: ([WalletUnspentTransactionOutput]?) -> Void) {
         executeBlock({ return WalletStoreExecutor.fetchUnspentTransactionOutputsFromAccountAtIndex(index, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     

@@ -34,7 +34,7 @@ final class WalletUnspentOutputsCollector {
         return collecting
     }
     
-    func collectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completionQueue: NSOperationQueue, completion: ([WalletTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void) {
+    func collectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completionQueue: NSOperationQueue, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -63,14 +63,14 @@ final class WalletUnspentOutputsCollector {
         }
     }
     
-    private func processCollectedUnspentOutputsFromAccountAtIndex(index: Int, outputs: [WalletTransactionOutput], amount: Int64, completionQueue: NSOperationQueue, completion: ([WalletTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void) {
-        var collectedOutputs: [WalletTransactionOutput] = []
+    private func processCollectedUnspentOutputsFromAccountAtIndex(index: Int, outputs: [WalletUnspentTransactionOutput], amount: Int64, completionQueue: NSOperationQueue, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void) {
+        var collectedOutputs: [WalletUnspentTransactionOutput] = []
         
         // collect required amount
         var collectedAmount: Int64 = 0
         for output in outputs where collectedAmount < amount {
             collectedOutputs.append(output)
-            collectedAmount += output.value
+            collectedAmount += output.output.value
         }
         
         // check amount

@@ -10,7 +10,7 @@ import Foundation
 
 final class VarIntParser {
     
-    let data: NSData
+    private let data: NSData
     
     var valid: Bool {
         return bytesCount > 0 && data.length >= bytesCount
@@ -51,6 +51,27 @@ final class VarIntParser {
     
     init(data: NSData) {
         self.data = data
+    }
+    
+    convenience init(value: UInt64) {
+        let writer = DataWriter()
+        
+        if value < 0xFD {
+            writer.writeNextUInt8(UInt8(value))
+        }
+        else if value <= 0xFFFF {
+            writer.writeNextUInt8(0xFD)
+            writer.writeNextLittleEndianUInt16(UInt16(value))
+        }
+        else if value <= 0xFFFFFFFF {
+            writer.writeNextUInt8(0xFE)
+            writer.writeNextLittleEndianUInt32(UInt32(value))
+        }
+        else {
+            writer.writeNextUInt8(0xFF)
+            writer.writeNextLittleEndianUInt64(value)
+        }
+        self.init(data: writer.data)
     }
     
 }

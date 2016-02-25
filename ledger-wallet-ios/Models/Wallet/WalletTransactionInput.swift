@@ -11,9 +11,9 @@ import Foundation
 struct WalletTransactionInput {
     
     let uid: String?
-    let index: Int
+    let index: UInt32
     let outputHash: String?
-    let outputIndex: Int?
+    let outputIndex: UInt32?
     let value: Int64?
     let scriptSignature: String?
     let address: String?
@@ -29,7 +29,7 @@ extension WalletTransactionInput: JSONInitializableModel {
     init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
             transaction = parentObject as? WalletTransaction,
-        	index = JSONObject["input_index"] as? Int
+        	index = JSONObject["input_index"] as? UInt32
         else {
             return nil
         }
@@ -49,7 +49,7 @@ extension WalletTransactionInput: JSONInitializableModel {
         else {
             guard let
                 outputHash = JSONObject["output_hash"] as? String,
-                outputIndex = JSONObject["output_index"] as? Int,
+                outputIndex = JSONObject["output_index"] as? UInt32,
                 value = JSONObject["value"] as? NSNumber,
                 scriptSignature = JSONObject["script_signature"] as? String
             else {
@@ -92,7 +92,7 @@ extension WalletTransactionInput: SQLiteFetchableModel {
     init?(resultSet: SQLiteStoreResultSet) {
         guard let
             transactionHash = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.transactionHashKey)),
-            index = resultSet.integerForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.indexKey)),
+            index = resultSet.unsignedInteger32ForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.indexKey)),
             coinbase = resultSet.boolForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.coinbaseKey))
         else {
             return nil
@@ -100,7 +100,7 @@ extension WalletTransactionInput: SQLiteFetchableModel {
         
         self.uid = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.uidKey))
         self.address = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.addressKey))
-        self.outputIndex = resultSet.integerForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.outputIndexKey))
+        self.outputIndex = resultSet.unsignedInteger32ForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.outputIndexKey))
         self.outputHash = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.outputHashKey))
         self.value = resultSet.integer64ForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.valueKey))
         self.scriptSignature = resultSet.stringForKey(WalletTransactionInputEntity.fieldKeypathWithKey(WalletTransactionInputEntity.scriptSignatureKey))

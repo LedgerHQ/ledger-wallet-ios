@@ -73,7 +73,7 @@ final class ApplicationRemoteDeviceViewController: ApplicationViewController {
     }
     
     private func checkOrGetDeviceIdentifier() {
-        deviceCommunicator?.deviceAPI?.verifyPIN(PIN: nil, timeoutInterval: 0, completionQueue: NSOperationQueue.mainQueue()) { [weak self] isVerified, remainingAttempts, error in
+        deviceCommunicator?.deviceAPI?.verifyPIN(nil, timeoutInterval: 0, completionQueue: NSOperationQueue.mainQueue()) { [weak self] isVerified, remainingAttempts, error in
             guard let strongSelf = self else { return }
             guard isVerified else {
                 strongSelf.alert("Wrong PIN code (remaining attemps = \(remainingAttempts)), disconnecting.\nPlease reboot device.")

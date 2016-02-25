@@ -71,9 +71,16 @@ final class RemoteDevicesListViewController: BaseViewController {
     }
     
     @IBAction private func sendHello() {
-        devicesCommunicator?.deviceAPI?.verifyPIN(PIN: nil, timeoutInterval: 0, completionQueue: NSOperationQueue.mainQueue()) { isVerified, remainingAttempts, error in
-            self.devicesCommunicator?.deviceAPI?.setCoinVersion(self.devicesCommunicator!.servicesProvider.coinNetwork, completionQueue: NSOperationQueue.mainQueue()) { error in
-                print(error)
+        devicesCommunicator?.deviceAPI?.verifyPIN(nil, completionQueue: NSOperationQueue.mainQueue()) { isVerified, remainingAttempts, error in
+            let trustedInputs = [
+                BTCDataFromHex("3200b9d62e1fe37ab16ff7a2b6e83e7216b4a25e033380e4be041d0748498c33f1ea6fa20000000000e1f5050000000041b0cdb6f877455d")!,
+                BTCDataFromHex("3200dabc2e1fe37ab16ff7a2b6e83e7216b4a25e033380e4be041d0748498c33f1ea6fa2010000004a0d26ae000000009894f8d4eaf4471e")!
+            ]
+            self.devicesCommunicator?.deviceAPI?.startUntrustedHashTransactionInput(trustedInputs: trustedInputs, trustedInputIndex: 0, outputScript: BTCDataFromHex("76a914516360da56dc120dfbf10772c32c6c4d5955568a88ac"), completionQueue: NSOperationQueue.mainQueue()) { success, error in
+                print(success, error)
+            }
+            self.devicesCommunicator?.deviceAPI?.startUntrustedHashTransactionInput(trustedInputs: trustedInputs, trustedInputIndex: 1, outputScript: BTCDataFromHex("76a91453e8ef1ab2db47b8e31fdfeeccd021cc09ab82c488ac"), completionQueue: NSOperationQueue.mainQueue()) { success, error in
+                print(success, error)
             }
         }
     }

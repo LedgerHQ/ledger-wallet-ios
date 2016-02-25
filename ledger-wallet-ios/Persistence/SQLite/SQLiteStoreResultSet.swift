@@ -26,6 +26,13 @@ extension SQLiteStoreResultSet {
         return longLongIntForColumn(key)
     }
     
+    func unsignedInteger32ForKey(key: String) -> UInt32? {
+        guard !columnIsNull(key) else {
+            return nil
+        }
+        return unsignedInteger32ForKey(key)
+    }
+    
     func stringForKey(key: String) -> String? {
         guard !columnIsNull(key) else {
             return nil

@@ -125,6 +125,7 @@ final class RemoteDeviceAPIQueue {
             
             strongSelf.currentTask?.completeWithError(error)
         }
+        workingQueue.waitUntilAllOperationsAreFinished()
     }
     
     // MARK: Initialization

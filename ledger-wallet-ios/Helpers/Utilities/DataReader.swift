@@ -74,6 +74,15 @@ final class DataReader {
         return readNextInteger(bigEndian: false)
     }
     
+    func readNextVarInteger() -> UInt64? {
+        let parser = VarIntParser(data: internalData)
+        if let value = parser.unsignedInt64Value {
+            readNextDataOfLength(parser.bytesCount)
+            return value
+        }
+        return nil
+    }
+    
     func readNextAvailableData() -> NSData? {
         return readNextDataOfLength(remainingBytesLength)
     }

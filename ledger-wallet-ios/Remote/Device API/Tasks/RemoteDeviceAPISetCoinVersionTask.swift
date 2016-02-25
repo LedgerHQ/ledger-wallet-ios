@@ -10,12 +10,13 @@ import Foundation
 
 final class RemoteDeviceAPISetCoinVersionTask: RemoteDeviceAPITaskType {
     
-    typealias CompletionBlock = (error: RemoteDeviceError?) -> Void
+    typealias CompletionBlock = (success: Bool, error: RemoteDeviceError?) -> Void
     
     var timeoutInterval = 0.0
     var completionBlock: (() -> Void)?
     let devicesCoordinator: RemoteDevicesCoordinator
 
+    private var success = false
     private let coinNetwork: CoinNetworkType
     private let resultCompletionQueue: NSOperationQueue
     private let resultCompletionBlock: CompletionBlock
@@ -39,12 +40,14 @@ final class RemoteDeviceAPISetCoinVersionTask: RemoteDeviceAPITaskType {
             return
         }
         
+        success = true
         completeWithError(nil)
     }
     
     func notifyResultWithError(error: RemoteDeviceError?) {
         let completionBlock = self.resultCompletionBlock
-        self.resultCompletionQueue.addOperationWithBlock() { completionBlock(error: error) }
+        let success = self.success
+        self.resultCompletionQueue.addOperationWithBlock() { completionBlock(success: success, error: error) }
     }
     
     // MARK: Initialize
