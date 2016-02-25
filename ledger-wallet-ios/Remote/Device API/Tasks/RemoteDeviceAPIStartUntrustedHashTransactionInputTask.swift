@@ -69,7 +69,8 @@ final class RemoteDeviceAPIStartUntrustedHashTransactionInputTask: RemoteDeviceA
         
         slices.append(buildTransactionHeaderSlice())
         for i in 0..<trustedInputs.count {
-            slices.append(buildTrustedInputSlice(currentTrustedInputIndex: i))
+            slices.append(buildTrustedInputHeaderSlice(currentTrustedInputIndex: i))
+            slices.appendContentsOf(buildTrustedInputScriptSlices(currentTrustedInputIndex: i))
         }
         return slices
     }
@@ -82,7 +83,7 @@ final class RemoteDeviceAPIStartUntrustedHashTransactionInputTask: RemoteDeviceA
         return writer.data
     }
     
-    private func buildTrustedInputSlice(currentTrustedInputIndex currentTrustedInputIndex: Int) -> NSData {
+    private func buildTrustedInputHeaderSlice(currentTrustedInputIndex currentTrustedInputIndex: Int) -> NSData {
         let trustedInput = trustedInputs[currentTrustedInputIndex]
         let writer = DataWriter()
         
@@ -91,15 +92,23 @@ final class RemoteDeviceAPIStartUntrustedHashTransactionInputTask: RemoteDeviceA
         writer.writeNextData(trustedInput)
         if currentTrustedInputIndex == trustedInputIndex {
             writer.writeNextVarInteger(UInt64(outputScript.length))
-            writer.writeNextData(outputScript)
         }
         else {
             writer.writeNextVarInteger(0)
         }
-        writer.writeNextLittleEndianUInt32(0xFFFFFFFF)
         return writer.data
     }
 
+    private func buildTrustedInputScriptSlices(currentTrustedInputIndex currentTrustedInputIndex: Int) -> [NSData] {
+        let writer = DataWriter()
+        
+        if currentTrustedInputIndex == trustedInputIndex {
+            writer.writeNextData(outputScript)
+        }
+        writer.writeNextLittleEndianUInt32(0xFFFFFFFF)
+        return writer.data.splitWithSize(Int(UInt8.max))
+    }
+    
     // MARK: Initialization
     
     init(trustedInputs: [NSData], trustedInputIndex: Int, outputScript: NSData, devicesCoordinator: RemoteDevicesCoordinator, completionQueue: NSOperationQueue, completion: CompletionBlock) {
