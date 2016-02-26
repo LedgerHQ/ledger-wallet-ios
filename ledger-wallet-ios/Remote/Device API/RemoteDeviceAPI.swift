@@ -190,6 +190,26 @@ final class RemoteDeviceAPI {
         }
     }
     
+    func finalizeFullUntrustedHashTransactionInput(spendableOutputs spendableOutputs: [WalletSpendableTransactionOutput], changeOutput: WalletSpendableTransactionOutput?, timeoutInterval: Double = 0.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.CompletionBlock) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            let task = RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask(spendableOutputs: spendableOutputs, changeOutput: changeOutput, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
+            task.timeoutInterval = timeoutInterval
+            strongSelf.queue.enqueueTask(task)
+        }
+    }
+    
+    func signUntrustedTransactionHash(inputAddress inputAddress: WalletAddress, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPISignUntrustedHashTask.CompletionBlock) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            let task = RemoteDeviceAPISignUntrustedHashTask(inputAddress: inputAddress, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
+            task.timeoutInterval = timeoutInterval
+            strongSelf.queue.enqueueTask(task)
+        }
+    }
+    
     // MARK: Events management
     
     func handleDidReceiveAPDU(APDU: RemoteAPDU, fromDevice device: RemoteDeviceType) {

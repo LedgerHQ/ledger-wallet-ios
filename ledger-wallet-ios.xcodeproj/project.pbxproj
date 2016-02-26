@@ -48,6 +48,9 @@
 		371E07001C7F4F8300A8AA9F /* WalletUnspentTransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E06FF1C7F4F8300A8AA9F /* WalletUnspentTransactionOutput.swift */; };
 		371E07041C7F58B600A8AA9F /* RemoteDeviceAPIQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E07021C7F58B600A8AA9F /* RemoteDeviceAPIQueue.swift */; };
 		371E07051C7F58B600A8AA9F /* RemoteDeviceAPITaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E07031C7F58B600A8AA9F /* RemoteDeviceAPITaskType.swift */; };
+		371E07071C7F66DF00A8AA9F /* RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E07061C7F66DF00A8AA9F /* RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.swift */; };
+		371E07091C804C3C00A8AA9F /* WalletSpendableTransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E07081C804C3C00A8AA9F /* WalletSpendableTransactionOutput.swift */; };
+		371E070B1C80639A00A8AA9F /* RemoteDeviceAPISignUntrustedHashTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E070A1C80639A00A8AA9F /* RemoteDeviceAPISignUntrustedHashTask.swift */; };
 		3725D4C11B58F66200252F2B /* LogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C01B58F66200252F2B /* LogWriter.swift */; };
 		3725D4C31B59023000252F2B /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C21B59023000252F2B /* LogLevel.swift */; };
 		3727E1161C23171E002320B6 /* WalletTransactionsStreamSpentFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3727E1151C23171E002320B6 /* WalletTransactionsStreamSpentFunnel.swift */; };
@@ -314,6 +317,9 @@
 		371E06FF1C7F4F8300A8AA9F /* WalletUnspentTransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletUnspentTransactionOutput.swift; sourceTree = "<group>"; };
 		371E07021C7F58B600A8AA9F /* RemoteDeviceAPIQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceAPIQueue.swift; sourceTree = "<group>"; };
 		371E07031C7F58B600A8AA9F /* RemoteDeviceAPITaskType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceAPITaskType.swift; sourceTree = "<group>"; };
+		371E07061C7F66DF00A8AA9F /* RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.swift; sourceTree = "<group>"; };
+		371E07081C804C3C00A8AA9F /* WalletSpendableTransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletSpendableTransactionOutput.swift; sourceTree = "<group>"; };
+		371E070A1C80639A00A8AA9F /* RemoteDeviceAPISignUntrustedHashTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDeviceAPISignUntrustedHashTask.swift; sourceTree = "<group>"; };
 		3725D4C01B58F66200252F2B /* LogWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWriter.swift; sourceTree = "<group>"; };
 		3725D4C21B59023000252F2B /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		3727E1151C23171E002320B6 /* WalletTransactionsStreamSpentFunnel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransactionsStreamSpentFunnel.swift; sourceTree = "<group>"; };
@@ -664,6 +670,8 @@
 				371E06F31C7F4EE900A8AA9F /* RemoteDeviceAPIGetPublicKeyTask.swift */,
 				371E06F41C7F4EE900A8AA9F /* RemoteDeviceAPIGetTrustedInputTask.swift */,
 				371E06F61C7F4EE900A8AA9F /* RemoteDeviceAPIStartUntrustedHashTransactionInputTask.swift */,
+				371E07061C7F66DF00A8AA9F /* RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.swift */,
+				371E070A1C80639A00A8AA9F /* RemoteDeviceAPISignUntrustedHashTask.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1231,6 +1239,7 @@
 				37E5EDC71C522DCD00716241 /* WalletTransactionInput.swift */,
 				37E5EDC81C522DCD00716241 /* WalletTransactionOutput.swift */,
 				371E06FF1C7F4F8300A8AA9F /* WalletUnspentTransactionOutput.swift */,
+				371E07081C804C3C00A8AA9F /* WalletSpendableTransactionOutput.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1618,6 +1627,7 @@
 				376F510F1A82190E001C6684 /* BTCProcessor.m in Sources */,
 				37ED4EDF1C764F310060BA1A /* WalletTransactionsManagerType.swift in Sources */,
 				37D0F4AB1C3FF37C00984743 /* BitcoinNetwork.swift in Sources */,
+				371E070B1C80639A00A8AA9F /* RemoteDeviceAPISignUntrustedHashTask.swift in Sources */,
 				37377EA81C7CAE3000F61C7F /* WalletTransactionBuilder.swift in Sources */,
 				376F50FE1A82190E001C6684 /* BTCBlockchainInfo.m in Sources */,
 				37E5EDD11C522DCD00716241 /* WalletOperation.swift in Sources */,
@@ -1668,6 +1678,7 @@
 				3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */,
 				37EB460D1C494FC7003149CE /* WalletFetchRequestProviderType.swift in Sources */,
 				37E316ED1C14667600BE2C87 /* WalletTransactionsStream.swift in Sources */,
+				371E07071C7F66DF00A8AA9F /* RemoteDeviceAPIFinalizeFullUntrustedHashTransactionInputTask.swift in Sources */,
 				3730736A1B2ECD6200DDFE5A /* BTCEncryptedBackup.m in Sources */,
 				37D29DA01C2192BC0082CAA6 /* WalletTransactionsStreamDiscardFunnel.swift in Sources */,
 				376F50FC1A82190D001C6684 /* BTCBlindSignature.m in Sources */,
@@ -1748,6 +1759,7 @@
 				375070741C088C5E00214B83 /* FMDatabaseQueue.m in Sources */,
 				37ED4EDE1C764F310060BA1A /* WalletTransactionsManager.swift in Sources */,
 				3707F5B51C60AD180038AABD /* RemoteConnectionState.swift in Sources */,
+				371E07091C804C3C00A8AA9F /* WalletSpendableTransactionOutput.swift in Sources */,
 				37EE09151C6897C100056F35 /* RemoteTransferType.swift in Sources */,
 				3713EAB21C6DEA210024D3E1 /* RemoteDeviceFirmwareVersion.swift in Sources */,
 				37EF91C51A6D3C47007DBBAF /* View.swift in Sources */,
