@@ -30,7 +30,7 @@ extension SQLiteStoreResultSet {
         guard !columnIsNull(key) else {
             return nil
         }
-        return unsignedInteger32ForKey(key)
+        return UInt32(intForColumn(key))
     }
     
     func stringForKey(key: String) -> String? {

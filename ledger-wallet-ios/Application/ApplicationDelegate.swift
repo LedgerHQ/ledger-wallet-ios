@@ -19,8 +19,9 @@ class ApplicationDelegate: UIResponder, UIApplicationDelegate {
         ApplicationManager.sharedInstance.handleLaunchWithOptions(launchOptions)
 
         // switch to root view controller
-        let tabBarController = RemoteDevicesListViewController.instantiateFromMainStoryboard()
-        tabBarController.devicesCommunicator = RemoteDeviceCommunicator(servicesProvider: LedgerServicesProvider(coinNetwork: BitcoinNetwork()))
+//        let tabBarController = RemoteDevicesListViewController.instantiateFromMainStoryboard()
+//        tabBarController.devicesCommunicator = RemoteDeviceCommunicator(servicesProvider: LedgerServicesProvider(coinNetwork: BitcoinNetwork()))
+        let tabBarController = ApplicationTabBarController.instantiateFromMainStoryboard()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

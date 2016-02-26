@@ -69,7 +69,7 @@ final class ApplicationWalletAccountsViewController: ApplicationViewController {
                     return
                 }
                 
-                let account = WalletAccount(index: request.accountIndex, extendedPublicKey: extendedPublicKey, name: "Recovered account #\(request.accountIndex)")
+                let account = WalletAccount(index: request.accountIndex, extendedPublicKey: extendedPublicKey, name: "Account #\(request.accountIndex)")
                 request.completeWithAccount(account)
             }
         }
@@ -95,6 +95,7 @@ final class ApplicationWalletAccountsViewController: ApplicationViewController {
     
     func updateUI() {
         let refreshing = context?.transactionsManager.isRefreshingTransactions ?? false
+        navigationItem.title = refreshing ? "Synchronizing..." : "Accounts"
         reloadButton?.enabled = !refreshing
         tableView?.reloadData()
         balanceLabel?.text = formatter.stringFromAmount(accounts.reduce(0, combine: { $0 + $1.balance }))

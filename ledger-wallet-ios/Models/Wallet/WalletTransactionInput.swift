@@ -29,12 +29,12 @@ extension WalletTransactionInput: JSONInitializableModel {
     init?(JSONObject: [String : AnyObject], parentObject: JSONInitializableModel?) {
         guard let
             transaction = parentObject as? WalletTransaction,
-        	index = JSONObject["input_index"] as? UInt32
+        	index = JSONObject["input_index"] as? NSNumber
         else {
             return nil
         }
         
-        self.index = index
+        self.index = index.unsignedIntValue
         self.transactionHash = transaction.hash
 
         if let _ = JSONObject["coinbase"] as? String {
@@ -49,7 +49,7 @@ extension WalletTransactionInput: JSONInitializableModel {
         else {
             guard let
                 outputHash = JSONObject["output_hash"] as? String,
-                outputIndex = JSONObject["output_index"] as? UInt32,
+                outputIndex = JSONObject["output_index"] as? NSNumber,
                 value = JSONObject["value"] as? NSNumber,
                 scriptSignature = JSONObject["script_signature"] as? String
             else {
@@ -58,7 +58,7 @@ extension WalletTransactionInput: JSONInitializableModel {
             
             self.uid = "\(outputHash)-\(outputIndex)"
             self.address = (JSONObject["addresses"] as? [String])?.first
-            self.outputIndex = outputIndex
+            self.outputIndex = outputIndex.unsignedIntValue
             self.outputHash = outputHash
             self.value = value.longLongValue
             self.scriptSignature = scriptSignature

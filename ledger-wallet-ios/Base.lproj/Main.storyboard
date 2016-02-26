@@ -141,7 +141,7 @@
                                 <rect key="frame" x="0.0" y="153" width="600" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AccountCell" textLabel="fad-Bv-va6" detailTextLabel="eHR-fG-acB" style="IBUITableViewCellStyleSubtitle" id="Cck-ER-zjf">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AccountCell" textLabel="fad-Bv-va6" detailTextLabel="eHR-fG-acB" style="IBUITableViewCellStyleValue1" id="Cck-ER-zjf">
                                         <rect key="frame" x="0.0" y="28" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cck-ER-zjf" id="E1q-bw-Ail">
@@ -149,17 +149,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fad-Bv-va6">
-                                                    <rect key="frame" x="15" y="13" width="32" height="20"/>
+                                                    <rect key="frame" x="15" y="20" width="32" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eHR-fG-acB">
-                                                    <rect key="frame" x="15" y="33" width="31" height="14"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eHR-fG-acB">
+                                                    <rect key="frame" x="523" y="20" width="42" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -360,7 +360,7 @@
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKU-A2-eP3">
                                 <rect key="frame" x="20" y="354" width="560" height="40"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="9xN-Dx-Aj0"/>
                                 </constraints>
@@ -701,9 +701,57 @@
                     <view key="view" contentMode="scaleToFill" id="oTc-sv-t0N">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive address:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LcN-OS-VfK">
+                                <rect key="frame" x="233" y="84" width="134" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eSi-ZS-0hz">
+                                <rect key="frame" x="175" y="125" width="250" height="250"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="MXb-yL-Oyo"/>
+                                    <constraint firstAttribute="width" constant="250" id="c2o-gv-VIN"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1339fJswA8HeeYZtQm5Mizug78RnvzQaX5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lO2-hS-bL9">
+                                <rect key="frame" x="160" y="395" width="281" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mP9-Qk-829">
+                                <rect key="frame" x="20" y="432" width="560" height="29"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <connections>
+                                    <action selector="accountsControlDidChange" destination="XCb-Ek-3pB" eventType="valueChanged" id="Hod-BG-lwc"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eSi-ZS-0hz" firstAttribute="centerX" secondItem="LcN-OS-VfK" secondAttribute="centerX" id="1mQ-ps-5VR"/>
+                            <constraint firstItem="LcN-OS-VfK" firstAttribute="centerX" secondItem="oTc-sv-t0N" secondAttribute="centerX" id="3fg-vZ-6o8"/>
+                            <constraint firstItem="mP9-Qk-829" firstAttribute="centerX" secondItem="lO2-hS-bL9" secondAttribute="centerX" id="4it-WH-F5e"/>
+                            <constraint firstItem="mP9-Qk-829" firstAttribute="top" secondItem="lO2-hS-bL9" secondAttribute="bottom" constant="20" id="Fer-gG-DGr"/>
+                            <constraint firstItem="LcN-OS-VfK" firstAttribute="top" secondItem="eFE-ZI-Jh5" secondAttribute="bottom" constant="20" id="ITg-Dl-HgJ"/>
+                            <constraint firstItem="mP9-Qk-829" firstAttribute="leading" secondItem="oTc-sv-t0N" secondAttribute="leadingMargin" id="Xjs-N4-lXB"/>
+                            <constraint firstItem="lO2-hS-bL9" firstAttribute="top" secondItem="eSi-ZS-0hz" secondAttribute="bottom" constant="20" id="pv2-wv-LKP"/>
+                            <constraint firstItem="lO2-hS-bL9" firstAttribute="centerX" secondItem="eSi-ZS-0hz" secondAttribute="centerX" id="smr-S6-HaZ"/>
+                            <constraint firstItem="eSi-ZS-0hz" firstAttribute="top" secondItem="LcN-OS-VfK" secondAttribute="bottom" constant="20" id="wrC-Ne-hsb"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Receive" id="Cxe-Vi-YMT"/>
+                    <connections>
+                        <outlet property="accountsControl" destination="mP9-Qk-829" id="EoY-ry-I2a"/>
+                        <outlet property="addressImageView" destination="eSi-ZS-0hz" id="4ef-zW-ce5"/>
+                        <outlet property="addressLabel" destination="lO2-hS-bL9" id="67X-pF-fD2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0X9-zB-N4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

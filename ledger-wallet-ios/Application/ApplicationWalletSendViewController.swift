@@ -33,7 +33,7 @@ final class ApplicationWalletSendViewController: ApplicationViewController {
         guard fees > 0 && amount > 0 else { return }
         
         disableUI(true)
-        context?.transactionsManager.collectUnspentOutputsFromAccountAtIndex(selectedIndex, amount: fees + amount) { [weak self] outputs, error in
+        context?.transactionsManager.collectUnspentOutputs(accountIndex: selectedIndex, amount: fees + amount) { [weak self] outputs, error in
             guard let strongSelf = self else { return }
             guard let outputs = outputs where error == nil else {
                 strongSelf.alert("Unable to collect UTXO \(error)")

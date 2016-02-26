@@ -26,7 +26,7 @@ extension WalletTransactionOutput: JSONInitializableModel {
         guard let
             value = JSONObject["value"] as? NSNumber,
             scriptHex = JSONObject["script_hex"] as? String,
-            index = JSONObject["output_index"] as? UInt32,
+            index = JSONObject["output_index"] as? NSNumber,
             transaction = parentObject as? WalletTransaction
         else {
             return nil
@@ -34,7 +34,7 @@ extension WalletTransactionOutput: JSONInitializableModel {
         
         self.address = (JSONObject["addresses"] as? [String])?.first
         self.scriptHex = scriptHex
-        self.index = index
+        self.index = index.unsignedIntValue
         self.value = value.longLongValue
         self.transactionHash = transaction.hash
     }

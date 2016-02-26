@@ -61,6 +61,10 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
+    func fetchCurrentAddressForAccountAtIndex(index: Int, external: Bool, completionQueue: NSOperationQueue, completion: (String?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.fetchCurrentAddressForAccountAtIndex(index, external: external, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+    
     // MARK: Transactions management
     
     func storeTransactions(transactions: [WalletTransactionContainer], completionQueue: NSOperationQueue, completion: (Bool) -> Void) {

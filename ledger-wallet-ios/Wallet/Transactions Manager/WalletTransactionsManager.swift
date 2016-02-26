@@ -13,6 +13,7 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
     let fetchRequestBuilder: WalletFetchRequestBuilder
     private var refreshingTransactions = false
     private var shouldUpdateStore = false
+    private var pendingTasks: [WalletTaskType] = []
     
     var isRefreshingTransactions: Bool {
         var refreshingTransactions = false
@@ -65,15 +66,28 @@ final class WalletTransactionsManager: WalletTransactionsManagerType {
         ApplicationManager.sharedInstance.stopNetworkActivity()
         enqueueUpdateStoreTasks()
         enqueueDidStopRefreshingTransactionsTask()
+        enqueuePendingTasks()
     }
     
-    // MARK: Prepare management
+    // MARK: Outputs management
     
-    func collectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
+    func collectUnspentOutputs(accountIndex accountIndex: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
 
-            strongSelf.enqueueCollectUnspentOutputsFromAccountAtIndex(index, amount: amount, completion: completion)
+            let task = strongSelf.buildCollectUnspentOutputs(accountIndex: accountIndex, amount: amount, completion: completion)
+            strongSelf.enqueueTaskIfNotRefreshing(task)
+        }
+    }
+
+    // MARK: Addresses management
+    
+    func getCurrentAddress(accountIndex accountIndex: Int, external: Bool, completion: (String?) -> Void) {
+        workingQueue.addOperationWithBlock() { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            let task = strongSelf.buildGetCurrentAddressTask(accountIndex: accountIndex, external: external, completion: completion)
+            strongSelf.taskQueue.enqueueTask(task)
         }
     }
 
@@ -185,14 +199,28 @@ private extension WalletTransactionsManager {
 
 extension WalletTransactionsManager {
     
+    private func enqueueTaskIfNotRefreshing(task: WalletTaskType) {
+        guard !refreshingTransactions else {
+            pendingTasks.append(task)
+            return
+        }
+        
+        taskQueue.enqueueTask(task)
+    }
+    
+    private func enqueuePendingTasks() {
+        taskQueue.enqueueTasks(pendingTasks)
+        pendingTasks.removeAll()
+    }
+    
     private func enqueueUpdateBalancesTask() {
-        let task = WalletBlockTask(identifier: "WalletStopRefreshingTransactionsTask", source: nil) { [weak self] completion in
+        let task = WalletBlockTask(identifier: "WalletStopRefreshingTransactionsTask", source: nil) { [weak self] taskCompletion in
             guard let strongSelf = self else { return }
 
             strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
                 guard let strongSelf = self else { return }
 
-                strongSelf.balanceUpdater.updateAccountBalances(completionQueue: strongSelf.workingQueue) { _ in completion() }
+                strongSelf.balanceUpdater.updateAccountBalances(completionQueue: strongSelf.workingQueue) { _ in taskCompletion() }
             }
         }
         taskQueue.enqueueTask(task)
@@ -200,13 +228,13 @@ extension WalletTransactionsManager {
     
     private func enqueueStoreTransactionTasks(transactions: [WalletTransactionContainer], source: WalletTaskSource) {
         let tasks: [WalletTaskType] = transactions.map({ transaction in
-            return WalletBlockTask(identifier: "WalletStoreTransactionTask", source: source) { [weak self] completion in
+            return WalletBlockTask(identifier: "WalletStoreTransactionTask", source: source) { [weak self] taskCompletion in
                 guard let strongSelf = self else { return }
             
                 strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    strongSelf.transactionsStream.processTransaction(transaction, completionQueue: strongSelf.workingQueue, completion: completion)
+                    strongSelf.transactionsStream.processTransaction(transaction, completionQueue: strongSelf.workingQueue, completion: taskCompletion)
                 }
             }
         })
@@ -215,13 +243,13 @@ extension WalletTransactionsManager {
     
     private func enqueueStoreBlockTasks(blocks: [WalletBlockContainer], source: WalletTaskSource) {
         let tasks: [WalletTaskType] = blocks.map({ block in
-            return WalletBlockTask(identifier: "WalletStoreBlockTask", source: source) { [weak self] completion in
+            return WalletBlockTask(identifier: "WalletStoreBlockTask", source: source) { [weak self] taskCompletion in
                 guard let strongSelf = self else { return }
                 
                 strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
                     guard let strongSelf = self else { return }
 
-                    strongSelf.blocksStream.processBlock(block, completionQueue: strongSelf.workingQueue, completion: completion)
+                    strongSelf.blocksStream.processBlock(block, completionQueue: strongSelf.workingQueue, completion: taskCompletion)
                 }
             }
         })
@@ -229,7 +257,7 @@ extension WalletTransactionsManager {
     }
     
     private func enqueueNotifyObserversTask(notification: String, userInfo: [String: AnyObject]? = nil) {
-        let task = WalletBlockTask(identifier: notification, source: nil) { [weak self] completion in
+        let task = WalletBlockTask(identifier: notification, source: nil) { [weak self] taskCompletion in
             guard let strongSelf = self else { return }
             
             strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
@@ -237,13 +265,13 @@ extension WalletTransactionsManager {
                 
                 strongSelf.notifyObservers(notification, userInfo: userInfo)
             }
-            completion()
+            taskCompletion()
         }
         taskQueue.enqueueTask(task)
     }
     
     private func enqueueDidStopRefreshingTransactionsTask() {
-        let task = WalletBlockTask(identifier: "WalletDidStopRefreshingTransactionsTask", source: nil) { [weak self] completion in
+        let task = WalletBlockTask(identifier: "WalletDidStopRefreshingTransactionsTask", source: nil) { [weak self] taskCompletion in
             guard let strongSelf = self else { return }
             
             strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
@@ -251,7 +279,7 @@ extension WalletTransactionsManager {
                 
                 strongSelf.refreshingTransactions = false
                 strongSelf.notifyObservers(WalletTransactionsManagerDidStopRefreshingTransactionsNotification)
-                completion()
+                taskCompletion()
             }
         }
         taskQueue.enqueueTask(task)
@@ -263,14 +291,14 @@ extension WalletTransactionsManager {
         enqueueNotifyObserversTask(WalletTransactionsManagerDidUpdateAccountsNotification)
     }
     
-    private func enqueueCollectUnspentOutputsFromAccountAtIndex(index: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> ()) {
+    private func buildCollectUnspentOutputs(accountIndex accountIndex: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void) -> WalletTaskType {
         let task = WalletBlockTask(identifier: "WalletCollectUnspentOutputsTask", source: nil) { [weak self] taskCompletion in
             guard let strongSelf = self else { return }
             
             strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
                 guard let strongSelf = self else { return }
                 
-                strongSelf.unspentOutputsCollector.collectUnspentOutputsFromAccountAtIndex(index, amount: amount, completionQueue: strongSelf.workingQueue) { [weak self] outputs, error in
+                strongSelf.unspentOutputsCollector.collectUnspentOutputs(accountIndex: accountIndex, amount: amount, completionQueue: strongSelf.workingQueue) { [weak self] outputs, error in
                     guard let strongSelf = self else { return }
 
                     strongSelf.delegateQueue.addOperationWithBlock() { completion(outputs, error) }
@@ -278,7 +306,26 @@ extension WalletTransactionsManager {
                 }
             }
         }
-        taskQueue.enqueueTask(task)
+        return task
+    }
+    
+    private func buildGetCurrentAddressTask(accountIndex accountIndex: Int, external: Bool, completion: (String?) -> Void) -> WalletTaskType {
+        let task = WalletBlockTask(identifier: "WalletGetCurrentAddressTask", source: nil) { [weak self] taskCompletion in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.workingQueue.addOperationWithBlock() { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.storeProxy.fetchCurrentAddressForAccountAtIndex(accountIndex, external: external, completionQueue: strongSelf.workingQueue) { [weak self] address in
+                    guard let strongSelf = self else { return }
+                    
+                    strongSelf.delegateQueue.addOperationWithBlock() { completion(address) }
+                    taskCompletion()
+                }
+
+            }
+        }
+        return task
     }
     
 }

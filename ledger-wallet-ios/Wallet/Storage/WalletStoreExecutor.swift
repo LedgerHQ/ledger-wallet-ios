@@ -223,6 +223,13 @@ final class WalletStoreExecutor {
         return results[0]
     }
     
+    class func fetchCurrentAddressForAccountAtIndex(index: Int, external: Bool, context: SQLiteStoreContext) -> String? {
+        guard let account = fetchAccountAtIndex(index, context: context) else { return nil }
+        let path = WalletAddressPath(BIP32AccountIndex: account.index, chainIndex: external ? 0 : 1, keyIndex: external ? account.nextExternalIndex : account.nextInternalIndex)
+        guard let address = fetchAddressAtPath(path, context: context) else { return nil }
+        return address.address
+    }
+    
     // MARK: Blocks management
     
     class func storeBlocks(blocks: [WalletBlockContainer], context: SQLiteStoreContext) -> Bool {
