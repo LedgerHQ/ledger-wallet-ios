@@ -92,17 +92,18 @@ extension WalletTransactionsListener: WebSocketDelegate {
     
     func websocketDidConnect(socket: WebSocket) {
         guard listening else { return }
+        
+        logger.info("Connected to websocket")
     }
     
     func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         guard listening else { return }
 
+        logger.warn("Disconnected from websocket, reconnecting in 3 seconds")
         dispatchAfter(3, queue: workingQueue) { [weak self] in
             guard let strongSelf = self where strongSelf.listening else { return }
 
-            strongSelf.logger.info("Lost connection, retrying in 3 seconds")
-            strongSelf.stopListening()
-            strongSelf.startListening()
+            strongSelf.websocket.connect()
         }
     }
     
