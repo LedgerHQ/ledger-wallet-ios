@@ -121,7 +121,7 @@ final class WalletAddressCache {
                 guard let
                     chainPath = path.pathDroppingFirst(1),
                     key = keychain.keyWithPath(chainPath.representativeString()),
-                    address = key.address
+                    address = key.compressedPublicKeyAddress
                 else {
                     self.logger.error("Unable to derive address for account at index \(path.BIP32AccountIndex!)")
                     queue.addOperationWithBlock() { completion(nil) }

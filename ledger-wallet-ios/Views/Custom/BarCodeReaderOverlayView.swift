@@ -54,7 +54,7 @@ class BarCodeReaderOverlayView: View {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         initialize()
     }
     

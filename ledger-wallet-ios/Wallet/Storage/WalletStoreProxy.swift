@@ -47,6 +47,10 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.setNextIndex(index, forAccountAtIndex: accountIndex, external: false, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
+    func fetchExtendedPublicKeyForAccountAtIndex(index: Int, completionQueue: NSOperationQueue, completion: (String?) -> Void) {
+        executeBlock({ return WalletStoreExecutor.fetchExtendedPublicKeyForAccountAtIndex(index, context: $0) }, completionQueue: completionQueue, completion: completion)
+    }
+    
     // MARK: Addresses management
     
     func fetchAddressesAtPaths(paths: [WalletAddressPath], completionQueue: NSOperationQueue, completion: ([WalletAddress]?) -> Void) {
@@ -61,7 +65,7 @@ final class WalletStoreProxy {
         executeTransaction({ return WalletStoreExecutor.addAddresses(addresses, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     
-    func fetchCurrentAddressForAccountAtIndex(index: Int, external: Bool, completionQueue: NSOperationQueue, completion: (String?) -> Void) {
+    func fetchCurrentAddressForAccountAtIndex(index: Int, external: Bool, completionQueue: NSOperationQueue, completion: (WalletAddress?) -> Void) {
         executeBlock({ return WalletStoreExecutor.fetchCurrentAddressForAccountAtIndex(index, external: external, context: $0) }, completionQueue: completionQueue, completion: completion)
     }
     

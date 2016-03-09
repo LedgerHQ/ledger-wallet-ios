@@ -200,11 +200,11 @@ final class RemoteDeviceAPI {
         }
     }
     
-    func signUntrustedTransactionHash(inputAddress inputAddress: WalletAddress, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPISignUntrustedHashTask.CompletionBlock) {
+    func signUntrustedTransactionHash(inputAddressPath inputAddressPath: WalletAddressPath, timeoutInterval: Double = 5.0, completionQueue: NSOperationQueue, completion: RemoteDeviceAPISignUntrustedHashTask.CompletionBlock) {
         workingQueue.addOperationWithBlock() { [weak self] in
             guard let strongSelf = self else { return }
             
-            let task = RemoteDeviceAPISignUntrustedHashTask(inputAddress: inputAddress, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
+            let task = RemoteDeviceAPISignUntrustedHashTask(inputAddressPath: inputAddressPath, devicesCoordinator: strongSelf.devicesCoordinator, completionQueue: completionQueue, completion: completion)
             task.timeoutInterval = timeoutInterval
             strongSelf.queue.enqueueTask(task)
         }

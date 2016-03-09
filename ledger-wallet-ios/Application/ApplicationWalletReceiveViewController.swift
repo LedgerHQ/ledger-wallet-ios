@@ -15,7 +15,7 @@ final class ApplicationWalletReceiveViewController: ApplicationViewController {
 
     @IBOutlet private weak var accountsControl: UISegmentedControl!
     @IBOutlet private weak var addressImageView: UIImageView!
-    @IBOutlet private weak var addressLabel: UILabel!
+    @IBOutlet private weak var addressLabel: UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,19 +57,19 @@ final class ApplicationWalletReceiveViewController: ApplicationViewController {
             return
         }
         
-        context?.transactionsManager.getCurrentAddress(accountIndex: selectedIndex, external: true) { [weak self] address in
+        context?.transactionsManager.fetchCurrentAddress(accountIndex: selectedIndex, external: true, completionQueue: NSOperationQueue.mainQueue()) { [weak self] address in
             guard let strongSelf = self else { return }
             guard let address = address else { return }
             
             let filter = CIFilter(name: "CIQRCodeGenerator")
-            filter?.setValue(address.dataUsingEncoding(NSISOLatin1StringEncoding)!, forKey: "inputMessage")
+            filter?.setValue(address.address.dataUsingEncoding(NSISOLatin1StringEncoding)!, forKey: "inputMessage")
             filter?.setValue("Q", forKey: "inputCorrectionLevel")
             
             guard var image = filter?.outputImage else { return }
             image = image.imageByApplyingTransform(CGAffineTransformMakeScale(5.0, 5.0))
             
             strongSelf.addressImageView?.image = UIImage(CIImage: image)
-            strongSelf.addressLabel?.text = address
+            strongSelf.addressLabel?.text = address.address
         }
     }
     

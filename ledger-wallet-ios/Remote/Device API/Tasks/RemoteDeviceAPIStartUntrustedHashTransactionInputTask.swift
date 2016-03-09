@@ -29,13 +29,13 @@ final class RemoteDeviceAPIStartUntrustedHashTransactionInputTask: RemoteDeviceA
         pendingSlices = buildSlices()
         guard pendingSlices.count > 0 else { return false }
         
-        sendNextPendingSlice(firstClass: true)
+        sendNextPendingSlice(firstCall: true)
         return true
     }
     
     func didReceiveAPDU(APDU: RemoteAPDU) {
         if pendingSlices.count > 0 {
-            sendNextPendingSlice(firstClass: false)
+            sendNextPendingSlice(firstCall: false)
             return
         }
         
@@ -51,13 +51,13 @@ final class RemoteDeviceAPIStartUntrustedHashTransactionInputTask: RemoteDeviceA
     
     // MARK: Slices management
     
-    func sendNextPendingSlice(firstClass firstClass: Bool) {
+    func sendNextPendingSlice(firstCall firstCall: Bool) {
         guard pendingSlices.count > 0 else {
             return
         }
         
         let slice = pendingSlices.removeFirst()
-        guard let APDU = RemoteAPDU(classByte: 0xE0, instruction: 0x44, p1: firstClass ? 0x00 : 0x80, p2: 0x00, data: slice, responseLength: 0x00) else {
+        guard let APDU = RemoteAPDU(classByte: 0xE0, instruction: 0x44, p1: firstCall ? 0x00 : 0x80, p2: trustedInputIndex == 0 ? 0x00 : 0x80, data: slice, responseLength: 0x00) else {
             completeWithError(.InvalidParameters)
             return
         }

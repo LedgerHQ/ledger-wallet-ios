@@ -180,6 +180,7 @@
 		37C15D151C402F110065C7D4 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C15D141C402F110065C7D4 /* Navigator.swift */; };
 		37C851291BDFB47E0042834D /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C851271BDFB47E0042834D /* OpenSSL.framework */; };
 		37CD32C01C7B634B005B3386 /* WalletMissingAccountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD32BF1C7B634B005B3386 /* WalletMissingAccountRequest.swift */; };
+		37CDAEDB1C8F1CA300C6DAA8 /* ApplicationWalletScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CDAEDA1C8F1CA300C6DAA8 /* ApplicationWalletScanViewController.swift */; };
 		37CEAD391C43C11D00085222 /* APIClientType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD381C43C11D00085222 /* APIClientType.swift */; };
 		37CEAD3F1C4509D400085222 /* WalletBlockEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CEAD3E1C4509D400085222 /* WalletBlockEntity.swift */; };
 		37D0F46F1C3EB7CE00984743 /* WalletBalanceUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */; };
@@ -521,6 +522,7 @@
 		37C15D141C402F110065C7D4 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		37C851271BDFB47E0042834D /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = Vendor/OpenSSL.framework; sourceTree = "<group>"; };
 		37CD32BF1C7B634B005B3386 /* WalletMissingAccountRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletMissingAccountRequest.swift; sourceTree = "<group>"; };
+		37CDAEDA1C8F1CA300C6DAA8 /* ApplicationWalletScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationWalletScanViewController.swift; sourceTree = "<group>"; };
 		37CEAD381C43C11D00085222 /* APIClientType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientType.swift; sourceTree = "<group>"; };
 		37CEAD3E1C4509D400085222 /* WalletBlockEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBlockEntity.swift; sourceTree = "<group>"; };
 		37D0F46E1C3EB7CE00984743 /* WalletBalanceUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBalanceUpdater.swift; sourceTree = "<group>"; };
@@ -1321,6 +1323,7 @@
 				371C7CD11C77190E00ECFF63 /* ApplicationWalletSendViewController.swift */,
 				371C7CD51C7719DF00ECFF63 /* ApplicationWalletReceiveViewController.swift */,
 				371C7CD91C771E8300ECFF63 /* ApplicationRemoteDeviceViewController.swift */,
+				37CDAEDA1C8F1CA300C6DAA8 /* ApplicationWalletScanViewController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1706,6 +1709,7 @@
 				376F51101A82190E001C6684 /* BTCProtocolSerialization.m in Sources */,
 				376F50FF1A82190E001C6684 /* BTCBlockHeader.m in Sources */,
 				37D29DA21C2192ED0082CAA6 /* WalletTransactionsStreamContext.swift in Sources */,
+				37CDAEDB1C8F1CA300C6DAA8 /* ApplicationWalletScanViewController.swift in Sources */,
 				376587961C6CC53C00F5AF09 /* EndianConvertible.swift in Sources */,
 				376F51011A82190E001C6684 /* BTCCurrencyConverter.m in Sources */,
 				3750704A1C088C0600214B83 /* FMDatabase.m in Sources */,
@@ -2065,7 +2069,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Epic Dream SAS (X6LFS5BQKN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Bigot (886TTS479K)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2076,7 +2080,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ledger.ledgerwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "20061113-c559-4bb2-bb34-bd769db1c2c6";
+				PROVISIONING_PROFILE = "1fa5785c-51a0-4706-9f1d-1fc8ed1b7114";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};

@@ -11,19 +11,21 @@ import Foundation
 final class WalletVisibleAccountsFetchRequestProvider: WalletFetchRequestProviderType {
     
     private weak var storeProxy: WalletStoreProxy?
+    private let delegateQueue: NSOperationQueue
     
     func fetchObjectsFromStoreFrom(from: Int, size: Int, order: WalletFetchRequestOrder, completion: ([WalletAccount]?) -> Void) {
-        storeProxy?.fetchVisibleAccountsFrom(from, size: size, order: order, completionQueue: NSOperationQueue.mainQueue(), completion: completion)
+        storeProxy?.fetchVisibleAccountsFrom(from, size: size, order: order, completionQueue: delegateQueue, completion: completion)
     }
     
     func countNumberOfObjectsFromStoreWithCompletion(completion: (Int?) -> Void) {
-        storeProxy?.countVisibleAccounts(NSOperationQueue.mainQueue(), completion: completion)
+        storeProxy?.countVisibleAccounts(delegateQueue, completion: completion)
     }
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy) {
+    init(storeProxy: WalletStoreProxy, delegateQueue: NSOperationQueue) {
         self.storeProxy = storeProxy
+        self.delegateQueue = delegateQueue
     }
     
 }

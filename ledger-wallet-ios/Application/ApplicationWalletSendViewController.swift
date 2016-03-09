@@ -15,6 +15,8 @@ final class ApplicationWalletSendViewController: ApplicationViewController {
     @IBOutlet private weak var feesControl: UISegmentedControl!
     @IBOutlet private weak var addressTextField: UITextField!
     @IBOutlet private weak var amountTextField: UITextField!
+    @IBOutlet private weak var cameraButton: UIBarButtonItem!
+    private var builder: WalletTransactionBuilder?
     private var accounts: [WalletAccount] = []
     private var accountsFetchRequest: WalletFetchRequest<WalletVisibleAccountsFetchRequestProvider>?
     private var formatter = BTCNumberFormatter(bitcoinUnit: .BTC, symbolStyle: .None)
@@ -26,22 +28,64 @@ final class ApplicationWalletSendViewController: ApplicationViewController {
         updateUI()
     }
     
+    @IBAction private func cameraButtonTouched() {
+        let vc = ApplicationWalletScanViewController.instantiateFromMainStoryboard()
+        vc.delegate = self
+        presentViewController(vc, animated: true, completion: nil)
+    }
+    
     @IBAction private func sendButtonTouched() {
-        guard let selectedIndex = accountControl?.selectedSegmentIndex else { return }
-        let fees = formatter.amountFromString(feesControl.titleForSegmentAtIndex(selectedIndex))
+        guard let selectedAccountIndex = accountControl?.selectedSegmentIndex where selectedAccountIndex >= 0 else { return }
+        guard let selectedFeesIndex = feesControl?.selectedSegmentIndex where selectedFeesIndex >= 0 else { return }
+        let fees = formatter.amountFromString(feesControl.titleForSegmentAtIndex(selectedFeesIndex))
         let amount = formatter.amountFromString(amountTextField.text!)
         guard fees > 0 && amount > 0 else { return }
+        guard let address = BTCAddress(string: addressTextField.text)?.string else { return }
         
         disableUI(true)
-        context?.transactionsManager.collectUnspentOutputs(accountIndex: selectedIndex, amount: fees + amount) { [weak self] outputs, error in
+        ensureDeviceIsConnected() { [weak self] deviceAPI in
             guard let strongSelf = self else { return }
-            guard let outputs = outputs where error == nil else {
-                strongSelf.alert("Unable to collect UTXO \(error)")
+            
+            guard let _ = deviceAPI else {
                 strongSelf.disableUI(false)
                 return
             }
+
+            strongSelf.builder = WalletTransactionBuilder(servicesProvider: strongSelf.context!.servicesProvider, transactionsManager: strongSelf.context!.transactionsManager, deviceCommunicator: strongSelf.context!.deviceCommunicator)
+            strongSelf.builder?.startTransaction(accountIndex: selectedAccountIndex, address: address, amount: amount, fees: fees, completionQueue: NSOperationQueue.mainQueue()) { [weak self] success, error in
+                guard let strongSelf = self else { return }
+                
+                guard success else {
+                    strongSelf.alert("Unable to start transaction, got error \(error)")
+                    strongSelf.disableUI(false)
+                    strongSelf.builder = nil
+                    return
+                }
             
-            
+                strongSelf.builder?.finalizeTransaction(completionQueue: NSOperationQueue.mainQueue()) { [weak self] rawTransaction, error in
+                    guard let strongSelf = self else { return }
+                    
+                    guard let rawTransaction = rawTransaction else {
+                        strongSelf.alert("Unable to finalize transaction, got error \(error)")
+                        strongSelf.disableUI(false)
+                        strongSelf.builder = nil
+                        return
+                    }
+                    
+                    strongSelf.builder?.pushTransaction(rawTransaction, completionQueue: NSOperationQueue.mainQueue()) { [weak self] success, error in
+                        guard let strongSelf = self else { return }
+
+                        if success == false {
+                            strongSelf.alert("Unable to push raw transaction")
+                        }
+                        else {
+                            strongSelf.alert("Successfully pushed raw transaction")
+                        }
+                        strongSelf.disableUI(false)
+                        strongSelf.builder = nil
+                    }
+                }
+            }
         }
     }
     
@@ -51,6 +95,7 @@ final class ApplicationWalletSendViewController: ApplicationViewController {
         feesControl.enabled = !disable
         addressTextField.enabled = !disable
         amountTextField.enabled = !disable
+        cameraButton.enabled = !disable
     }
     
     @IBAction private func accountControlDidChange() {
@@ -114,5 +159,15 @@ extension ApplicationWalletSendViewController: UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension ApplicationWalletSendViewController: ApplicationWalletScanViewControllerDelegate {
+    
+    func walletScanViewController(walletScanViewController: ApplicationWalletScanViewController, didScanAddressAddress address: String, amount: Int64?) {
+        addressTextField.text = address
+        if let amount = amount {
+            amountTextField.text = formatter.stringFromAmount(amount)
+        }
     }
 }

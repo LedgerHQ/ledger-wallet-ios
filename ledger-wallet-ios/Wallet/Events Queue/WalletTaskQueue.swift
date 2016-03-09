@@ -27,19 +27,6 @@ final class WalletTaskQueue {
     
     // MARK: Tasks management
     
-    func enqueueDebouncedTask(task: WalletTaskType) {
-        workingQueue.addOperationWithBlock() { [weak self] in
-            guard let strongSelf = self else { return }
-
-            let tasksToKeep = strongSelf.pendingTasks.filter({ $0.identifier != task.identifier })
-            strongSelf.pendingTasks = tasksToKeep
-            strongSelf.pendingTasks.append(task)
-            
-            // process next pending task if not busy
-            strongSelf.processNextPendingTaskIfNotBusy()
-        }
-    }
-    
     func enqueueTask(task: WalletTaskType) {
         enqueueTasks([task])
     }

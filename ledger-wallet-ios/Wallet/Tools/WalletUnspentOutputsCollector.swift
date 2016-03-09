@@ -10,7 +10,7 @@ import Foundation
 
 enum WalletUnspentOutputsCollectorError: ErrorType {
     
-    case InternalError
+    case InternalFailure
     case InsufficientFunds
     case AlreadyCollecting
     
@@ -51,13 +51,13 @@ final class WalletUnspentOutputsCollector {
                 guard strongSelf.collecting else { return }
                 
                 guard let outputs = outputs else {
-                    strongSelf.logger.error("Failed to fetch unspent outputs from account \(accountIndex) for amount \(amount), aborting")
+                    strongSelf.logger.error("Failed to fetch unspent outputs, aborting")
                     strongSelf.collecting = false
-                    completionQueue.addOperationWithBlock() { completion(nil, .InternalError) }
+                    completionQueue.addOperationWithBlock() { completion(nil, .InternalFailure) }
                     return
                 }
                 
-                strongSelf.logger.info("Fetched \(outputs.count) unspent outputs from account \(accountIndex) for amount \(amount), checking if balance is enough")
+                strongSelf.logger.info("Fetched \(outputs.count) unspent output(s), checking if balance is enough")
                 strongSelf.processCollectedUnspentOutputs(accountIndex: accountIndex, outputs: outputs, amount: amount, completionQueue: completionQueue, completion: completion)
             }
         }
@@ -75,13 +75,13 @@ final class WalletUnspentOutputsCollector {
         
         // check amount
         guard collectedAmount >= amount else {
-            logger.warn("Not enough funds \(collectedAmount) to collect unspent outputs from account \(accountIndex) for amount \(amount)")
+            logger.warn("Not enough funds \(collectedAmount) to collect unspent outputs, aborting")
             collecting = false
             completionQueue.addOperationWithBlock() { completion(nil, .InsufficientFunds) }
             return
         }
         
-        logger.info("Successfully collected unspent outputs from account \(accountIndex) for amount \(amount)")
+        logger.info("Successfully collected unspent outputs")
         collecting = false
         completionQueue.addOperationWithBlock() { completion(collectedOutputs, nil) }
     }

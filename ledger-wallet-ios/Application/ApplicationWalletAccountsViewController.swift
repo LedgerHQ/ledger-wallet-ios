@@ -22,6 +22,7 @@ final class ApplicationWalletAccountsViewController: ApplicationViewController {
         super.viewDidLoad()
         
         formatter.locale = NSLocale(localeIdentifier: "en-US")
+        updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -74,27 +75,18 @@ final class ApplicationWalletAccountsViewController: ApplicationViewController {
             }
         }
         
-        if let deviceAPI = context?.deviceCommunicator.deviceAPI {
-            processWithDeviceConnectedBlock(deviceAPI)
-        }
-        else {
-            let remoteViewController = ApplicationRemoteDeviceViewController.instantiateFromMainStoryboard()
-            remoteViewController.acceptableIdentifier = context?.identifier
-            remoteViewController.deviceCommunicator = context?.deviceCommunicator
-            remoteViewController.completionBlock = { success, deviceCommunicator, identifier in
-                guard let deviceAPI = deviceCommunicator?.deviceAPI where success else {
-                    request.completeWithAccount(nil)
-                    return
-                }
-                
-                processWithDeviceConnectedBlock(deviceAPI)
+        ensureDeviceIsConnected() { deviceAPI in
+            guard let deviceAPI = deviceAPI else {
+                request.completeWithAccount(nil)
+                return
             }
-            self.presentViewController(remoteViewController, animated: true, completion: nil)
+            
+            processWithDeviceConnectedBlock(deviceAPI)
         }
     }
     
     func updateUI() {
-        let refreshing = context?.transactionsManager.isRefreshingTransactions ?? false
+        let refreshing = context?.transactionsManager.isRefreshing ?? false
         navigationItem.title = refreshing ? "Synchronizing..." : "Accounts"
         reloadButton?.enabled = !refreshing
         tableView?.reloadData()

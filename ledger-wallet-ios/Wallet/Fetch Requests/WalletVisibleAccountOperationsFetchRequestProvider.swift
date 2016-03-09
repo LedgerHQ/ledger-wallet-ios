@@ -12,20 +12,22 @@ final class WalletVisibleAccountOperationsFetchRequestProvider: WalletFetchReque
     
     let accountIndex: Int?
     private weak var storeProxy: WalletStoreProxy?
+    private let delegateQueue: NSOperationQueue
     
     func fetchObjectsFromStoreFrom(from: Int, size: Int, order: WalletFetchRequestOrder, completion: ([WalletAccountOperationContainer]?) -> Void) {
-        storeProxy?.fetchVisibleAccountOperationsForAccountAtIndex(accountIndex, from: from, size: size, order: order, completionQueue: NSOperationQueue.mainQueue(), completion: completion)
+        storeProxy?.fetchVisibleAccountOperationsForAccountAtIndex(accountIndex, from: from, size: size, order: order, completionQueue: delegateQueue, completion: completion)
     }
     
     func countNumberOfObjectsFromStoreWithCompletion(completion: (Int?) -> Void) {
-        storeProxy?.countVisibleAccountOperationsForAccountAtIndex(accountIndex, completionQueue: NSOperationQueue.mainQueue(), completion: completion)
+        storeProxy?.countVisibleAccountOperationsForAccountAtIndex(accountIndex, completionQueue: delegateQueue, completion: completion)
     }
     
     // MARK: Initialization
     
-    init(accountIndex: Int?, storeProxy: WalletStoreProxy) {
+    init(accountIndex: Int?, storeProxy: WalletStoreProxy, delegateQueue: NSOperationQueue) {
         self.accountIndex = accountIndex
         self.storeProxy = storeProxy
+        self.delegateQueue = delegateQueue
     }
     
 }

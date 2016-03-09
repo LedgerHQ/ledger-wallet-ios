@@ -71,10 +71,17 @@ extension ApplicationWalletAccountDetailViewController: UITableViewDelegate {
         let operation = operations[indexPath.row]
         cell.textLabel?.text = operation.operationContainer.transactionContainer.transaction.receiveAt
         cell.detailTextLabel?.text = (operation.operationContainer.operation.kind == .Receive ? "+" : "-") + formatter.stringFromAmount(operation.operationContainer.operation.amount)
+        cell.textLabel?.textColor = operation.operationContainer.transactionContainer.transaction.isConfirmed ? UIColor.blackColor() : UIColor.redColor()
         
         if indexPath.row == operations.count - 1 && operations.count < fetchRequest!.numberOfObjects {
             updateModel(true)
         }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let operation = operations[indexPath.row]
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://blockchain.info/tx/\(operation.operationContainer.transactionContainer.transaction.hash)")!)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
 }

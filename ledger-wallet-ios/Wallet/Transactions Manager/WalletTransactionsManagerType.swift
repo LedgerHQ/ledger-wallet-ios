@@ -13,16 +13,18 @@ let WalletTransactionsManagerDidStopRefreshingTransactionsNotification = "Wallet
 let WalletTransactionsManagerDidUpdateAccountsNotification = "WalletTransactionsManagerDidUpdateAccountsNotification"
 let WalletTransactionsManagerDidUpdateOperationsNotification = "WalletTransactionsManagerDidUpdateOperationsNotification"
 let WalletTransactionsManagerDidMissAccountNotification = "WalletTransactionsManagerDidMissAccountNotification"
+
 let WalletTransactionsManagerMissingAccountRequestKey = "WalletTransactionsManagerMissingAccountRequestKey"
 
 protocol WalletTransactionsManagerType: class {
     
-    var isRefreshingTransactions: Bool { get }
+    var isRefreshing: Bool { get }
     var fetchRequestBuilder: WalletFetchRequestBuilder { get }
     
     func refreshTransactions()
-    func collectUnspentOutputs(accountIndex accountIndex: Int, amount: Int64, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void)
-    func getCurrentAddress(accountIndex accountIndex: Int, external: Bool, completion: (String?) -> Void)
+    func collectUnspentOutputs(accountIndex accountIndex: Int, amount: Int64, completionQueue: NSOperationQueue, completion: ([WalletUnspentTransactionOutput]?, WalletUnspentOutputsCollectorError?) -> Void)
+    func fetchCurrentAddress(accountIndex accountIndex: Int, external: Bool, completionQueue: NSOperationQueue, completion: (WalletAddress?) -> Void)
+    func fetchExtendedPublicKey(accountIndex accountIndex: Int, completionQueue: NSOperationQueue, completion: (String?) -> Void)
     
     init?(identifier: String, servicesProvider: ServicesProviderType)
     

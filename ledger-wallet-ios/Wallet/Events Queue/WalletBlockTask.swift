@@ -10,7 +10,6 @@ import Foundation
 
 struct WalletBlockTask: WalletTaskType {
     
-    let identifier: String
     let source: WalletTaskSource?
     private let block: (completion: () -> Void) -> Void
     
@@ -20,8 +19,7 @@ struct WalletBlockTask: WalletTaskType {
     
     // MARK: Initialize
     
-    init(identifier: String, source: WalletTaskSource?, block: (completion: () -> Void) -> Void) {
-        self.identifier = identifier
+    init(source: WalletTaskSource?, block: (completion: () -> Void) -> Void) {
         self.source = source
         self.block = block
     }

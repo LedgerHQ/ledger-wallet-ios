@@ -10,6 +10,7 @@ import Foundation
 
 struct WalletSpendableTransactionOutput {
     
+    let index: UInt32
     let amount: Int64
     let script: NSData
     let address: WalletAddress?

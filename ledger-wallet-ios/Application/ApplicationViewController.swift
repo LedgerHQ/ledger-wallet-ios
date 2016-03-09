@@ -79,4 +79,23 @@ class ApplicationViewController: UIViewController {
     func handleDidMissAccount(request: WalletMissingAccountRequest) {
 
     }
+    
+    func ensureDeviceIsConnected(completion: (RemoteDeviceAPI?) -> Void) {
+        if let deviceAPI = context?.deviceCommunicator.deviceAPI {
+            completion(deviceAPI)
+            return
+        }
+        
+        let remoteViewController = ApplicationRemoteDeviceViewController.instantiateFromMainStoryboard()
+        remoteViewController.acceptableIdentifier = context?.identifier
+        remoteViewController.deviceCommunicator = context?.deviceCommunicator
+        remoteViewController.completionBlock = { success, deviceCommunicator, identifier in
+            guard success == true, let deviceAPI = deviceCommunicator?.deviceAPI else {
+                completion(nil)
+                return
+            }
+            completion(deviceAPI)
+        }
+        presentViewController(remoteViewController, animated: true, completion: nil)
+    }
 }

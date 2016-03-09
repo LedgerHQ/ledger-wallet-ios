@@ -10,7 +10,7 @@ import Foundation
 
 final class RemoteDeviceAPISignUntrustedHashTask: RemoteDeviceAPITaskType {
     
-    typealias CompletionBlock = (signature: NSData?, error: RemoteDeviceError?) -> Void
+    typealias CompletionBlock = (signature: NSData?, sigHashType: UInt8?, error: RemoteDeviceError?) -> Void
     
     var timeoutInterval = 0.0
     var completionBlock: (() -> Void)?
@@ -18,19 +18,20 @@ final class RemoteDeviceAPISignUntrustedHashTask: RemoteDeviceAPITaskType {
     
     static private let signatureHashTypeByte: UInt8 = 0x01
     private var signature: NSData?
-    private let inputAddress: WalletAddress
+    private var sigHashType: UInt8?
+    private let inputAddressPath: WalletAddressPath
     private let resultCompletionQueue: NSOperationQueue
     private let resultCompletionBlock: CompletionBlock
 
     func main() -> Bool {
         let writer = DataWriter()
-        writer.writeNextUInt8(UInt8(inputAddress.path.depth))
-        inputAddress.path.derivationIndexes.forEach({ writer.writeNextBigEndianUInt32($0) })
+        writer.writeNextUInt8(UInt8(inputAddressPath.depth))
+        inputAddressPath.derivationIndexes.forEach({ writer.writeNextBigEndianUInt32($0) })
         writer.writeNextUInt8(0x00)
         writer.writeNextBigEndianUInt32(0x00000000)
         writer.writeNextUInt8(self.dynamicType.signatureHashTypeByte)
         
-        guard let APDU = RemoteAPDU(classByte: 0xE0, instruction: 48, p1: 0x00, p2: 0x00, data: writer.data, responseLength: 0x00) else {
+        guard let APDU = RemoteAPDU(classByte: 0xE0, instruction: 0x48, p1: 0x00, p2: 0x00, data: writer.data, responseLength: 0x00) else {
             return false
         }
         
@@ -58,19 +59,21 @@ final class RemoteDeviceAPISignUntrustedHashTask: RemoteDeviceAPITaskType {
         let finalSignature = NSMutableData(data: signature)
         finalSignature.replaceBytesInRange(NSMakeRange(0, 1), withBytes: [0x30] as [UInt8], length: 1)
         self.signature = finalSignature
+        self.sigHashType = sigHashType
         completeWithError(nil)
     }
     
     func notifyResultWithError(error: RemoteDeviceError?) {
         let completionBlock = self.resultCompletionBlock
         let signature = self.signature
-        self.resultCompletionQueue.addOperationWithBlock() { completionBlock(signature: signature, error: error) }
+        let sigHashType = self.sigHashType
+        self.resultCompletionQueue.addOperationWithBlock() { completionBlock(signature: signature, sigHashType: sigHashType, error: error) }
     }
     
     // MARK: Initialization
     
-    init(inputAddress: WalletAddress, devicesCoordinator: RemoteDevicesCoordinator, completionQueue: NSOperationQueue, completion: CompletionBlock) {
-        self.inputAddress = inputAddress
+    init(inputAddressPath: WalletAddressPath, devicesCoordinator: RemoteDevicesCoordinator, completionQueue: NSOperationQueue, completion: CompletionBlock) {
+        self.inputAddressPath = inputAddressPath
         self.devicesCoordinator = devicesCoordinator
         self.resultCompletionQueue = completionQueue
         self.resultCompletionBlock = completion

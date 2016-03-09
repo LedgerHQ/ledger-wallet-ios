@@ -35,13 +35,23 @@ struct LedgerServicesProvider: ServicesProviderType {
         return NSURL(string: path, relativeToURL: websocketBaseURL)!
     }
     
-    var m2FAChannelsWebsocketURL: NSURL {
-        return NSURL(string: "/2fa/channels", relativeToURL: websocketBaseURL)!
-    }
-
     func walletTransactionsURLForAddresses(addresses: [String]) -> NSURL {
         let path = "/blockchain/\(coinNetwork.acronym)/addresses/\(addresses.joinWithSeparator(","))/transactions"
         return NSURL(string: path, relativeToURL: APIBaseURL)!
+    }
+    
+    func walletRawTransactionURLFromHash(hash: String) -> NSURL {
+        let path = "/blockchain/\(coinNetwork.acronym)/transactions/\(hash)/hex"
+        return NSURL(string: path, relativeToURL: APIBaseURL)!
+    }
+    
+    func walletPushRawTransactionURL() -> NSURL {
+        let path = "/blockchain/\(coinNetwork.acronym)/pushtx"
+        return NSURL(string: path, relativeToURL: APIBaseURL)!
+    }
+    
+    var m2FAChannelsWebsocketURL: NSURL {
+        return NSURL(string: "/2fa/channels", relativeToURL: websocketBaseURL)!
     }
     
     func m2FAPushTokensURLForPairingId(pairingId: String) -> NSURL {

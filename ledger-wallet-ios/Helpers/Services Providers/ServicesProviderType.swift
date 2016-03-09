@@ -20,8 +20,10 @@ protocol ServicesProviderType {
     
     // Endpoint URLs
     var walletEventsWebsocketURL: NSURL { get }
-    var m2FAChannelsWebsocketURL: NSURL { get }
     func walletTransactionsURLForAddresses(addresses: [String]) -> NSURL
+    func walletRawTransactionURLFromHash(hash: String) -> NSURL
+    func walletPushRawTransactionURL() -> NSURL
+    var m2FAChannelsWebsocketURL: NSURL { get }
     func m2FAPushTokensURLForPairingId(pairingId: String) -> NSURL
 
     // Attestation keys

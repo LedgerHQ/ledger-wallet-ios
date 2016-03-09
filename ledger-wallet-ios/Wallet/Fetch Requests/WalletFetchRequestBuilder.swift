@@ -11,16 +11,17 @@ import Foundation
 final class WalletFetchRequestBuilder {
     
     private let storeProxy: WalletStoreProxy
+    private let delegateQueue: NSOperationQueue
     
     // MARK: Fetch request management
     
     func accountsFetchRequestWithIncrementSize(incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<WalletVisibleAccountsFetchRequestProvider>?) -> Void) {
-        let provider = WalletVisibleAccountsFetchRequestProvider(storeProxy: storeProxy)
+        let provider = WalletVisibleAccountsFetchRequestProvider(storeProxy: storeProxy, delegateQueue: delegateQueue)
         fetchRequestWithProvider(provider, incrementSize: incrementSize, order: order, completion: completion)
     }
     
     func accountOperationsFetchRequestForAccountAtIndex(index: Int?, incrementSize: Int, order: WalletFetchRequestOrder, completion: (WalletFetchRequest<WalletVisibleAccountOperationsFetchRequestProvider>?) -> Void) {
-        let provider = WalletVisibleAccountOperationsFetchRequestProvider(accountIndex: index, storeProxy: storeProxy)
+        let provider = WalletVisibleAccountOperationsFetchRequestProvider(accountIndex: index, storeProxy: storeProxy, delegateQueue: delegateQueue)
         fetchRequestWithProvider(provider, incrementSize: incrementSize, order: order, completion: completion)
     }
     
@@ -40,8 +41,9 @@ final class WalletFetchRequestBuilder {
     
     // MARK: Initialization
     
-    init(storeProxy: WalletStoreProxy) {
+    init(storeProxy: WalletStoreProxy, delegateQueue: NSOperationQueue) {
         self.storeProxy = storeProxy
+        self.delegateQueue = delegateQueue
     }
     
 }

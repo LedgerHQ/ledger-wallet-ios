@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol BarCodeReaderViewDelegate: class {
+@objc protocol BarCodeReaderViewDelegate: class {
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String)
 
@@ -20,7 +20,7 @@ class BarCodeReaderView: View {
     private var previewLayer: AVCaptureVideoPreviewLayer {
         return layer as! AVCaptureVideoPreviewLayer
     }
-    weak var delegate: BarCodeReaderViewDelegate?
+    @IBOutlet weak var delegate: BarCodeReaderViewDelegate?
     var listensAppNotifications = true
     private(set) var isCapturing = false
     private var captureDevice: AVCaptureDevice?

@@ -8,6 +8,8 @@
 
 import UIKit
 
+var task: NSURLSessionDataTask? = nil
+
 class ApplicationDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - States management
