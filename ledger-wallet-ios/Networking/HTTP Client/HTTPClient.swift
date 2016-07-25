@@ -73,12 +73,14 @@ final class HTTPClient {
                 return
             }
             guard let httpResponse = response as? NSHTTPURLResponse else {
+                let error = NSError(domain: "HTTPClient", code: NSURLError.BadServerResponse.rawValue, userInfo: nil)
                 strongSelf.postprocessResponse(nil, request: request, error: error)
                 completionHandler(nil, request, nil, error)
                 return
             }
             let statusCode = httpResponse.statusCode
             guard statusCode < 400 else {
+                let error = NSError(domain: "HTTPClient", code: NSURLError.BadServerResponse.rawValue, userInfo: nil)
                 strongSelf.postprocessResponse(httpResponse, request: request, error: error)
                 completionHandler(nil, request, httpResponse, error)
                 return
