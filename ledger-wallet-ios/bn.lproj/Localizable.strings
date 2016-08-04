@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "বাতিল করুন";
+
+"OK" = "ঠিক আছে";
+
+"CONFIRM" = "নিশ্চিত করুন";
+
+"CLOSE" = "বন্ধ করুন";
+
+"REJECT" = "বাতিল";
+
+"DONE" = "করা হয়ে গিয়েছে";
+
+"yes" = "হ্যাঁ";
+
+"no" = "না";
+
+"cancel" = "বাতিল করুন";
+
+"delete" = "মুছে ফেলুন";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "Ledger Wallet জোট বন্ধন করুন";
+
+"CONFIRM_TRANSACTION" = "লেনদেন নিশ্চিত করুন";
+
+"PAIRING_SUCCEEDED" = "জোট বন্ধন সফল হয়েছে";
+
+"PAIRING_FAILED" = "জোট বন্ধন ব্যর্থ হয়েছে";
+
+"PAIRED_LEDGER_WALLETS" = "জোট বন্ধন হওয়া LEDGER WALLET";
+
+"pairing_in_progress..." = "জোট বন্ধন চলছে...";
+
+"establishing_connection..." = "সংযোগ স্থাপন করা হচ্ছে...";
+
+"waiting_for_transactions..." = "লেনদেনের জন্য অপেক্ষা করা হচ্ছে...";
+
+"this_operation_may_take_a_while" = "অনুগ্রহ করে অপেক্ষা করুন, এই কাজে একটু সময় লাগতে পারে।.";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "আপনার সিকিউরিটি কার্ড নিন এবং প্রতিটি অক্ষরের মান মিলিয়ে নিয়ে লিখুন.";
+
+"your_device_is_now_paired" = "জোট বন্ধন প্রক্রিয়া সম্পন্ন.\nএই Ledger Wallet এর একটি নাম লিখুন.";
+
+"ledger_wallet_name" = "Ledger Wallet এর নাম";
+
+"my_ledger_wallet" = "আমার Ledger Wallet";
+
+"assign_a_name_to_this_ledger_wallet" = "এই Ledger Wallet এর ধার্য একটি নাম নির্বাচন করুন.";
+
+"enter_letter_or_value_matching_%@" = "আপনার সিকিউরিটি কার্ডের কালো বাক্সের ম্যাচিং \"%@\" অক্ষর বা অঙ্কটি লিখুন.";
+
+"your_device_is_creating_secure_connection" = "এই স্মার্টফোনটি আপনার Ledger Wallet এর সাথে একটি নিরাপদ সংযোগ তৈরি করছে.";
+
+"ledger_wallet_is_finalizing_pairing" = "আপনার Ledger Wallet এই স্মার্টফোনের সঙ্গে জোট বন্ধন প্রক্রিয়া চূড়ান্ত করছে.";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "সিকিউরিটি কার্ডের বৈধতা কোডটি ভুল আছে.";
+
+"error_pairing_timeout" = "জোট বন্ধন প্রক্রিয়া খুব বেশি সময় নিয়েছে (সময় উত্তীর্ণ).";
+
+"success_pairing_named_%@" = "আপনার Ledger Wallet \"%@\" এখন আপনার স্মার্টফোনের সঙ্গে জুড়ে গেছে.";
+
+"no_paired_ledger_wallet" = "কোন জোড়া Ledger Wallet নেই";
+
+"to_enable_second_factor_pair_device" = "দ্বিতীয় বিষয় বৈধতা সক্রিয় করার জন্য, এই স্মার্টফোনের সঙ্গে আপনার Ledger Wallet এ জোট \nবন্ধন করুন.";
+
+"transactions_will_automatically_appear" = "যখন ব্যবহারকারী বৈধতার প্রয়োজন হয় তখন লেনদেন স্বয়ংক্রিয়ভাবে প্রদর্শিত হবে.";
+
+"need_help_visit_help_center" = "সাহায্য দরকার? আমাদের সহায়তা কেন্দ্রে যান.";
+
+"requested_on_%@" = "%@ অনুরোধ করা";
+
+"paired_on_%@" = "%@ এর উপর জোটবদ্ধ করুন";
+
+"you_need_to_provide_a_dongle_name" = "এই Ledger Wallet এর জন্য একটি অনন্য নাম প্রদান করতে হবে.";
+
+"a_dongle_with_this_name_already_exists" = "এই নামটি ইতিমধ্যেই অন্য এক জোড়া Ledger Wallet এর জন্য ব্যবহার করা হয়ে গেছে.";
+
+"deleting_this_dongle_pairing" = "এই জোটবদ্ধ Ledger Wallet মুছে ফেললে, আপনি আর নিজের থেকে স্মার্টফোন দ্বারা লেনদেন যাচাই করতে সক্ষম হবেন না.\nআপনি কি এটি বহাল রাখতে চান?";

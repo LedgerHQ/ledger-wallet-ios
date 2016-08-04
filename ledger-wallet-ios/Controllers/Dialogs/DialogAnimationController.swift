@@ -23,7 +23,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         
         if (toViewController.isBeingPresented()) {
-            let containerView = transitionContext.containerView()
+            guard let containerView = transitionContext.containerView() else { return }
             
             // create dimming view
             dimmingView = UIView()
@@ -53,7 +53,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
             backgroundView.addSubview(contentView)
             
             // animate
-            UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions(0), animations: {
+            UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions(rawValue: 0), animations: {
                 self.dimmingView.alpha = 1.0
                 self.backgroundView.center = self.dimmingView.center
             }, completion: { finished in
@@ -62,7 +62,7 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
         }
         else {
             // animate
-            UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions(0), animations: {
+            UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions(rawValue: 0), animations: {
                 self.dimmingView.alpha = 0.0
                 self.backgroundView.center = CGPointMake(self.dimmingView.center.x, self.dimmingView.bounds.size.height + self.backgroundView.bounds.size.height / 2.0)
             }, completion: { finished in
@@ -71,8 +71,8 @@ extension DialogAnimationController: UIViewControllerAnimatedTransitioning {
         }
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-        if (transitionContext.isAnimated()) {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        if let animated = transitionContext?.isAnimated() where animated == true {
             return VisualFactory.Durations.Animation.Long
         }
         return 0

@@ -11,11 +11,11 @@ import Foundation
 final class JSON {
     
     class func JSONObjectFromData(data: NSData) -> AnyObject? {
-        return NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil)
+        return try? NSJSONSerialization.JSONObjectWithData(data, options: [])
     }
     
     class func dataFromJSONObject(object: AnyObject) -> NSData? {
-        return NSJSONSerialization.dataWithJSONObject(object, options: nil, error: nil)
+        return try? NSJSONSerialization.dataWithJSONObject(object, options: [])
     }
     
 }

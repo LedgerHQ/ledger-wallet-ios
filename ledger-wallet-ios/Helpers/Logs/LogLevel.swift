@@ -12,7 +12,7 @@ enum LogLevel: Int {
     case Debug, Info, Warn, Error
 }
 
-extension LogLevel: Printable {
+extension LogLevel: CustomStringConvertible {
     
     var description: String {
         switch self {

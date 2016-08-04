@@ -19,7 +19,7 @@ extension UIView {
             return objc_getAssociatedObject(self, &allureKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &allureKey, newValue, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &allureKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             ViewStylist.stylizeView(self)
         }
     }

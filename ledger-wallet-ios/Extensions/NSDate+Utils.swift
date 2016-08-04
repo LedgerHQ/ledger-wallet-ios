@@ -12,7 +12,7 @@ extension NSDate {
     
     func firstMomentDate() -> NSDate {
         let calendar = NSCalendar.currentCalendar()
-        var comps = calendar.components(NSCalendarUnit.YearCalendarUnit | .MonthCalendarUnit | .DayCalendarUnit | .HourCalendarUnit | .MinuteCalendarUnit | .SecondCalendarUnit, fromDate: self)
+        let comps = calendar.components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: self)
         
         comps.hour = 0
         comps.minute = 0

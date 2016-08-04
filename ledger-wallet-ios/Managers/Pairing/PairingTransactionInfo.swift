@@ -83,7 +83,7 @@ final class PairingTransactionInfo: Mockable {
     // MARK: - Mock
     
     class func testObject() -> Self {
-        return self()
+        return self.init()
     }
     
     private init() {

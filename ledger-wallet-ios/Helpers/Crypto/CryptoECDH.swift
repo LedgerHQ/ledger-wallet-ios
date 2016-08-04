@@ -12,7 +12,7 @@ extension Crypto {
     
     final class ECDH {
         
-        class func performAgreement(#internalKey: Crypto.Key, peerKey: Crypto.Key) -> Crypto.Key {
+        class func performAgreement(internalKey internalKey: Crypto.Key, peerKey: Crypto.Key) -> Crypto.Key {
             if (!internalKey.isAsymmetric || !internalKey.hasPrivateKey || !peerKey.isAsymmetric || !peerKey.hasPublicKey) {
                 return Crypto.Key(symmetricKey: NSData())
             }

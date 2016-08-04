@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "취소";
+
+"OK" = "OK";
+
+"CONFIRM" = "확인";
+
+"CLOSE" = "닫기";
+
+"REJECT" = "거부";
+
+"DONE" = "완료";
+
+"yes" = "네";
+
+"no" = "아니요";
+
+"cancel" = "취소";
+
+"delete" = "삭제";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "LEDGER WALLETS 연동하기";
+
+"CONFIRM_TRANSACTION" = "거래 확인";
+
+"PAIRING_SUCCEEDED" = "페어링 성공";
+
+"PAIRING_FAILED" = "페어링에 실패 했습니다.";
+
+"PAIRED_LEDGER_WALLETS" = "페어드 LEDGER WALLETS";
+
+"pairing_in_progress..." = "페어링 진행...";
+
+"establishing_connection..." = "연결을 설정...";
+
+"waiting_for_transactions..." = "거래 대기중...";
+
+"this_operation_may_take_a_while" = "잠시 기다려 주십시오, 이 작업은 시간이 걸릴 수 있습니다. ";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "보안 카드를 들고 각 문자에 대해 일치하는 값을 입력 합니다.";
+
+"your_device_is_now_paired" = "연동 작업이 완료되었습니다.  Ledger Wallet의 이름을 입력하십시오. ";
+
+"ledger_wallet_name" = "Ledger Wallet 이름";
+
+"my_ledger_wallet" = "내 Ledger Wallet";
+
+"assign_a_name_to_this_ledger_wallet" = "Ledger Wallet에 할당할 이름을 선택하십시오. ";
+
+"enter_letter_or_value_matching_%@" = "보안카드 \"%@\"에 일치하는 블랙 박스에 있는 문자와 숫자를 입력하십시오.";
+
+"your_device_is_creating_secure_connection" = "이 스마트폰은 Ledger Wallet과 보안 연결이 되고 있습니다. ";
+
+"ledger_wallet_is_finalizing_pairing" = "Ledger Wallet은 이 스마트폰으로 페어링 과정을 마무리하고 있습니다. ";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "보안 카드 인증 코드가 올바르지 않습니다.";
+
+"error_pairing_timeout" = "연동 과정에 너무 많은 시간 (타임 아웃)이 걸렸습니다.";
+
+"success_pairing_named_%@" = "Ledger Wallet \"%@\"는 지금 당신의 스마트폰과 연동됩니다.";
+
+"no_paired_ledger_wallet" = "연동된 Ledger Wallet 없음";
+
+"to_enable_second_factor_pair_device" = "두번째 요소 인증을 하시려면 LEDGER WALLETS과 이 스마트폰을  함께 사용할 수 있도록 연동하십시오. ";
+
+"transactions_will_automatically_appear" = "수동 인증 필요시 거래내역이 자동으로 나타납니다. ";
+
+"need_help_visit_help_center" = "도움이 필요하십니까? 도움 센터를 방문하십시오.";
+
+"requested_on_%@" = "요청된 %@";
+
+"paired_on_%@" = "연동된 %@";
+
+"you_need_to_provide_a_dongle_name" = "Ledger Wallet에 고유이름을 지정하십시오";
+
+"a_dongle_with_this_name_already_exists" = "이 이름은 이미 다른 연동된 Ledger Wallet이 사용 중입니다.";
+
+"deleting_this_dongle_pairing" = "이 Ledger Wallet을 삭제하면 이 스마트폰에서의 수동적인 거래를 더이상 하실 수 없게 됩니다. 계속하시겠습니까?";

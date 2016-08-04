@@ -8,23 +8,16 @@
 
 import Foundation
 
-final class RemoteNotificationsManager: BaseManager {
+final class RemoteNotificationsManager {
+    
+    static let sharedInstance = RemoteNotificationsManager()
     
     // MARK: - Common
     
     func registerForRemoteNotifications() {
         let application = UIApplication.sharedApplication()
-        if (application.respondsToSelector("isRegisteredForRemoteNotifications"))
-        {
-            // iOS 8 Notifications
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Badge | .Sound | .Alert), categories: nil));
-            application.registerForRemoteNotifications()
-        }
-        else
-        {
-            // iOS < 8 Notifications
-            application.registerForRemoteNotificationTypes(.Badge | .Sound | .Alert)
-        }
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: ([.Badge, .Sound, .Alert]), categories: nil));
+        application.registerForRemoteNotifications()
     }
     
     func handleNewDeviceToken(token: NSData) {
@@ -39,7 +32,7 @@ final class RemoteNotificationsManager: BaseManager {
         for item in allItems {
             // if pairing item has no (or outdated) device token
             if item.deviceToken == nil || item.deviceToken! != token {
-                RemoteNotificationsRestClient.sharedInstance().registerDeviceToken(token, toPairingId: item.pairingId!) { success in
+                RemoteNotificationsRestClient.sharedInstance.registerDeviceToken(token, toPairingId: item.pairingId!) { success in
                     if (success) {
                         item.deviceToken = token
                     }
@@ -51,10 +44,16 @@ final class RemoteNotificationsManager: BaseManager {
     func unregisterDeviceTokenFromPairedDongle(pairingItem: PairingKeychainItem) {
         // if pairing item already registered a device token
         if (pairingItem.deviceToken != nil) {
-            RemoteNotificationsRestClient.sharedInstance().unregisterDeviceTokenFromPairingId(pairingItem.pairingId!) { success in
+            RemoteNotificationsRestClient.sharedInstance.unregisterDeviceTokenFromPairingId(pairingItem.pairingId!) { success in
             
             }
         }
+    }
+    
+    // MARK: Initialization
+    
+    private init() {
+
     }
     
 }

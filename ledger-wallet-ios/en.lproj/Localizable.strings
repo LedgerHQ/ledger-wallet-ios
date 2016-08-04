@@ -8,7 +8,7 @@
 
 /* Common */
 
-"ledger_wallet" = "Ledger Wallet";
+"ledger_authenticator" = "Ledger Authenticator";
 
 "CANCEL" = "CANCEL";
 
@@ -50,7 +50,7 @@
 
 "this_operation_may_take_a_while" = "Please wait, this operation may take a while.";
 
-"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Chrome application.";
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
 
 "enter_security_card_value" = "Grab your security card and enter the matching value for each character.";
 
@@ -72,7 +72,7 @@
 
 "error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
 
-"error_pairing_dongle_cancelled" = "The Ledger Wallet Chrome application cancelled the pairing process.";
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
 
 "error_pairing_wrong_validation_code" = "The security card validation code is incorrect.";
 

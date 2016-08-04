@@ -16,9 +16,6 @@
 		3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */; };
 		3725D4C11B58F66200252F2B /* LogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C01B58F66200252F2B /* LogWriter.swift */; };
 		3725D4C31B59023000252F2B /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725D4C21B59023000252F2B /* LogLevel.swift */; };
-		373073541B2ECCE100DDFE5A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073531B2ECCE100DDFE5A /* WebSocket.swift */; };
-		373073551B2ECCE400DDFE5A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073531B2ECCE100DDFE5A /* WebSocket.swift */; };
-		373073571B2ECCFC00DDFE5A /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073561B2ECCFC00DDFE5A /* Security.swift */; };
 		373073681B2ECD6200DDFE5A /* BTCAssetAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073591B2ECD6200DDFE5A /* BTCAssetAddress.m */; };
 		3730736A1B2ECD6200DDFE5A /* BTCEncryptedBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3730735D1B2ECD6200DDFE5A /* BTCEncryptedBackup.m */; };
 		3730736B1B2ECD6200DDFE5A /* BTCFancyEncryptedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3730735F1B2ECD6200DDFE5A /* BTCFancyEncryptedMessage.m */; };
@@ -27,7 +24,6 @@
 		3730736F1B2ECD6200DDFE5A /* BTCProtocolBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073671B2ECD6200DDFE5A /* BTCProtocolBuffers.m */; };
 		373073751B2ECF7400DDFE5A /* BTCAssetID.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073721B2ECF7400DDFE5A /* BTCAssetID.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		373073761B2ECF7400DDFE5A /* BTCAssetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073741B2ECF7400DDFE5A /* BTCAssetType.m */; };
-		373073771B2ECFA700DDFE5A /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373073561B2ECCFC00DDFE5A /* Security.swift */; };
 		373073791B2EDF0700DDFE5A /* BTCAssetID.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073721B2ECF7400DDFE5A /* BTCAssetID.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3730737A1B2EDF2200DDFE5A /* BTCAssetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073741B2ECF7400DDFE5A /* BTCAssetType.m */; };
 		3730737B1B2EDF2B00DDFE5A /* BTCAssetAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 373073591B2ECD6200DDFE5A /* BTCAssetAddress.m */; };
@@ -95,12 +91,8 @@
 		378205D41A60195E00F6CA45 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 378205D31A60195E00F6CA45 /* Fonts */; };
 		3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */; };
 		3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3784FB111A5D2F5F0063A364 /* Images.xcassets */; };
-		378E5C531AADEF7C00A0C9A8 /* SharableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C521AADEF7C00A0C9A8 /* SharableObject.swift */; };
-		378E5C541AADEF7C00A0C9A8 /* SharableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C521AADEF7C00A0C9A8 /* SharableObject.swift */; };
 		378E5C561AADEFBE00A0C9A8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C551AADEFBE00A0C9A8 /* Preferences.swift */; };
 		378E5C571AADEFBE00A0C9A8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C551AADEFBE00A0C9A8 /* Preferences.swift */; };
-		378E5C691AADFAB900A0C9A8 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C681AADFAB900A0C9A8 /* BaseManager.swift */; };
-		378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E5C681AADFAB900A0C9A8 /* BaseManager.swift */; };
 		378E5C6B1AAE032900A0C9A8 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC847B1A7FB75B00072B71 /* DeviceManager.swift */; };
 		378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */; };
 		3798BA1A1A6E6C7C00F5B603 /* ViewStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */; };
@@ -214,6 +206,8 @@
 		37BC84881A7FE3DC00072B71 /* BasePairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */; };
 		37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */; };
 		37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */; };
+		37C36AAE1D52458A000E739A /* SSLSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C36AAC1D52458A000E739A /* SSLSecurity.swift */; };
+		37C36AAF1D52458A000E739A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C36AAD1D52458A000E739A /* WebSocket.swift */; };
 		37C723B11A851E49002CF49D /* PairingTransactionsCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */; };
 		37C903351ADBC43E001517ED /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C903341ADBC43E001517ED /* OpenSSL.framework */; };
 		37DD54031A823C3E00449CCA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
@@ -273,8 +267,6 @@
 		3724A3851A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingAddConnectionStepViewController.xib; sourceTree = "<group>"; };
 		3725D4C01B58F66200252F2B /* LogWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWriter.swift; sourceTree = "<group>"; };
 		3725D4C21B59023000252F2B /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
-		373073531B2ECCE100DDFE5A /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = Vendor/Starscream/WebSocket.swift; sourceTree = "<group>"; };
-		373073561B2ECCFC00DDFE5A /* Security.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Security.swift; path = Vendor/Starscream/Security.swift; sourceTree = "<group>"; };
 		373073581B2ECD6200DDFE5A /* BTCAssetAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BTCAssetAddress.h; path = Vendor/CoreBitcoin/CoreBitcoin/BTCAssetAddress.h; sourceTree = "<group>"; };
 		373073591B2ECD6200DDFE5A /* BTCAssetAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BTCAssetAddress.m; path = Vendor/CoreBitcoin/CoreBitcoin/BTCAssetAddress.m; sourceTree = "<group>"; };
 		3730735C1B2ECD6200DDFE5A /* BTCEncryptedBackup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BTCEncryptedBackup.h; path = Vendor/CoreBitcoin/CoreBitcoin/BTCEncryptedBackup.h; sourceTree = "<group>"; };
@@ -301,7 +293,6 @@
 		3745D7801A796CE100762F80 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingIndicator.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		374A1E981B57D552006C325E /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		374A1E9A1B57D779006C325E /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
-		375183611B8F2310007DFFDB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37579F071A719BCE007A7344 /* DialogAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogAnimationController.swift; path = dialogs/DialogAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		375FF5751B5D1F92000175CB /* NSDate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Utils.swift"; path = "ledger-wallet-ios/Extensions/NSDate+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		37656F2E1A76A3540042512D /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeychainItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -394,9 +385,7 @@
 		3784FB111A5D2F5F0063A364 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3784FB1A1A5D2F5F0063A364 /* ledger-wallet-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ledger-wallet-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784FB1F1A5D2F5F0063A364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		378E5C521AADEF7C00A0C9A8 /* SharableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharableObject.swift; sourceTree = "<group>"; };
 		378E5C551AADEFBE00A0C9A8 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		378E5C681AADFAB900A0C9A8 /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = managers/BaseManager.swift; sourceTree = "<group>"; };
 		378F579C1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingHomeWaitingContentViewController.xib; sourceTree = "<group>"; };
 		3798BA171A6E6C7C00F5B603 /* ViewStylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStylist.swift; sourceTree = "<group>"; };
 		3798BA181A6E6C7C00F5B603 /* VisualFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualFactory.swift; sourceTree = "<group>"; };
@@ -407,7 +396,6 @@
 		379A12C31B2AE80500D6E8DA /* HTTPClientTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
 		379A12C51B2AE80500D6E8DA /* BaseRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRestClient.swift; sourceTree = "<group>"; };
 		379A12C61B2AE80500D6E8DA /* RemoteNotificationsRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsRestClient.swift; sourceTree = "<group>"; };
-		379A12D11B2AE90D00D6E8DA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		379CA0F71A7135A300A9D426 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DialogViewController.swift; path = dialogs/DialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		379CA1031A713B7100A9D426 /* PairingConfirmationDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingConfirmationDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		379CA1051A713BB900A9D426 /* PairingConfirmationDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PairingConfirmationDialogViewController.xib; sourceTree = "<group>"; };
@@ -458,9 +446,14 @@
 		37BC84851A7FE3DC00072B71 /* BasePairingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BasePairingManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84861A7FE3DC00072B71 /* PairingProtocolManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37BC84871A7FE3DC00072B71 /* PairingTransactionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingTransactionsManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		37BDAE901ACB0C1100DA2E45 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		37C36AAB1D524081000E739A /* ledger-wallet-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ledger-wallet-ios.entitlements"; sourceTree = "<group>"; };
+		37C36AAC1D52458A000E739A /* SSLSecurity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SSLSecurity.swift; path = Vendor/Starscream/Source/SSLSecurity.swift; sourceTree = "<group>"; };
+		37C36AAD1D52458A000E739A /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = Vendor/Starscream/Source/WebSocket.swift; sourceTree = "<group>"; };
 		37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTransactionsCryptor.swift; sourceTree = "<group>"; };
 		37C903341ADBC43E001517ED /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = vendor/OpenSSL.framework; sourceTree = "<group>"; };
+		37CEDD831D537828007B4C7A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		37CEDD841D537852007B4C7A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		37CEDD851D53786B007B4C7A /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		37DF00751A8E119B00712AB1 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationManager.swift; path = managers/ApplicationManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
@@ -511,8 +504,8 @@
 		373BA3111A9385A900849B6E /* Starscream */ = {
 			isa = PBXGroup;
 			children = (
-				373073561B2ECCFC00DDFE5A /* Security.swift */,
-				373073531B2ECCE100DDFE5A /* WebSocket.swift */,
+				37C36AAC1D52458A000E739A /* SSLSecurity.swift */,
+				37C36AAD1D52458A000E739A /* WebSocket.swift */,
 			);
 			name = Starscream;
 			sourceTree = "<group>";
@@ -562,7 +555,6 @@
 		375A38081A77DA9A0082D917 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				378E5C681AADFAB900A0C9A8 /* BaseManager.swift */,
 				37DF00751A8E119B00712AB1 /* ApplicationManager.swift */,
 				37BC847B1A7FB75B00072B71 /* DeviceManager.swift */,
 				37414B161A8D0B9300CE0795 /* RemoteNotificationsManager.swift */,
@@ -760,6 +752,7 @@
 			children = (
 				3784FB0A1A5D2F5F0063A364 /* AppDelegate.swift */,
 				37B9E4911A67F8640055E81A /* ledger-wallet-ios-Bridging-Header.h */,
+				37C36AAB1D524081000E739A /* ledger-wallet-ios.entitlements */,
 				3784FB091A5D2F5F0063A364 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1035,7 +1028,6 @@
 			isa = PBXGroup;
 			children = (
 				378E5C551AADEFBE00A0C9A8 /* Preferences.swift */,
-				378E5C521AADEF7C00A0C9A8 /* SharableObject.swift */,
 				37F283C01A655D7200F432CC /* Localization.swift */,
 				373E22CB1A71517C00BAF63F /* Blocks.swift */,
 				3724A3811A79383700E1B977 /* Common.swift */,
@@ -1103,7 +1095,9 @@
 		3784FAFD1A5D2F5E0063A364 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Ledger;
 				TargetAttributes = {
 					3784FB041A5D2F5E0063A364 = {
@@ -1114,7 +1108,7 @@
 								enabled = 0;
 							};
 							com.apple.Keychain = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1132,8 +1126,8 @@
 				en,
 				Base,
 				fr,
-				es,
 				ja,
+				"es-ES",
 			);
 			mainGroup = 3784FAFC1A5D2F5E0063A364;
 			productRefGroup = 3784FB061A5D2F5E0063A364 /* Products */;
@@ -1196,6 +1190,7 @@
 				37BC84891A7FE3DC00072B71 /* PairingProtocolManager.swift in Sources */,
 				376F51041A82190E001C6684 /* BTCEncryptedMessage.m in Sources */,
 				37BC848A1A7FE3DC00072B71 /* PairingTransactionsManager.swift in Sources */,
+				37C36AAF1D52458A000E739A /* WebSocket.swift in Sources */,
 				37A2DBE31A7A85FD0045B639 /* PairingAddFinalizeStepViewController.swift in Sources */,
 				370E83911B5696B900D67A9D /* StoryboardFactory.swift in Sources */,
 				37698A5E1A75157F00AA8B30 /* PairingTransactionDialogViewController.swift in Sources */,
@@ -1224,7 +1219,6 @@
 				376F510F1A82190E001C6684 /* BTCProcessor.m in Sources */,
 				379A12C81B2AE80500D6E8DA /* HTTPClientDataTask.swift in Sources */,
 				377E81181A8A048200010B37 /* PairingHomeWaitingContentViewController.swift in Sources */,
-				373073571B2ECCFC00DDFE5A /* Security.swift in Sources */,
 				376F50FE1A82190E001C6684 /* BTCBlockchainInfo.m in Sources */,
 				376F51051A82190E001C6684 /* BTCErrors.m in Sources */,
 				37EF30DC1B5E4A0100E0316F /* Logger.swift in Sources */,
@@ -1249,9 +1243,9 @@
 				37B537661A82A1AB0087AB43 /* CryptoHash.swift in Sources */,
 				377E811A1A8A04A000010B37 /* PairingHomeEmptyContentViewController.swift in Sources */,
 				3798BA1C1A6E6C7C00F5B603 /* VisualTheme.swift in Sources */,
-				378E5C531AADEF7C00A0C9A8 /* SharableObject.swift in Sources */,
 				3730736A1B2ECD6200DDFE5A /* BTCEncryptedBackup.m in Sources */,
 				376F50FC1A82190D001C6684 /* BTCBlindSignature.m in Sources */,
+				37C36AAE1D52458A000E739A /* SSLSecurity.swift in Sources */,
 				37EF91C01A6D3C47007DBBAF /* Label.swift in Sources */,
 				37AB9ECE1A8B566900A48951 /* UIViewController+Init.m in Sources */,
 				3730736F1B2ECD6200DDFE5A /* BTCProtocolBuffers.m in Sources */,
@@ -1274,7 +1268,6 @@
 				37B604CE1A9226FA00E6AD78 /* AlertController.swift in Sources */,
 				37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */,
 				376F510E1A82190E001C6684 /* BTCPriceSource.m in Sources */,
-				373073541B2ECCE100DDFE5A /* WebSocket.swift in Sources */,
 				379A12CB1B2AE80500D6E8DA /* RemoteNotificationsRestClient.swift in Sources */,
 				374A1E9B1B57D779006C325E /* LogEntry.swift in Sources */,
 				37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */,
@@ -1311,7 +1304,6 @@
 				37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */,
 				3730736C1B2ECD6200DDFE5A /* BTCMerkleTree.m in Sources */,
 				379A12CA1B2AE80500D6E8DA /* BaseRestClient.swift in Sources */,
-				378E5C691AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37ABFBD81A83C8F50061E92D /* CryptoCipher.swift in Sources */,
 				376F510C1A82190E001C6684 /* BTCOpcode.m in Sources */,
 				3784FB0B1A5D2F5F0063A364 /* AppDelegate.swift in Sources */,
@@ -1334,14 +1326,12 @@
 				37BAF3151AB1975F0084B832 /* BTCProtocolSerialization.m in Sources */,
 				37EF30E51B5E522000E0316F /* NSDate+Utils.swift in Sources */,
 				37BAF2FA1AB196450084B832 /* BitcoinFormatter.swift in Sources */,
-				373073771B2ECFA700DDFE5A /* Security.swift in Sources */,
 				37BAF31D1AB1975F0084B832 /* NS+BTCBase58.m in Sources */,
 				37AA95651A88CF88009C3EE4 /* PairingTransactionsCryptor.swift in Sources */,
 				37B537701A82A84C0087AB43 /* CryptoData.swift in Sources */,
 				37ABFBE11A850F2C0061E92D /* PairingProtocolCryptor.swift in Sources */,
 				37BAF3011AB1975F0084B832 /* BTCBlindSignature.m in Sources */,
 				37BAF3101AB1975F0084B832 /* BTCNumberFormatter.m in Sources */,
-				378E5C6A1AADFAB900A0C9A8 /* BaseManager.swift in Sources */,
 				37B746A51A5D5020001373C5 /* WebSocketTests.swift in Sources */,
 				37EF30E81B5E829500E0316F /* Log.swift in Sources */,
 				37BAF2FF1AB1975F0084B832 /* BTCBigNumber.m in Sources */,
@@ -1384,7 +1374,6 @@
 				37B537711A82A84C0087AB43 /* CryptoHash.swift in Sources */,
 				37ABFBD01A836F110061E92D /* CryptoECDH.swift in Sources */,
 				37AA95641A88CF4F009C3EE4 /* PairingTransactionsCryptorTest.swift in Sources */,
-				373073551B2ECCE400DDFE5A /* WebSocket.swift in Sources */,
 				37ABFBD41A83A2270061E92D /* CryptoECDHTests.swift in Sources */,
 				37ABFBD91A83C9400061E92D /* CryptoCipher.swift in Sources */,
 				37BAF31E1AB1975F0084B832 /* NSData+BTCData.m in Sources */,
@@ -1399,7 +1388,6 @@
 				37414B181A8D0B9300CE0795 /* RemoteNotificationsManager.swift in Sources */,
 				370E838C1B565F8800D67A9D /* APIRestClient.swift in Sources */,
 				37656F301A76A3F60042512D /* KeychainItem.swift in Sources */,
-				378E5C541AADEF7C00A0C9A8 /* SharableObject.swift in Sources */,
 				378E5C571AADEFBE00A0C9A8 /* Preferences.swift in Sources */,
 				37BAF2FC1AB1975F0084B832 /* BTC256.m in Sources */,
 				379A12D01B2AE8A900D6E8DA /* HTTPClientTask.swift in Sources */,
@@ -1453,9 +1441,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				37F283691A6406A900F432CC /* en */,
-				37BDAE901ACB0C1100DA2E45 /* fr */,
-				379A12D11B2AE90D00D6E8DA /* es */,
-				375183611B8F2310007DFFDB /* ja */,
+				37CEDD831D537828007B4C7A /* fr */,
+				37CEDD841D537852007B4C7A /* ja */,
+				37CEDD851D53786B007B4C7A /* es-ES */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1482,7 +1470,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/ledger-wallet-ios/vendor";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1503,7 +1493,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor/corebitcoin",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
@@ -1531,6 +1521,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/ledger-wallet-ios/vendor";
@@ -1546,7 +1537,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor/corebitcoin",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
@@ -1560,15 +1551,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Bigot (886TTS479K)";
+				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nicolas Bigot (886TTS479K)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
 				);
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.ledger.ledgerwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "922c5f12-cace-4a16-8562-2fc280897443";
+				PROVISIONING_PROFILE = "1fa5785c-51a0-4706-9f1d-1fc8ed1b7114";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 			};
 			name = Debug;
@@ -1579,17 +1573,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Epic Dream SAS (X6LFS5BQKN)";
+				CODE_SIGN_ENTITLEMENTS = "ledger-wallet-ios/ledger-wallet-ios.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Epic Dream SAS (X6LFS5BQKN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ledger-wallet-ios/vendor",
 				);
 				INFOPLIST_FILE = "ledger-wallet-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.ledger.ledgerwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e55926b6-4d58-436f-b2a0-6d0c428e2e42";
+				PROVISIONING_PROFILE = "20061113-c559-4bb2-bb34-bd769db1c2c6";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -1608,6 +1605,7 @@
 				);
 				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.ledger.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";
@@ -1625,6 +1623,7 @@
 				);
 				INFOPLIST_FILE = "ledger-wallet-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.ledger.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ledger-wallet-ios/ledger-wallet-ios-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ledger-wallet-ios.app/ledger-wallet-ios";

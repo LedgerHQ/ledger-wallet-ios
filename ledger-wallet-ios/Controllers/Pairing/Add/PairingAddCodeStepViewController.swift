@@ -31,7 +31,7 @@ final class PairingAddCodeStepViewController: PairingAddBaseStepViewController {
         pinCodeView?.placeholder = data as? String
     
         // remove invisible views
-        if (DeviceManager.sharedInstance().screenHeightClass == DeviceManager.HeightClass.Small) {
+        if (DeviceManager.sharedInstance.screenHeightClass == DeviceManager.HeightClass.Small) {
             indicationLabel?.removeFromSuperview()
         }
         

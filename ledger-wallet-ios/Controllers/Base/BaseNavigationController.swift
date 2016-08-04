@@ -14,7 +14,7 @@ class BaseNavigationController: UINavigationController {
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         if self.topViewController != nil {
-            return self.topViewController.preferredStatusBarStyle()
+            return self.topViewController!.preferredStatusBarStyle()
         }
         return super.preferredStatusBarStyle()
     }

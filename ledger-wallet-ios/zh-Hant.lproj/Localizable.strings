@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "取消";
+
+"OK" = "可以";
+
+"CONFIRM" = "確認";
+
+"CLOSE" = "關閉";
+
+"REJECT" = "拒絕";
+
+"DONE" = "完成";
+
+"yes" = "對";
+
+"no" = "不";
+
+"cancel" = "取消";
+
+"delete" = "刪除";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "配對 Ledger Wallet";
+
+"CONFIRM_TRANSACTION" = "確認交易";
+
+"PAIRING_SUCCEEDED" = "配對成功";
+
+"PAIRING_FAILED" = "配對失敗";
+
+"PAIRED_LEDGER_WALLETS" = "配對的 Ledger Wallet";
+
+"pairing_in_progress..." = "配對的進展......";
+
+"establishing_connection..." = "建立連接...";
+
+"waiting_for_transactions..." = "正在等待交易...";
+
+"this_operation_may_take_a_while" = "請等一等，此操作可能需要一段時間。";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "抓住你安全卡和輸入的每個字元的匹配的值。";
+
+"your_device_is_now_paired" = "配對的過程是完整的。輸入此 Ledger Wallet的名稱。";
+
+"ledger_wallet_name" = " Ledger Wallet名稱";
+
+"my_ledger_wallet" = "我的 Ledger Wallet";
+
+"assign_a_name_to_this_ledger_wallet" = "選擇要分配給此 Ledger Wallet的名稱。";
+
+"enter_letter_or_value_matching_%@" = "安全卡上輸入字母或數位在 %@\"黑箱\"匹配。";
+
+"your_device_is_creating_secure_connection" = "這個智慧手機與您的 Ledger Wallet創建安全連線。";
+
+"ledger_wallet_is_finalizing_pairing" = " Ledger Wallet正在最後確定與此智慧手機的配對過程。";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "安全卡驗證代碼是不正確的。";
+
+"error_pairing_timeout" = "配對的過程花了太多的時間 (超時)。";
+
+"success_pairing_named_%@" = "你的 Ledger Wallet\"%@\"現在搭配你的智慧手機。";
+
+"no_paired_ledger_wallet" = "沒有成對的 Ledger Wallet";
+
+"to_enable_second_factor_pair_device" = "若要啟用第二個因數驗證，對與此智慧手機 Ledger Wallet。";
+
+"transactions_will_automatically_appear" = "需要手動驗證時，將自動顯示交易。";
+
+"need_help_visit_help_center" = "需要幫助嗎?請訪問我們的説明中心。";
+
+"requested_on_%@" = "要求對 %@";
+
+"paired_on_%@" = "在 %@ 上配對";
+
+"you_need_to_provide_a_dongle_name" = "您需要提供此 Ledger Wallet的唯一名稱。";
+
+"a_dongle_with_this_name_already_exists" = "此名稱已由另一個成對 Ledger Wallet使用。";
+
+"deleting_this_dongle_pairing" = "刪去此配對的 Ledger Wallet，你將不再能夠手動驗證交易記錄從這個智慧手機。你想要繼續嗎?";

@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7EF6234A97DF3E3A92C1684128B437B1A19215EC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : 0,
+    "A5967575A82190AAAA29664569CD239121414FCA" : 0,
+    "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : 0,
+    "0E0A98171E336D1655B102FE87F6C416C1D752A9" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1EDA088C-975B-42CE-AEEE-210AEADCA7DF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7EF6234A97DF3E3A92C1684128B437B1A19215EC" : "ledger-wallet-ios\/",
+    "A5967575A82190AAAA29664569CD239121414FCA" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/FontAwesome\/",
+    "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/Starscream\/",
+    "0E0A98171E336D1655B102FE87F6C416C1D752A9" : "ledger-wallet-ios\/ledger-wallet-ios\/Vendor\/CoreBitcoin\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ledger-wallet-ios",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ledger-wallet-ios.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:oleganza\/CoreBitcoin.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0E0A98171E336D1655B102FE87F6C416C1D752A9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:LedgerHQ\/ledger-wallet-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7EF6234A97DF3E3A92C1684128B437B1A19215EC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:FortAwesome\/Font-Awesome.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A5967575A82190AAAA29664569CD239121414FCA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:daltoniam\/Starscream.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C86D95FCAEB1FEA0694B5D4AC7241D7E5F42F31D"
+    }
+  ]
+}

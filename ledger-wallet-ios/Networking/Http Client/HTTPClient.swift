@@ -21,31 +21,31 @@ final class HTTPClient {
     }
     lazy private var logger = Logger.sharedInstance("HTTPClient")
     private var _session: NSURLSession! = nil
-    private var logsRequests = ApplicationManager.sharedInstance().isInDebug
+    private var logsRequests = ApplicationManager.sharedInstance.isInDebug
     
     // MARK: - Tasks management
     
-    func get(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+    func get(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.GET, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func post(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+    func post(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.POST, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func delete(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+    func delete(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.DELETE, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func head(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+    func head(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.HEAD, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func put(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+    func put(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.PUT, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    private func performDataRequest(method: Task.Method, URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler?) -> DataTask {
+    private func performDataRequest(method: Task.Method, URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         // create request
         let request = defaultRequest(method, URL: URL)
         
@@ -53,7 +53,7 @@ final class HTTPClient {
         encoding.encode(request, parameters: parameters)
         
         // create data task
-        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void)? = (completionHandler == nil) ? nil : { data, response, error in
+        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { data, response, error in
             let httpResponse = response as! NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
             var finalError = error
@@ -61,7 +61,7 @@ final class HTTPClient {
                 finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
             }
             self.logResponse(httpResponse, request: request, data: data, error: error)
-            completionHandler?(data, request, httpResponse, finalError)
+            completionHandler(data, request, httpResponse, finalError)
         }
         logRequest(request)
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
@@ -100,7 +100,7 @@ final class HTTPClient {
     
     // MARK: - Configuration
     
-    private func preferredSessionConfiguration() -> NSURLSessionConfiguration? {
+    private func preferredSessionConfiguration() -> NSURLSessionConfiguration {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
         configuration.timeoutIntervalForRequest = timeoutInterval
         return configuration

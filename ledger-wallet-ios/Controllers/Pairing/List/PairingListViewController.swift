@@ -88,7 +88,7 @@ extension PairingListViewController: PairingListTableViewCellDelegate {
                 let pairingItem = weakSelf.pairingKeychainItems.removeAtIndex(indexPath.row)
                 
                 // unregister pairing item push token
-                RemoteNotificationsManager.sharedInstance().unregisterDeviceTokenFromPairedDongle(pairingItem)
+                RemoteNotificationsManager.sharedInstance.unregisterDeviceTokenFromPairedDongle(pairingItem)
                 
                 // destroy pairing item
                 pairingItem.destroy()

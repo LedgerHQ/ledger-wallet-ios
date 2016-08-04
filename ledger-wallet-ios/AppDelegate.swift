@@ -17,10 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // print library path
-        ApplicationManager.sharedInstance().printLibraryPathIfNeeded()
+        ApplicationManager.sharedInstance.printLibraryPathIfNeeded()
         
         // handle first app launch
-        ApplicationManager.sharedInstance().handleFirstLaunch()
+        ApplicationManager.sharedInstance.handleFirstLaunch()
         
         // handle entry point without being embedded in a navigation controller
         if let viewController = window?.rootViewController as? BaseViewController {
@@ -31,17 +31,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // register remote notifications
-        RemoteNotificationsManager.sharedInstance().registerForRemoteNotifications()
+        RemoteNotificationsManager.sharedInstance.registerForRemoteNotifications()
         
         // clear stale log files
-        LogWriter.sharedInstance().cleanStaleLogFiles()
+        LogWriter.sharedInstance.cleanStaleLogFiles()
     }
 
     // MARK: - Remote notifications
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // refresh device token
-        RemoteNotificationsManager.sharedInstance().handleNewDeviceToken(deviceToken)
+        RemoteNotificationsManager.sharedInstance.handleNewDeviceToken(deviceToken)
     }
 
 }

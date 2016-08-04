@@ -31,7 +31,7 @@ func ==(lhs: LogEntry, rhs: LogEntry) -> Bool {
     lhs.level == rhs.level && lhs.loggerName == rhs.loggerName
 }
 
-extension LogEntry: Printable {
+extension LogEntry: CustomStringConvertible {
 
     var description: String {
         return "\(date) [\(loggerName)][\(level)] \(string)"

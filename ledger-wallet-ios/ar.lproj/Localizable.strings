@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "إلغاء";
+
+"OK" = "موافق";
+
+"CONFIRM" = "تأكيد";
+
+"CLOSE" = "إغلاق";
+
+"REJECT" = "رفض";
+
+"DONE" = "تم";
+
+"yes" = "نعم";
+
+"no" = "لا";
+
+"cancel" = "إلغاء";
+
+"delete" = "حذف";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "إقتران LEDGER WALLET";
+
+"CONFIRM_TRANSACTION" = "تأكيد المعاملة";
+
+"PAIRING_SUCCEEDED" = "نجح الإقتران";
+
+"PAIRING_FAILED" = "فشل الاقتران";
+
+"PAIRED_LEDGER_WALLETS" = "LEDGER WALLETS المقترنة";
+
+"pairing_in_progress..." = "الإقتران قيد التنفيذ...";
+
+"establishing_connection..." = "تأسيس اتصال...";
+
+"waiting_for_transactions..." = "في انتظار المعاملات...";
+
+"this_operation_may_take_a_while" = "الرجاء الانتظار، قد تستغرق هذه العملية بعض الوقت.";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "الحصول على بطاقة الأمان الخاصة بك، وقم بإدخال القيمة المطابقة لكل حرف.";
+
+"your_device_is_now_paired" = "اكتمال عملية الأقران. أدخل اسماً للـ Ledger Wallet.";
+
+"ledger_wallet_name" = "اسم الـ Ledger Wallet";
+
+"my_ledger_wallet" = "الـ Ledger Wallet الخاص بي";
+
+"assign_a_name_to_this_ledger_wallet" = "اختر اسماً لتعيين الـ Ledger Wallet هذه.";
+
+"enter_letter_or_value_matching_%@" = "أدخل حرف أو رقم في مربع أسود مطابقاً لـ \"%@\" على بطاقة الأمان الخاصة بك.";
+
+"your_device_is_creating_secure_connection" = "هذا الهاتف الذكي هو إنشاء اتصال أمن مع الـ Ledger Wallet الخاص بك.";
+
+"ledger_wallet_is_finalizing_pairing" = "الـ Ledger Wallet الخاص بك قام بوضع اللمسات الأخيرة على عملية الإقتران مع هذا الهاتف الذكي.";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "رمز التحقق من بطاقة الأمان غير صحيح.";
+
+"error_pairing_timeout" = "عملية الإقتران تستغرق وقتاً طويلاً (نفذ الوقت).";
+
+"success_pairing_named_%@" = "تم الآن إقران الـ Ledger Wallet الخاص بك \"%@\" مع الهاتف الذكي.";
+
+"no_paired_ledger_wallet" = "لا يوجد Ledger Wallet مقترنة";
+
+"to_enable_second_factor_pair_device" = "تمكين التحقق من صحة العامل الثاني، قم بإقران الـ Ledger Wallet الخاصة بك مع هذا الهاتف الذكي.";
+
+"transactions_will_automatically_appear" = "سوف تظهر المعاملات تلقائياً عندما يكون التحقق اليدوي مطلوب.";
+
+"need_help_visit_help_center" = "بحاجة إلى مساعدة؟ قم بزيارة مركز المساعدة.";
+
+"requested_on_%@" = "طلب في %@";
+
+"paired_on_%@" = "إقران في %@";
+
+"you_need_to_provide_a_dongle_name" = "تحتاج إلى توفير اسم فريد لهذه الـ Ledger Wallet.";
+
+"a_dongle_with_this_name_already_exists" = "يتم إستخدام هذا الإسم بالفعل بواسطة Ledger Wallet مقترن آخر.";
+
+"deleting_this_dongle_pairing" = "بحذف هذه الـ Ledger Wallet المقترنة، سوف لم تعد تتمكن من التحقق يدوياً من صحة المعاملات من هذا الهاتف الذكي. هل تريد الاستمرار؟";

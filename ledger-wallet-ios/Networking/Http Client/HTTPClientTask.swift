@@ -14,16 +14,28 @@ extension HTTPClient {
         
         typealias CompletionHandler = (NSData?, NSURLRequest, NSHTTPURLResponse?, NSError?) -> Void
         typealias Parameters = [String: AnyObject]
-     
+        
         enum Method: String {
+            
             case GET = "GET"
             case HEAD = "HEAD"
             case POST = "POST"
             case PUT = "PUT"
             case DELETE = "DELETE"
+            
+            private var encodesParameterInURL: Bool {
+                switch self {
+                case .GET, .HEAD, .DELETE:
+                    return true
+                default:
+                    return false
+                }
+            }
+            
         }
         
         enum Encoding {
+            
             case URL
             case JSON
             
@@ -38,39 +50,32 @@ extension HTTPClient {
                 case .URL:
                     func query(parameters: [String: AnyObject]) -> String {
                         var components: [(String, String)] = []
-                        for key in sorted(Array(parameters.keys), <) {
+                        for key in Array(parameters.keys).sort(<) {
                             let value: AnyObject! = parameters[key]
                             components += queryComponents(key, value)
                         }
                         
-                        return join("&", components.map{"\($0)=\($1)"} as [String])
+                        return (components.map{"\($0)=\($1)"} as [String]).joinWithSeparator("&")
                     }
                     
-                    func encodesParametersInURL(method: Method) -> Bool {
-                        switch method {
-                        case .GET, .HEAD, .DELETE:
-                            return true
-                        default:
-                            return false
-                        }
-                    }
-                    
-                    let method = Method(rawValue: URLRequest.HTTPMethod)
-                    if method != nil && encodesParametersInURL(method!) {
-                        if let URLComponents = NSURLComponents(URL: URLRequest.URL!, resolvingAgainstBaseURL: false) {
-                            URLComponents.percentEncodedQuery = (URLComponents.percentEncodedQuery != nil ? URLComponents.percentEncodedQuery! + "&" : "") + query(parameters!)
-                            URLRequest.URL = URLComponents.URL
-                        }
-                    } else {
+                    guard let method = Method(rawValue: URLRequest.HTTPMethod) where method.encodesParameterInURL else {
                         if URLRequest.valueForHTTPHeaderField("Content-Type") == nil {
                             URLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                         }
                         URLRequest.HTTPBody = query(parameters!).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+                        break
+                    }
+                    if let URLComponents = NSURLComponents(URL: URLRequest.URL!, resolvingAgainstBaseURL: false) {
+                        URLComponents.percentEncodedQuery = (URLComponents.percentEncodedQuery != nil ? URLComponents.percentEncodedQuery! + "&" : "") + query(parameters!)
+                        URLRequest.URL = URLComponents.URL
                     }
                 case .JSON:
-                    if let data = NSJSONSerialization.dataWithJSONObject(parameters!, options: nil, error: &error) {
+                    do {
+                        let data = try NSJSONSerialization.dataWithJSONObject(parameters!, options: [])
                         URLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                         URLRequest.HTTPBody = data
+                    } catch let error1 as NSError {
+                        error = error1
                     }
                 }
                 return error
@@ -87,7 +92,7 @@ extension HTTPClient {
                         components += queryComponents("\(key)[]", value)
                     }
                 } else {
-                    components.extend([(escape(key), escape("\(value)"))])
+                    components.appendContentsOf([(escape(key), escape("\(value)"))])
                 }
                 
                 return components
@@ -97,8 +102,8 @@ extension HTTPClient {
                 let legalURLCharactersToBeEscaped: CFStringRef = ":/?&=;+!@#$()',*"
                 return CFURLCreateStringByAddingPercentEscapes(nil, string, nil, legalURLCharactersToBeEscaped, CFStringBuiltInEncodings.UTF8.rawValue) as String
             }
+            
         }
-
         
     }
     

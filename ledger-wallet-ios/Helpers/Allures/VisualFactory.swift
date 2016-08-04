@@ -10,7 +10,7 @@ import UIKit
 
 final class VisualFactory {
     
-    typealias TextAttribute = [NSObject: AnyObject]
+    typealias TextAttribute = [String: AnyObject]
     
     struct TextAttributes {
     
@@ -190,7 +190,8 @@ final class VisualFactory {
             NSFontAttributeName: Fonts.iconFontWithSize(Fonts.Size.MegaLarge)
         ]
         
-        private static func extend(var textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
+        private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
+            var textAttribute = textAttribute
             for (key, value) in attributes {
                 textAttribute.updateValue(value, forKey: key)
             }
@@ -306,6 +307,7 @@ final class VisualFactory {
             static let Small:CGFloat = 3
             static let Medium:CGFloat = 5
             static let Large:CGFloat = 10
+            static let Infinite:CGFloat = CGFloat.max
         }
         
         struct Padding {

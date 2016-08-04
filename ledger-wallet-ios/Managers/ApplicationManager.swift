@@ -8,8 +8,11 @@
 
 import Foundation
 
-final class ApplicationManager: BaseManager {
-        
+final class ApplicationManager: NSObject {
+    
+    static let sharedInstance = ApplicationManager()
+    private let preferences = Preferences(storeName: "ApplicationManager")
+    
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
             return uuid
@@ -45,7 +48,7 @@ final class ApplicationManager: BaseManager {
     }
     
     var libraryDirectoryPath: String {
-        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as! String
+        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] 
     }
     
     var temporaryDirectoryPath: String {
@@ -68,6 +71,12 @@ final class ApplicationManager: BaseManager {
         if self.isInDebug {
             Logger.sharedInstance(self.className()).info(libraryDirectoryPath)
         }
+    }
+    
+    // MARK: Initialization
+    
+    private override init() {
+        super.init()
     }
     
 }

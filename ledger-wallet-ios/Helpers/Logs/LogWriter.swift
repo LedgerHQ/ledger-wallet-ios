@@ -8,10 +8,12 @@
 
 import Foundation
 
-final class LogWriter: SharableObject {
+final class LogWriter {
+    
+    static let sharedInstance = LogWriter()
     
     lazy private var fileHandles: [NSDate: NSFileHandle] = [:]
-    lazy private var logsDirectoryPath = ApplicationManager.sharedInstance().libraryDirectoryPath.stringByAppendingPathComponent("Logs")
+    lazy private var logsDirectoryPath = (ApplicationManager.sharedInstance.libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs")
     lazy private var fileManager = NSFileManager.defaultManager()
     lazy private var operationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
@@ -78,8 +80,8 @@ final class LogWriter: SharableObject {
     // MARK: Utilities
     
     private func logFilepathForFirstMomentDate(date: NSDate) -> String {
-        let fileName = logsDirectoryPath.stringByAppendingPathComponent(self.dateFormatter.stringFromDate(date))
-        if let fullFileName = fileName.stringByAppendingPathExtension("log") {
+        let fileName = (logsDirectoryPath as NSString).stringByAppendingPathComponent(self.dateFormatter.stringFromDate(date))
+        if let fullFileName = (fileName as NSString).stringByAppendingPathExtension("log") {
             return fullFileName
         }
         return fileName
@@ -88,11 +90,11 @@ final class LogWriter: SharableObject {
     private func enqueuePrepareDirectoriesOperation() {
         // enqueue prepare directories operation
         operationQueue.addOperationWithBlock() {
-            if !self.fileManager.createDirectoryAtPath(self.logsDirectoryPath, withIntermediateDirectories: true, attributes: nil, error: nil) {
+            if (try? self.fileManager.createDirectoryAtPath(self.logsDirectoryPath, withIntermediateDirectories: true, attributes: nil)) == nil {
                 console("LogWriter: Unable to create logs directory at path \(self.logsDirectoryPath)")
             }
             let URL = NSURL(fileURLWithPath: self.logsDirectoryPath, isDirectory: true)
-            if URL == nil || !URL!.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: nil) {
+            if (try? URL.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)) == nil {
                 console("LogWriter: Unable to exclude logs directory from backup at path \(self.logsDirectoryPath)")
             }
         }
@@ -103,10 +105,10 @@ final class LogWriter: SharableObject {
         operationQueue.addOperationWithBlock() {
             // extract list of to-keep files - (most 2 recent files) roughly 48 hours of logs
             let filesToRemove: ArraySlice<String>
-            if let files = self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath, error: nil) as? [String] {
+            if let files = (try? self.fileManager.contentsOfDirectoryAtPath(self.logsDirectoryPath)) {
                 var allLogs = files.filter({$0.hasSuffix(".log")})
-                allLogs.sort(<)
-                filesToRemove = prefix(allLogs, max(0, allLogs.count - 2))
+                allLogs.sortInPlace(<)
+                filesToRemove = allLogs.prefix(max(0, allLogs.count - 2))
             }
             else {
                 console("LogWriter: Unable to obtain list of files to clean from logs directory at path \(self.logsDirectoryPath)")
@@ -119,15 +121,15 @@ final class LogWriter: SharableObject {
             }
             
             // close all opened files
-            for (date, fileHandle) in self.fileHandles {
+            for (_, fileHandle) in self.fileHandles {
                 fileHandle.closeFile()
             }
             self.fileHandles = [:]
             
             // remove all stale files
             for file in filesToRemove {
-                let filepath = self.logsDirectoryPath.stringByAppendingPathComponent(file)
-                if !self.fileManager.removeItemAtPath(filepath, error: nil) {
+                let filepath = (self.logsDirectoryPath as NSString).stringByAppendingPathComponent(file)
+                if (try? self.fileManager.removeItemAtPath(filepath)) == nil {
                     console("LogWriter: Unable to remove log file at path \(filepath)")
                 }
             }
@@ -136,9 +138,7 @@ final class LogWriter: SharableObject {
     
     // MARK: Initialization
     
-    required init() {
-        super.init()
-        
+    private init() {
         enqueuePrepareDirectoriesOperation()
     }
 }

@@ -98,7 +98,7 @@ extension PairingTransactionsManager {
         let exemptedPairingItem = exceptions ?? []
         let pairingItems = PairingKeychainItem.fetchAll() as! [PairingKeychainItem]
         for pairingItem in pairingItems {
-            if (contains(exemptedPairingItem, pairingItem)) {
+            if (exemptedPairingItem.contains(pairingItem)) {
                 continue
             }
             let webSocket = WebSocket(url: NSURL(string: webSocketsBaseURL)!.URLByAppendingPathComponent("/2fa/channels"))
@@ -111,8 +111,8 @@ extension PairingTransactionsManager {
     private func destroyWebSockets(excepted exceptions: [WebSocket]? = nil) {
         // destroy webSockets
         let exemptedWebSockets = exceptions ?? []
-        for (webSocket, pairingItem) in webSockets {
-            if (contains(exemptedWebSockets, webSocket)) {
+        for (webSocket, _) in webSockets {
+            if (exemptedWebSockets.contains(webSocket)) {
                 continue
             }
             webSocket.delegate = nil

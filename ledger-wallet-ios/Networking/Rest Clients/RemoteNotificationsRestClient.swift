@@ -10,6 +10,8 @@ import Foundation
 
 final class RemoteNotificationsRestClient: APIRestClient {
     
+    static let sharedInstance = RemoteNotificationsRestClient()
+    
     // MARK: - Push token management
     
     func registerDeviceToken(token: NSData, toPairingId pairingId: String, completion: ((Bool) -> Void)?) {
@@ -24,6 +26,12 @@ final class RemoteNotificationsRestClient: APIRestClient {
         delete("/2fa/pairings/\(pairingId)/push_token") { data, request, response, error in
             (completion?(error == nil && response != nil))!
         }
+    }
+    
+    // MARK: Initialization
+    
+    private override init() {
+        super.init()
     }
     
 }

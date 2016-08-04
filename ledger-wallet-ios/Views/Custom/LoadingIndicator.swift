@@ -50,7 +50,7 @@ class LoadingIndicator: View {
     private var timer: NSTimer? = nil
     private var highlightedLayerIndex = -1
     
-    // MARK: - Animation
+    // MARK: Animation
     
     func startAnimating() {
         if (animating) {
@@ -64,34 +64,34 @@ class LoadingIndicator: View {
         if (!animating) {
             return
         }
-
+        
         timer?.invalidate()
         timer = nil
     }
     
     private func scheduledTimer() -> NSTimer {
-        return NSTimer.scheduledTimerWithTimeInterval(animationDuration, target: self, selector: "timerFired", userInfo: nil, repeats: true)
+        return NSTimer.scheduledTimerWithTimeInterval(animationDuration, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
     }
     
     dynamic private func timerFired() {
         let oldIndex = highlightedLayerIndex
-        highlightedLayerIndex++
-        if (highlightedLayerIndex >= layer.sublayers.count) {
+        highlightedLayerIndex += 1
+        if (highlightedLayerIndex >= layer.sublayers!.count) {
             highlightedLayerIndex = 0
-            if (highlightedLayerIndex >= layer.sublayers.count) {
+            if (highlightedLayerIndex >= layer.sublayers!.count) {
                 return
             }
         }
         
         if (oldIndex >= 0) {
-            if let layer = layer.sublayers[oldIndex] as? CALayer {
+            if let layer = layer.sublayers?[oldIndex] {
                 CATransaction.begin()
                 CATransaction.setAnimationDuration(0.25)
                 layer.backgroundColor = dotsNormalColor.CGColor
                 CATransaction.commit()
             }
         }
-        if let layer = layer.sublayers[highlightedLayerIndex] as? CALayer {
+        if let layer = layer.sublayers?[highlightedLayerIndex] {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             layer.backgroundColor = dotsHighlightedColor.CGColor
@@ -99,7 +99,7 @@ class LoadingIndicator: View {
         }
     }
     
-    // MARK: - Layers
+    // MARK: Layers
     
     private func generateLayers() {
         removeLayers()
@@ -108,7 +108,7 @@ class LoadingIndicator: View {
         CATransaction.setDisableActions(true)
         for _ in 0..<dotsCount {
             let layer = CALayer()
-            layer.contentsScale = DeviceManager.sharedInstance().screenScale
+            layer.contentsScale = DeviceManager.sharedInstance.screenScale
             layer.bounds = CGRectZero
             layer.allowsEdgeAntialiasing = true
             layer.backgroundColor = dotsNormalColor.CGColor
@@ -128,14 +128,14 @@ class LoadingIndicator: View {
         if (layer.sublayers == nil) {
             return
         }
-        for layer in self.layer.sublayers as! [CALayer] {
+        for layer in self.layer.sublayers! {
             closure(layer)
         }
     }
     
-    // MARK: - Layout
+    // MARK: Layout
     
-    override func layoutSublayersOfLayer(layer: CALayer!) {
+    override func layoutSublayersOfLayer(layer: CALayer) {
         super.layoutSublayersOfLayer(layer)
         
         CATransaction.begin()
@@ -157,7 +157,7 @@ class LoadingIndicator: View {
         return CGSizeMake(preferredWidth, preferredWidth)
     }
     
-    // MARK: - Initialization
+    // MARK: Initialization
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
@@ -181,7 +181,7 @@ class LoadingIndicator: View {
         initialize()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         initialize()

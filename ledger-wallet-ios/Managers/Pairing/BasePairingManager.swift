@@ -91,7 +91,7 @@ extension BasePairingManager {
         if ignoresTimeout || timeoutTimer != nil && timeoutTimer!.valid {
             return
         }
-        timeoutTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "notifyTimeout", userInfo: nil, repeats: false)
+        timeoutTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: #selector(self.notifyTimeout), userInfo: nil, repeats: false)
     }
     
     private func stopTimeoutTimer() {

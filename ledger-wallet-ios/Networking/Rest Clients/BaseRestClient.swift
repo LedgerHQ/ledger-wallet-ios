@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BaseRestClient: SharableObject {
+class BaseRestClient {
     
     var baseURL: String {
         if _baseURL == nil { _baseURL = preferredBaseURL() }
@@ -18,10 +18,7 @@ class BaseRestClient: SharableObject {
         if _httpClient == nil { _httpClient = preferredHttpClient() }
         return _httpClient
     }
-    var preferences: Preferences {
-        if (_preferences == nil) { _preferences = Preferences(storeName: self.className()) }
-        return _preferences
-    }
+    
     private var _baseURL: String! = nil
     private var _httpClient: HTTPClient! = nil
     private var _preferences: Preferences! = nil

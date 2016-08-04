@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "ΑΚΥΡΩΣΗ";
+
+"OK" = "ΕΝΤΑΞΕΙ";
+
+"CONFIRM" = "ΕΠΙΒΕΒΑΙΩΣΗ";
+
+"CLOSE" = "ΚΛΕΙΣΙΜΟ";
+
+"REJECT" = "ΑΠΟΡΡΙΨΗ";
+
+"DONE" = "ΟΛΟΚΛΗΡΩΘΗΚΕ";
+
+"yes" = "Ναι";
+
+"no" = "Όχι";
+
+"cancel" = "Άκυρο";
+
+"delete" = "Διαγραφή";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "ΖΕΥΞΗ LEDGER WALLET";
+
+"CONFIRM_TRANSACTION" = "ΕΠΙΒΕΒΑΙΩΣΗ ΣΥΝΑΛΛΑΓΗΣ";
+
+"PAIRING_SUCCEEDED" = "ΕΠΙΤΥΧΗΣ ΖΕΥΞΗ";
+
+"PAIRING_FAILED" = "ΑΠΟΤΥΧΗΜΕΝΗ ΖΕΥΞΗ";
+
+"PAIRED_LEDGER_WALLETS" = "ΖΕΥΓΗ LEDGER WALLET";
+
+"pairing_in_progress..." = "Ζεύξη σε εξέλιξη...";
+
+"establishing_connection..." = "Διαδικασία σύνδεσης...";
+
+"waiting_for_transactions..." = "Αναμονή συναλλαγών...";
+
+"this_operation_may_take_a_while" = "Παρακαλώ περιμένετε, αυτή η λειτουργία θα χρειαστεί λίγο χρόνο.";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "Χρησιμοποιείστε την <b>κάρτα ασφάλισης</b> για να εισάγετε την τιμή για κάθε χαρακτήρα.";
+
+"your_device_is_now_paired" = "Ολοκληρώθηκε η διαδικασία της ζεύξης. Πληκτρολογήστε ένα όνομα για αυτό το Ledger Wallet.";
+
+"ledger_wallet_name" = "Ονομασία Ledger Wallet";
+
+"my_ledger_wallet" = "To Ledger Wallet μου";
+
+"assign_a_name_to_this_ledger_wallet" = "Aντιστοιχίστε ένα όνομα σε αυτό το Ledger Wallet.";
+
+"enter_letter_or_value_matching_%@" = "Εισάγετε το γράμμα ή το ψηφίο στο μαύρο κουτί ταιριάζοντας \"%@\" στην κάρτα ασφαλείας σας.";
+
+"your_device_is_creating_secure_connection" = "Αυτό το έξυπνο κινητό δημιουργεί μια ασφαλή σύνδεση με το Ledger Wallet σας.";
+
+"ledger_wallet_is_finalizing_pairing" = "Το Ledger Wallet σας ολοκληρώνει τη διαδικασία ζεύξης με αυτό το smartphone.";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "Ο κωδικός επιβεβαίωσης της κάρτας ασφάλειας είναι εσφαλμένος.";
+
+"error_pairing_timeout" = "Η διαδικασία ζεύξης πήρε πάρα πολύ χρόνο (λήξη χρόνου).";
+
+"success_pairing_named_%@" = "Το Ledger Wallet σας \"%@\" είναι συζευγμένο με το smartphone σας.";
+
+"no_paired_ledger_wallet" = "Κανένα ζεύγος Ledger Wallet";
+
+"to_enable_second_factor_pair_device" = "Για να ενεργοποιήσετε την επικύρωση με δύο παράγοντες, \npair το Ledger Wallet σας με αυτό το έξυπνο κινητό.";
+
+"transactions_will_automatically_appear" = "Οι συναλλαγές θα εμφανιστούν αυτομάτως όταν χρειαστεί μη αυτόματη επικύρωση.";
+
+"need_help_visit_help_center" = "Χρειάζεστε βοήθεια; Επισκεφθείτε το κέντρο βοήθειας.";
+
+"requested_on_%@" = "Ζητούμενο στο %@";
+
+"paired_on_%@" = "Συζευγμένο στο %@";
+
+"you_need_to_provide_a_dongle_name" = "Πρέπει να παράσχετε ένα μοναδικό όνομα για αυτό το Ledger Wallet.";
+
+"a_dongle_with_this_name_already_exists" = "Αυτό το όνομα χρησιμοποιείται ήδη από άλλο ζεύγος Ledger Wallet.";
+
+"deleting_this_dongle_pairing" = "Διαγράφοντας το συγκεκριμένο Ledger Wallet δεν θα είστε πλέον σε θέση να επικυρώσετε χειροκίνητα συναλλαγές από το έξυπνο κινητό σας. Θέλετε να συνεχίσετε?";

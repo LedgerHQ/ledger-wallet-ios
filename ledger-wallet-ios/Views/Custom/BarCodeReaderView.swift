@@ -37,7 +37,7 @@ class BarCodeReaderView: View {
         }
         
         captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-        if (captureDevice == nil || captureDevice!.lockForConfiguration(nil) == false) {
+        if (captureDevice == nil || (try? captureDevice!.lockForConfiguration()) == nil) {
             return
         }
         if (captureDevice!.focusPointOfInterestSupported) {
@@ -45,7 +45,7 @@ class BarCodeReaderView: View {
         }
         captureDevice!.unlockForConfiguration()
         
-        captureDeviceInput = AVCaptureDeviceInput.deviceInputWithDevice(captureDevice, error: nil) as? AVCaptureDeviceInput
+        captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice)
         if (captureDeviceInput == nil) {
             cleanUp()
             return
@@ -104,7 +104,7 @@ class BarCodeReaderView: View {
         initialize()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         initialize()
@@ -129,8 +129,8 @@ extension BarCodeReaderView {
     
     private func listenNotifications(listen: Bool) {
         if (listen) {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication())
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleDidBecomeActiveNotification:", name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleWillResignActiveNotification(_:)), name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleDidBecomeActiveNotification(_:)), name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
         }
         else {
             NSNotificationCenter.defaultCenter().removeObserver(self)

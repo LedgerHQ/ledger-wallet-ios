@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "CANCELAR";
+
+"OK" = "OK";
+
+"CONFIRM" = "CONFIRMAR";
+
+"CLOSE" = "FECHAR";
+
+"REJECT" = "REJEITAR";
+
+"DONE" = "FEITO";
+
+"yes" = "Sim";
+
+"no" = "Não";
+
+"cancel" = "Cancelar";
+
+"delete" = "Deletar";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "PAREAR UMA LEDGER WALLET";
+
+"CONFIRM_TRANSACTION" = "CONFIRMAR TRANSAÇÃO";
+
+"PAIRING_SUCCEEDED" = "PAREAMENTO FEITO COM SUCESSO";
+
+"PAIRING_FAILED" = "PAREAMENTO FALHOU";
+
+"PAIRED_LEDGER_WALLETS" = "LEDGER WALLETS PAREADAS";
+
+"pairing_in_progress..." = "Pareamento em progresso...";
+
+"establishing_connection..." = "Estabelecendo conexão...";
+
+"waiting_for_transactions..." = "Esperando pelas transações...";
+
+"this_operation_may_take_a_while" = "Por favor, aguarde, essa operação pode demorar um pouco.";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "Tenha em mãos seu cartão de segurança e informe o valor correspondente para cada caractere. ";
+
+"your_device_is_now_paired" = "O processo de pareamento está incompleto.\nInforme um nome para essa carteira Ledger Wallet.";
+
+"ledger_wallet_name" = "Nome da Ledger Wallet";
+
+"my_ledger_wallet" = "Minha Ledger Wallet";
+
+"assign_a_name_to_this_ledger_wallet" = "Escolha um nome para associar a essa Ledger Wallet.";
+
+"enter_letter_or_value_matching_%@" = "Informe a letra ou dígito na caixa preta correspondendo a \"%@\" no seu cartão de segurança. ";
+
+"your_device_is_creating_secure_connection" = "Esse smartphone está criando uma conexão segura com a sua carteira Ledger Wallet.";
+
+"ledger_wallet_is_finalizing_pairing" = "Sua Ledger Wallet está terminando o processo de pareamento com o smartphone.";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "O código de validação do cartão de segurança está incorreto.";
+
+"error_pairing_timeout" = "O processo de pareamento expirou.";
+
+"success_pairing_named_%@" = "Sua Ledger Wallet “%@” está agora pareada com seu smartphone.";
+
+"no_paired_ledger_wallet" = "Sem Ledger Wallets pareadas";
+
+"to_enable_second_factor_pair_device" = "Para habilitar a validação com segundo fator, pareie sua Ledger Wallet com seu smartphone.";
+
+"transactions_will_automatically_appear" = "As transações vai automaticamente aparecer quando a validação manual é necessária.";
+
+"need_help_visit_help_center" = "Precisa de ajuda? Visite nosso centro de ajuda";
+
+"requested_on_%@" = "Solicitado em %@";
+
+"paired_on_%@" = "Emparelhado em %@";
+
+"you_need_to_provide_a_dongle_name" = "Você precisa fornecer um nome único para essa Ledger Wallet.";
+
+"a_dongle_with_this_name_already_exists" = "Esse nome já está em uso por outro Ledger Wallet pareado.";
+
+"deleting_this_dongle_pairing" = "Ao deletar essa Ledger Wallet pareada, você não vai mais poder validar manualmente transações desse smartphone.\nDeseja continuar?";

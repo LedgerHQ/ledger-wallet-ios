@@ -26,14 +26,14 @@ extension Navigator {
 
     final class Pairing {
         
-        class func presentAddViewController(#fromViewController: UIViewController, delegate: PairingAddViewControllerDelegate) {
+        class func presentAddViewController(fromViewController fromViewController: UIViewController, delegate: PairingAddViewControllerDelegate) {
             let viewController = PairingAddViewController.instantiateFromStoryboard(StoryboardFactory.storyboardWithIdentifier(.Pairing))
             let navigationController = Navigator.embedViewController(viewController)
             viewController.delegate = delegate
             fromViewController.presentViewController(navigationController, animated: true, completion: nil)
         }
         
-        class func presentListViewController(#fromViewController: UIViewController) {
+        class func presentListViewController(fromViewController fromViewController: UIViewController) {
             let viewController = PairingListViewController.instantiateFromStoryboard(StoryboardFactory.storyboardWithIdentifier(.Pairing))
             let navigationController = Navigator.embedViewController(viewController)
             fromViewController.presentViewController(navigationController, animated: true, completion: nil)

@@ -9,7 +9,9 @@
 import Foundation
 import AudioToolbox
 
-final class DeviceManager: BaseManager {
+final class DeviceManager {
+    
+    static let sharedInstance = DeviceManager()
     
     enum HeightClass {
         case Small
@@ -39,6 +41,12 @@ final class DeviceManager: BaseManager {
     
     func vibrate() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    // MARK: Initialization
+    
+    private init() {
+        
     }
     
 }

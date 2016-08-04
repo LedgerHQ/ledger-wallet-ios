@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "取消";
+
+"OK" = "可以";
+
+"CONFIRM" = "确认";
+
+"CLOSE" = "关闭";
+
+"REJECT" = "拒绝";
+
+"DONE" = "完成";
+
+"yes" = "是啊";
+
+"no" = "不";
+
+"cancel" = "取消";
+
+"delete" = "删除";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "配对一个Ledger Wallet";
+
+"CONFIRM_TRANSACTION" = "确认交易";
+
+"PAIRING_SUCCEEDED" = "配对成功";
+
+"PAIRING_FAILED" = "配对失败";
+
+"PAIRED_LEDGER_WALLETS" = "配对的Ledger Wallet";
+
+"pairing_in_progress..." = "配对的进展......";
+
+"establishing_connection..." = "建立连接...";
+
+"waiting_for_transactions..." = "正在等待交易...";
+
+"this_operation_may_take_a_while" = "请等一等，此操作可能需要一段时间。";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "抓住你安全卡和输入的每个字符的匹配的值。";
+
+"your_device_is_now_paired" = "配对的过程是完整的。输入此Ledger Wallet的名称。";
+
+"ledger_wallet_name" = "Ledger Wallet名称";
+
+"my_ledger_wallet" = "我的Ledger Wallet";
+
+"assign_a_name_to_this_ledger_wallet" = "选择要分配给此Ledger Wallet的名称。";
+
+"enter_letter_or_value_matching_%@" = "安全卡上输入字母或数字在 %@\"黑箱\"匹配。";
+
+"your_device_is_creating_secure_connection" = "这个智能手机与您的Ledger Wallet创建安全连接。";
+
+"ledger_wallet_is_finalizing_pairing" = "Ledger Wallet正在最后确定与此智能手机的配对过程。";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "安全卡验证代码是不正确的。";
+
+"error_pairing_timeout" = "配对的过程花了太多的时间 (超时)。";
+
+"success_pairing_named_%@" = "你的Ledger Wallet\"%@\"现在搭配你的智能手机。";
+
+"no_paired_ledger_wallet" = "没有成对的Ledger Wallet";
+
+"to_enable_second_factor_pair_device" = "若要启用第二个因子验证，配对此智能手机与Ledger Wallet。";
+
+"transactions_will_automatically_appear" = "需要手动验证时，将自动显示交易。";
+
+"need_help_visit_help_center" = "需要帮助吗?请访问我们的帮助中心。";
+
+"requested_on_%@" = "要求对 %@";
+
+"paired_on_%@" = "在 %@ 上配对";
+
+"you_need_to_provide_a_dongle_name" = "您需要提供此Ledger Wallet的唯一名称。";
+
+"a_dongle_with_this_name_already_exists" = "此名称已由另一个成对Ledger Wallet使用。";
+
+"deleting_this_dongle_pairing" = "删去此配对Ledger Wallet，你将不再能够手动验证交易记录从这个智能手机。你想要继续吗?";

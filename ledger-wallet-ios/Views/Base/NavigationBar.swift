@@ -22,7 +22,7 @@ class NavigationBar: UINavigationBar {
     
     private var barHeight: CGFloat {
         let bounds: CGRect
-        if UIScreen.mainScreen().respondsToSelector("nativeBounds") {
+        if UIScreen.mainScreen().respondsToSelector(Selector("nativeBounds")) {
             bounds = UIScreen.mainScreen().nativeBounds
         }
         else {
@@ -40,7 +40,7 @@ class NavigationBar: UINavigationBar {
         super.layoutSubviews()
         
         // move title and buttons
-        for view in self.subviews as! [UIView] {
+        for view in self.subviews {
             if (view is UIButton || view is UILabel) {
                 if (view === topItem?.leftBarButtonItem?.customView || view === topItem?.rightBarButtonItem?.customView || view === topItem?.titleView) {
                     view.frame = CGRectMake(view.frame.origin.x, round((self.bounds.size.height - view.bounds.size.height) / 2), view.frame.size.width, view.frame.size.height)

@@ -8,12 +8,12 @@
 
 import Foundation
 
-func console<T: Printable>(value: T) {
+func console<T: CustomStringConvertible>(value: T) {
     console(value.description)
 }
 
 func console(value: String) {
     dispatchAsyncOnMainQueue() {
-        println(value)
+        print(value)
     }
 }

@@ -152,7 +152,7 @@ final class VisualTheme {
         }),
         "roundedButton": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
             roundedButton.adjustsImageWhenHighlighted = false
-            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadius.Medium
+            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadius.Infinite
             roundedButton.setAttributedTitle(NSAttributedString(string: roundedButton.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.RoundedButtonText), forState: UIControlState.Normal)
             roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.Padding.VerySmall, left: VisualFactory.Metrics.Padding.Small, bottom: VisualFactory.Metrics.Padding.VerySmall, right: VisualFactory.Metrics.Padding.Small)
             if (roundedButton.imageForState(UIControlState.Normal) != nil) {
