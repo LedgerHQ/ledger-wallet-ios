@@ -23,7 +23,7 @@ class KeychainItemTests: XCTestCase {
     }
     
     func testAddCount() {
-        let item = KeychainItem.create()
+        _ = KeychainItem.create()
         XCTAssertEqual(KeychainItem.fetchAll().count, 1, "Keychain items count is not 1")
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class PairingProtocolManagerTests: XCTestCase, PairingProtocolManagerDelegate {
+class PairingProtocolManagerTests: XCTestCase {
     
     let publicKey = Crypto.Encode.dataFromBase16String("04ae218d8080c7b9cd141b06f6b9f63ef3adf7aecdf49bb3916ac7f5d887fc4027bea6fd187b9fa810b6d251e1430f6555edd2d5b19828d51908917c03e3f7c436")!
     let privateKey = Crypto.Encode.dataFromBase16String("b208b83b23edfff327bb6e0098eeaa0a5c87a599d5d8b24ff2734d2aac8bbdde")!

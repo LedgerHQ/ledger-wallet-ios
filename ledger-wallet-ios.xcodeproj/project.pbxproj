@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		370E838B1B564AFC00D67A9D /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* APIRestClient.swift */; };
 		370E838C1B565F8800D67A9D /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E838A1B564AFC00D67A9D /* APIRestClient.swift */; };
-		370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370E838D1B5695D500D67A9D /* Pairing.storyboard */; };
 		370E83911B5696B900D67A9D /* StoryboardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370E83901B5696B900D67A9D /* StoryboardFactory.swift */; };
 		3724A3821A79383700E1B977 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		3724A3841A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */; };
@@ -37,6 +36,8 @@
 		3745D7811A796CE100762F80 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3745D7801A796CE100762F80 /* LoadingIndicator.swift */; };
 		374A1E9B1B57D779006C325E /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374A1E9A1B57D779006C325E /* LogEntry.swift */; };
 		37579F081A719BCE007A7344 /* DialogAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37579F071A719BCE007A7344 /* DialogAnimationController.swift */; };
+		375C7A6F1D537CD50080764B /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C36AAD1D52458A000E739A /* WebSocket.swift */; };
+		375C7A701D537CF50080764B /* SSLSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C36AAC1D52458A000E739A /* SSLSecurity.swift */; };
 		375FF5761B5D1F92000175CB /* NSDate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FF5751B5D1F92000175CB /* NSDate+Utils.swift */; };
 		37656F2F1A76A3540042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
 		37656F301A76A3F60042512D /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37656F2E1A76A3540042512D /* KeychainItem.swift */; };
@@ -210,6 +211,8 @@
 		37C36AAF1D52458A000E739A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C36AAD1D52458A000E739A /* WebSocket.swift */; };
 		37C723B11A851E49002CF49D /* PairingTransactionsCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C723B01A851E49002CF49D /* PairingTransactionsCryptor.swift */; };
 		37C903351ADBC43E001517ED /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C903341ADBC43E001517ED /* OpenSSL.framework */; };
+		37CEDD8A1D537A50007B4C7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37CEDD881D537A50007B4C7A /* Main.storyboard */; };
+		37CEDD8B1D537A50007B4C7A /* Pairing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37CEDD891D537A50007B4C7A /* Pairing.storyboard */; };
 		37DD54031A823C3E00449CCA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724A3811A79383700E1B977 /* Common.swift */; };
 		37DF00761A8E119B00712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
 		37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF00751A8E119B00712AB1 /* ApplicationManager.swift */; };
@@ -237,7 +240,6 @@
 		37EF91C71A6D3C47007DBBAF /* BarCodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91BD1A6D3C47007DBBAF /* BarCodeReaderView.swift */; };
 		37EF91C81A6D3C47007DBBAF /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91BE1A6D3C47007DBBAF /* RoundedButton.swift */; };
 		37EF91CA1A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF91C91A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift */; };
-		37F283621A64064100F432CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F283601A64064100F432CC /* Main.storyboard */; };
 		37F283681A6406A900F432CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37F2836A1A6406A900F432CC /* Localizable.strings */; };
 		37F283AA1A655D3400F432CC /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283951A655D3400F432CC /* BaseNavigationController.swift */; };
 		37F283AB1A655D3400F432CC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F283961A655D3400F432CC /* BaseViewController.swift */; };
@@ -260,7 +262,6 @@
 
 /* Begin PBXFileReference section */
 		370E838A1B564AFC00D67A9D /* APIRestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRestClient.swift; sourceTree = "<group>"; };
-		370E838E1B5695D500D67A9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pairing.storyboard; sourceTree = "<group>"; };
 		370E83901B5696B900D67A9D /* StoryboardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoryboardFactory.swift; path = "ledger-wallet-ios/Helpers/Utils/StoryboardFactory.swift"; sourceTree = SOURCE_ROOT; };
 		3724A3811A79383700E1B977 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		3724A3831A793CFD00E1B977 /* PairingAddConnectionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAddConnectionStepViewController.swift; sourceTree = "<group>"; };
@@ -454,6 +455,8 @@
 		37CEDD831D537828007B4C7A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37CEDD841D537852007B4C7A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37CEDD851D53786B007B4C7A /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		37CEDD881D537A50007B4C7A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Resources/Main.storyboard; sourceTree = "<group>"; };
+		37CEDD891D537A50007B4C7A /* Pairing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Pairing.storyboard; path = Resources/Pairing.storyboard; sourceTree = "<group>"; };
 		37DF00751A8E119B00712AB1 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationManager.swift; path = managers/ApplicationManager.swift; sourceTree = "<group>"; };
 		37E35E531A6FAB7C00D0ED00 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PinCodeView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37E962341B441B890092946B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fontawesome-webfont.ttf"; path = "Vendor/FontAwesome/fonts/fontawesome-webfont.ttf"; sourceTree = "<group>"; };
@@ -471,7 +474,6 @@
 		37EF91BD1A6D3C47007DBBAF /* BarCodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BarCodeReaderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91BE1A6D3C47007DBBAF /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RoundedButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37EF91C91A6D48E2007DBBAF /* BarCodeReaderOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BarCodeReaderOverlayView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		37F283611A64064100F432CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37F283691A6406A900F432CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37F283951A655D3400F432CC /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37F283961A655D3400F432CC /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -702,8 +704,8 @@
 		378205D51A60196C00F6CA45 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				37F283601A64064100F432CC /* Main.storyboard */,
-				370E838D1B5695D500D67A9D /* Pairing.storyboard */,
+				37CEDD881D537A50007B4C7A /* Main.storyboard */,
+				37CEDD891D537A50007B4C7A /* Pairing.storyboard */,
 				37F2836A1A6406A900F432CC /* Localizable.strings */,
 				3784FB111A5D2F5F0063A364 /* Images.xcassets */,
 				378205D31A60195E00F6CA45 /* Fonts */,
@@ -1148,15 +1150,15 @@
 				37A88F651A6928040036CF2A /* PairingAddScanStepViewController.xib in Resources */,
 				37F283681A6406A900F432CC /* Localizable.strings in Resources */,
 				3724A3861A793D0B00E1B977 /* PairingAddConnectionStepViewController.xib in Resources */,
+				37CEDD8B1D537A50007B4C7A /* Pairing.storyboard in Resources */,
 				37A88F691A692EDC0036CF2A /* PairingAddCodeStepViewController.xib in Resources */,
 				377E811D1A8A0D6E00010B37 /* PairingHomeEmptyContentViewController.xib in Resources */,
 				379CA1061A713BB900A9D426 /* PairingConfirmationDialogViewController.xib in Resources */,
+				37CEDD8A1D537A50007B4C7A /* Main.storyboard in Resources */,
 				37A88F6D1A6948980036CF2A /* PairingAddNameStepViewController.xib in Resources */,
-				37F283621A64064100F432CC /* Main.storyboard in Resources */,
 				3784FB121A5D2F5F0063A364 /* Images.xcassets in Resources */,
 				37E962351B441B890092946B /* fontawesome-webfont.ttf in Resources */,
 				37A2DBE51A7A86080045B639 /* PairingAddFinalizeStepViewController.xib in Resources */,
-				370E838F1B5695D500D67A9D /* Pairing.storyboard in Resources */,
 				37698A601A75158A00AA8B30 /* PairingTransactionDialogViewController.xib in Resources */,
 				378F579D1A8A1F9000E1ED62 /* PairingHomeWaitingContentViewController.xib in Resources */,
 				378205D41A60195E00F6CA45 /* Fonts in Resources */,
@@ -1345,6 +1347,7 @@
 				37DF00771A8E123800712AB1 /* ApplicationManager.swift in Sources */,
 				37AA95661A88CFC7009C3EE4 /* PairingTransactionInfo.swift in Sources */,
 				37AB9EC61A8A449F00A48951 /* JSON.swift in Sources */,
+				375C7A6F1D537CD50080764B /* WebSocket.swift in Sources */,
 				37EF30E31B5E516B00E0316F /* LogWriter.swift in Sources */,
 				379A12CC1B2AE88D00D6E8DA /* RemoteNotificationsRestClient.swift in Sources */,
 				37BAF31C1AB1975F0084B832 /* BTCTransactionOutput.m in Sources */,
@@ -1366,6 +1369,7 @@
 				37DD54031A823C3E00449CCA /* Common.swift in Sources */,
 				37BAF2FE1AB1975F0084B832 /* BTCBase58.m in Sources */,
 				37BAF3161AB1975F0084B832 /* BTCQRCode.m in Sources */,
+				375C7A701D537CF50080764B /* SSLSecurity.swift in Sources */,
 				377E810E1A89124E00010B37 /* BitcoinAddress.swift in Sources */,
 				377E810F1A89126700010B37 /* BitcoinCommon.swift in Sources */,
 				373E22DC1A7689B400BAF63F /* PairingKeychainItem.swift in Sources */,
@@ -1421,22 +1425,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		370E838D1B5695D500D67A9D /* Pairing.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				370E838E1B5695D500D67A9D /* Base */,
-			);
-			name = Pairing.storyboard;
-			sourceTree = "<group>";
-		};
-		37F283601A64064100F432CC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				37F283611A64064100F432CC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		37F2836A1A6406A900F432CC /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
