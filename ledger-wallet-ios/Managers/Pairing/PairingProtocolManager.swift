@@ -74,7 +74,10 @@ extension PairingProtocolManager {
         
         // send join message
         context.pairingId = pairingId
-        let message = messageWithType(MessageType.Join, data: ["room": pairingId])
+    }
+ 
+    func joinRoom() {
+        let message = messageWithType(MessageType.Join, data: ["room": context.pairingId])
         sendMessage(message, webSocket: webSocket)
     }
     
@@ -197,6 +200,11 @@ extension PairingProtocolManager {
 extension PairingProtocolManager {
     
     // MARK: - WebSocket delegate
+    
+    override func handleWebSocketDidConnect(webSocket: WebSocket) {
+        joinRoom()
+        sendPublicKey()
+    }
     
     override func handleWebSocket(webSocket: WebSocket, didDisconnectWithError error: NSError?) {
         self.disconnectWebSocket()
