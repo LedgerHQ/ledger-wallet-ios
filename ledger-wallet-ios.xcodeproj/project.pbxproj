@@ -433,6 +433,9 @@
 		37ABFBDF1A8503B10061E92D /* PairingProtocolCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolCryptor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37ABFBE21A85101F0061E92D /* PairingProtocolContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PairingProtocolContext.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		37ABFBE51A8514390061E92D /* PairingProtocolCryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingProtocolCryptorTests.swift; sourceTree = "<group>"; };
+		37B2B7F61D957F5B001F3F38 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		37B2B7F71D957F5C001F3F38 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		37B2B7F81D957F5F001F3F38 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		37B537631A8299EA0087AB43 /* CryptoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoData.swift; path = crypto/CryptoData.swift; sourceTree = "<group>"; };
 		37B537651A82A1AB0087AB43 /* CryptoHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoHash.swift; path = crypto/CryptoHash.swift; sourceTree = "<group>"; };
 		37B5376C1A82A5D20087AB43 /* CryptoEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoEncode.swift; path = crypto/CryptoEncode.swift; sourceTree = "<group>"; };
@@ -1436,6 +1439,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				371CFC121D95564400DDA17D /* en */,
+				37B2B7F61D957F5B001F3F38 /* fr */,
+				37B2B7F71D957F5C001F3F38 /* ja */,
+				37B2B7F81D957F5F001F3F38 /* es-ES */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
