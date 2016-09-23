@@ -11,10 +11,10 @@ import Foundation
 final class Logger {
     
     let name: String
-    private static var instancesQueue = dispatch_queue_create(dispatchQueueNameForIdentifier("Logger"), DISPATCH_QUEUE_SERIAL)
+    private static var instancesQueue = dispatch_queue_create("co.ledger.logger.dispatch-queue", DISPATCH_QUEUE_SERIAL)
     private static var instances: [String: Logger] = [:]
     
-    // MARK: Log methods
+    // MARK: - Log methods
     
     func debug(string: String) {
         log(string, level: .Debug)
@@ -39,14 +39,9 @@ final class Logger {
         let logEntry = buildLogEntry(string, logLevel: level)
         
         // log to console if app is in debug
-        #if DEBUG
-            NSLog(logEntry.debugDescription)
-        #endif
-        
-        // write nothing if in tests
-        #if TEST
-            return
-        #endif
+        if ApplicationManager.sharedInstance.isInDebug {
+            console(logEntry)
+        }
         
         // log to file
         LogWriter.sharedInstance.storeLogEntry(logEntry)
@@ -56,9 +51,9 @@ final class Logger {
         return LogEntry(string: string, level: logLevel, loggerName: self.name)
     }
     
-    // MARK: Initialization
+    // MARK: - Initialization
     
-    class func sharedInstance(name name: String) -> Logger {
+    class func sharedInstance(name: String) -> Logger {
         dispatch_sync(instancesQueue) {
             if self.instances[name] == nil {
                 self.instances[name] = Logger(name: name)

@@ -8,121 +8,88 @@
 
 import Foundation
 
-typealias HTTPClientDataTask = NSURLSessionDataTask
-
 final class HTTPClient {
     
-    var additionalHeaders: [String: String]?
-    var timeoutInterval: NSTimeInterval {
-        get { return session.configuration.timeoutIntervalForRequest }
-        set { session.configuration.timeoutIntervalForRequest = newValue }
+    var autostartRequests = true
+    var timeoutInterval: NSTimeInterval = 30
+    var additionalHeaders: [String: String]? = nil
+    var session: NSURLSession {
+        if _session == nil {
+            _session = NSURLSession(configuration: preferredSessionConfiguration(), delegate: preferredSessionDelegate(), delegateQueue: preferredSessionDelegateQueue())
+        }
+        return _session
     }
-    private let session: NSURLSession
-    private let logger = Logger.sharedInstance(name: "HTTPClient")
-    private var activeTasksCount = 0
+    lazy private var logger = Logger.sharedInstance("HTTPClient")
+    private var _session: NSURLSession! = nil
+    private var logsRequests = ApplicationManager.sharedInstance.isInDebug
     
-    // MARK: Tasks management
+    // MARK: - Tasks management
     
-    func get(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func get(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.GET, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func post(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .JSON, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func post(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.POST, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func delete(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func delete(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.DELETE, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func head(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func head(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.HEAD, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func put(URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .JSON, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    func put(URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         return performDataRequest(.PUT, URL: URL, parameters: parameters, encoding: encoding, completionHandler: completionHandler)
     }
     
-    func cancelAllTasks() {
-        session.getTasksWithCompletionHandler() { dataTasks, uploadTasks, downloadTasks in
-            dataTasks.forEach({ $0.cancel() })
-            uploadTasks.forEach({ $0.cancel() })
-            downloadTasks.forEach({ $0.cancel() })
-        }
-    }
-    
-    private func performDataRequest(method: Task.Method, URL: NSURL, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> HTTPClientDataTask {
+    private func performDataRequest(method: Task.Method, URL: String, parameters: Task.Parameters? = nil, encoding: Task.Encoding = .URL, completionHandler: Task.CompletionHandler) -> DataTask {
         // create request
         let request = defaultRequest(method, URL: URL)
         
         // encode parameters
         encoding.encode(request, parameters: parameters)
-
-        // handler block
-        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { [weak self] data, response, error in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.activeTasksCount -= 1
-            ApplicationManager.sharedInstance.stopNetworkActivity()
-            
-            guard error == nil else {
-                if error!.code != NSURLErrorCancelled {
-                    strongSelf.postprocessResponse(nil, request: request, error: error)
-                    completionHandler(nil, request, nil, error)
-                }
-                return
-            }
-            guard let httpResponse = response as? NSHTTPURLResponse else {
-                let error = NSError(domain: "HTTPClient", code: NSURLError.BadServerResponse.rawValue, userInfo: nil)
-                strongSelf.postprocessResponse(nil, request: request, error: error)
-                completionHandler(nil, request, nil, error)
-                return
-            }
+        
+        // create data task
+        let handler: ((NSData?, NSURLResponse?, NSError?) -> Void) = { data, response, error in
+            let httpResponse = response as! NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
-            guard statusCode < 400 else {
-                let error = NSError(domain: "HTTPClient", code: NSURLError.BadServerResponse.rawValue, userInfo: nil)
-                strongSelf.postprocessResponse(httpResponse, request: request, error: error)
-                completionHandler(nil, request, httpResponse, error)
-                return
+            var finalError = error
+            if finalError == nil && statusCode < 200 && statusCode > 299 {
+                finalError = NSError(domain: "HTTPClientErrorDomain", code: statusCode, userInfo: nil)
             }
-            strongSelf.postprocessResponse(httpResponse, request: request, error: error)
-            completionHandler(data, request, httpResponse, nil)
+            self.logResponse(httpResponse, request: request, data: data, error: error)
+            completionHandler(data, request, httpResponse, finalError)
         }
-        
-        // launch request
+        logRequest(request)
         let task = session.dataTaskWithRequest(request, completionHandler: handler)
-        preprocessRequest(request)
-        task.resume()
         
-        activeTasksCount += 1
-        ApplicationManager.sharedInstance.startNetworkActivity()
-        
+        // launch it if necessary
+        if autostartRequests {
+            task.resume()
+        }
         return task
     }
     
-    // MARK: Utilities
+    // MARK: - Log
     
-    private func preprocessRequest(request: NSURLRequest) {
-        logger.info("-> \(request.HTTPMethod!) \(request.URL!.absoluteString)")
+    private func logRequest(request: NSURLRequest) {
+        logger.info("-> \(request.HTTPMethod!) \(request.URL!)")
     }
     
-    private func postprocessResponse(response: NSHTTPURLResponse?, request: NSURLRequest, error: NSError?) {
-        let statusCode = response?.statusCode ?? 0
-        if let error = error {
-            logger.error("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!.absoluteString) | \(error.localizedDescription)")
-        }
-        else {
-            logger.info("<- \(statusCode) \(request.HTTPMethod!) \(request.URL!.absoluteString)")
-        }
+    private func logResponse(response: NSHTTPURLResponse?, request: NSURLRequest, data: NSData?, error: NSError?) {
+        logger.info("<- \(response!.statusCode) \(request.HTTPMethod!) \(request.URL!)")
     }
     
-    // MARK: Requests
+    // MARK: - Requests
     
-    private func defaultRequest(method: Task.Method, URL: NSURL) -> NSMutableURLRequest {
+    private func defaultRequest(method: Task.Method, URL: String) -> NSMutableURLRequest {
         let request = NSMutableURLRequest()
-        request.URL = URL
+        request.URL = NSURL(string: URL)
         request.HTTPMethod = method.rawValue
-        request.timeoutInterval = session.configuration.timeoutIntervalForRequest
+        request.timeoutInterval = timeoutInterval
         if let additionalHeaders = additionalHeaders {
             for (key, value) in additionalHeaders {
                 request.addValue(value, forHTTPHeaderField: key)
@@ -131,19 +98,26 @@ final class HTTPClient {
         return request
     }
     
-    // MARK: Initialization
+    // MARK: - Configuration
     
-    init(delegateQueue: NSOperationQueue) {
+    private func preferredSessionConfiguration() -> NSURLSessionConfiguration {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 60
-        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: delegateQueue)
+        configuration.timeoutIntervalForRequest = timeoutInterval
+        return configuration
     }
     
+    private func preferredSessionDelegate() -> NSURLSessionDelegate? {
+        return nil
+    }
+    
+    private func preferredSessionDelegateQueue() -> NSOperationQueue? {
+        return NSOperationQueue.mainQueue()
+    }
+    
+    // MARK: - Initialization
+    
     deinit {
-        for _ in 0..<activeTasksCount {
-            ApplicationManager.sharedInstance.stopNetworkActivity()
-        }
-        session.invalidateAndCancel()
+        _session?.finishTasksAndInvalidate()
     }
     
 }

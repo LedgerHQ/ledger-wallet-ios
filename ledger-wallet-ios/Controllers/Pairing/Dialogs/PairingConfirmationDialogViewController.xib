@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PairingConfirmationDialogViewController" customModule="ledger_wallet_ios" customModuleProvider="target">
+            <connections>
+                <outlet property="iconImageView" destination="PJ0-oU-4lE" id="hum-Oc-1jj"/>
+                <outlet property="messageLabel" destination="uka-Ln-ge7" id="Sl9-hF-mkc"/>
+                <outlet property="titleLabel" destination="oEJ-gf-umL" id="TlQ-nZ-UsN"/>
+                <outlet property="variableWidthConstraint" destination="GU1-mN-zJE" id="53P-2y-B1o"/>
+                <outlet property="view" destination="iN0-l3-epB" id="KDO-vn-Wln"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="View" customModule="ledger_wallet_ios" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="242"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="64" placeholderIntrinsicHeight="64" translatesAutoresizingMaskIntoConstraints="NO" id="PJ0-oU-4lE">
+                    <rect key="frame" x="208" y="0.0" width="64" height="64"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kam-SQ-VBy" customClass="RoundedButton" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="210" y="171" width="60" height="71"/>
+                    <state key="normal" title="CLOSE">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="grey"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="complete" destination="-1" eventType="touchUpInside" id="BgO-aZ-jTt"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_title_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEJ-gf-umL" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="218" y="89" width="45" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="sectionTitle"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_message_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="uka-Ln-ge7" customClass="Label" customModule="ledger_wallet_ios" customModuleProvider="target">
+                    <rect key="frame" x="90" y="125" width="300" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="GU1-mN-zJE"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="allure" value="small.centered"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="oEJ-gf-umL" firstAttribute="top" secondItem="PJ0-oU-4lE" secondAttribute="bottom" constant="25" id="0GM-Gz-XRb"/>
+                <constraint firstAttribute="centerX" secondItem="PJ0-oU-4lE" secondAttribute="centerX" id="0iI-ea-ngt"/>
+                <constraint firstItem="uka-Ln-ge7" firstAttribute="top" secondItem="oEJ-gf-umL" secondAttribute="bottom" constant="15" id="3dJ-7C-qex"/>
+                <constraint firstAttribute="centerX" secondItem="uka-Ln-ge7" secondAttribute="centerX" id="CA4-08-sUD"/>
+                <constraint firstAttribute="centerX" secondItem="oEJ-gf-umL" secondAttribute="centerX" id="Ceb-jJ-DEv"/>
+                <constraint firstAttribute="bottom" secondItem="kam-SQ-VBy" secondAttribute="bottom" id="URw-wm-fqF"/>
+                <constraint firstAttribute="centerX" secondItem="kam-SQ-VBy" secondAttribute="centerX" id="a3Y-m9-oCK"/>
+                <constraint firstItem="uka-Ln-ge7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" id="deo-qH-01N"/>
+                <constraint firstItem="kam-SQ-VBy" firstAttribute="top" secondItem="uka-Ln-ge7" secondAttribute="bottom" constant="25" id="fOc-44-bOL"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uka-Ln-ge7" secondAttribute="trailing" id="nKz-Q0-Ky4"/>
+                <constraint firstItem="PJ0-oU-4lE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uCy-af-xNL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="string" keyPath="allure" value="background"/>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="996" y="414"/>
+        </view>
+    </objects>
+</document>

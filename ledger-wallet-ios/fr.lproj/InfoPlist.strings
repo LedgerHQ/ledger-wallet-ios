@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 23/09/2016.
+  Copyright © 2016 Ledger. All rights reserved.
+*/
+
+"NSCameraUsageDescription" = "L’application utilise votre appareil photo pour scanner les codes QR.";

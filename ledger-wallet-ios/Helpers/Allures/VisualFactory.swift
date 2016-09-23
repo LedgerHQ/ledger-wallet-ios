@@ -68,18 +68,9 @@ final class VisualFactory {
             ]
         )
         
-        static let MediumLight = [
-            NSForegroundColorAttributeName: Colors.Black,
-            NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Size.Medium),
-            NSParagraphStyleAttributeName: {
-                let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = Metrics.LineSpacing.Small
-                return paragraph
-                }()
-        ]
-        
         static let Small = [
             NSForegroundColorAttributeName: Colors.Black,
+            NSKernAttributeName: -Fonts.Kerning.VerySmall,
             NSFontAttributeName: Fonts.regularFontWithSize(Fonts.Size.Small),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
@@ -127,7 +118,7 @@ final class VisualFactory {
         
         static let LargeIndication = [
             NSForegroundColorAttributeName: Colors.Black,
-            NSKernAttributeName: -Fonts.Kerning.VerySmall,
+            NSKernAttributeName: -Fonts.Kerning.Small,
             NSFontAttributeName: Fonts.lightFontWithSize(Fonts.Size.AlmostLarge),
             NSParagraphStyleAttributeName: {
                 let paragraph = NSMutableParagraphStyle()
@@ -191,22 +182,8 @@ final class VisualFactory {
         static let SectionTitle = [
             NSForegroundColorAttributeName: Colors.Black,
             NSKernAttributeName: -Fonts.Kerning.Small,
-            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge),
-            NSParagraphStyleAttributeName: {
-                let paragraph = NSMutableParagraphStyle()
-                paragraph.lineSpacing = Metrics.LineSpacing.Medium
-                return paragraph
-                }()
+            NSFontAttributeName: Fonts.semiboldFontWithSize(Fonts.Size.AlmostLarge)
         ]
-        
-        static let SectionTitleCentered: TextAttribute = TextAttributes.extend(SectionTitle, withAttributes: [
-            NSParagraphStyleAttributeName: {
-                let paragraph = (LargeIndicationGrey[NSParagraphStyleAttributeName] as! NSParagraphStyle).mutableCopy() as! NSMutableParagraphStyle
-                paragraph.alignment = NSTextAlignment.Center
-                return paragraph
-                }()
-            ]
-        )
         
         static let LargeIconGrey = [
             NSForegroundColorAttributeName: Colors.LightGrey,
@@ -215,7 +192,6 @@ final class VisualFactory {
         
         private static func extend(textAttribute: TextAttribute, withAttributes attributes: TextAttribute) -> TextAttribute {
             var textAttribute = textAttribute
-            
             for (key, value) in attributes {
                 textAttribute.updateValue(value, forKey: key)
             }
@@ -331,6 +307,7 @@ final class VisualFactory {
             static let Small:CGFloat = 3
             static let Medium:CGFloat = 5
             static let Large:CGFloat = 10
+            static let Infinite:CGFloat = CGFloat.max
         }
         
         struct Padding {

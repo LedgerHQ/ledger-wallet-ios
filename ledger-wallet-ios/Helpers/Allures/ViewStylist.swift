@@ -11,16 +11,15 @@ import UIKit
 final class ViewStylist {
     
     typealias AllureBlock = (UIView) -> Void
-    private static let logger = Logger.sharedInstance(name: "ViewStylist")
     
     class func stylizeView(view: UIView) {
         // check if full allure style name is present and apply it
-        if let styleName = allureStyleName(view) {
+        if let styleName = view.allureStyleName {
             if let allureBlock = VisualTheme.allureBlocks["\(styleName)"] {
                 allureBlock(view)
                 return
             }
-            logger.error("Unable to find allure \"\(styleName)\" for view \(view)")
+            console("ViewStylist: Unable to find allure \"\(styleName)\" for view \(view)")
         }
     }
     
@@ -31,24 +30,8 @@ final class ViewStylist {
                 allureBlock(view)
                 return
             }
-            logger.error("Cannot apply allure \"\(allureStyleName(view))\" to view \(view)")
+            console("ViewStylist: Cannot apply allure \"\(view.allureStyleName)\" to view \(view)")
         }
-    }
-    
-    private class func allureStyleName(view: UIView) -> String? {
-        if let allure = view.allure {
-            if allure.hasPrefix("_") {
-                return allure.stringByReplacingCharactersInRange(allure.startIndex...allure.startIndex, withString: "")
-            }
-            return allureClassName(view) + "." + allure
-        }
-        return nil
-    }
-    
-    private class func allureClassName(view: UIView) -> String {
-        var className = view.className().stringByReplacingOccurrencesOfString("UI", withString: "")
-        className.replaceRange(className.startIndex...className.startIndex, with: String(className[className.startIndex]).lowercaseString)
-        return className
     }
 
 }

@@ -40,7 +40,7 @@ class ActionBarView: View {
     }
     
     override func drawRect(rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
+        guard let context = UIGraphicsGetCurrentContext() else { return }
         
         self.backgroundColor?.setFill()
         CGContextFillRect(context, self.bounds)

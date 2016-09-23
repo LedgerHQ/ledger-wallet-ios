@@ -8,9 +8,10 @@
 
 import Foundation
 
-final class ApplicationManager {
+final class ApplicationManager: NSObject {
     
     static let sharedInstance = ApplicationManager()
+    private let preferences = Preferences(storeName: "ApplicationManager")
     
     var UUID: String {
         if let uuid = preferences.stringForKey("uuid") {
@@ -20,7 +21,23 @@ final class ApplicationManager {
         preferences.setObject(uuid, forKey: "uuid")
         return uuid
     }
-    var bundleIdentifier: String { return NSBundle.mainBundle().bundleIdentifier ?? "" }
+    
+    var isInDebug: Bool {
+        #if DEBUG
+            return true
+            #else
+            return false
+        #endif
+    }
+    
+    var isInProduction: Bool {
+        return !isInDebug
+    }
+    
+    var bundleIdentifier: String {
+        return NSBundle.mainBundle().bundleIdentifier ?? ""
+    }
+
     var disablesIdleTimer: Bool {
         get {
             return UIApplication.sharedApplication().idleTimerDisabled
@@ -29,46 +46,18 @@ final class ApplicationManager {
             UIApplication.sharedApplication().idleTimerDisabled = newValue
         }
     }
-    var developmentLocale: String { return NSBundle.mainBundle().developmentLocalization ?? "en" }
-    var currentLocale: String {
-        let locales = NSLocale.preferredLanguages()
-        if locales.count > 0 {
-            return locales[0]
-        }
-        return ""
-    }
-    var developmentLocalizationBundle: NSBundle {
-        if _developmentLocalizationBundle == nil {
-            let path = NSBundle.mainBundle().pathForResource(developmentLocale, ofType: "lproj")!
-            _developmentLocalizationBundle = NSBundle(path: path)
-        }
-        return _developmentLocalizationBundle
+    
+    var libraryDirectoryPath: String {
+        return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] 
     }
     
-    var libraryDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] }
-    var temporaryDirectoryPath: String { return NSTemporaryDirectory() }
-    var logsDirectoryPath: String { return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Logs") }
-    var databasesDirectoryPath: String { return (libraryDirectoryPath as NSString).stringByAppendingPathComponent("Databases") }
-
-    private lazy var preferences = Preferences(storeName: "ApplicationManager")
-    private lazy var networkActivitiesCount = 0
-    private lazy var logger = Logger.sharedInstance(name: "ApplicationManager")
-    private var _developmentLocalizationBundle: NSBundle! = nil
+    var temporaryDirectoryPath: String {
+        return NSTemporaryDirectory()
+    }
     
     // MARK: Utilities
     
-    func handleLaunchWithOptions(launchOptions: [NSObject: AnyObject]?) {
-        // print application path if needed
-        #if DEBUG
-            logger.info("Library path: \"\(libraryDirectoryPath)\"")
-        #endif
-        
-        // remove all tmp files
-        clearTemporaryDirectory()
-        
-        // clear stale log files
-        LogWriter.sharedInstance.cleanStaleLogFiles()
-        
+    func handleFirstLaunch() {
         // if app hasn't been launched before
         if !preferences.boolForKey("already_launched") {
             preferences.setBool(true, forKey: "already_launched")
@@ -77,59 +66,17 @@ final class ApplicationManager {
             PairingKeychainItem.destroyAll()
         }
     }
-
-    private func clearTemporaryDirectory() {
-        // if testing, no dothing
-        #if TEST
-            return
-        #endif
-        
-        let directoryPath = self.temporaryDirectoryPath
-        let fileManager = NSFileManager.defaultManager()
-        
-        if !fileManager.fileExistsAtPath(directoryPath) {
-            return
-        }
-        
-        if var content = (try? fileManager.contentsOfDirectoryAtPath(directoryPath)) {
-            content = content.filter({ !$0.hasPrefix(".") })
-            for file in content {
-                let filepath = (directoryPath as NSString).stringByAppendingPathComponent(file)
-                do {
-                    try fileManager.removeItemAtPath(filepath)
-                } catch _ {
-                    logger.warn("Unable to remove temporary file at path \"\(filepath)\"")
-                }
-            }
-        }
-    }
     
-    // MARK: Network activity indicator
-    
-    func startNetworkActivity() {
-        dispatchAsyncOnMainQueue() {
-            self.networkActivitiesCount += 1
-            self.updateNetworkActivityIndicator()
+    func printLibraryPathIfNeeded() {
+        if self.isInDebug {
+            Logger.sharedInstance(self.className()).info(libraryDirectoryPath)
         }
-    }
-    
-    func stopNetworkActivity() {
-        dispatchAsyncOnMainQueue() {
-            if self.networkActivitiesCount > 0 {
-                self.networkActivitiesCount -= 1
-                self.updateNetworkActivityIndicator()
-            }
-        }
-    }
-    
-    private func updateNetworkActivityIndicator() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = networkActivitiesCount > 0
     }
     
     // MARK: Initialization
     
-    private init() {
-        
+    private override init() {
+        super.init()
     }
     
 }

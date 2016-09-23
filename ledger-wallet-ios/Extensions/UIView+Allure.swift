@@ -12,7 +12,7 @@ private var allureKey = "allure"
 
 extension UIView {
     
-    // MARK: Allure
+    // MARK: - Allure
     
     @IBInspectable var allure: String? {
         get {
@@ -22,6 +22,22 @@ extension UIView {
             objc_setAssociatedObject(self, &allureKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             ViewStylist.stylizeView(self)
         }
+    }
+    
+    var allureStyleName: String? {
+        if let allure = allure {
+            if allure.hasPrefix("_") {
+                return allure.stringByReplacingCharactersInRange(allure.startIndex...allure.startIndex, withString: "")
+            }
+            return allureClassName + "." + allure
+        }
+        return nil
+    }
+    
+    private var allureClassName: String {
+        var className = self.className().stringByReplacingOccurrencesOfString("UI", withString: "")
+        className.replaceRange(className.startIndex...className.startIndex, with: String(className[className.startIndex]).lowercaseString)
+        return className
     }
     
 }

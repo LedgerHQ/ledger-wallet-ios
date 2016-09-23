@@ -64,13 +64,13 @@ class LoadingIndicator: View {
         if (!animating) {
             return
         }
-
+        
         timer?.invalidate()
         timer = nil
     }
     
     private func scheduledTimer() -> NSTimer {
-        return NSTimer.scheduledTimerWithTimeInterval(animationDuration, target: self, selector: "timerFired", userInfo: nil, repeats: true)
+        return NSTimer.scheduledTimerWithTimeInterval(animationDuration, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
     }
     
     dynamic private func timerFired() {

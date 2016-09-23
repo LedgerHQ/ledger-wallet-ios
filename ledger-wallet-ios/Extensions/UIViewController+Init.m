@@ -11,19 +11,9 @@
 
 @implementation UIViewController (Init)
 
-+ (NSString *)interfaceBuilderIdentifier
-{
-    return [self className];
-}
-
-+ (instancetype)instantiateFromMainStoryboard
-{
-    return [self instantiateFromStoryboard:[UIStoryboard storyboardWithName:@"Main" bundle:nil]];
-}
-
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard
 {
-    return [self instantiateFromStoryboard:storyboard identifier:[self interfaceBuilderIdentifier]];
+    return [self instantiateFromStoryboard:storyboard identifier:[self className]];
 }
 
 + (instancetype)instantiateFromStoryboard:(UIStoryboard *)storyboard identifier:(NSString *)identifier
@@ -33,7 +23,7 @@
 
 + (instancetype)instantiateFromNib
 {
-    return [self instantiateFromNibNamed:[self interfaceBuilderIdentifier]];
+    return [self instantiateFromNibNamed:[self className]];
 }
 
 + (instancetype)instantiateFromNibNamed:(NSString *)name

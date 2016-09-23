@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "BATAL";
+
+"OK" = "OKE";
+
+"CONFIRM" = "KONFIRMASI";
+
+"CLOSE" = "TUTUP";
+
+"REJECT" = "TOLAK";
+
+"DONE" = "SELESAI";
+
+"yes" = "Ya";
+
+"no" = "Tidak";
+
+"cancel" = "Batal";
+
+"delete" = "Hapus";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "PASANGKAN DENGAN LEDGER WALLET";
+
+"CONFIRM_TRANSACTION" = "KONFIRMASI TRANSAKSI";
+
+"PAIRING_SUCCEEDED" = "PEMASANGAN BERHASIL";
+
+"PAIRING_FAILED" = "PERMASANGAN GAGAL";
+
+"PAIRED_LEDGER_WALLETS" = "LEDGER WALLET TERPASANG";
+
+"pairing_in_progress..." = "Pemasangan sedang berlangsung...";
+
+"establishing_connection..." = "Membangun koneksi...";
+
+"waiting_for_transactions..." = "Menunggu transaksi...";
+
+"this_operation_may_take_a_while" = "Silakan tunggu, langkah ini mungkin mememerlukan beberapa saat.";
+
+"scan_the_pairing_qr_code" = "Scan the pairing QR code on the Ledger Wallet Bitcoin Chrome application.";
+
+"enter_security_card_value" = "Ambil kartu keamanan anda dan masukkan nilai yang cocok untuk setiap karakter.";
+
+"your_device_is_now_paired" = "Proses pemasangan selesai. Masukkan nama untuk Ledget Wallet ini.";
+
+"ledger_wallet_name" = "Nama Ledger Wallet";
+
+"my_ledger_wallet" = "Ledger Wallet Saya";
+
+"assign_a_name_to_this_ledger_wallet" = "Pilih nama bagi Ledger Wallet ini.";
+
+"enter_letter_or_value_matching_%@" = "Masukkan huruf atau angka ke dalam kotak hitam yang sesuai \"%@\" pada kartu keamanan anda.";
+
+"your_device_is_creating_secure_connection" = "Smartphone ini sedang membangun koneksi aman dengan Ledger Wallet anda.";
+
+"ledger_wallet_is_finalizing_pairing" = "Ledger Wallet anda sedang menyelesaikan proses pemasangan dengan smartphone ini.";
+
+"error_pairing_unknown" = "An unknown error occurred.\nPlease try again later.";
+
+"error_pairing_network" = "A network error occurred.\nPlease check your internet connection.";
+
+"error_pairing_dongle_cancelled" = "The Ledger Wallet Bitcoin Chrome application cancelled the pairing process.";
+
+"error_pairing_wrong_validation_code" = "Kode validasi kartu keamanan tidaklah tepat.";
+
+"error_pairing_timeout" = "Proses pemasangan mengambil terlalu banyak waktu (habis batas waktu).";
+
+"success_pairing_named_%@" = "Ledger Wallet anda \"%@\" telah dipasangkan dengan smartphone-mu.";
+
+"no_paired_ledger_wallet" = "Tidak ada Ledger Wallet terpasang";
+
+"to_enable_second_factor_pair_device" = "Untuk mengaktifkan faktor validasi kedua, pasangkan Ledger Wallet anda dengan smartphone ini.";
+
+"transactions_will_automatically_appear" = "Transaksi akan secara otomatis muncul saat validasi manual diperlukan.";
+
+"need_help_visit_help_center" = "Perlu bantuan? Kunjungi pusat bantuan kami.";
+
+"requested_on_%@" = "Diminta pada %@";
+
+"paired_on_%@" = "Dipasangkan pada %@";
+
+"you_need_to_provide_a_dongle_name" = "Anda harus memberikan nama yang unik untuk Ledger Wallet ini.";
+
+"a_dongle_with_this_name_already_exists" = "Nama ini telah digunakan oleh Ledger Wallet terpasang lainnya.";
+
+"deleting_this_dongle_pairing" = "Dengan menghapus Ledger Wallet terpasang ini, anda tidak akan lagi dapat melakukan validasi transaksi secara manual dari smartphone ini.\n\nApakah anda ingin melanjutkan?";

@@ -4,10 +4,10 @@
   Created by Nicolas Bigot on 12/01/2015.
   Copyright (c) 2015 Ledger. All rights reserved.
 */
-// Common
+/* Common */
 
 
-"ledger_wallet" = "Ledger Wallet";
+"ledger_authenticator" = "Ledger Authenticator";
 
 "CANCEL" = "ANNULER";
 
@@ -29,27 +29,9 @@
 
 "delete" = "Supprimer";
 
-"need_help_visit_help_center" = "Besoin d'aide? Visitez notre centre d'aide.";
-
-// Errors
-
-"error_unknown" = "An unknown error occurred.\nPlease try again later.";
-
-"error_network" = "A network error occurred.\nPlease check your internet connection.";
-
-"error_internal_error" = "An internal error occured.\nPlease try again later or contact Ledger support if the problem persists.";
-
-"error_pairing_dongle_cancelled" = "L'application Chrome Ledger Wallet a annulé l'association.";
-
-"error_pairing_wrong_validation_code" = "Le code de validation de la carte de sécurité est incorrect.";
-
-"error_pairing_timeout" = "L'association a dépassé le temps limite (timeout).";
-
-// M2FA
+/* Pairing */
 
 "PAIR_A_LEDGER_WALLET" = "ASSOCIER UN LEDGER WALLET";
-
-"PAIRING" = "ASSOCIATION";
 
 "CONFIRM_TRANSACTION" = "CONFIRMER LA TRANSACTION";
 
@@ -59,8 +41,6 @@
 
 "PAIRED_LEDGER_WALLETS" = "LEDGER WALLETS ASSOCIÉS";
 
-"PAIRED_DEVICES" = "ASSOCIATIONS";
-
 "pairing_in_progress..." = "Association en cours...";
 
 "establishing_connection..." = "Établissement de la connexion...";
@@ -69,7 +49,7 @@
 
 "this_operation_may_take_a_while" = "Veuillez patienter, cette opération peut prendre quelques instants.";
 
-"scan_the_pairing_qr_code" = "Scannez le code QR d'association sur l'application Chrome Ledger Wallet.";
+"scan_the_pairing_qr_code" = "Scannez le QR code d'association sur l'application Chrome Ledger Wallet Bitcoin.";
 
 "enter_security_card_value" = "Utilisez votre carte de sécurité et entrez les valeurs correspondantes.";
 
@@ -87,6 +67,16 @@
 
 "ledger_wallet_is_finalizing_pairing" = "Votre Ledger Wallet finalise l'association avec ce smartphone.";
 
+"error_pairing_unknown" = "Une erreur inconnue s'est produite. \nVeuillez réessayer ultérieurement.";
+
+"error_pairing_network" = "Une erreur réseau est survenue.\nVérifiez votre connexion Internet.";
+
+"error_pairing_dongle_cancelled" = "L'application Chrome Ledger Wallet Bitcoin a annulé l'association.";
+
+"error_pairing_wrong_validation_code" = "Le code de validation de la carte de sécurité est incorrect.";
+
+"error_pairing_timeout" = "L'association a dépassé le temps limite (timeout).";
+
 "success_pairing_named_%@" = "Votre Ledger Wallet “%@” est maintenant associé avec ce smartphone.";
 
 "no_paired_ledger_wallet" = "Aucun Ledger Wallet associé";
@@ -94,6 +84,8 @@
 "to_enable_second_factor_pair_device" = "Pour activer le second facteur d'authentification mobile, associez votre Ledger Wallet avec ce smartphone.";
 
 "transactions_will_automatically_appear" = "Les transactions apparaîtront automatiquement quand une validation manuelle sera requise.";
+
+"need_help_visit_help_center" = "Besoin d'aide? Visitez notre centre d'aide.";
 
 "requested_on_%@" = "Initiée le %@";
 

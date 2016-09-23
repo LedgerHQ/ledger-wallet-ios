@@ -107,8 +107,8 @@ extern "C" {
 
 #if !(defined(VMS) || defined(__VMS)) /* VMS uses logical names instead */
 #if defined(HEADER_CRYPTLIB_H) && !defined(OPENSSLDIR)
-#define ENGINESDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/Vendor/tmp/bin/iPhoneSimulator9.0-i386.sdk/lib/engines"
-#define OPENSSLDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/Vendor/tmp/bin/iPhoneSimulator9.0-i386.sdk"
+#define ENGINESDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/vendor/tmp/bin/iPhoneSimulator8.3-i386.sdk/lib/engines"
+#define OPENSSLDIR "/Users/nicolas/devel/ledger-wallet-ios/ledger-wallet-ios/vendor/tmp/bin/iPhoneSimulator8.3-i386.sdk"
 #endif
 #endif
 
@@ -203,7 +203,7 @@ extern "C" {
 #endif
 
 #if defined(DES_RISC1) && defined(DES_RISC2)
-#error YOU SHOULD NOT HAVE BOTH DES_RISC1 AND DES_RISC2 DEFINED!!!!!
+YOU SHOULD NOT HAVE BOTH DES_RISC1 AND DES_RISC2 DEFINED!!!!!
 #endif
 
 /* Unroll the inner loop, this sometimes helps, sometimes hinders.

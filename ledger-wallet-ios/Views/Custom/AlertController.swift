@@ -8,82 +8,114 @@
 
 import UIKit
 
-final class AlertController: NSObject {
+class AlertController: NSObject {
     
     enum Style {
         case Alert
         case ActionSheet
+    }
+    
+    class Action {
         
-        private var systemAlertControllerStyle: UIAlertControllerStyle {
-            switch self {
-            case .ActionSheet: return .ActionSheet
-            case .Alert: return .Alert
+        enum Style {
+            case Default
+            case Destructive
+            case Cancel
+        }
+        
+        typealias Handler = (Action) -> Void
+        let title: String
+        let style: Style
+        private let handler: Handler?
+        
+        init(title: String, style: Style, handler: Handler?) {
+            self.title = title
+            self.style = style
+            self.handler = handler
+        }
+        
+        private class func UIAlertActionForStyle(style: Style) -> UIAlertActionStyle {
+            switch style {
+            case .Cancel: return .Cancel
+            case .Destructive: return .Destructive
+            default: return .Default
             }
         }
+
     }
     
     let style: Style
     let title: String?
     let message: String?
-    private var actions: [AlertAction] = []
+    private var actions: [Action] = []
     private var alertController: UIAlertController! = nil
+    private var alertView: UIAlertView! = nil
     private static var sharedControllers: [UIAlertView: AlertController] = [:]
     
-    func addAction(action: AlertAction) {
-        actions.append(action)
+    class func usesSystemAlertController() -> Bool {
+        return NSClassFromString("UIAlertController") != nil
     }
-    
-    func presentFromViewController(viewController: UIViewController, animated: Bool) {
-        alertController = UIAlertController(title: title, message: message, preferredStyle: style.systemAlertControllerStyle)
-        for action in actions {
-            let alertAction = UIAlertAction(title: action.title, style: action.style.systemAlertActionStyle) { handler in
-                action.handler?(action)
-            }
-            alertController.addAction(alertAction)
-        }
-        viewController.presentViewController(alertController, animated: animated, completion: nil)
-    }
-    
-    // MARK Initialization
     
     init(title: String?, message: String?) {
         self.title = title
         self.message = message
         self.style = .Alert
     }
-   
-    convenience init(alert: String) {
-        self.init(title: nil, message: alert)
-        addAction(AlertAction(title: localizedString("OK"), style: .Default, handler: nil))
+    
+    func addAction(action: Action) {
+        actions.append(action)
+    }
+    
+    func presentFromViewController(viewController: BaseViewController, animated: Bool) {
+        if AlertController.usesSystemAlertController() {
+            // ios >= 8
+            alertController = UIAlertController(title: title, message: message, preferredStyle: AlertController.UIAlertControllerStyleForStyle(style))
+            for action in actions {
+                let alertAction = UIAlertAction(title: action.title, style: Action.UIAlertActionForStyle(action.style), handler: action.handler == nil ? nil : { _ in
+                    (action.handler?(action))!
+                })
+                alertController.addAction(alertAction)
+            }
+            viewController.presentViewController(alertController, animated: animated, completion: nil)
+        }
+        else {
+            // ios < 8
+            alertView = UIAlertView()
+            alertView.delegate = self
+            alertView.title = title ?? ""
+            alertView.message = message
+            alertView.alertViewStyle = .Default
+            for action in actions {
+                alertView.addButtonWithTitle(action.title)
+            }
+            alertView.show()
+            
+            // add to shared pool
+            AlertController.sharedControllers[alertView] = self
+        }
+    }
+    
+    private class func UIAlertControllerStyleForStyle(style: Style) -> UIAlertControllerStyle {
+        switch style {
+        case .ActionSheet: return .ActionSheet
+        default: return .Alert
+        }
     }
     
 }
 
-class AlertAction {
+extension AlertController: UIAlertViewDelegate {
     
-    enum Style {
-        case Default
-        case Destructive
-        case Cancel
+    // MARK: - UIAlertView delegate
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        // call handler
+        let alertController = AlertController.sharedControllers[alertView]
+        let action = alertController?.actions[buttonIndex]
+        action?.handler?(action!)
         
-        private var systemAlertActionStyle: UIAlertActionStyle {
-            switch self {
-            case .Cancel: return .Cancel
-            case .Destructive: return .Destructive
-            case .Default: return .Default
-            }
-        }
-    }
-    
-    typealias Handler = (AlertAction) -> Void
-    let title: String
-    let style: Style
-    private let handler: Handler?
-    
-    init(title: String, style: Style, handler: Handler?) {
-        self.title = title
-        self.style = style
-        self.handler = handler
+        // remove from shared pool
+        AlertController.sharedControllers[alertView] = nil
     }
     
 }

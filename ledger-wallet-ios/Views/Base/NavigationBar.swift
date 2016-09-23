@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationBar: UINavigationBar {
     
-    // MARK: Content size
+    // MARK: - Content size
     
     override func intrinsicContentSize() -> CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight)
@@ -21,21 +21,30 @@ class NavigationBar: UINavigationBar {
     }
     
     private var barHeight: CGFloat {
-        if DeviceManager.sharedInstance.screenHeightClass == .Small {
+        let bounds: CGRect
+        if UIScreen.mainScreen().respondsToSelector(Selector("nativeBounds")) {
+            bounds = UIScreen.mainScreen().nativeBounds
+        }
+        else {
+            bounds = UIScreen.mainScreen().bounds
+        }
+        if bounds.height <= 480 {
             return VisualFactory.Metrics.View.NavigationBar.Height.Small
         }
         return VisualFactory.Metrics.View.NavigationBar.Height.Default
     }
     
-    // MARK: Layout
+    // MARK: - Layout
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         // move title and buttons
-        for view in self.subviews where (view is UIButton || view is UILabel) {
-            if (view === topItem?.leftBarButtonItem?.customView || view === topItem?.rightBarButtonItem?.customView || view === topItem?.titleView) {
-                view.frame = CGRectMake(view.frame.origin.x, round((self.bounds.size.height - view.bounds.size.height) / 2), view.frame.size.width, view.frame.size.height)
+        for view in self.subviews {
+            if (view is UIButton || view is UILabel) {
+                if (view === topItem?.leftBarButtonItem?.customView || view === topItem?.rightBarButtonItem?.customView || view === topItem?.titleView) {
+                    view.frame = CGRectMake(view.frame.origin.x, round((self.bounds.size.height - view.bounds.size.height) / 2), view.frame.size.width, view.frame.size.height)
+                }
             }
         }
     }

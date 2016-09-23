@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationItem: UINavigationItem {
     
-    // MARK: Style management
+    // MARK: - Style management
     
     @IBInspectable var titleAllure: String? {
         get {
@@ -36,7 +36,7 @@ class NavigationItem: UINavigationItem {
         }
     }
     
-    // MARK: Localization
+    // MARK: - Localization
     
     override func awakeFromNib() {
         super.awakeFromNib()

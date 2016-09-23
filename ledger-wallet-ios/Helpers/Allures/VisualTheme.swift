@@ -12,7 +12,7 @@ final class VisualTheme {
     
     static let allureBlocks: [String: ViewStylist.AllureBlock] = [
         
-        // MARK: View allures
+        // MARK: - View allures
         
         "view.background": ViewStylist.wrapAllureBlock({ (view: UIView) in
             view.backgroundColor = VisualFactory.Colors.BackgroundColor
@@ -31,7 +31,7 @@ final class VisualTheme {
         "tableView.transparent": ViewStylist.wrapAllureBlock({ (tableView: TableView) in
             tableView.backgroundColor = VisualFactory.Colors.Transparent
             tableView.separatorColor = VisualFactory.Colors.LightGrey
-            tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Padding.Medium, 0, VisualFactory.Metrics.Padding.Medium)
+            tableView.separatorInset = UIEdgeInsetsMake(0, VisualFactory.Metrics.Padding.Small, 0, VisualFactory.Metrics.Padding.Small)
         }),
         "tableViewCell.transparent": ViewStylist.wrapAllureBlock({ (tableViewCell: TableViewCell) in
             tableViewCell.contentView.backgroundColor = VisualFactory.Colors.Transparent
@@ -61,7 +61,7 @@ final class VisualTheme {
             loadingIndicator.dotsCount = 9
         }),
         
-        // MARK: Label allures
+        // MARK: - Label allures
         
         "label.navigationBar.title": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.PageTitle)
@@ -74,9 +74,6 @@ final class VisualTheme {
         }),
         "label.medium": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Medium)
-        }),
-        "label.medium.light": ViewStylist.wrapAllureBlock({ (label: UILabel) in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumLight)
         }),
         "label.medium.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.MediumCentered)
@@ -123,9 +120,6 @@ final class VisualTheme {
         "label.sectionTitle": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SectionTitle)
         }),
-        "label.sectionTitle.centered": ViewStylist.wrapAllureBlock({ (label: UILabel) in
-            label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.SectionTitleCentered)
-        }),
         "label.huge": ViewStylist.wrapAllureBlock({ (label: UILabel) in
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.Huge)
         }),
@@ -136,7 +130,7 @@ final class VisualTheme {
             label.attributedText = NSAttributedString(string: label.readableText(), attributes: VisualFactory.TextAttributes.HugeLightCentered)
         }),
 
-        // MARK: Button allures
+        // MARK: - Button allures
     
         "button.navigationBar.grey": ViewStylist.wrapAllureBlock({ (button: UIButton) in
             var highlightedStyle = VisualFactory.TextAttributes.NavigationBarText
@@ -158,7 +152,7 @@ final class VisualTheme {
         }),
         "roundedButton": ViewStylist.wrapAllureBlock({ (roundedButton: RoundedButton) in
             roundedButton.adjustsImageWhenHighlighted = false
-            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadius.Medium
+            roundedButton.borderRadius = VisualFactory.Metrics.BordersRadius.Infinite
             roundedButton.setAttributedTitle(NSAttributedString(string: roundedButton.readableTitleForState(UIControlState.Normal), attributes: VisualFactory.TextAttributes.RoundedButtonText), forState: UIControlState.Normal)
             roundedButton.contentEdgeInsets = UIEdgeInsets(top: VisualFactory.Metrics.Padding.VerySmall, left: VisualFactory.Metrics.Padding.Small, bottom: VisualFactory.Metrics.Padding.VerySmall, right: VisualFactory.Metrics.Padding.Small)
             if (roundedButton.imageForState(UIControlState.Normal) != nil) {
@@ -192,7 +186,7 @@ final class VisualTheme {
             button.setAttributedTitle(NSAttributedString(string: button.readableTitleForState(UIControlState.Normal), attributes: highlightedStyle), forState: UIControlState.Highlighted)
         }),
 
-        // MARK: TextField allures
+        // MARK: - TextField allures
     
         "textField.huge.light": ViewStylist.wrapAllureBlock({ (textField: UITextField) in
             var placeholderAttributes = VisualFactory.TextAttributes.HugeLight

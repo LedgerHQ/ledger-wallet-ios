@@ -10,12 +10,12 @@ import UIKit
 
 class BarCodeReaderOverlayView: View {
 
-    // MARK: Drawing
+    // MARK: - Drawing
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         
-        let context = UIGraphicsGetCurrentContext()
+        guard let context = UIGraphicsGetCurrentContext() else { return }
         let squareWidth = bounds.size.width * 0.6
         let squareRect = CGRectMake((bounds.size.width - squareWidth) / 2.0, (bounds.size.height - squareWidth) / 2.0, squareWidth, squareWidth)
         let roundedPath = UIBezierPath(roundedRect: squareRect, cornerRadius: VisualFactory.Metrics.BordersRadius.Medium)
@@ -39,7 +39,7 @@ class BarCodeReaderOverlayView: View {
         CGContextRestoreGState(context)
     }
     
-    // MARK: Initialization
+    // MARK: - Initialization
     
     private func initialize() {
         backgroundColor = UIColor.clearColor()
@@ -54,7 +54,7 @@ class BarCodeReaderOverlayView: View {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         initialize()
     }
     

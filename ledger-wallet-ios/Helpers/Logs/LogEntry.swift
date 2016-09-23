@@ -24,8 +24,6 @@ struct LogEntry {
     
 }
 
-// MARK: - Equatable
-
 extension LogEntry: Equatable {}
 
 func ==(lhs: LogEntry, rhs: LogEntry) -> Bool {
@@ -33,22 +31,10 @@ func ==(lhs: LogEntry, rhs: LogEntry) -> Bool {
     lhs.level == rhs.level && lhs.loggerName == rhs.loggerName
 }
 
-// MARK: - CustomStringConvertible
-
 extension LogEntry: CustomStringConvertible {
 
     var description: String {
         return "\(date) [\(loggerName)][\(level)] \(string)"
     }
 
-}
-
-// MARK: - CustomDebugStringConvertible
-
-extension LogEntry: CustomDebugStringConvertible {
-    
-    var debugDescription: String {
-        return "[\(loggerName)][\(level)] \(string)"
-    }
-    
 }

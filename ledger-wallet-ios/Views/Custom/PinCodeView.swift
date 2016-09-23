@@ -72,7 +72,7 @@ class PinCodeView: View {
     var restrictedCharacterSet: NSCharacterSet?
     weak var delegate: PinCodeViewDelegate?
     lazy private var _textField: UITextField = {
-       let textField = UITextField()
+        let textField = UITextField()
         textField.tintColor = UIColor.clearColor()
         textField.spellCheckingType = UITextSpellCheckingType.No
         textField.secureTextEntry = true
@@ -89,9 +89,9 @@ class PinCodeView: View {
     func text() -> String {
         return _textField.text ?? ""
     }
-
+    
     // MARK: Responder
-
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         
@@ -124,14 +124,14 @@ class PinCodeView: View {
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
-
+        
         let borderDecal = (borderWidth / DeviceManager.sharedInstance.screenScale)
         let drawLetter: (_ : NSString, point: CGPoint, font: UIFont, color: UIColor) -> Void = { letter, point, font, color in
             let attributes = [NSForegroundColorAttributeName: color, NSFontAttributeName: font, NSParagraphStyleAttributeName: NSParagraphStyle.defaultParagraphStyle()]
             let size = letter.sizeWithAttributes(attributes)
             letter.drawAtPoint(CGPointMake(point.x - ceil(size.width) / 2.0, point.y - ceil(size.height) / 2.0), withAttributes: attributes)
         }
-
+        
         for i in 0..<length {
             // draw box
             let boxRect = CGRectMake(CGFloat(i) * (boxSize.width - borderDecal + boxSpacing) + borderDecal, borderDecal, boxSize.width - borderDecal * 2, boxSize.height - borderDecal * 2)
@@ -140,7 +140,7 @@ class PinCodeView: View {
             boxPath.lineWidth = borderWidth
             var fillColor: UIColor!
             var strokeColor: UIColor!
-
+            
             if (i == textFieldLength) {
                 strokeColor = highlightedColor
                 fillColor = boxColor
@@ -230,7 +230,7 @@ extension PinCodeView {
     
     private func observeTextFieldNotifications(observe: Bool) {
         if (observe) {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleTextFieldDidChangeNotification", name: UITextFieldTextDidChangeNotification, object: _textField)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleTextFieldDidChangeNotification), name: UITextFieldTextDidChangeNotification, object: _textField)
         }
         else {
             NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: _textField)

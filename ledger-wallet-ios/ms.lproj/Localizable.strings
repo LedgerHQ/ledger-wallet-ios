@@ -1,0 +1,98 @@
+/* 
+  Localizable.strings
+  ledger-wallet-ios
+  Created by Nicolas Bigot on 12/01/2015.
+  Copyright (c) 2015 Ledger. All rights reserved.
+*/
+/* Common */
+
+
+"ledger_authenticator" = "Ledger Authenticator";
+
+"CANCEL" = "BATAL";
+
+"OK" = "OK";
+
+"CONFIRM" = "SAH";
+
+"CLOSE" = "TUTUP";
+
+"REJECT" = "MENOLAK";
+
+"DONE" = "SIAP";
+
+"yes" = "Ya";
+
+"no" = "Tidak";
+
+"cancel" = "Batal";
+
+"delete" = "Hapus";
+
+/* Pairing */
+
+"PAIR_A_LEDGER_WALLET" = "BERPASANGKAN DOPET LEDGER";
+
+"CONFIRM_TRANSACTION" = "SAHKAN TRANSAKSI";
+
+"PAIRING_SUCCEEDED" = "BERPASANGAN BERJAYA";
+
+"PAIRING_FAILED" = "BERPASANGAN GAGAL";
+
+"PAIRED_LEDGER_WALLETS" = "DOMPET LEDGER BERPASANGAN";
+
+"pairing_in_progress..." = "Berpasangan dijalankan...";
+
+"establishing_connection..." = "Menetapkan sambungan...";
+
+"waiting_for_transactions..." = "Menunggu transaksi...";
+
+"this_operation_may_take_a_while" = "Sila tunggu, operasi ini mungkin mengambil sedikit masa.";
+
+"scan_the_pairing_qr_code" = "Imbas Kod QR berpasangan pada applikasi Chrome Dompet Ledger Bitcoin.";
+
+"enter_security_card_value" = "Ambil kad keselamatan anda dan masukkan nilai yang sama untuk setiap aksara.";
+
+"your_device_is_now_paired" = "Proses berpasangan telah selesai. Masukkan nama bagi Dompet Ledger ini.";
+
+"ledger_wallet_name" = "Nama Dompet Ledger";
+
+"my_ledger_wallet" = "Dompet Ledger saya";
+
+"assign_a_name_to_this_ledger_wallet" = "Pilih satu nama untuk Dompet Ledger ini.";
+
+"enter_letter_or_value_matching_%@" = "Masukkan huruf atau angka di dalam kotak hitam sepadan \"%@\" pada kad keselamatan.";
+
+"your_device_is_creating_secure_connection" = "Telefon pintar sedang mewujudkan sambungan selamat dengan Dompet Ledger.";
+
+"ledger_wallet_is_finalizing_pairing" = "Dompet Ledger sedang menyiapkan proses berpasangan dengan telefon pintar ini.";
+
+"error_pairing_unknown" = "Ralat tidak diketahui berlaku. Sila cuba lagi nanti.";
+
+"error_pairing_network" = "Ralat rangkaian berlaku. Sila semak sambungan internet anda.";
+
+"error_pairing_dongle_cancelled" = "Aplikasi Dompet Ledger Bitcoin Chrome dibatalkan proses pemasangan.";
+
+"error_pairing_wrong_validation_code" = "Kod pengesahan kad keselamatan tidak betul.";
+
+"error_pairing_timeout" = "Proses berpasangan telah ambil terlalu banyak masa (tamat masa).";
+
+"success_pairing_named_%@" = "Dompet Ledger \"%@\" kini berpasangan dengan telefon pintar anda.";
+
+"no_paired_ledger_wallet" = "Dompet Ledger tiada berpasangan";
+
+"to_enable_second_factor_pair_device" = "Untuk membolehkan kedua faktor pengesahan, selaraskan Dompet Ledger dengan telefon pintar ini.";
+
+"transactions_will_automatically_appear" = "Transaksi secara automatik akan muncul apabila pengesahan secara manual bila diperlukan.";
+
+"need_help_visit_help_center" = "Perlukan bantuan? Lawati Pusat Bantuan kami.";
+
+"requested_on_%@" = "Diminta pada %@";
+
+"paired_on_%@" = "Dipasangkan pada %@";
+
+"you_need_to_provide_a_dongle_name" = "Anda perlu memberikan nama unik untuk Dompet Ledger ini.";
+
+"a_dongle_with_this_name_already_exists" = "Nama ini telah digunakan oleh berpasangan Dompet Ledger lain.";
+
+"deleting_this_dongle_pairing" = "Dengan menghapuskan pasangan Dompet Ledger ini, anda tidak lagi akan dapat mengesahkan transaksi dari telefon pintar ini secara manual. Adakah anda mahu meneruskan?";

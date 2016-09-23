@@ -14,7 +14,7 @@ extension HTTPClient {
         
         typealias CompletionHandler = (NSData?, NSURLRequest, NSHTTPURLResponse?, NSError?) -> Void
         typealias Parameters = [String: AnyObject]
-     
+        
         enum Method: String {
             
             case GET = "GET"

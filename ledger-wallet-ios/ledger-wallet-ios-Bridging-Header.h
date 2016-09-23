@@ -5,6 +5,7 @@
 // Ledger Wallet
 #import "NSObject+Utils.h"
 #import "UIViewController+Init.h"
+#import "CryptoCipher.h"
 
 // Cocoa
 #import <CommonCrypto/CommonCrypto.h>
@@ -20,6 +21,3 @@
 #import <openssl/rand.h>
 #import <openssl/crypto.h>
 #import <openssl/des.h>
-
-// FMDB
-#import "FMDB.h"

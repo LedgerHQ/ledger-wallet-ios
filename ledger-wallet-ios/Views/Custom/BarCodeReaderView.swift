@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-@objc protocol BarCodeReaderViewDelegate: class {
+protocol BarCodeReaderViewDelegate: class {
     
     func barCodeReaderView(barCodeReaderView: BarCodeReaderView, didScanCode code: String, withType type: String)
 
@@ -20,7 +20,7 @@ class BarCodeReaderView: View {
     private var previewLayer: AVCaptureVideoPreviewLayer {
         return layer as! AVCaptureVideoPreviewLayer
     }
-    @IBOutlet weak var delegate: BarCodeReaderViewDelegate?
+    weak var delegate: BarCodeReaderViewDelegate?
     var listensAppNotifications = true
     private(set) var isCapturing = false
     private var captureDevice: AVCaptureDevice?
@@ -29,10 +29,12 @@ class BarCodeReaderView: View {
     private var captureMetadataOutput: AVCaptureMetadataOutput?
     private var captureDispatchQueue: dispatch_queue_t?
     
-    // MARK: Video Capture
+    // MARK: - Video Capture
     
     func startCapture() {
-        guard isCapturing == false else { return }
+        if (isCapturing) {
+            return
+        }
         
         captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         if (captureDevice == nil || (try? captureDevice!.lockForConfiguration()) == nil) {
@@ -43,7 +45,7 @@ class BarCodeReaderView: View {
         }
         captureDevice!.unlockForConfiguration()
         
-        captureDeviceInput = (try? AVCaptureDeviceInput(device: captureDevice!))
+        captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice)
         if (captureDeviceInput == nil) {
             cleanUp()
             return
@@ -94,7 +96,7 @@ class BarCodeReaderView: View {
         return AVCaptureVideoPreviewLayer.self
     }
 
-    // MARK: Initialization
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,14 +123,14 @@ class BarCodeReaderView: View {
     
 }
 
-// MARK: - Notifications
-
 extension BarCodeReaderView {
+    
+    // MARK: - Notifications
     
     private func listenNotifications(listen: Bool) {
         if (listen) {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication())
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleDidBecomeActiveNotification:", name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleWillResignActiveNotification(_:)), name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication())
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleDidBecomeActiveNotification(_:)), name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
         }
         else {
             NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -149,9 +151,9 @@ extension BarCodeReaderView {
     
 }
 
-// MARK: - AVCaptureMetadataOutputObjectsDelegate
-
 extension BarCodeReaderView: AVCaptureMetadataOutputObjectsDelegate {
+    
+    // MARK: - Metadata objects delegate
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
         if let metadataObjects = metadataObjects {
